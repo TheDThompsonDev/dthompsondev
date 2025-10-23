@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model BlogPost {
+  id            Int       @id @default(autoincrement())
+  slug          String    @unique
+  title         String
+  excerpt       String?
+  content       Json      
+  category      String?
+  featured      Boolean   @default(false)
+  status        String    @default("draft")
+  readTime      String?
+  coverImageUrl String?
+  authorName    String    @default("DTHOMPSONDEV")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  publishedAt   DateTime?
+  
+  components    BlogComponent[]
+  
+  @@index([slug])
+  @@index([status])
+  @@index([publishedAt])
+  @@map("blog_posts")
+}
+
+model BlogComponent {
+  id            Int      @id @default(autoincrement())
+  postId        Int
+  componentType String
+  componentData Json
+  orderIndex    Int
+  createdAt     DateTime @default(now())
+  
+  post          BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  
+  @@index([postId, orderIndex])
+  @@map("blog_components")
+}
+
+model UploadedFile {
+  id         Int      @id @default(autoincrement())
+  fileName   String
+  blobUrl    String
+  fileType   String?
+  fileSize   Int?
+  uploadedAt DateTime @default(now())
+  
+  @@map("uploaded_files")
+}

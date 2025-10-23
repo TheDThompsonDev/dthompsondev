@@ -252,7 +252,6 @@ export function OrbitSwitcher() {
                 })}
               </svg>
 
-              {/* Danny at center */}
               <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
                 <motion.div
                   whileHover={{ scale: 1.05 }}
@@ -267,7 +266,6 @@ export function OrbitSwitcher() {
                 </motion.div>
               </div>
 
-              {/* Orbiting personas with random, non-uniform positioning */}
               {VISITOR_ARCHETYPES.map((p, i) => {
                 const pos = personPositions[i];
                 const angle = (pos.angle * Math.PI) / 180;
@@ -328,7 +326,6 @@ export function OrbitSwitcher() {
 
             </div>
 
-            {/* Backdrop overlay when drawer is open */}
             <AnimatePresence>
               {selectedPerson && (
                 <motion.div
@@ -342,7 +339,6 @@ export function OrbitSwitcher() {
               )}
             </AnimatePresence>
 
-            {/* Side drawer when archetype is selected */}
             <AnimatePresence>
               {selectedPerson && selected && (
                 <motion.div
