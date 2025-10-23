@@ -81,18 +81,18 @@ export default function Home() {
                 </div>
 
                 <BentoGrid images={[
-                  { src: '/polaroid/1.jpg', alt: 'Community moment 1' },
-                  { src: '/polaroid/2.jpg', alt: 'Community moment 2' },
-                  { src: '/polaroid/3.jpg', alt: 'Community moment 3' },
-                  { src: '/polaroid/4.jpg', alt: 'Community moment 4' },
-                  { src: '/polaroid/5.jpg', alt: 'Community moment 5' },
-                  { src: '/polaroid/6.jpg', alt: 'Community moment 6' },
-                  { src: '/polaroid/7.jpg', alt: 'Community moment 7' },
-                  { src: '/polaroid/8.jpg', alt: 'Community moment 8' },
-                  { src: '/polaroid/9.jpg', alt: 'Community moment 9' },
-                  { src: '/polaroid/10.jpg', alt: 'Community moment 10' },
-                  { src: '/polaroid/11.jpg', alt: 'Community moment 11' },
-                  { src: '/polaroid/12.jpg', alt: 'Community moment 12' },
+                  { src: 'https://twxvicohcixbzang.public.blob.vercel-storage.com/polaroid/1.jpg', alt: 'Community moment 1' },
+                  { src: 'https://twxvicohcixbzang.public.blob.vercel-storage.com/polaroid/2.jpg', alt: 'Community moment 2' },
+                  { src: 'https://twxvicohcixbzang.public.blob.vercel-storage.com/polaroid/3.jpg', alt: 'Community moment 3' },
+                  { src: 'https://twxvicohcixbzang.public.blob.vercel-storage.com/polaroid/4.jpg', alt: 'Community moment 4' },
+                  { src: 'https://twxvicohcixbzang.public.blob.vercel-storage.com/polaroid/5.jpg', alt: 'Community moment 5' },
+                  { src: 'https://twxvicohcixbzang.public.blob.vercel-storage.com/polaroid/6.jpg', alt: 'Community moment 6' },
+                  { src: 'https://twxvicohcixbzang.public.blob.vercel-storage.com/polaroid/7.jpg', alt: 'Community moment 7' },
+                  { src: 'https://twxvicohcixbzang.public.blob.vercel-storage.com/polaroid/8.jpg', alt: 'Community moment 8' },
+                  { src: 'https://twxvicohcixbzang.public.blob.vercel-storage.com/polaroid/9.jpg', alt: 'Community moment 9' },
+                  { src: 'https://twxvicohcixbzang.public.blob.vercel-storage.com/polaroid/10.jpg', alt: 'Community moment 10' },
+                  { src: 'https://twxvicohcixbzang.public.blob.vercel-storage.com/polaroid/11.jpg', alt: 'Community moment 11' },
+                  { src: 'https://twxvicohcixbzang.public.blob.vercel-storage.com/polaroid/12.jpg', alt: 'Community moment 12' },
                 ]} />
               </div>
             </div>
