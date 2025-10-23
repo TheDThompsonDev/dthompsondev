@@ -69,32 +69,123 @@ function escapeHtml(text: string): string {
 }
 
 const defaultExamples = {
-  fractal: `// 🌀 Sierpinski Triangle Generator
-function sierpinski(depth) {
-  const size = Math.pow(2, depth);
-  const grid = Array(size).fill(0).map(() => Array(size * 2).fill(' '));
-  
-  function drawTriangle(x, y, size) {
-    if (size === 1) {
-      grid[y][x] = '▲';
-      return;
-    }
-    
-    const half = size / 2;
-    drawTriangle(x + half, y, half);
-    drawTriangle(x, y + half, half);
-    drawTriangle(x + size, y + half, half);
+  typescript: `// 🎯 TypeScript Discriminated Unions
+// This shows how TypeScript prevents bugs!
+
+type LoadingState = { status: 'loading' };
+type SuccessState = { status: 'success'; data: string };
+type ErrorState = { status: 'error'; error: Error };
+
+type State = LoadingState | SuccessState | ErrorState;
+
+function handleState(state: State) {
+  switch (state.status) {
+    case 'loading':
+      console.log("⏳ Loading...");
+      // TypeScript knows: no 'data' or 'error' here!
+      return "Loading...";
+      
+    case 'success':
+      console.log("✅ Success! Data:", state.data);
+      // TypeScript knows: 'data' exists here!
+      return state.data;
+      
+    case 'error':
+      console.log("❌ Error:", state.error.message);
+      // TypeScript knows: 'error' exists here!
+      return state.error.message;
   }
-  
-  drawTriangle(0, 0, size);
-  
-  console.log("🌀 Sierpinski Triangle (Depth: " + depth + ")\\n");
-  grid.forEach(row => console.log(row.join('')));
-  console.log("\\n✨ Fractals are infinitely complex patterns!");
 }
 
-// Try changing the depth (1-5)!
-sierpinski(4);`,
+console.log("🎯 TypeScript Discriminated Unions Demo\\n");
+
+const loadingState = { status: 'loading' };
+const successState = { status: 'success', data: 'User profile loaded!' };
+const errorState = { status: 'error', error: new Error('Network failure') };
+
+console.log("Test 1:");
+handleState(loadingState);
+
+console.log("\\nTest 2:");
+handleState(successState);
+
+console.log("\\nTest 3:");
+handleState(errorState);
+
+console.log("\\n💡 TypeScript prevents accessing wrong properties!");
+console.log("🚀 This pattern is used in React Query, Redux Toolkit, and more!");`,
+
+  css: `// 🎨 Live CSS Animation Demo
+// Edit the styles and see them animate!
+
+document.getElementById('preview').innerHTML = \`
+  <div class="animation-grid">
+    <div class="box bounce">Bounce</div>
+    <div class="box spin">Spin</div>
+    <div class="box pulse">Pulse</div>
+    <div class="box slide">Slide</div>
+  </div>
+  
+  <style>
+    .animation-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      padding: 20px;
+    }
+    
+    .box {
+      background: linear-gradient(135deg, #4D7DA3, #84803E);
+      color: white;
+      padding: 30px;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 18px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .bounce {
+      animation: bounce 1s ease-in-out infinite;
+    }
+    
+    .spin {
+      animation: spin 2s linear infinite;
+    }
+    
+    .pulse {
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    
+    .slide {
+      animation: slide 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(0.95); }
+    }
+    
+    @keyframes slide {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(10px); }
+    }
+  </style>
+\`;
+
+console.log("🎨 CSS Animations Running!");
+console.log("✨ Switch to Preview mode to see them!");
+console.log("💡 Try editing the animation properties!");`,
 
   sorting: `// 🔄 Bubble Sort Visualizer
 function bubbleSort(arr) {
@@ -188,7 +279,7 @@ console.log("\\n✨ Different orders, different uses!");`
 };
 
 interface TabConfig {
-  key: 'fractal' | 'sorting' | 'tree';
+  key: 'typescript' | 'css' | 'sorting' | 'tree';
   label: string;
   icon: string;
   filename: string;
@@ -197,16 +288,19 @@ interface TabConfig {
 }
 
 const tabs: TabConfig[] = [
-  { key: 'fractal', label: 'Fractal', icon: '🌀', filename: 'sierpinski.js', language: 'javascript', color: '#4D7DA3' },
+  { key: 'typescript', label: 'TypeScript', icon: '🎯', filename: 'discriminated-unions.ts', language: 'typescript', color: '#3178C6' },
+  { key: 'css', label: 'CSS', icon: '🎨', filename: 'animations.css', language: 'css', color: '#E65100' },
   { key: 'sorting', label: 'Sorting', icon: '🔄', filename: 'bubbleSort.js', language: 'javascript', color: '#84803E' },
   { key: 'tree', label: 'Trees', icon: '🌳', filename: 'binaryTree.js', language: 'javascript', color: '#10B981' },
 ];
 
 export function CodePlayground() {
-  const [activeTab, setActiveTab] = useState<'fractal' | 'sorting' | 'tree'>('fractal');
-  const [code, setCode] = useState<string>(defaultExamples.fractal);
+  const [activeTab, setActiveTab] = useState<'typescript' | 'css' | 'sorting' | 'tree'>('typescript');
+  const [code, setCode] = useState<string>(defaultExamples.typescript);
   const [output, setOutput] = useState<string>('');
+  const [previewHtml, setPreviewHtml] = useState<string>('');
   const [isRunning, setIsRunning] = useState(false);
+  const [viewMode, setViewMode] = useState<'console' | 'preview'>('console');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const highlightRef = useRef<HTMLDivElement>(null);
   const [lineCount, setLineCount] = useState(1);
@@ -223,15 +317,17 @@ export function CodePlayground() {
     }
   };
 
-  const handleTabChange = (tab: 'fractal' | 'sorting' | 'tree') => {
+  const handleTabChange = (tab: 'typescript' | 'css' | 'sorting' | 'tree') => {
     setActiveTab(tab);
     setCode(defaultExamples[tab]);
     setOutput('');
+    setPreviewHtml('');
   };
 
   const runCode = () => {
     setIsRunning(true);
     const logs: string[] = [];
+    let htmlContent = '';
     
     const mockConsole = {
       log: (...args: any[]) => {
@@ -241,12 +337,30 @@ export function CodePlayground() {
       }
     };
 
+    const mockDocument = {
+      getElementById: (id: string) => {
+        if (id === 'preview') {
+          return {
+            set innerHTML(value: string) {
+              htmlContent = value;
+            },
+            get innerHTML() {
+              return htmlContent;
+            }
+          };
+        }
+        return null;
+      }
+    };
+
     try {
-      const func = new Function('console', code);
-      func(mockConsole);
+      const func = new Function('console', 'document', code);
+      func(mockConsole, mockDocument);
       setOutput(logs.join('\n'));
+      setPreviewHtml(htmlContent);
     } catch (error) {
       setOutput(`❌ Error: ${error instanceof Error ? error.message : 'Unknown error'}\n\n💡 Tip: Check your syntax and try again!`);
+      setPreviewHtml('');
     }
     
     setTimeout(() => setIsRunning(false), 300);
@@ -380,13 +494,39 @@ export function CodePlayground() {
 
         <div className="bg-[#f0f8fc] flex flex-col">
           <div className="bg-gradient-to-r from-[#e8f4fd] to-[#f8fcfe] px-4 py-2 border-b border-[#9bcdf6]/30 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <svg className="w-4 h-4 text-[#84803E]" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-              </svg>
-              <span className="text-[#164063]/80 font-mono text-xs font-semibold">Console Output</span>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                <svg className="w-4 h-4 text-[#84803E]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                </svg>
+                <span className="text-[#164063]/80 font-mono text-xs font-semibold">Output</span>
+              </div>
+              
+              <div className="flex gap-1 bg-white/60 rounded-lg p-1">
+                <button
+                  onClick={() => setViewMode('console')}
+                  className={`px-3 py-1 rounded text-xs font-semibold transition-all ${
+                    viewMode === 'console'
+                      ? 'bg-[#5a9bd4] text-white shadow-sm'
+                      : 'text-[#164063]/60 hover:text-[#164063]'
+                  }`}
+                >
+                  Console
+                </button>
+                <button
+                  onClick={() => setViewMode('preview')}
+                  className={`px-3 py-1 rounded text-xs font-semibold transition-all ${
+                    viewMode === 'preview'
+                      ? 'bg-[#5a9bd4] text-white shadow-sm'
+                      : 'text-[#164063]/60 hover:text-[#164063]'
+                  }`}
+                >
+                  Preview
+                </button>
+              </div>
             </div>
-            {output && (
+            
+            {output && viewMode === 'console' && (
               <button
                 onClick={() => setOutput('')}
                 className="text-[#153230]/40 hover:text-[#153230]/80 text-xs font-semibold transition-colors"
@@ -396,24 +536,41 @@ export function CodePlayground() {
             )}
           </div>
           
-          <div className="flex-1 overflow-auto p-4 h-[500px] bg-white/50">
-            {output ? (
-              <pre className="text-[#153230] font-mono text-xs leading-relaxed whitespace-pre-wrap">
-                {output}
-              </pre>
-            ) : (
-              <div className="text-[#153230]/40 font-mono text-xs space-y-2">
-                <p>// Welcome to the Live Code Editor! 🎉</p>
-                <p>//</p>
-                <p>// 1. Edit the code on the left</p>
-                <p>// 2. Click the "Run" button to execute</p>
-                <p>// 3. See your output here</p>
-                <p>//</p>
-                <p className="text-[#4D7DA3] font-semibold">// 💡 Tip: Try modifying the values and see what happens!</p>
-                <p className="text-[#84803E] font-semibold">// 🔄 Use the Reset button to restore the original code</p>
-                <p className="text-[#10B981] font-semibold">// 🌟 Experiment with different algorithms and patterns</p>
-              </div>
-            )}
+          <div className="flex-1 overflow-auto h-[500px] bg-white/50">
+            <div className={viewMode === 'console' ? 'p-4' : 'hidden'}>
+              {output ? (
+                <pre className="text-[#153230] font-mono text-xs leading-relaxed whitespace-pre-wrap">
+                  {output}
+                </pre>
+              ) : (
+                <div className="text-[#153230]/40 font-mono text-xs space-y-2">
+                  <p>// Welcome to the Live Code Editor! 🎉</p>
+                  <p>//</p>
+                  <p>// 1. Edit the code on the left</p>
+                  <p>// 2. Click the "Run" button to execute</p>
+                  <p>// 3. See your output here</p>
+                  <p>//</p>
+                  <p className="text-[#4D7DA3] font-semibold">// 💡 Tip: Try modifying the values and see what happens!</p>
+                  <p className="text-[#84803E] font-semibold">// 🔄 Use the Reset button to restore the original code</p>
+                  <p className="text-[#10B981] font-semibold">// 🌟 Switch to Preview mode for visual output</p>
+                </div>
+              )}
+            </div>
+            
+            <div
+              className={`w-full h-full p-4 ${viewMode === 'preview' ? 'block' : 'hidden'}`}
+            >
+              {previewHtml ? (
+                <div dangerouslySetInnerHTML={{ __html: previewHtml }} className="w-full h-full" />
+              ) : (
+                <div className="flex items-center justify-center h-full">
+                  <div className="text-center text-[#153230]/40 font-mono text-xs">
+                    <p>Click "Run" to see visual output</p>
+                    <p className="mt-2 text-[#4D7DA3]">Perfect for CSS animations and HTML demos!</p>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

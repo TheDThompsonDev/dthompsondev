@@ -12,14 +12,47 @@ function getColorForPost(index: number): string {
   return colors[index % colors.length];
 }
 
+const samplePosts: BlogPost[] = [
+  {
+    id: 1,
+    title: 'Closures Visualized: Understanding JavaScript\'s Secret Weapon',
+    slug: 'closures-visualized',
+    excerpt: 'Master one of JavaScript\'s most powerful features through interactive visualizations and real-world examples.',
+    content: { blocks: [] },
+    category: 'JavaScript',
+    featured: true,
+    read_time: '8 min',
+    status: 'published',
+    author_name: 'DTHOMPSONDEV',
+    created_at: new Date('2024-01-15').toISOString(),
+    updated_at: new Date('2024-01-15').toISOString(),
+    published_at: new Date('2024-01-15').toISOString(),
+  },
+  {
+    id: 2,
+    title: 'React Hooks Visualized: A Complete Guide',
+    slug: 'react-hooks-visualized',
+    excerpt: 'Learn how React Hooks work under the hood with interactive examples and visual diagrams.',
+    content: { blocks: [] },
+    category: 'React',
+    featured: false,
+    read_time: '10 min',
+    status: 'published',
+    author_name: 'DTHOMPSONDEV',
+    created_at: new Date('2024-01-20').toISOString(),
+    updated_at: new Date('2024-01-20').toISOString(),
+    published_at: new Date('2024-01-20').toISOString(),
+  },
+];
+
 export default function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [categories, setCategories] = useState<string[]>(['All']);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>(samplePosts);
+  const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState<string[]>(['All', 'JavaScript', 'React']);
 
   useEffect(() => {
-    fetchPosts();
+    // fetchPosts(); // Disabled - showing sample posts only
   }, []);
 
   const fetchPosts = async () => {
@@ -27,15 +60,15 @@ export default function BlogPage() {
       const res = await fetch('/api/blog/posts');
       if (res.ok) {
         const posts: BlogPost[] = await res.json();
-        setBlogPosts(posts);
         
-        const uniqueCategories = ['All', ...Array.from(new Set(posts.map(p => p.category).filter(Boolean) as string[]))];
-        setCategories(uniqueCategories);
+        if (posts.length > 0) {
+          setBlogPosts(posts);
+          const uniqueCategories = ['All', ...Array.from(new Set(posts.map(p => p.category).filter(Boolean) as string[]))];
+          setCategories(uniqueCategories);
+        }
       }
     } catch (error) {
       console.error('Failed to fetch posts:', error);
-    } finally {
-      setLoading(false);
     }
   };
 
