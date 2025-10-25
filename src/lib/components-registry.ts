@@ -76,16 +76,6 @@ export const AVAILABLE_COMPONENTS: Record<string, ComponentConfig> = {
       ],
     },
   },
-  'whiteboard': {
-    name: 'Virtual Whiteboard',
-    description: 'Interactive drawing canvas',
-    icon: '✏️',
-    defaultData: {
-      type: 'whiteboard',
-      title: '',
-      height: 400,
-    },
-  },
   'code-steps': {
     name: 'Code Steps',
     description: 'Step-by-step code walkthrough',
@@ -120,6 +110,61 @@ export const AVAILABLE_COMPONENTS: Record<string, ComponentConfig> = {
       type: 'quote',
       content: '',
       author: '',
+    },
+  },
+  'callout': {
+    name: 'Callout Box',
+    description: 'Highlighted information box with icon',
+    icon: '💡',
+    defaultData: {
+      type: 'callout',
+      variant: 'info',
+      title: 'Key Insight',
+      content: '',
+      icon: '💡',
+    },
+  },
+  'code-block': {
+    name: 'Code Block',
+    description: 'Syntax-highlighted code snippet',
+    icon: '🔤',
+    defaultData: {
+      type: 'code-block',
+      title: '',
+      code: '',
+      language: 'javascript',
+      showLineNumbers: true,
+    },
+  },
+  'button': {
+    name: 'Interactive Button',
+    description: 'Clickable button element',
+    icon: '🔘',
+    defaultData: {
+      type: 'button',
+      text: 'Click me',
+      action: 'counter',
+      variant: 'primary',
+    },
+  },
+  'list': {
+    name: 'Styled List',
+    description: 'Bullet or numbered list with custom styling',
+    icon: '📋',
+    defaultData: {
+      type: 'list',
+      items: ['Item 1', 'Item 2', 'Item 3'],
+      variant: 'bullet',
+      colored: false,
+    },
+  },
+  'code-playground': {
+    name: 'Code Playground',
+    description: 'Interactive code editor with live execution',
+    icon: '🎮',
+    defaultData: {
+      type: 'code-playground',
+      title: 'Try It Yourself!',
     },
   },
 };

@@ -3,10 +3,21 @@
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { TiltCard } from '@/components/TiltCard';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { BlogPost } from '@/types/blog';
 
 const colors = ['#4D7DA3', '#84803E', '#A34D7D', '#7DA34D', '#D87D4A'];
+
+// Persona labels for display
+const PERSONA_LABELS: Record<string, string> = {
+  p1: 'Junior Developer',
+  p2: 'Senior Engineer',
+  p3: 'Engineering Manager',
+  p4: 'Developer Relations',
+  p5: 'Career Changer',
+  p6: 'Executive Leader',
+};
 
 function getColorForPost(index: number): string {
   return colors[index % colors.length];
@@ -27,6 +38,7 @@ const samplePosts: BlogPost[] = [
     created_at: new Date('2024-01-15').toISOString(),
     updated_at: new Date('2024-01-15').toISOString(),
     published_at: new Date('2024-01-15').toISOString(),
+    targetPersonas: ['p1', 'p2', 'p5'], // Junior Dev, Senior Engineer, Career Changer
   },
   {
     id: 2,
@@ -42,10 +54,18 @@ const samplePosts: BlogPost[] = [
     created_at: new Date('2024-01-20').toISOString(),
     updated_at: new Date('2024-01-20').toISOString(),
     published_at: new Date('2024-01-20').toISOString(),
+    targetPersonas: ['p1', 'p2'], // Junior Dev, Senior Engineer
   },
 ];
 
-export default function BlogPage() {
+function getRelevanceScore(post: BlogPost, personaId: string | null): number {
+  if (!personaId || !post.targetPersonas) return 0;
+  return post.targetPersonas.includes(personaId) ? 1 : 0;
+}
+
+function BlogContent() {
+  const searchParams = useSearchParams();
+  const selectedPersona = searchParams.get('persona');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>(samplePosts);
   const [loading, setLoading] = useState(false);
@@ -72,12 +92,26 @@ export default function BlogPage() {
     }
   };
 
-  const filteredPosts = selectedCategory === 'All'
+  // Filter by category and persona
+  let filteredPosts = selectedCategory === 'All'
     ? blogPosts
     : blogPosts.filter(post => post.category === selectedCategory);
 
-  const featuredPosts = blogPosts.filter(post => post.featured);
-  const regularPosts = filteredPosts.filter(post => !post.featured);
+  // If persona is selected, prioritize relevant content and separate into matched and all posts
+  let personaRelevantPosts: BlogPost[] = [];
+  let otherPosts: BlogPost[] = [];
+  
+  if (selectedPersona) {
+    personaRelevantPosts = filteredPosts.filter(post => post.targetPersonas?.includes(selectedPersona));
+    otherPosts = filteredPosts.filter(post => !post.targetPersonas?.includes(selectedPersona));
+  } else {
+    personaRelevantPosts = filteredPosts;
+  }
+
+  const featuredPosts = personaRelevantPosts.filter(post => post.featured);
+  const regularPosts = personaRelevantPosts.filter(post => !post.featured);
+  const featuredOtherPosts = otherPosts.filter(post => post.featured);
+  const regularOtherPosts = otherPosts.filter(post => !post.featured);
 
   if (loading) {
     return (
@@ -110,12 +144,22 @@ export default function BlogPage() {
             <div className="max-w-6xl mx-auto">
               <ScrollReveal>
                 <div className="text-center mb-16">
-                  <div className="inline-flex items-center gap-2.5 bg-[#153230] text-white px-4 py-2 rounded-full shadow-lg mb-6">
-                    <div className="relative flex items-center justify-center">
-                      <div className="w-2 h-2 bg-[#4ade80] rounded-full animate-pulse"></div>
-                      <div className="absolute w-2 h-2 bg-[#4ade80] rounded-full animate-ping"></div>
+                  <div className="flex flex-col items-center gap-4 mb-6">
+                    <div className="inline-flex items-center gap-2.5 bg-[#153230] text-white px-4 py-2 rounded-full shadow-lg">
+                      <div className="relative flex items-center justify-center">
+                        <div className="w-2 h-2 bg-[#4ade80] rounded-full animate-pulse"></div>
+                        <div className="absolute w-2 h-2 bg-[#4ade80] rounded-full animate-ping"></div>
+                      </div>
+                      <span className="text-sm font-bold tracking-wide">FRESH INSIGHTS</span>
                     </div>
-                    <span className="text-sm font-bold tracking-wide">FRESH INSIGHTS</span>
+                    {selectedPersona && PERSONA_LABELS[selectedPersona] && (
+                      <div className="inline-flex items-center gap-2 bg-[#4D7DA3]/20 text-[#4D7DA3] px-4 py-2 rounded-full border border-[#4D7DA3]/40">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        <span className="text-sm font-bold">Curated for {PERSONA_LABELS[selectedPersona]}</span>
+                      </div>
+                    )}
                   </div>
                   
                   <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-[#153230] leading-[1.1] tracking-tight mb-6">
@@ -124,7 +168,7 @@ export default function BlogPage() {
                   </h1>
                   
                   <p className="text-xl text-[#153230]/70 leading-relaxed max-w-3xl mx-auto">
-                    Insights on building communities, advancing careers, and mastering the art of technical leadership.
+                    {selectedPersona ? `Content tailored for ${PERSONA_LABELS[selectedPersona]}. Discover insights on building communities, advancing careers, and mastering technical leadership.` : 'Insights on building communities, advancing careers, and mastering the art of technical leadership.'}
                   </p>
                 </div>
               </ScrollReveal>
@@ -250,18 +294,64 @@ export default function BlogPage() {
                 </div>
               </div>
 
-              {filteredPosts.length === 0 && (
+              {personaRelevantPosts.length === 0 && (
                 <ScrollReveal delay={300}>
                   <div className="text-center py-20">
                     <div className="w-24 h-24 bg-[#4D7DA3]/10 rounded-full flex items-center justify-center mx-auto mb-6">
                       <svg className="w-12 h-12 text-[#4D7DA3]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9.172 16.172a4 4 0 515.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     </div>
                     <h3 className="text-2xl font-black text-[#153230] mb-3">No posts found</h3>
-                    <p className="text-[#153230]/70">Try selecting a different category</p>
+                    <p className="text-[#153230]/70">{selectedPersona ? 'Try selecting a different category or browse all content' : 'Try selecting a different category'}</p>
                   </div>
                 </ScrollReveal>
+              )}
+              {selectedPersona && regularOtherPosts.length > 0 && (
+                <div className="mt-20 pt-16 border-t-2 border-[#4D7DA3]/20">
+                  <ScrollReveal>
+                    <h2 className="text-3xl font-black text-[#153230] mb-8">Explore More Content</h2>
+                  </ScrollReveal>
+                  
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {regularOtherPosts.slice(0, 3).map((post, index) => (
+                      <ScrollReveal key={post.id} delay={500 + index * 100}>
+                        <TiltCard className="h-full">
+                          <Link href={`/blog/${post.slug}`} className="block h-full">
+                            <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 border border-[#4D7DA3]/10 h-full">
+                              <div
+                                className="h-32 opacity-60"
+                                style={{
+                                  backgroundColor: getColorForPost(index)
+                                }}
+                              ></div>
+                              <div className="p-5">
+                                <div className="flex items-center gap-2 mb-3">
+                                  <span 
+                                    className="px-2.5 py-1 rounded-full text-xs font-black text-white"
+                                    style={{ backgroundColor: getColorForPost(index) }}
+                                  >
+                                    {post.category}
+                                  </span>
+                                  <span className="text-xs text-[#153230]/60">{post.read_time || '5 min'}</span>
+                                </div>
+                                <h3 className="text-xl font-black text-[#153230] mb-2 leading-tight">
+                                  {post.title}
+                                </h3>
+                                <p className="text-sm text-[#153230]/70 leading-relaxed mb-3">
+                                  {post.excerpt}
+                                </p>
+                                <div className="text-xs text-[#153230]/60 font-medium">
+                                  {new Date(post.published_at || post.created_at).toLocaleDateString()}
+                                </div>
+                              </div>
+                            </div>
+                          </Link>
+                        </TiltCard>
+                      </ScrollReveal>
+                    ))}
+                  </div>
+                </div>
               )}
             </div>
           </section>
@@ -311,5 +401,17 @@ export default function BlogPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function BlogPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-[#E2F3F2] flex items-center justify-center">
+        <div className="text-[#153230] text-xl">Loading...</div>
+      </div>
+    }>
+      <BlogContent />
+    </Suspense>
   );
 }

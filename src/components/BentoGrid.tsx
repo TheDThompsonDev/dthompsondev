@@ -30,18 +30,18 @@ export function BentoGrid({ images }: BentoGridProps) {
   const displayImages = images || defaultImages;
 
   const polaroidCards = [
-    { delay: '0ms', rotate: '-6deg', top: '1%', left: '-10%', size: 'w-[240px]', zIndex: 10, color: '#DC2626' },
-    { delay: '100ms', rotate: '5deg', top: '2%', left: '22%', size: 'w-[240px]', zIndex: 11, color: '#4D7DA3' },
-    { delay: '200ms', rotate: '-4deg', top: '1%', left: '54%', size: 'w-[240px]', zIndex: 12, color: '#84803E' },
-    { delay: '300ms', rotate: '3deg', top: '2%', left: '76%', size: 'w-[240px]', zIndex: 13, color: '#EAB308' },
-    { delay: '200ms', rotate: '-5deg', top: '36%', left: '-6%', size: 'w-[240px]', zIndex: 14, color: '#3B82F6' },
-    { delay: '300ms', rotate: '6deg', top: '37%', left: '24%', size: 'w-[240px]', zIndex: 15, color: '#10B981' },
-    { delay: '200ms', rotate: '4deg', top: '36%', left: '46%', size: 'w-[240px]', zIndex: 16, color: '#153230' },
-    { delay: '100ms', rotate: '-3deg', top: '37%', left: '76%', size: 'w-[240px]', zIndex: 17, color: '#F59E0B' },
-    { delay: '200ms', rotate: '5deg', top: '71%', left: '-5%', size: 'w-[240px]', zIndex: 18, color: '#8B5CF6' },
-    { delay: '100ms', rotate: '-4deg', top: '72%', left: '22%', size: 'w-[240px]', zIndex: 19, color: '#EC4899' },
-    { delay: '300ms', rotate: '3deg', top: '71%', left: '44%', size: 'w-[240px]', zIndex: 20, color: '#06B6D4' },
-    { delay: '100ms', rotate: '-5deg', top: '72%', left: '76%', size: 'w-[240px]', zIndex: 21, color: '#14B8A6' },
+    { delay: '0ms', rotate: '-6deg', top: '1%', left: '-10%', size: 'w-[220px]', zIndex: 10, color: '#DC2626' },
+    { delay: '100ms', rotate: '5deg', top: '2%', left: '22%', size: 'w-[220px]', zIndex: 11, color: '#4D7DA3' },
+    { delay: '200ms', rotate: '-4deg', top: '1%', left: '54%', size: 'w-[220px]', zIndex: 12, color: '#84803E' },
+    { delay: '300ms', rotate: '3deg', top: '2%', left: '76%', size: 'w-[220px]', zIndex: 13, color: '#EAB308' },
+    { delay: '200ms', rotate: '-5deg', top: '36%', left: '-6%', size: 'w-[220px]', zIndex: 14, color: '#3B82F6' },
+    { delay: '300ms', rotate: '6deg', top: '37%', left: '24%', size: 'w-[220px]', zIndex: 15, color: '#10B981' },
+    { delay: '200ms', rotate: '4deg', top: '36%', left: '46%', size: 'w-[220px]', zIndex: 16, color: '#153230' },
+    { delay: '100ms', rotate: '-3deg', top: '37%', left: '76%', size: 'w-[220px]', zIndex: 17, color: '#F59E0B' },
+    { delay: '200ms', rotate: '5deg', top: '71%', left: '-5%', size: 'w-[220px]', zIndex: 18, color: '#8B5CF6' },
+    { delay: '100ms', rotate: '-4deg', top: '72%', left: '22%', size: 'w-[220px]', zIndex: 19, color: '#EC4899' },
+    { delay: '300ms', rotate: '3deg', top: '71%', left: '44%', size: 'w-[220px]', zIndex: 20, color: '#06B6D4' },
+    { delay: '100ms', rotate: '-5deg', top: '72%', left: '76%', size: 'w-[220px]', zIndex: 21, color: '#14B8A6' },
   ];
 
   return (

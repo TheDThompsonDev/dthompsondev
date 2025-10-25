@@ -206,6 +206,27 @@ body {
   }
 }
 
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+[contenteditable].empty:before {
+  content: attr(data-placeholder);
+  color: #9CA3AF;
+  pointer-events: none;
+}
+
+[contenteditable]:focus {
+  outline: none;
+}
+
 .scrollbar-thin {
   scrollbar-width: thin;
 }

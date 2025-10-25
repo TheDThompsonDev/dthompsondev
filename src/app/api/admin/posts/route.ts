@@ -29,6 +29,13 @@ export async function POST(request: Request) {
 
     const data = await request.json();
 
+    if (!data.slug || !data.title) {
+      return NextResponse.json(
+        { error: 'Title and slug are required' },
+        { status: 400 }
+      );
+    }
+
     const post = await createBlogPost({
       slug: data.slug,
       title: data.title,
@@ -41,10 +48,21 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json(post, { status: 201 });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error creating post:', error);
+    
+    if (error.code === 'P2002') {
+      return NextResponse.json(
+        { error: 'A post with this slug already exists' },
+        { status: 409 }
+      );
+    }
+    
     return NextResponse.json(
-      { error: 'Failed to create post' },
+      {
+        error: 'Failed to create post',
+        details: error.message
+      },
       { status: 500 }
     );
   }

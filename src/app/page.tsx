@@ -43,9 +43,9 @@ export default function Home() {
             </div>
           </header>
 
-          <section className="relative px-8 md:px-16 py-20 md:py-32 overflow-hidden">
-            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-[#4D7DA3]/10 to-transparent rounded-full blur-3xl"></div>
-            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-[#84803E]/8 to-transparent rounded-full blur-3xl"></div>
+          <section className="relative px-8 md:px-16 md:py-12">
+            <div className="absolute top-0 right-0 w-[600px] h-[700px] bg-gradient-to-br from-[#4D7DA3]/10 to-transparent rounded-full blur-3xl"></div>
+            <div className="absolute bottom-0 left-0 w-[400px] h-[700px] bg-gradient-to-tr from-[#84803E]/8 to-transparent rounded-full blur-3xl"></div>
             
             <div className="relative z-10 max-w-6xl mx-auto">
               <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -55,51 +55,62 @@ export default function Home() {
                       <div className="w-2 h-2 bg-[#4ade80] rounded-full animate-pulse"></div>
                       <div className="absolute w-2 h-2 bg-[#4ade80] rounded-full animate-ping"></div>
                     </div>
-                    <span className="text-sm font-bold tracking-wide">ACCEPTING 1:1 CALLS</span>
+                    <span className="text-sm font-bold tracking-wide">ACCEPTING COMPANY CALLS</span>
                   </div>
 
-                  <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-[#153230] leading-[1] tracking-tight">
-                    Director of Tech,{' '}
-                    <span className="text-[#4D7DA3]">Community</span>{' '}
-                    Leader & Speaker
+                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-[#153230] leading-[1] tracking-tight">
+                    Director of Tech, {' '}
+                    <span className="text-[#4D7DA3]">Executive Advisor,<br /></span>{' '}
+                    & Community Leader.
                   </h1>
                   
                   <p className="text-xl text-[#153230]/70 leading-relaxed max-w-xl">
-                    Helping developers land jobs, level up careers, and build lasting connections in tech through mentorship and community.
+                    When organizations have engineering teams that have too many priorities, too much complexity, and not enough clarity.
+                    <span className="text-[#4D7DA3] font-bold"> They call me. </span> I fix team alignment, simplify their systems, and deliver results they’re proud of.
                   </p>
-
                   <div className="flex flex-wrap items-center gap-4 pt-4">
-                    <button className="group relative bg-[#4D7DA3] text-white px-10 py-5 rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300 font-bold text-lg overflow-hidden">
-                      <span className="relative z-10">Book a 1:1 Call</span>
+                    <p className="text-2xl text-[#4D7DA3] font-bold leading-relaxed max-w-xl">   
+                      Clarity. Confidence. Code. 
+                    </p>
+                    <button className="group relative bg-[#4D7DA3] text-white px-10 py-5 rounded-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 font-bold text-md overflow-hidden">
+                      <span className="relative z-10">Let's work together!</span>
                       <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
                     </button>
-                    
-                    <div className="flex items-center gap-3 text-[#153230]/70">
-                      <div className="flex -space-x-2">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#4D7DA3] to-[#3d6a8a] border-2 border-white shadow"></div>
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#84803E] to-[#6a6731] border-2 border-white shadow"></div>
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#153230] to-[#0f2624] border-2 border-white shadow"></div>
-                      </div>
-                      <div className="text-sm">
-                        <div className="font-bold text-[#153230]">12,000+</div>
-                        <div>developers</div>
-                      </div>
-                    </div>
                   </div>
 
-                  {/* Key metrics */}
+                  {/* Key metrics
                   <div className="flex gap-8 pt-6 border-t border-[#4D7DA3]/10">
                     {[
-                      { n: "700+", l: "1-on-1 calls" },
-                      { n: "130+", l: "5-star reviews" },
-                      { n: "1000s", l: "Jobs landed" }
+                      { n: "450,000+", l: "Qualified developer reach" },
+                      { n: "200+", l: "Talks, Workshops, & Meetups" },
+                      { n: "22", l: "Brands worked with" }
                     ].map((x, i) => (
                       <div key={i}>
                         <div className="text-3xl font-black text-[#4D7DA3]">{x.n}</div>
                         <div className="text-xs text-[#153230]/60 font-medium">{x.l}</div>
                       </div>
                     ))}
+                  </div> */}
+                <section aria-label="Impact and Reach" className="mt-10">
+                  <div className="-mt-6 grid gap-6">
+                    <div>
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-center">
+                        <div className="rounded-2xl border border-slate-200 p-3 bg-white/60">
+                          <div className="text-3xl font-extrabold tracking-tight text-[#4D7DA3]">450,000</div>
+                          <div className="text-sm text-slate-600">Qualified Dev reach</div>
+                        </div>
+                        <div className="rounded-2xl border border-slate-200 p-3 bg-white/60">
+                          <div className="text-3xl font-extrabold tracking-tight text-[#4D7DA3]">200</div>
+                          <div className="text-sm text-slate-600">Talks/Workshops</div>
+                        </div>
+                        <div className="rounded-2xl border border-slate-200 p-3 bg-white/60">
+                          <div className="text-3xl font-extrabold tracking-tight text-[#4D7DA3]">22</div>
+                          <div className="text-sm text-slate-600">Brands partnered</div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
+                </section>
                 </div>
 
                 <BentoGrid images={[
@@ -126,36 +137,32 @@ export default function Home() {
         <CodePlayground />
 
         <div className="relative">
-          <section className="sticky top-0 z-[100] bg-[#153230] text-white px-6 md:px-10 py-8 md:py-10 rounded-[32px] mx-4 mt-6 shadow-2xl">
-          <ScrollReveal>
-            <h2 className="text-2xl md:text-4xl font-black mb-6 max-w-5xl leading-tight">
-              Community Builder. Technical Leader. Career Champion.
-            </h2>
-            <p className="text-base md:text-lg mb-8 max-w-4xl leading-relaxed opacity-90">
-              As Director of Technology and Community Leader, I've dedicated my career to bridging the gap between aspiring developers and their dream careers through mentorship, technical education, and authentic community building.
-            </p>
-          </ScrollReveal>
-          
-          <ScrollReveal delay={200}>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 pt-6 border-t border-white/20">
+          <section className="sticky top-0 z-[100] bg-[#153230] text-white px-6 md:px-8 py-5 md:py-6 rounded-[32px] mx-4 mt-6 shadow-2xl">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-6">
+            <div>
+              <h2 className="text-xl md:text-2xl font-black leading-snug">
+                Community Builder. Technical Leader. Career Champion.
+              </h2>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 flex-shrink-0">
               <div className="text-center">
-                <p className="text-3xl md:text-4xl font-black mb-1 text-[#4ade80]">1000s</p>
-                <p className="text-xs md:text-sm opacity-70">Developers Placed</p>
+                <p className="text-2xl md:text-3xl font-black text-[#4ade80]">1000s</p>
+                <p className="text-xs opacity-70">Placed</p>
               </div>
               <div className="text-center">
-                <p className="text-3xl md:text-4xl font-black mb-1 text-[#4ade80]">700+</p>
-                <p className="text-xs md:text-sm opacity-70">Mentorship Calls</p>
+                <p className="text-2xl md:text-3xl font-black text-[#4ade80]">700+</p>
+                <p className="text-xs opacity-70">Calls</p>
               </div>
               <div className="text-center">
-                <p className="text-3xl md:text-4xl font-black mb-1 text-[#4ade80]">12K+</p>
-                <p className="text-xs md:text-sm opacity-70">Community Members</p>
+                <p className="text-2xl md:text-3xl font-black text-[#4ade80]">12K+</p>
+                <p className="text-xs opacity-70">Community</p>
               </div>
               <div className="text-center">
-                <p className="text-3xl md:text-4xl font-black mb-1 text-[#4ade80]">60+</p>
-                <p className="text-xs md:text-sm opacity-70">Speaking Events</p>
+                <p className="text-2xl md:text-3xl font-black text-[#4ade80]">60+</p>
+                <p className="text-xs opacity-70">Speaking</p>
               </div>
             </div>
-          </ScrollReveal>
+          </div>
         </section>
 
         <section className="relative z-[50] bg-white rounded-[32px] mx-4 mt-6 px-6 md:px-12 py-16 md:py-20 shadow-lg border border-[#E2F3F2]">
@@ -245,15 +252,10 @@ export default function Home() {
         </div>
 
         <div className="relative">
-          <section className="sticky top-0 z-[100] bg-gradient-to-br from-[#4D7DA3] to-[#153230] text-white px-6 md:px-10 py-8 md:py-10 rounded-[32px] mx-4 mt-6 shadow-2xl">
-            <ScrollReveal>
-              <h2 className="text-2xl md:text-4xl font-black mb-6 leading-tight">
-                Thought Leadership & Education
-              </h2>
-              <p className="text-base md:text-lg max-w-4xl leading-relaxed opacity-90">
-                Sharing knowledge and insights across multiple platforms to help developers navigate their careers and master the technical landscape.
-              </p>
-            </ScrollReveal>
+          <section className="sticky top-0 z-[100] bg-gradient-to-br from-[#4D7DA3] to-[#153230] text-white px-6 md:px-8 py-5 md:py-6 rounded-[32px] mx-4 mt-6 shadow-2xl">
+            <h2 className="text-xl md:text-2xl font-black leading-snug">
+              Thought Leadership & Education
+            </h2>
           </section>
 
           <section className="relative z-[50] bg-white rounded-[32px] mx-4 mt-6 px-6 md:px-12 py-16 shadow-lg border border-[#E2F3F2]">
@@ -424,15 +426,10 @@ export default function Home() {
         </div>
 
         <div className="relative">
-          <section className="sticky top-0 z-[100] bg-white rounded-[32px] mx-4 mt-6 shadow-xl border border-[#E2F3F2] px-6 md:px-10 py-8 md:py-10">
-            <ScrollReveal>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-[#153230] mb-6 leading-tight">
-                Resources &<br />Initiatives
-              </h2>
-              <p className="text-base md:text-lg text-[#153230]/70 max-w-4xl leading-relaxed">
-                Turning vision into impact through conferences, education, and community-driven initiatives that create real opportunities for developers worldwide.
-              </p>
-            </ScrollReveal>
+          <section className="sticky top-0 z-[100] bg-white rounded-[32px] mx-4 mt-6 shadow-xl border border-[#E2F3F2] px-6 md:px-8 py-5 md:py-6">
+            <h2 className="text-xl md:text-2xl font-black text-[#153230] leading-snug">
+              Resources & Initiatives
+            </h2>
           </section>
 
           <section className="relative z-[50] bg-white rounded-[32px] mx-4 mt-6 px-6 md:px-12 py-16 shadow-lg border border-[#E2F3F2]">

@@ -22,6 +22,20 @@ const VISITOR_ARCHETYPES = [
       "Landing your first or second dev role",
       "Navigating team dynamics"
     ],
+    challenges: [
+      "Struggling with fundamental concepts like closures, async/await, or state management",
+      "Building portfolio projects that actually impress hiring managers",
+      "Feeling overwhelmed by the breadth of technologies and not knowing where to focus",
+      "Preparing for technical interviews and whiteboarding problems"
+    ],
+    resources: [
+      "Weekly 1:1 mentorship calls focused on your growth",
+      "Access to 12,000+ community members for support and networking",
+      "Technical blog posts with interactive visualizations",
+      "Resume reviews tailored to junior dev positions",
+      "Interview preparation workshops"
+    ],
+    impact: "300+ junior developers have landed their first or next roles through mentorship",
     stats: "300+ junior devs mentored to their next role",
     cta: "Get Mentorship"
   },
@@ -37,13 +51,27 @@ const VISITOR_ARCHETYPES = [
       "Promotion strategy & visibility",
       "Building cross-team influence"
     ],
+    challenges: [
+      "Unclear what the next step in your career looks like (Staff vs Principal)",
+      "Struggling to get visibility for your technical contributions",
+      "Not sure how to transition from individual contributor to leader",
+      "Preparing for system design interviews and architect-level thinking"
+    ],
+    resources: [
+      "1:1 coaching on staff engineer expectations and promotion paths",
+      "System design mentorship tailored to your tech stack",
+      "Strategies for increasing technical visibility across the organization",
+      "Networking with other senior+ engineers in the community",
+      "Deep dives into architecture and scalability concepts"
+    ],
+    impact: "150+ engineers successfully promoted to Staff, Principal, and leadership roles",
     stats: "150+ engineers promoted to senior+ levels",
     cta: "Level Up"
   },
   {
     id: "p3",
     label: "Engineering Manager",
-    icon: "👔",
+    icon: "📄",
     description: "Leading teams & processes",
     rooms: ["Leadership", "Tech"],
     whatYouGet: [
@@ -52,13 +80,27 @@ const VISITOR_ARCHETYPES = [
       "Stakeholder communication",
       "Career path strategy for reports"
     ],
+    challenges: [
+      "Transitioning from IC to manager—maintaining credibility without hands-on code",
+      "Building and scaling high-performing engineering teams",
+      "Having difficult conversations: performance reviews, feedback, and terminations",
+      "Balancing technical decisions with business constraints and team well-being"
+    ],
+    resources: [
+      "Weekly coaching on leadership challenges and team dynamics",
+      "Hiring strategies and interview frameworks proven to identify top talent",
+      "Performance management best practices and difficult conversation scripts",
+      "Engineering manager community for peer learning and support",
+      "Executive coaching for navigating organizational politics"
+    ],
+    impact: "60+ engineers successfully transitioned to management and built thriving teams",
     stats: "60+ successful EM transitions",
     cta: "Enhance Leadership"
   },
   {
     id: "p4",
     label: "Developer Relations",
-    icon: "📣",
+    icon: "📫",
     description: "DevRel, advocacy & community",
     rooms: ["Community", "Content"],
     whatYouGet: [
@@ -67,6 +109,20 @@ const VISITOR_ARCHETYPES = [
       "Public speaking coaching",
       "Conference & event connections"
     ],
+    challenges: [
+      "Measuring the ROI of community and content initiatives",
+      "Creating content that resonates and drives engagement",
+      "Building authentic communities that don't feel sales-focused",
+      "Developing speaking skills and overcoming stage fright"
+    ],
+    resources: [
+      "DevRel strategy coaching from someone who built 12K+ communities",
+      "Content creation frameworks for blog, video, and podcasts",
+      "Public speaking coaching and conference application strategies",
+      "Access to 12,000+ developers for testing ideas and gathering feedback",
+      "Metrics and analytics frameworks for measuring community impact"
+    ],
+    impact: "40+ DevRel professionals building thriving, engaged communities",
     stats: "40+ DevRel professionals coached",
     cta: "Grow Your Impact"
   },
@@ -82,6 +138,20 @@ const VISITOR_ARCHETYPES = [
       "Breaking into first tech role",
       "Community support & networking"
     ],
+    challenges: [
+      "Proving you're serious about tech despite coming from a different field",
+      "Building a portfolio that shows real skills, not just bootcamp projects",
+      "Addressing the 'why' in interviews and explaining your pivot",
+      "Competing with computer science graduates with traditional tech backgrounds"
+    ],
+    resources: [
+      "Personalized career transition roadmap based on your background",
+      "Portfolio projects that actually get you interview callbacks",
+      "Interview prep focused on career changer narratives",
+      "Resume and LinkedIn optimization for non-traditional backgrounds",
+      "Supportive community of 12,000+ developers who've walked similar paths"
+    ],
+    impact: "500+ career changers have successfully landed their first tech roles",
     stats: "500+ successful career transitions",
     cta: "Start Your Transition"
   },
@@ -97,6 +167,20 @@ const VISITOR_ARCHETYPES = [
       "Building high-performing teams",
       "Industry connections & insights"
     ],
+    challenges: [
+      "Balancing short-term delivery with long-term technical vision",
+      "Building and retaining world-class engineering teams",
+      "Making data-driven decisions in the face of uncertainty",
+      "Communicating technical strategy to non-technical stakeholders"
+    ],
+    resources: [
+      "1:1 executive coaching on technical leadership and organizational strategy",
+      "Board-ready communication frameworks for technical initiatives",
+      "Talent acquisition and retention strategies for senior engineering roles",
+      "Access to network of 25+ fellow executives for peer learning",
+      "Industry trend analysis and competitive intelligence"
+    ],
+    impact: "25+ executives transforming their organizations through better technical leadership",
     stats: "25+ executives coached",
     cta: "Strategic Coaching"
   },
@@ -158,7 +242,7 @@ export function OrbitSwitcher() {
   ];
 
   return (
-    <div className="mt-12 rounded-3xl bg-white p-8 shadow-xl border-2 border-[#4D7DA3]/20">
+    <div className="rounded-3xl bg-white p-8 shadow-xl border-2 border-[#4D7DA3]/20" style={{ boxShadow: '0 -10px 30px -10px rgba(77, 125, 163, 0.3), 0 10px 30px -10px rgba(0, 0, 0, 0.1)' }}>
       <div className="mb-6 inline-flex rounded-full bg-[#E2F3F2] p-1.5 shadow-inner">
         {(["orbit", "rooms"] as const).map((t) => (
           <button
@@ -363,31 +447,67 @@ export function OrbitSwitcher() {
                     </div>
                   </div>
 
-                  <div className="bg-gradient-to-br from-[#E2F3F2] to-[#E2F3F2]/30 rounded-2xl p-6 mb-6">
-                    <p className="text-sm font-bold text-[#153230]/70 uppercase tracking-wider mb-4">What You Get</p>
-                    <div className="space-y-3">
-                      {selected.whatYouGet.map((item, i) => (
-                        <div key={i} className="flex items-start gap-3">
-                          <div className="w-5 h-5 bg-[#4D7DA3] rounded-md flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
-                            </svg>
-                          </div>
-                          <span className="text-base text-[#153230] font-medium">{item}</span>
+                  {/* Challenges Section */}
+                  <div className="bg-red-50/30 rounded-2xl p-5 mb-5 border border-red-200/30">
+                    <p className="text-sm font-bold text-[#153230]/70 uppercase tracking-wider mb-4 flex items-center gap-2">
+                      <span className="text-lg">🎯</span> Common Challenges
+                    </p>
+                    <div className="space-y-2.5">
+                      {selected.challenges?.map((challenge, i) => (
+                        <div key={i} className="flex items-start gap-2.5">
+                          <div className="w-1.5 h-1.5 bg-red-400 rounded-full flex-shrink-0 mt-2"></div>
+                          <span className="text-sm text-[#153230]/80 leading-snug">{challenge}</span>
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-4 mb-6 p-5 bg-gradient-to-r from-[#4D7DA3]/10 via-[#4D7DA3]/5 to-transparent rounded-xl border border-[#4D7DA3]/20">
-                    <div className="text-4xl">{selected.icon}</div>
-                    <div>
-                      <p className="text-xs text-[#153230]/60 font-medium mb-1">Track Record</p>
-                      <p className="text-base font-bold text-[#153230]">{selected.stats}</p>
+                  {/* Resources Section */}
+                  <div className="bg-gradient-to-br from-[#E2F3F2] to-[#E2F3F2]/30 rounded-2xl p-5 mb-5 border border-[#4D7DA3]/20">
+                    <p className="text-sm font-bold text-[#153230]/70 uppercase tracking-wider mb-4 flex items-center gap-2">
+                      <span className="text-lg">📚</span> What You Get
+                    </p>
+                    <div className="space-y-2.5">
+                      {selected.whatYouGet.map((item, i) => (
+                        <div key={i} className="flex items-start gap-2.5">
+                          <div className="w-5 h-5 bg-[#4D7DA3] rounded-md flex items-center justify-center flex-shrink-0 mt-0">
+                            <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                            </svg>
+                          </div>
+                          <span className="text-sm text-[#153230] font-medium">{item}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
 
-                  <button className="w-full bg-gradient-to-r from-[#4D7DA3] to-[#3d6a8a] text-white py-4 rounded-xl font-bold text-base hover:shadow-xl hover:scale-105 transition-all duration-300">
+                  {/* Resources Available */}
+                  <div className="bg-emerald-50/30 rounded-2xl p-5 mb-5 border border-emerald-200/30">
+                    <p className="text-sm font-bold text-[#153230]/70 uppercase tracking-wider mb-4 flex items-center gap-2">
+                      <span className="text-lg">🎓</span> Resources Available
+                    </p>
+                    <div className="space-y-2.5">
+                      {selected.resources?.map((resource, i) => (
+                        <div key={i} className="flex items-start gap-2.5">
+                          <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full flex-shrink-0 mt-2.5"></div>
+                          <span className="text-sm text-[#153230]/80 leading-snug">{resource}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Impact Section */}
+                  <div className="bg-gradient-to-r from-[#4D7DA3] to-[#3d6a8a] rounded-2xl p-5 mb-6 text-white border border-[#4D7DA3]/40">
+                    <p className="text-xs font-bold uppercase tracking-wider mb-2 opacity-90">🚀 Real Impact</p>
+                    <p className="text-base font-bold leading-tight">{selected.impact}</p>
+                  </div>
+
+                  <button 
+                    onClick={() => {
+                      window.location.href = `/blog?persona=${selectedPerson}`;
+                    }}
+                    className="w-full bg-gradient-to-r from-[#4D7DA3] to-[#3d6a8a] text-white py-4 rounded-xl font-bold text-base hover:shadow-xl hover:scale-105 transition-all duration-300"
+                  >
                     {selected.cta} →
                   </button>
                 </motion.div>

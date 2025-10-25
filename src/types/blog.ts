@@ -13,6 +13,12 @@ export interface BlogPost {
   created_at: string;
   updated_at: string;
   published_at?: string;
+  seo?: {
+    meta_description?: string;
+    focus_keyword?: string;
+    og_image?: string;
+  };
+  targetPersonas?: string[]; // e.g., ['p1', 'p2'] for Junior Dev, Senior Engineer
 }
 
 export interface BlogContent {
@@ -28,7 +34,12 @@ export type ContentBlock =
   | WhiteboardBlock
   | ImageBlock
   | QuoteBlock
-  | CodeStepsBlock;
+  | CodeStepsBlock
+  | CalloutBlock
+  | CodeBlock
+  | ButtonBlock
+  | ListBlock
+  | CodePlaygroundBlock;
 
 export interface TextBlock {
   type: 'text';
@@ -100,6 +111,41 @@ export interface CodeStepsBlock {
     description: string;
     code: string;
   }[];
+}
+
+export interface CalloutBlock {
+  type: 'callout';
+  variant: 'info' | 'warning' | 'success' | 'error';
+  title: string;
+  content: string;
+  icon?: string;
+}
+
+export interface CodeBlock {
+  type: 'code-block';
+  title?: string;
+  code: string;
+  language: string;
+  showLineNumbers?: boolean;
+}
+
+export interface ButtonBlock {
+  type: 'button';
+  text: string;
+  action: string;
+  variant: 'primary' | 'secondary' | 'ghost';
+}
+
+export interface ListBlock {
+  type: 'list';
+  items: string[];
+  variant: 'bullet' | 'numbered' | 'checkmark';
+  colored?: boolean;
+}
+
+export interface CodePlaygroundBlock {
+  type: 'code-playground';
+  title?: string;
 }
 
 export interface UploadedFile {
