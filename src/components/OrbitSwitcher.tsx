@@ -242,7 +242,7 @@ export function OrbitSwitcher() {
   ];
 
   return (
-    <div className="rounded-3xl bg-white p-8 shadow-xl border-2 border-[#4D7DA3]/20" style={{ boxShadow: '0 -10px 30px -10px rgba(77, 125, 163, 0.3), 0 10px 30px -10px rgba(0, 0, 0, 0.1)' }}>
+    <div className="rounded-3xl bg-white p-8 shadow-xl border-2 -mt-8 border-[#4D7DA3]/20" style={{ boxShadow: '0 -10px 30px -10px rgba(77, 125, 163, 0.3), 0 10px 30px -10px rgba(0, 0, 0, 0.1)' }}>
       <div className="mb-6 inline-flex rounded-full bg-[#E2F3F2] p-1.5 shadow-inner">
         {(["orbit", "rooms"] as const).map((t) => (
           <button

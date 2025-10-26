@@ -3,6 +3,7 @@ import { TiltCard } from '@/components/TiltCard';
 import { OrbitSwitcher } from '@/components/OrbitSwitcher';
 import { BentoGrid } from '@/components/BentoGrid';
 import { CodePlayground } from '@/components/CodePlayground';
+import RotarySelector from '@/components/RotarySelector';
 import Link from 'next/link';
 
 export default function Home() {
@@ -77,20 +78,7 @@ export default function Home() {
                       <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
                     </button>
                   </div>
-
-                  {/* Key metrics
-                  <div className="flex gap-8 pt-6 border-t border-[#4D7DA3]/10">
-                    {[
-                      { n: "450,000+", l: "Qualified developer reach" },
-                      { n: "200+", l: "Talks, Workshops, & Meetups" },
-                      { n: "22", l: "Brands worked with" }
-                    ].map((x, i) => (
-                      <div key={i}>
-                        <div className="text-3xl font-black text-[#4D7DA3]">{x.n}</div>
-                        <div className="text-xs text-[#153230]/60 font-medium">{x.l}</div>
-                      </div>
-                    ))}
-                  </div> */}
+                  
                 <section aria-label="Impact and Reach" className="mt-10">
                   <div className="-mt-6 grid gap-6">
                     <div>
@@ -131,7 +119,12 @@ export default function Home() {
             </div>
           </section>
 
+
+        <RotarySelector />
+        <ScrollReveal delay={100}>
+          {/* OrbitSwitcher Section - Outside the main card */}
           <OrbitSwitcher />
+        </ScrollReveal>
         </div>
 
         <CodePlayground />
@@ -432,114 +425,7 @@ export default function Home() {
             </h2>
           </section>
 
-          <section className="relative z-[50] bg-white rounded-[32px] mx-4 mt-6 px-6 md:px-12 py-16 shadow-lg border border-[#E2F3F2]">
-            <div className="space-y-6">
-            <ScrollReveal delay={200}>
-              <TiltCard className="bg-[#4D7DA3] rounded-[24px] overflow-hidden shadow-2xl hover:shadow-[0_25px_50px_rgba(77,125,163,0.3)] transition-all duration-500 cursor-pointer">
-                <div className="aspect-[16/9] flex items-center justify-center p-8 md:p-10">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 md:p-8 text-center border border-white/20">
-                    <p className="text-white text-xl md:text-2xl font-black">Commit Your Code 2025</p>
-                  </div>
-                </div>
-                <div className="bg-white p-5 md:p-6">
-                  <div className="flex justify-between items-start mb-3">
-                    <h3 className="text-lg md:text-xl font-black text-[#153230]">TECH CONFERENCE</h3>
-                    <span className="text-base md:text-lg font-bold text-[#4D7DA3]">2025</span>
-                  </div>
-                  <p className="text-[#153230]/70 mb-3 text-sm md:text-base">60 speakers, 3 tracks, highly technical. $30 tickets with 100% proceeds to charity.</p>
-                  <div className="flex gap-2">
-                    <span className="bg-[#4D7DA3] text-white px-3 py-1.5 rounded-full text-xs md:text-sm font-black">CONFERENCE</span>
-                    <span className="bg-[#153230] text-white px-3 py-1.5 rounded-full text-xs md:text-sm font-black">CHARITY</span>
-                  </div>
-                </div>
-              </TiltCard>
-            </ScrollReveal>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              <ScrollReveal delay={300}>
-                <TiltCard className="bg-[#E2F3F2] rounded-[24px] overflow-hidden shadow-2xl hover:shadow-[0_25px_50px_rgba(132,128,62,0.2)] transition-all duration-500 cursor-pointer border border-[#4D7DA3]/20">
-                  <div className="aspect-[4/3] flex items-center justify-center p-8">
-                    <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 text-center border border-[#4D7DA3]/20">
-                      <p className="text-[#153230] text-lg md:text-xl font-black">LinkedIn Mastery</p>
-                    </div>
-                  </div>
-                  <div className="bg-white p-5">
-                    <div className="flex justify-between items-start mb-3">
-                      <h3 className="text-base md:text-lg font-black text-[#153230]">LINKEDIN COURSE</h3>
-                      <span className="text-sm md:text-base font-bold text-[#84803E]">FREE</span>
-                    </div>
-                    <div className="flex gap-2">
-                      <span className="bg-[#84803E] text-white px-3 py-1.5 rounded-full text-xs md:text-sm font-black">EDUCATION</span>
-                      <span className="bg-[#153230] text-white px-3 py-1.5 rounded-full text-xs md:text-sm font-black">CAREER</span>
-                    </div>
-                  </div>
-                </TiltCard>
-              </ScrollReveal>
-
-              <ScrollReveal delay={400}>
-                <TiltCard className="bg-[#84803E] rounded-[24px] overflow-hidden shadow-2xl hover:shadow-[0_25px_50px_rgba(77,125,163,0.3)] transition-all duration-500 cursor-pointer">
-                  <div className="aspect-[4/3] flex items-center justify-center p-8">
-                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/20">
-                      <p className="text-white text-lg md:text-xl font-black">Discord Community</p>
-                    </div>
-                  </div>
-                  <div className="bg-white p-5">
-                    <div className="flex justify-between items-start mb-3">
-                      <h3 className="text-base md:text-lg font-black text-[#153230]">COMMIT YOUR CODE</h3>
-                      <span className="text-sm md:text-base font-bold text-[#4D7DA3]">12K+</span>
-                    </div>
-                    <div className="flex gap-2">
-                      <span className="bg-[#4D7DA3] text-white px-3 py-1.5 rounded-full text-xs md:text-sm font-black">COMMUNITY</span>
-                      <span className="bg-[#153230] text-white px-3 py-1.5 rounded-full text-xs md:text-sm font-black">SUPPORT</span>
-                    </div>
-                  </div>
-                </TiltCard>
-              </ScrollReveal>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              <ScrollReveal delay={500}>
-                <TiltCard className="bg-[#153230] rounded-[24px] overflow-hidden shadow-2xl hover:shadow-[0_25px_50px_rgba(132,128,62,0.2)] transition-all duration-500 cursor-pointer">
-                  <div className="aspect-[4/3] flex items-center justify-center p-8">
-                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/20">
-                      <p className="text-white text-lg md:text-xl font-black">The Programming Podcast</p>
-                    </div>
-                  </div>
-                  <div className="bg-white p-5">
-                    <div className="flex justify-between items-start mb-3">
-                      <h3 className="text-base md:text-lg font-black text-[#153230]">PODCAST</h3>
-                      <span className="text-sm md:text-base font-bold text-[#84803E]">TOP TECH</span>
-                    </div>
-                    <div className="flex gap-2">
-                      <span className="bg-[#84803E] text-white px-3 py-1.5 rounded-full text-xs md:text-sm font-black">PODCAST</span>
-                      <span className="bg-[#153230] text-white px-3 py-1.5 rounded-full text-xs md:text-sm font-black">INTERVIEWS</span>
-                    </div>
-                  </div>
-                </TiltCard>
-              </ScrollReveal>
-
-              <ScrollReveal delay={600}>
-                <TiltCard className="bg-[#d4d0c8] rounded-[24px] overflow-hidden shadow-2xl hover:shadow-[0_25px_50px_rgba(77,125,163,0.3)] transition-all duration-500 cursor-pointer border border-[#4D7DA3]/10">
-                  <div className="aspect-[4/3] flex items-center justify-center p-8">
-                    <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 text-center border border-[#153230]/10">
-                      <p className="text-[#153230] text-lg md:text-xl font-black">LinkedIn Series</p>
-                    </div>
-                  </div>
-                  <div className="bg-white p-5">
-                    <div className="flex justify-between items-start mb-3">
-                      <h3 className="text-base md:text-lg font-black text-[#153230]">OFFICIAL SERIES</h3>
-                      <span className="text-sm md:text-base font-bold text-[#4D7DA3]">VIDEO</span>
-                    </div>
-                    <div className="flex gap-2">
-                      <span className="bg-[#4D7DA3] text-white px-3 py-1.5 rounded-full text-xs md:text-sm font-black">LINKEDIN</span>
-                      <span className="bg-[#153230] text-white px-3 py-1.5 rounded-full text-xs md:text-sm font-black">JOBS</span>
-                    </div>
-                  </div>
-                </TiltCard>
-              </ScrollReveal>
-            </div>
-            </div>
-          </section>
+          
         </div>
       </div>
     </div>

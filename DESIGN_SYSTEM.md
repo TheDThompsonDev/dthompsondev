@@ -49,6 +49,46 @@ Our design system is built around three core colors that represent technical exc
 #14B8A6  /* Teal - Polaroid pins */
 #10B981  /* Emerald - Polaroid pins */
 #F59E0B  /* Amber - Polaroid pins */
+#EF4444  /* Red - Error states, diagrams */
+```
+
+### Code Playground Colors
+```css
+/* Playground UI */
+#9bcdf6  /* Light blue - Playground header/footer background */
+#164063  /* Dark blue - Playground UI text */
+#5a9bd4  /* Medium blue - Active tabs, buttons */
+#3a7fb8  /* Darker blue - Button gradients */
+#e8f4fd  /* Very light blue - Playground panel backgrounds */
+#f8fcfe  /* Near white blue - Alternate panels */
+#f0f8fc  /* Light blue - Output panel */
+
+/* Code Editor */
+#0d1117  /* Dark background - Code blocks and editor background */
+#263238  /* Dark text - Default code text */
+
+/* Syntax Highlighting */
+#6A9955  /* Green - Comments */
+#E65100  /* Orange - Keywords, operators */
+#00838F  /* Teal - Built-ins, functions */
+#7B1FA2  /* Purple - Strings */
+
+/* macOS Window Dots */
+#ff5f57  /* Red dot */
+#febc2e  /* Yellow dot */
+#28c840  /* Green dot */
+```
+
+### Rich Text Editor Colors
+```css
+/* Text Formatting Presets */
+#153230  /* Dark green */
+#4D7DA3  /* Steel blue */
+#10B981  /* Emerald green */
+#EF4444  /* Red */
+#F59E0B  /* Amber */
+#8B5CF6  /* Purple */
+#EC4899  /* Pink */
 ```
 
 ### Gradients
@@ -175,6 +215,36 @@ text-[#153230]/70 hover:text-[#153230] font-semibold transition-colors
 }
 ```
 
+#### Slide Down Notification
+```css
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+/* Used for save notifications in blog editor */
+```
+
+#### Fade In
+```css
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Used for component menus and dialogs */
+```
+
 #### Gradient Text Animation
 ```css
 .gradient-text {
@@ -200,9 +270,9 @@ text-[#153230]/70 hover:text-[#153230] font-semibold transition-colors
 }
 
 .tilt-card:hover {
-  transform: perspective(1000px) 
-    rotateX(var(--rotate-x, 0deg)) 
-    rotateY(var(--rotate-y, 0deg)) 
+  transform: perspective(1000px)
+    rotateX(var(--rotate-x, 0deg))
+    rotateY(var(--rotate-y, 0deg))
     scale(1.02);
 }
 ```
@@ -226,12 +296,44 @@ text-[#153230]/70 hover:text-[#153230] font-semibold transition-colors
 }
 ```
 
+#### ContentEditable Placeholder
+```css
+[contenteditable].empty:before {
+  content: attr(data-placeholder);
+  color: #9CA3AF;
+  pointer-events: none;
+}
+
+[contenteditable]:focus {
+  outline: none;
+}
+/* Provides placeholder text for rich text editor */
+```
+
 ### Transitions
 - **Standard**: `transition-all duration-300`
 - **Smooth**: `transition-all duration-500`
 - **Long**: `transition-all duration-700`
 - **Color**: `transition-colors`
 - **Transform**: `transition-transform`
+
+### Framer Motion Patterns
+```typescript
+// Slide in from right (used in OrbitSwitcher detail panel)
+initial={{ x: "100%" }}
+animate={{ x: 0 }}
+exit={{ x: "100%" }}
+transition={{ type: "spring", stiffness: 300, damping: 30 }}
+
+// Fade with scale (used in mode switching)
+initial={{ opacity: 0, y: 12 }}
+animate={{ opacity: 1, y: 0 }}
+exit={{ opacity: 0, y: -12 }}
+transition={{ duration: 0.3 }}
+
+// Staggered reveals (used in orbit personas)
+transition={{ delay: i * 0.08 }}
+```
 
 ---
 
@@ -319,6 +421,73 @@ flex items-center gap-3
 - CSS custom properties for rotation values
 - Perspective transforms for realistic 3D effect
 
+### OrbitSwitcher
+- Framer Motion powered animations
+- SVG curved connection paths
+- Interactive persona orbits
+- Dual mode display (Orbit/Rooms)
+- Top shadow: `0 -10px 30px -10px rgba(77, 125, 163, 0.3)`
+
+### Blog Editor Components
+
+#### RichTextEditor
+- ContentEditable with syntax parsing
+- Floating formatting toolbar on text selection
+- Markdown-style syntax (`**bold**`, `*italic*`, `__underline__`, `[text](url)`)
+- Inline color picker with 6 preset colors
+- Keyboard shortcuts (Ctrl+B/I/U/K)
+
+#### SlashCommandMenu
+- Type `/` for quick component insertion
+- Fuzzy search filtering
+- Arrow key navigation
+- Keyboard-first workflow
+- Dark highlight on selection (`bg-[#4D7DA3]`)
+
+#### LinkDialog
+- Modal for inserting hyperlinks
+- Auto-adds https:// protocol
+- Clean form design with focus states
+- Keyboard shortcuts (Enter/Esc)
+
+#### CodePlayground
+- Split-pane interactive code editor
+- Live JavaScript execution
+- Syntax highlighting with custom colors
+- Multiple language tabs (TypeScript, CSS, JS)
+- Console output and visual preview modes
+- macOS-style window chrome
+- Line numbers with rainbow colors
+- Fully opaque status bar: `backgroundColor: '#9bcdf6'`
+
+### Blog Content Components
+
+#### CodeMorph
+- Animated code transformations
+- Step-by-step code evolution
+- Syntax highlighting with custom theme
+
+#### InteractiveCode
+- Tabbed code examples
+- Color-coded explanations
+- Dark terminal theme (`bg-[#0d1117]`)
+
+#### AnimatedDiagram
+- Step cards with custom colors and icons
+- Progress indicator
+- Smooth transitions between steps
+
+#### CodeSteps
+- Numbered step walkthrough
+- Code blocks with descriptions
+- Clean card-based layout
+
+#### VirtualWhiteboard
+- HTML5 Canvas drawing
+- 7 color palette
+- Brush size control
+- Clear/download functionality
+
 ---
 
 ## Design Principles
@@ -354,13 +523,86 @@ flex items-center gap-3
 ```
 src/
 ├── app/
-│   ├── globals.css          # Global styles and animations
-│   └── layout.tsx           # Font configuration
+│   ├── globals.css                    # Global styles and animations
+│   ├── layout.tsx                     # Font configuration
+│   ├── page.tsx                       # Homepage
+│   ├── blog/
+│   │   ├── page.tsx                   # Blog listing (with Suspense for useSearchParams)
+│   │   ├── [slug]/page.tsx            # Dynamic blog post pages
+│   │   ├── closures-visualized/       # Example article
+│   │   └── react-hooks-visualized/    # Example article with playground
+│   └── admin/
+│       ├── posts/new/page.tsx         # Blog post editor (rich features)
+│       └── [other admin pages]
 ├── components/
-│   ├── BentoGrid.tsx        # Polaroid gallery component
-│   ├── TiltCard.tsx         # 3D tilt interaction
-│   ├── ScrollReveal.tsx     # Intersection Observer animations
-│   └── [other components]   # Feature-specific components
+│   ├── BentoGrid.tsx                  # Polaroid gallery component
+│   ├── TiltCard.tsx                   # 3D tilt interaction
+│   ├── ScrollReveal.tsx               # Intersection Observer animations
+│   ├── OrbitSwitcher.tsx              # Persona selector with Framer Motion
+│   ├── BlogRenderer.tsx               # Renders all blog content blocks
+│   ├── RichTextEditor.tsx             # Rich text with inline formatting
+│   ├── LinkDialog.tsx                 # Link insertion modal
+│   ├── SlashCommandMenu.tsx           # "/" command component picker
+│   ├── CodePlayground.tsx             # Interactive code editor
+│   ├── CodeMorph.tsx                  # Animated code transitions
+│   ├── InteractiveCode.tsx            # Tabbed code examples
+│   ├── AnimatedDiagram.tsx            # Step-by-step visuals
+│   ├── CodeSteps.tsx                  # Code walkthroughs
+│   ├── VirtualWhiteboard.tsx          # Drawing canvas
+│   ├── FloatingTOC.tsx                # Table of contents
+│   └── ScrollProgress.tsx             # Reading progress bar
+├── hooks/
+│   └── useUndoRedo.ts                 # Undo/redo state management
+├── lib/
+│   ├── components-registry.ts         # Available component types (14 types)
+│   └── component-templates.ts         # Full-page article templates (10 templates)
+└── types/
+    └── blog.ts                        # TypeScript interfaces for blog system
 ```
+
+## Blog Editor System
+
+### Component Registry (14 Types)
+1. **text** - Rich formatted text with inline styles
+2. **heading** - H1/H2/H3 with auto-generated IDs
+3. **code-morph** - Animated code transformations
+4. **interactive-code** - Tabbed examples with explanations
+5. **animated-diagram** - Step-by-step visual diagrams
+6. **code-steps** - Code walkthroughs
+7. **image** - Upload/paste with captions
+8. **quote** - Blockquotes with optional attribution
+9. **callout** - Info boxes (4 variants: info, warning, success, error)
+10. **code-block** - Syntax highlighted code (7 languages)
+11. **button** - Interactive buttons (3 styles)
+12. **list** - Styled lists (bullet, numbered, checkmark)
+13. **code-playground** - Live code execution environment
+14. **whiteboard** - Always included (drawing canvas for readers)
+
+### Article Templates (10 Available)
+**Quick Templates:**
+- 3-Step Tutorial
+- Key Takeaways
+- Before/After Code
+- Interactive Demo
+- Visual Concept
+- Feature Highlight
+- Problem → Solution
+
+**Full-Page Templates:**
+- Complete Tutorial Article (intro, code-morph, playground, patterns, takeaways)
+- Concept Deep Dive (definition, diagrams, playground, use cases, summary)
+- Technology Comparison (side-by-side with playground demos)
+
+### Editor Features
+- **Slash Commands**: Type `/` for instant component insertion
+- **Undo/Redo**: Ctrl+Z/Y with 50-state history
+- **Rich Text**: Inline bold, italic, underline, colors, links
+- **Auto-save**: Every 3 seconds with visual confirmation
+- **Word Count**: Real-time with auto-calculated read time
+- **Drag-and-Drop**: Visual block reordering
+- **Image Paste**: Direct screenshot upload
+- **Preview Mode**: See exactly what readers will see
+- **Focus Mode**: Distraction-free dark theme writing
+- **SEO Fields**: Meta description, keywords, OG image with Google preview
 
 This design system ensures consistency across the DThompsonDev brand while maintaining flexibility for growth and evolution.
