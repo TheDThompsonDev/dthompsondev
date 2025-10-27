@@ -32,8 +32,18 @@ export default async function PodcastPage() {
   let error: string | null = null;
 
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    const res = await fetch(`${baseUrl}/api/podcast.json`, {
+    // Get base URL - ensure it's absolute
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL;
+    
+    if (!baseUrl) {
+      throw new Error('NEXT_PUBLIC_APP_URL environment variable is not configured. Please set it in your Vercel project settings.');
+    }
+    
+    // Ensure the URL is absolute and properly formatted
+    const apiUrl = `${baseUrl}/api/podcast.json`;
+    console.log('Fetching podcast data from:', apiUrl);
+    
+    const res = await fetch(apiUrl, {
       next: { revalidate: 3600 },
     });
     

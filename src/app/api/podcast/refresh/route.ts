@@ -77,6 +77,7 @@ async function saveJSON(key: string, data: unknown) {
         access: 'public',
         contentType: 'application/json',
         addRandomSuffix: false, // Keep the same name for overwriting
+        allowOverwrite: true, // Allow overwriting existing files
       });
       console.log('Blob saved successfully:', blob.url);
       return;
