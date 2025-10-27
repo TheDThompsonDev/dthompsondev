@@ -69,213 +69,255 @@ function escapeHtml(text: string): string {
 }
 
 const defaultExamples = {
-  typescript: `// 🎯 TypeScript Discriminated Unions
-// This shows how TypeScript prevents bugs!
+  typescript: `// 📚 LESSON 1: Understanding Functions & Scope
+// TEACHER: Let's start with the foundation of how functions work
 
-type LoadingState = { status: 'loading' };
-type SuccessState = { status: 'success'; data: string };
-type ErrorState = { status: 'error'; error: Error };
+// ════════════════════════════════════════════════════════════════
+// LEARNING GOAL: Master function basics before moving forward
+// ════════════════════════════════════════════════════════════════
 
-type State = LoadingState | SuccessState | ErrorState;
+console.log("👨‍🏫 Welcome! Let's learn functions step-by-step\\n");
 
-function handleState(state: State) {
-  switch (state.status) {
-    case 'loading':
-      console.log("⏳ Loading...");
-      // TypeScript knows: no 'data' or 'error' here!
-      return "Loading...";
-      
-    case 'success':
-      console.log("✅ Success! Data:", state.data);
-      // TypeScript knows: 'data' exists here!
-      return state.data;
-      
-    case 'error':
-      console.log("❌ Error:", state.error.message);
-      // TypeScript knows: 'error' exists here!
-      return state.error.message;
+// STEP 1: A simple function
+function greet(name) {
+  return "Hello, " + name + "!";
+}
+
+console.log("Step 1 - Basic Function:");
+console.log(greet("Student"));
+console.log("");
+
+// STEP 2: Functions can return other functions (IMPORTANT!)
+function createGreeter(greeting) {
+  // This inner function "remembers" the greeting variable
+  return function(name) {
+    return greeting + ", " + name + "!";
+  };
+}
+
+console.log("Step 2 - Function Returns Function:");
+const casualGreeter = createGreeter("Hey");
+const formalGreeter = createGreeter("Good evening");
+
+console.log(casualGreeter("Danny"));
+console.log(formalGreeter("Mr. Thompson"));
+console.log("");
+
+// TEACHER NOTE: See how each greeter "remembers" its greeting?
+// This is called CLOSURE - we'll explore this more in Lesson 2!
+
+console.log("✅ Lesson 1 Complete!");
+console.log("💡 Key Takeaway: Functions can return functions");
+console.log("🎯 Next: Click Lesson 2 to learn about Closures!");
+console.log("");
+console.log("🔥 CHALLENGE: Try creating a farewell function below:");
+console.log("   function createFarewell(word) { ... }");`,
+
+  css: `// 📚 LESSON 2: Understanding Closures (Real-World Example)
+// TEACHER: Now let's see WHY closures matter in real code
+
+// ════════════════════════════════════════════════════════════════
+// LEARNING GOAL: See how closures solve real problems
+// ════════════════════════════════════════════════════════════════
+
+console.log("👨‍🏫 Lesson 2: Closures in Action\\n");
+
+// REAL-WORLD SCENARIO: Building a shopping cart
+function createCart() {
+  // This variable is PRIVATE - only functions inside can see it
+  let items = [];
+  let total = 0;
+  
+  console.log("🛒 Cart created! (items array is hidden/private)\\n");
+  
+  // Return an object with methods that "close over" items & total
+  return {
+    addItem: function(name, price) {
+      items.push({ name, price });
+      total += price;
+      console.log(\`✅ Added: \${name} - $\${price}\`);
+      console.log(\`   Current total: $\${total}\\n\`);
+    },
+    
+    getTotal: function() {
+      return total;
+    },
+    
+    getItems: function() {
+      return items.length;
+    }
+  };
+}
+
+// TEACHER: Watch what happens when we create TWO separate carts
+const myCart = createCart();
+const yourCart = createCart();
+
+console.log("--- Danny's Cart ---");
+myCart.addItem("JavaScript Book", 29.99);
+myCart.addItem("Coffee Mug", 12.99);
+
+console.log("--- Your Cart ---");
+yourCart.addItem("React Course", 99.99);
+
+console.log("--- Final Totals ---");
+console.log(\`Danny's cart: $\${myCart.getTotal()} (\${myCart.getItems()} items)\`);
+console.log(\`Your cart: $\${yourCart.getTotal()} (\${yourCart.getItems()} items)\`);
+console.log("");
+
+console.log("✅ Lesson 2 Complete!");
+console.log("💡 Key Takeaway: Each cart has its own private data!");
+console.log("🎯 Next: Lesson 3 covers Async/Await patterns");
+console.log("");
+console.log("🔥 CHALLENGE: Add a removeItem() method to the cart!");`,
+
+  sorting: `// 📚 LESSON 3: Async/Await (The Right Way)
+// TEACHER: Let's learn modern JavaScript async patterns
+
+// ════════════════════════════════════════════════════════════════
+// LEARNING GOAL: Write clean async code without callback hell
+// ════════════════════════════════════════════════════════════════
+
+console.log("👨‍🏫 Lesson 3: Mastering Async/Await\\n");
+
+// STEP 1: Simulating API calls (pretend network requests)
+function fetchUserData(userId) {
+  console.log(\`📡 Fetching user \${userId}...\`);
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        id: userId,
+        name: "Danny Thompson",
+        role: "Director of Tech"
+      });
+    }, 1000);
+  });
+}
+
+function fetchUserPosts(userId) {
+  console.log(\`📡 Fetching posts for user \${userId}...\`);
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve([
+        { id: 1, title: "Understanding Closures" },
+        { id: 2, title: "React Hooks Explained" }
+      ]);
+    }, 1000);
+  });
+}
+
+// STEP 2: The OLD way (callback hell - DON'T do this!)
+console.log("❌ OLD WAY (Callback Hell):");
+console.log("   fetchUser(id, (user) => {");
+console.log("     fetchPosts(id, (posts) => {");
+console.log("       // Nested and hard to read!");
+console.log("     });");
+console.log("   });\\n");
+
+// STEP 3: The NEW way (async/await - MUCH cleaner!)
+async function loadUserProfile(userId) {
+  try {
+    console.log("✅ NEW WAY (Async/Await):\\n");
+    
+    const user = await fetchUserData(userId);
+    console.log(\`👤 User loaded: \${user.name}\`);
+    
+    const posts = await fetchUserPosts(userId);
+    console.log(\`📝 Posts loaded: \${posts.length} posts\\n\`);
+    
+    console.log("Full Profile:");
+    console.log(user);
+    console.log("Posts:", posts);
+    
+  } catch (error) {
+    console.log("❌ Error:", error.message);
   }
 }
 
-console.log("🎯 TypeScript Discriminated Unions Demo\\n");
+// Run it!
+loadUserProfile(1);
 
-const loadingState = { status: 'loading' };
-const successState = { status: 'success', data: 'User profile loaded!' };
-const errorState = { status: 'error', error: new Error('Network failure') };
+console.log("");
+console.log("⏳ Watch the async operations happen!");
+console.log("✅ Lesson 3 Complete!");
+console.log("💡 Key Takeaway: async/await makes async code readable");
+console.log("🎯 Next: Lesson 4 shows real API integration!");`,
 
-console.log("Test 1:");
-handleState(loadingState);
+  tree: `// 📚 LESSON 4: Real-World API Integration
+// TEACHER: Now let's put it all together with a real example
 
-console.log("\\nTest 2:");
-handleState(successState);
+// ════════════════════════════════════════════════════════════════
+// LEARNING GOAL: Build a complete feature with error handling
+// ════════════════════════════════════════════════════════════════
 
-console.log("\\nTest 3:");
-handleState(errorState);
+console.log("👨‍🏫 Lesson 4: Production-Ready Code\\n");
 
-console.log("\\n💡 TypeScript prevents accessing wrong properties!");
-console.log("🚀 This pattern is used in React Query, Redux Toolkit, and more!");`,
-
-  css: `// 🎨 Live CSS Animation Demo
-// Edit the styles and see them animate!
-
-document.getElementById('preview').innerHTML = \`
-  <div class="animation-grid">
-    <div class="box bounce">Bounce</div>
-    <div class="box spin">Spin</div>
-    <div class="box pulse">Pulse</div>
-    <div class="box slide">Slide</div>
-  </div>
+// STEP 1: Create a reusable API client with error handling
+class APIClient {
+  constructor(baseURL) {
+    this.baseURL = baseURL;
+    console.log(\`🔧 API Client initialized: \${baseURL}\\n\`);
+  }
   
-  <style>
-    .animation-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      padding: 20px;
-    }
+  async get(endpoint) {
+    console.log(\`📡 GET \${this.baseURL}\${endpoint}\`);
     
-    .box {
-      background: linear-gradient(135deg, #4D7DA3, #84803E);
-      color: white;
-      padding: 30px;
-      border-radius: 12px;
-      font-weight: bold;
-      font-size: 18px;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    
-    .bounce {
-      animation: bounce 1s ease-in-out infinite;
-    }
-    
-    .spin {
-      animation: spin 2s linear infinite;
-    }
-    
-    .pulse {
-      animation: pulse 1.5s ease-in-out infinite;
-    }
-    
-    .slide {
-      animation: slide 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
-    }
-    
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
-    }
-    
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-    
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.7; transform: scale(0.95); }
-    }
-    
-    @keyframes slide {
-      0%, 100% { transform: translateX(0); }
-      50% { transform: translateX(10px); }
-    }
-  </style>
-\`;
-
-console.log("🎨 CSS Animations Running!");
-console.log("✨ Switch to Preview mode to see them!");
-console.log("💡 Try editing the animation properties!");`,
-
-  sorting: `// 🔄 Bubble Sort Visualizer
-function bubbleSort(arr) {
-  const n = arr.length;
-  const steps = [];
-  const copy = [...arr];
-  
-  console.log("🔄 Bubble Sort Visualization\\n");
-  console.log("Initial: [" + copy.join(", ") + "]\\n");
-  
-  for (let i = 0; i < n - 1; i++) {
-    let swapped = false;
-    
-    for (let j = 0; j < n - i - 1; j++) {
-      if (copy[j] > copy[j + 1]) {
-        [copy[j], copy[j + 1]] = [copy[j + 1], copy[j]];
-        swapped = true;
-        
-        console.log(\`Pass \${i + 1}: [\${copy.join(", ")}]\`);
-        console.log(\`  Swapped: \${copy[j]} ↔ \${copy[j + 1]}\`);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      if (endpoint === "/error") {
+        throw new Error("Network timeout");
       }
+      
+      return {
+        success: true,
+        data: { message: "Data fetched successfully" }
+      };
+    } catch (error) {
+      console.log(\`❌ Error: \${error.message}\\n\`);
+      return { success: false, error: error.message };
     }
-    
-    if (!swapped) break;
   }
+}
+
+// STEP 2: Use the client with proper error handling
+async function loadDashboard() {
+  const api = new APIClient("https://api.example.com");
   
-  console.log("\\n✅ Sorted: [" + copy.join(", ") + "]");
-  console.log("\\n💡 Try different arrays!");
-}
-
-bubbleSort([64, 34, 25, 12, 22, 11, 90]);`,
-
-  tree: `// 🌳 Binary Tree Traversal
-class TreeNode {
-  constructor(val) {
-    this.val = val;
-    this.left = null;
-    this.right = null;
+  console.log("--- Loading Dashboard ---\\n");
+  
+  const userResult = await api.get("/user");
+  if (!userResult.success) {
+    console.log("⚠️ Could not load user, using cached data");
+    return;
   }
+  console.log("✅ User data loaded\\n");
+  
+  const postsResult = await api.get("/posts");
+  if (!postsResult.success) {
+    console.log("⚠️ Could not load posts, showing message");
+    return;
+  }
+  console.log("✅ Posts loaded\\n");
+  
+  console.log("🎉 Dashboard ready!\\n");
 }
 
-function buildTree() {
-  const root = new TreeNode(1);
-  root.left = new TreeNode(2);
-  root.right = new TreeNode(3);
-  root.left.left = new TreeNode(4);
-  root.left.right = new TreeNode(5);
-  root.right.left = new TreeNode(6);
-  root.right.right = new TreeNode(7);
-  return root;
-}
+// Run the dashboard loader
+loadDashboard();
 
-function inorder(node, path = []) {
-  if (!node) return path;
-  inorder(node.left, path);
-  path.push(node.val);
-  inorder(node.right, path);
-  return path;
-}
+console.log("--- Try This ---");
+console.log("Change '/posts' to '/error' to see error handling!\\n");
 
-function preorder(node, path = []) {
-  if (!node) return path;
-  path.push(node.val);
-  preorder(node.left, path);
-  preorder(node.right, path);
-  return path;
-}
-
-function postorder(node, path = []) {
-  if (!node) return path;
-  postorder(node.left, path);
-  postorder(node.right, path);
-  path.push(node.val);
-  return path;
-}
-
-const tree = buildTree();
-
-console.log("🌳 Binary Tree Traversals\\n");
-console.log("Tree Structure:");
-console.log("       1");
-console.log("      / \\\\");
-console.log("     2   3");
-console.log("    / \\\\ / \\\\");
-console.log("   4  5 6  7\\n");
-
-console.log("Inorder:   " + inorder(tree));
-console.log("Preorder:  " + preorder(tree));
-console.log("Postorder: " + postorder(tree));
-console.log("\\n✨ Different orders, different uses!");`
+console.log("✅ Lesson 4 Complete!");
+console.log("💡 Key Takeaway: Always handle errors gracefully");
+console.log("🎯 You now understand:");
+console.log("   1. Functions & Scope");
+console.log("   2. Closures & Privacy");
+console.log("   3. Async/Await Patterns");
+console.log("   4. Real-World Error Handling");
+console.log("");
+console.log("🔥 Ready to work 1:1? Book a mentorship session!");`
 };
 
 interface TabConfig {
@@ -288,10 +330,10 @@ interface TabConfig {
 }
 
 const tabs: TabConfig[] = [
-  { key: 'typescript', label: 'TypeScript', icon: '🎯', filename: 'discriminated-unions.ts', language: 'typescript', color: '#3178C6' },
-  { key: 'css', label: 'CSS', icon: '🎨', filename: 'animations.css', language: 'css', color: '#E65100' },
-  { key: 'sorting', label: 'Sorting', icon: '🔄', filename: 'bubbleSort.js', language: 'javascript', color: '#84803E' },
-  { key: 'tree', label: 'Trees', icon: '🌳', filename: 'binaryTree.js', language: 'javascript', color: '#10B981' },
+  { key: 'typescript', label: 'Lesson 1', icon: '📚', filename: 'functions-and-scope.js', language: 'javascript', color: '#3178C6' },
+  { key: 'css', label: 'Lesson 2', icon: '🔒', filename: 'closures-explained.js', language: 'javascript', color: '#E65100' },
+  { key: 'sorting', label: 'Lesson 3', icon: '⚡', filename: 'async-await.js', language: 'javascript', color: '#84803E' },
+  { key: 'tree', label: 'Lesson 4', icon: '🚀', filename: 'real-world-api.js', language: 'javascript', color: '#10B981' },
 ];
 
 export function CodePlayground() {

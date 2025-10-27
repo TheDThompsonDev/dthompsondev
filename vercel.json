@@ -1,0 +1,6 @@
+{
+  "crons": [
+    { "path": "/api/podcast/refresh", "schedule": "0 15 * * 4" },
+    { "path": "/api/podcast/refresh", "schedule": "0 16 * * 4" }
+  ]
+}
