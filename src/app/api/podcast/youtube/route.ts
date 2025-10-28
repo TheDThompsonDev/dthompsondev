@@ -50,78 +50,39 @@ async function fetchWithYouTubeAPI(playlistId: string) {
     const response = await fetch(url, { cache: "no-store" });
     
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error('YouTube API error:', response.status, errorText);
       throw new Error(`YouTube API request failed: ${response.status}`);
     }
 
     const data = await response.json();
-    
-    // Log full API response for debugging
-    console.log('=== YouTube API Response ===');
-    console.log('Total items in this batch:', data.items?.length || 0);
-    console.log('Next page token:', data.nextPageToken || 'none');
-    console.log('\nFirst 3 items (full details):');
-    data.items?.slice(0, 3).forEach((item: any, idx: number) => {
-      console.log(`\n--- Item ${idx + 1} ---`);
-      console.log('Title:', item.snippet?.title);
-      console.log('VideoId (contentDetails):', item.contentDetails?.videoId);
-      console.log('VideoId (resourceId):', item.snippet?.resourceId?.videoId);
-      console.log('Published:', item.snippet?.publishedAt);
-      console.log('Thumbnails available:', Object.keys(item.snippet?.thumbnails || {}));
-      console.log('Full item:', JSON.stringify(item, null, 2));
-    });
-    console.log('========================\n');
-    
-    allVideos.push(...data.items);
+        allVideos.push(...data.items);
     nextPageToken = data.nextPageToken;
   } while (nextPageToken);
 
-  console.log(`Fetched ${allVideos.length} videos from YouTube API`);
-
   // Get video IDs for duration lookup
   const videoIds = allVideos
-    .map((item, idx) => {
+    .map((item) => {
       const videoId = item.contentDetails?.videoId || item.snippet?.resourceId?.videoId;
-      if (!videoId) {
-        console.warn(`Video at index ${idx} has no videoId:`, item.snippet?.title);
-      }
       return videoId;
     })
     .filter(Boolean);
   
   // Fetch durations in batches of 50
-  console.log(`\n=== Fetching Durations for ${videoIds.length} Videos ===`);
   const durations = new Map<string, string>();
   for (let i = 0; i < videoIds.length; i += 50) {
     const batch = videoIds.slice(i, i + 50);
     const durationUrl = `https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${batch.join(',')}&key=${YOUTUBE_API_KEY}`;
     
-    console.log(`Fetching batch ${Math.floor(i / 50) + 1}: ${batch.length} videos`);
     const durationRes = await fetch(durationUrl, { cache: "no-store" });
     if (durationRes.ok) {
       const durationData = await durationRes.json();
-      console.log(`  Received ${durationData.items?.length || 0} duration entries`);
-      
-      if (i === 0 && durationData.items?.length > 0) {
-        console.log('\n  Sample duration data (first item):');
-        console.log('  VideoId:', durationData.items[0].id);
-        console.log('  Raw duration:', durationData.items[0].contentDetails?.duration);
-        console.log('  Parsed duration:', parseDuration(durationData.items[0].contentDetails?.duration));
-      }
       
       durationData.items?.forEach((item: any) => {
         durations.set(item.id, parseDuration(item.contentDetails.duration));
       });
-    } else {
-      console.warn(`  ⚠️  Duration fetch failed: ${durationRes.status}`);
     }
   }
-  console.log(`✅ Fetched durations for ${durations.size} videos`);
-  console.log('==========================================\n');
 
   // Transform to episode format
-  console.log('\n=== Transforming Videos to Episodes ===');
   const episodes = allVideos
     .map((video, idx) => {
       const videoId = video.contentDetails?.videoId || video.snippet?.resourceId?.videoId;
@@ -130,10 +91,6 @@ async function fetchWithYouTubeAPI(playlistId: string) {
       
       // Skip videos with missing or invalid video IDs
       if (!videoId || videoId === 'undefined' || videoId === 'null') {
-        console.warn(`⚠️  Video ${idx + 1}: SKIPPED - Invalid videoId`);
-        console.warn('   Title:', title);
-        console.warn('   contentDetails:', JSON.stringify(video.contentDetails));
-        console.warn('   resourceId:', JSON.stringify(video.snippet?.resourceId));
         return null;
       }
       
@@ -141,10 +98,6 @@ async function fetchWithYouTubeAPI(playlistId: string) {
       if (title === 'Deleted video' || title === 'Private video' || 
           description.includes('This video is unavailable') ||
           description.includes('This video is private')) {
-        console.warn(`⚠️  Video ${idx + 1}: SKIPPED - Deleted/Private video`);
-        console.warn('   VideoId:', videoId);
-        console.warn('   Title:', title);
-        console.warn('   Description:', description.substring(0, 100));
         return null;
       }
       
@@ -176,25 +129,9 @@ async function fetchWithYouTubeAPI(playlistId: string) {
         externalUrl: `https://www.youtube.com/watch?v=${videoId}`,
       };
       
-      if (idx < 3) {
-        console.log(`✅ Video ${idx + 1}: Transformed successfully`);
-        console.log('   VideoId:', videoId);
-        console.log('   Title:', episode.title.substring(0, 60));
-        console.log('   VideoUrl:', episode.videoUrl);
-        console.log('   Thumbnail:', episode.thumbnail.substring(0, 80));
-        console.log('   Duration:', episode.duration || 'N/A');
-      }
-      
       return episode;
     })
     .filter((episode): episode is NonNullable<typeof episode> => episode !== null);
-  
-  const skippedCount = allVideos.length - episodes.length;
-  console.log(`\n✅ Successfully transformed ${episodes.length} videos`);
-  if (skippedCount > 0) {
-    console.log(`⚠️  Skipped ${skippedCount} video(s) (deleted, private, or invalid)`);
-  }
-  console.log('======================================\n');
   
   return episodes;
 }
@@ -223,7 +160,6 @@ async function parseYouTubeRss(xml: string) {
       if (title === 'Deleted video' || title === 'Private video' || 
           description.includes('This video is unavailable') ||
           description.includes('This video is private')) {
-        console.warn('⚠️  Skipping deleted/private video from RSS:', videoId);
         return null;
       }
       
@@ -274,18 +210,14 @@ export async function GET() {
     // Try YouTube API first (gets ALL episodes + durations)
     if (YOUTUBE_API_KEY) {
       try {
-        console.log('Using YouTube Data API v3 for playlist:', playlistId);
         episodes = await fetchWithYouTubeAPI(playlistId);
-        console.log('✅ YouTube API: fetched', episodes.length, 'episodes with durations');
       } catch (apiError: any) {
-        console.error('YouTube API failed, falling back to RSS:', apiError.message);
         // Fall through to RSS fallback
       }
     }
 
     // Fallback to RSS if API failed or not configured (only gets 15 most recent)
     if (episodes.length === 0) {
-      console.log('Using YouTube RSS feed (limited to 15 episodes):', YOUTUBE_RSS_URL);
       const response = await fetch(YOUTUBE_RSS_URL, { cache: "no-store" });
       
       if (!response.ok) {
@@ -295,7 +227,6 @@ export async function GET() {
       const xml = await response.text();
       const data = await parseYouTubeRss(xml);
       episodes = data.episodes;
-      console.log('⚠️  YouTube RSS: fetched', episodes.length, 'episodes (no durations)');
     }
 
     return new NextResponse(JSON.stringify({
@@ -312,7 +243,6 @@ export async function GET() {
     });
 
   } catch (err: any) {
-    console.error('YouTube fetch error:', err);
     return new NextResponse(JSON.stringify({
       ok: false,
       error: err.message,

@@ -5,8 +5,6 @@ export const runtime = "edge";
 const RSS_URL = process.env.PODCAST_RSS_URL || "https://anchor.fm/s/fd45682c/podcast/rss";
 
 async function parseRss(xml: string) {
-  console.log('\n=== Parsing Spotify RSS Feed ===');
-  
   const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].map((m, idx) => {
     const pick = (tag: string) =>
       m[1].match(new RegExp(`<${tag}>([\\s\\S]*?)<\\/${tag}>`, "i"))?.[1].trim() ?? "";
@@ -58,20 +56,8 @@ async function parseRss(xml: string) {
       externalUrl: link
     };
     
-    if (idx < 3) {
-      console.log(`\n✅ Episode ${idx + 1}:`);
-      console.log('   Title:', episode.title.substring(0, 60));
-      console.log('   PublishDate:', episode.publishDate);
-      console.log('   AudioUrl:', episode.audioUrl?.substring(0, 60));
-      console.log('   Duration:', episode.duration || 'N/A');
-      console.log('   Thumbnail:', episode.thumbnail?.substring(0, 60));
-    }
-    
     return episode;
   });
-  
-  console.log(`\n✅ Parsed ${items.length} Spotify episodes`);
-  console.log('==============================\n');
   
   return { episodes: items };
 }
@@ -87,8 +73,6 @@ export async function GET() {
         headers: { "content-type": "application/json; charset=utf-8" },
       });
     }
-
-    console.log('🎵 Fetching Spotify RSS feed:', RSS_URL);
     
     const response = await fetch(RSS_URL, { cache: "no-store" });
     
@@ -113,7 +97,6 @@ export async function GET() {
     });
 
   } catch (err: any) {
-    console.error('Spotify fetch error:', err);
     return new NextResponse(JSON.stringify({
       ok: false,
       error: err.message,

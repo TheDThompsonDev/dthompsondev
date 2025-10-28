@@ -1,55 +1,30 @@
-import React from 'react';
+'use client';
 
-export interface PodcastEpisode {
-  id: string;
-  title: string;
-  description: string;
-  audioUrl?: string;
-  videoUrl?: string;
-  thumbnail?: string;
-  duration?: string;
-  publishDate: string;
-  platform: 'spotify' | 'youtube';
-  externalUrl: string;
-}
+import { useState } from 'react';
+import { formatPodcastDate, getYouTubeThumbnailUrl, hasMultiplePlatforms, getEpisodeLink } from '@/lib/podcast-utils';
+import type { Episode } from '@/types/podcast';
 
 interface PodcastEpisodeProps {
-  episode: PodcastEpisode;
+  episode: Episode;
   index?: number;
 }
 
 export function PodcastEpisode({ episode, index = 0 }: PodcastEpisodeProps) {
-  const [thumbnailUrl, setThumbnailUrl] = React.useState(episode.thumbnail);
-  const [errorCount, setErrorCount] = React.useState(0);
+  const [errorCount, setErrorCount] = useState(0);
   
-  const formatDate = (dateString: string) => {
-    // Use UTC to avoid timezone issues with YYYY-MM-DD dates
-    const date = new Date(dateString + 'T12:00:00Z'); // Add noon UTC to avoid timezone shift
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      timeZone: 'UTC' // Force UTC to match the publishDate
-    });
-  };
+  // Get thumbnail URL with fallback quality
+  const thumbnailUrl = getYouTubeThumbnailUrl(episode.thumbnail, errorCount);
   
   // Handle thumbnail load errors with quality fallbacks
   const handleThumbnailError = () => {
     if (!episode.thumbnail || errorCount >= 2) return;
     
-    // YouTube thumbnail quality levels
-    const qualities = ['hqdefault.jpg', 'mqdefault.jpg', 'default.jpg'];
-    const nextQuality = qualities[errorCount + 1];
-    
-    if (episode.thumbnail.includes('i.ytimg.com') && nextQuality) {
-      const newUrl = episode.thumbnail.replace(/hqdefault\.jpg|mqdefault\.jpg/, nextQuality);
-      console.log(`Thumbnail failed, trying fallback: ${nextQuality}`);
-      setThumbnailUrl(newUrl);
+    if (episode.thumbnail.includes('i.ytimg.com')) {
       setErrorCount(prev => prev + 1);
     }
   };
 
-  const hasMultiplePlatforms = episode.audioUrl && episode.videoUrl;
+  const isMultiPlatform = hasMultiplePlatforms(episode);
 
   return (
     <article className="group relative bg-white border-2 border-[#153230]/10 hover:border-[#4D7DA3] transition-all duration-500 overflow-hidden">
@@ -100,7 +75,7 @@ export function PodcastEpisode({ episode, index = 0 }: PodcastEpisodeProps) {
             {/* Meta info */}
             <div className="flex flex-wrap items-center gap-3 mb-4">
               <time className="text-sm font-mono font-bold text-[#153230] tracking-wider uppercase">
-                {formatDate(episode.publishDate)}
+                {formatPodcastDate(episode.publishDate)}
               </time>
               {episode.duration && (
                 <>
@@ -110,7 +85,7 @@ export function PodcastEpisode({ episode, index = 0 }: PodcastEpisodeProps) {
                   </span>
                 </>
               )}
-              {hasMultiplePlatforms && (
+              {isMultiPlatform && (
                 <>
                   <span className="text-[#153230]/30">•</span>
                   <span className="text-xs font-bold text-[#4D7DA3] uppercase tracking-wider bg-[#4D7DA3]/10 px-2 py-1">

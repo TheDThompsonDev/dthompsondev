@@ -42,7 +42,7 @@ export default async function Home() {
       episodes = data.episodes || [];
     }
   } catch (err) {
-    console.error("Failed to fetch podcast episodes for homepage:", err);
+    // Failed to fetch episodes
   }
   return (
     <div className="min-h-screen bg-[#E2F3F2]">

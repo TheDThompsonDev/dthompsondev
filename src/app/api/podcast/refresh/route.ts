@@ -79,16 +79,13 @@ async function saveJSON(key: string, data: unknown) {
         addRandomSuffix: false, // Keep the same name for overwriting
         allowOverwrite: true, // Allow overwriting existing files
       });
-      console.log('Blob saved successfully:', blob.url);
       return;
     } catch (error) {
-      console.error('Blob save error:', error);
       throw new Error(`Blob save failed: ${error}`);
     }
   }
   
   // Fallback: return only, no persistence
-  console.warn("No Blob configured. Data will not be persisted (local development mode).");
 }
 
 async function fetchYouTubeEpisodes() {
@@ -99,8 +96,6 @@ async function fetchYouTubeEpisodes() {
       : (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000');
     const youtubeUrl = `${baseUrl}/api/podcast/youtube`;
     
-    console.log('Fetching YouTube episodes from:', youtubeUrl);
-    
     const response = await fetch(youtubeUrl, { 
       cache: "no-store",
       // Add timeout to prevent hanging
@@ -108,27 +103,22 @@ async function fetchYouTubeEpisodes() {
     });
     
     if (!response.ok) {
-      console.error('YouTube fetch failed:', response.status);
       return [];
     }
     
     const data = await response.json();
     if (data.ok && data.episodes) {
-      console.log('YouTube episodes fetched:', data.episodes.length);
       return data.episodes;
     }
     
     return [];
   } catch (error) {
-    console.error('YouTube fetch error:', error);
     return [];
   }
 }
 
 export async function GET() {
   try {
-    console.log('Starting podcast refresh (Spotify + YouTube)...');
-    
     // Fetch both sources in parallel for better performance
     const [spotifyResult, youtubeResult] = await Promise.allSettled([
       fetch(RSS_URL, { cache: "no-store" }).then(res => {
@@ -142,13 +132,11 @@ export async function GET() {
     const spotifyData = spotifyResult.status === 'fulfilled' 
       ? spotifyResult.value 
       : { episodes: [] };
-    console.log('Spotify episodes:', spotifyData.episodes.length);
     
     // Handle YouTube result
     const youtubeEpisodes = youtubeResult.status === 'fulfilled'
       ? youtubeResult.value
       : [];
-    console.log('YouTube episodes:', youtubeEpisodes.length);
 
     // Merge episodes from both sources
     const allEpisodes = [...spotifyData.episodes, ...youtubeEpisodes];
@@ -160,8 +148,6 @@ export async function GET() {
       return dateB - dateA;
     });
 
-    console.log('Total episodes after merge:', allEpisodes.length);
-
     const mergedData = {
       episodes: allEpisodes,
       refreshedAt: new Date().toISOString(),
@@ -172,12 +158,9 @@ export async function GET() {
     if (USE_BLOB) {
       try {
         await saveJSON("podcast/latest.json", mergedData);
-        console.log('Data saved successfully to Blob');
       } catch (blobError) {
-        console.error('Blob save failed, but continuing:', blobError);
+        // Blob save failed, but continuing
       }
-    } else {
-      console.log('Skipping Blob storage (not configured)');
     }
 
     return new NextResponse(JSON.stringify({ 
@@ -195,7 +178,6 @@ export async function GET() {
       },
     });
   } catch (err: any) {
-    console.error('Podcast refresh error:', err);
     return new NextResponse(JSON.stringify({ 
       ok: false, 
       error: err.message,

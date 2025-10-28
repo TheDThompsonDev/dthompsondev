@@ -5,8 +5,6 @@ export async function GET() {
   try {
     await prisma.$connect();
     
-    console.log('Database connection successful');
-    
     return NextResponse.json({ 
       success: true, 
       message: 'Database connected. Use "npx prisma db push" to create tables.' 

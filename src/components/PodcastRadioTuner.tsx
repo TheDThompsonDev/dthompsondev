@@ -51,14 +51,6 @@ export function PodcastRadioTuner({ episodes }: PodcastRadioTunerProps) {
     
     const latest = merged.slice(0, 4);
     
-    console.log('Latest 4 episodes for radio:', latest.map(ep => ({
-      title: ep.title.substring(0, 30),
-      thumbnail: ep.thumbnail ? 'YES' : 'NO',
-      platform: ep.platform,
-      hasVideo: !!ep.videoUrl,
-      hasAudio: !!ep.audioUrl
-    })));
-    
     return latest;
   }, [episodes]);
 
@@ -75,16 +67,9 @@ export function PodcastRadioTuner({ episodes }: PodcastRadioTunerProps) {
     setIsMounted(true);
   }, []);
   
-  // Debug: Log when episode changes
+  // Track episode changes
   useEffect(() => {
-    if (selectedEpisode) {
-      console.log('Selected episode changed:', {
-        index: selectedIndex,
-        title: selectedEpisode.title.substring(0, 30),
-        thumbnail: selectedEpisode.thumbnail ? 'YES' : 'NO',
-        thumbnailUrl: selectedEpisode.thumbnail?.substring(0, 50)
-      });
-    }
+    // Episode changed
   }, [selectedIndex, selectedEpisode]);
   
   // Get thumbnail URL with fallback quality levels
@@ -111,7 +96,6 @@ export function PodcastRadioTuner({ episodes }: PodcastRadioTunerProps) {
   const handleThumbnailError = (episodeIndex: number) => {
     const currentErrorLevel = thumbnailError[episodeIndex] || 0;
     if (currentErrorLevel < 2) { // Try up to 3 quality levels
-      console.log(`Thumbnail failed, trying fallback quality for episode ${episodeIndex}`);
       setThumbnailError(prev => ({
         ...prev,
         [episodeIndex]: currentErrorLevel + 1

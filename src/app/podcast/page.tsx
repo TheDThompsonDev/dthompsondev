@@ -2,30 +2,25 @@ import { ScrollReveal } from '@/components/ScrollReveal';
 import { PodcastPageClient } from '@/components/PodcastPageClient';
 import Link from 'next/link';
 import { headers } from 'next/headers';
+import type { Episode, PodcastData } from '@/types/podcast';
+import type { Metadata } from 'next';
 
 export const revalidate = 3600; // Revalidate every hour
 
-type Episode = {
-  id: string;
-  guid: string;
-  title: string;
-  link: string;
-  pubDate: string;
-  publishDate: string;
-  description: string;
-  audioUrl: string;
-  videoUrl?: string;
-  thumbnail: string;
-  duration: string;
-  platform: 'spotify' | 'youtube';
-  externalUrl: string;
-};
-
-type PodcastData = {
-  episodes: Episode[];
-  refreshedAt: string;
-  source: string;
-  error?: string;
+export const metadata: Metadata = {
+  title: 'The Programming Podcast | Danny Thompson & Leon Noel',
+  description: 'Deep dives into programming, technology, and career growth with Leon Noel and Danny Thompson. Real talk about AI, career advice, and everything developers need to thrive.',
+  openGraph: {
+    title: 'The Programming Podcast',
+    description: 'Deep dives into programming, technology, and career growth with Leon Noel and Danny Thompson.',
+    type: 'website',
+    siteName: 'DThompsonDev',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'The Programming Podcast',
+    description: 'Deep dives into programming, technology, and career growth with Leon Noel and Danny Thompson.',
+  },
 };
 
 export default async function PodcastPage() {
@@ -41,7 +36,6 @@ export default async function PodcastPage() {
     
     // Construct API URL
     const apiUrl = `${baseUrl}/api/podcast.json`;
-    console.log('Fetching podcast data from:', apiUrl);
     
     const res = await fetch(apiUrl, {
       next: { revalidate: 3600 },
@@ -58,7 +52,6 @@ export default async function PodcastPage() {
       error = data.error;
     }
   } catch (err) {
-    console.error('Failed to fetch episodes:', err);
     error = err instanceof Error ? err.message : 'Unknown error';
   }
 
