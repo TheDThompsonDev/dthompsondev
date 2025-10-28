@@ -157,11 +157,11 @@ export function PodcastRadioTuner({ episodes }: PodcastRadioTunerProps) {
 
   return (
     <div 
-      className="relative bg-gradient-to-b from-[#1a4039] via-[#153230] to-[#0f2624] rounded-3xl p-4 md:p-6 border-8 border-[#0a1a18] shadow-2xl overflow-hidden"
+      className="relative bg-gradient-to-b from-[#1a4039] via-[#153230] to-[#0f2624] rounded-2xl p-3 md:p-4 border-6 border-[#0a1a18] shadow-2xl overflow-hidden"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
       style={{
-        boxShadow: 'inset 0 1px 2px rgba(255,255,255,0.15), 0 20px 60px rgba(0,0,0,0.6), 0 0 0 2px rgba(77,125,163,0.2)',
+        boxShadow: 'inset 0 1px 2px rgba(255,255,255,0.15), 0 15px 45px rgba(0,0,0,0.6), 0 0 0 2px rgba(77,125,163,0.2)',
       }}
     >
       {/* Plastic/Metal texture overlay */}
@@ -211,26 +211,26 @@ export function PodcastRadioTuner({ episodes }: PodcastRadioTunerProps) {
       ))}
 
       {/* Top Brand Badge - Compact */}
-      <div className="relative z-10 mb-4">
-        <div className="bg-gradient-to-b from-[#0a1a18] to-[#061210] rounded-xl p-3 border-2 border-[#4D7DA3] shadow-xl relative"
+      <div className="relative z-10 mb-3">
+        <div className="bg-gradient-to-b from-[#0a1a18] to-[#061210] rounded-lg p-2 border-2 border-[#4D7DA3] shadow-lg relative"
           style={{
-            boxShadow: 'inset 0 1px 2px rgba(255,255,255,0.1), 0 4px 8px rgba(0,0,0,0.5)',
+            boxShadow: 'inset 0 1px 2px rgba(255,255,255,0.1), 0 3px 6px rgba(0,0,0,0.5)',
           }}
         >
           <div className="flex items-center justify-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-[#5a8db3] to-[#4D7DA3] rounded-lg flex items-center justify-center shadow-lg border-2 border-[#3d6a8a]">
-              <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+            <div className="w-6 h-6 bg-gradient-to-br from-[#5a8db3] to-[#4D7DA3] rounded flex items-center justify-center shadow-md border border-[#3d6a8a]">
+              <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 00-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4V8h16v11zm-8-9.5c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
               </svg>
             </div>
             <div className="text-center">
-              <h2 className="text-lg md:text-xl font-black tracking-wider text-[#E2F3F2]" style={{ 
+              <h2 className="text-sm md:text-base font-black tracking-wider text-[#E2F3F2]" style={{ 
                 fontFamily: 'system-ui, sans-serif',
-                textShadow: '0 2px 4px rgba(0,0,0,0.5)',
+                textShadow: '0 1px 3px rgba(0,0,0,0.5)',
               }}>
                 THE PROGRAMMING PODCAST
               </h2>
-              <p className="text-[8px] uppercase tracking-[0.3em] text-[#4D7DA3] font-bold mt-0.5">
+              <p className="text-[7px] uppercase tracking-[0.25em] text-[#4D7DA3] font-bold mt-0.5">
                 EST. 2023 • WEEKLY BROADCASTS
               </p>
             </div>
@@ -238,7 +238,7 @@ export function PodcastRadioTuner({ episodes }: PodcastRadioTunerProps) {
         </div>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-3">
           {/* Multi-Band Radio Dial Face with Flanking Knobs */}
           <div className="relative">
             <div className="flex items-center gap-4 md:gap-6">
@@ -368,42 +368,48 @@ export function PodcastRadioTuner({ episodes }: PodcastRadioTunerProps) {
             </div>
           </div>
 
-          {/* Display Section - Compact */}
-          <div className="relative bg-black rounded-2xl p-4 md:p-6 border-4 border-[#153230] shadow-2xl overflow-hidden" style={{
-            boxShadow: 'inset 0 4px 10px rgba(0,0,0,0.9), 0 6px 12px rgba(0,0,0,0.6)',
-          }}>
-            {/* Screen glow */}
-            <div className="absolute inset-0 bg-gradient-radial from-[#4D7DA3]/5 via-transparent to-transparent"></div>
+          {/* Display Section - Compact with side constraints to match dial width */}
+          <div className="flex items-center gap-4 md:gap-6">
+            {/* LEFT SPACER - matches knob width */}
+            <div className="flex-shrink-0 w-14 md:w-16"></div>
+            
+            {/* CENTER - Display content */}
+            <div className="flex-1 relative bg-black rounded-xl p-3 md:p-4 border-3 border-[#153230] shadow-xl overflow-hidden" style={{
+              boxShadow: 'inset 0 3px 8px rgba(0,0,0,0.9), 0 4px 8px rgba(0,0,0,0.5)',
+            }}>
+              {/* Screen glow */}
+              <div className="absolute inset-0 bg-gradient-radial from-[#4D7DA3]/5 via-transparent to-transparent"></div>
 
-            <div className="relative z-10">
+              <div className="relative z-10">
               {/* NOW BROADCASTING Indicator - Compact */}
-              <div className="flex items-center gap-2 mb-4 justify-center flex-wrap">
+              <div className="flex items-center gap-2 mb-3 justify-center flex-wrap">
                 <div className="relative flex items-center justify-center">
-                  <div className="w-3 h-3 bg-[#FF0000] rounded-full animate-pulse shadow-lg" style={{
-                    boxShadow: '0 0 10px rgba(255,0,0,0.8), 0 0 20px rgba(255,0,0,0.4)',
+                  <div className="w-2.5 h-2.5 bg-[#FF0000] rounded-full animate-pulse shadow-lg" style={{
+                    boxShadow: '0 0 8px rgba(255,0,0,0.8), 0 0 16px rgba(255,0,0,0.4)',
                   }}></div>
-                  <div className="absolute w-3 h-3 bg-[#FF0000] rounded-full animate-ping"></div>
-                  <div className="absolute w-5 h-5 border-2 border-[#FF0000]/30 rounded-full"></div>
+                  <div className="absolute w-2.5 h-2.5 bg-[#FF0000] rounded-full animate-ping"></div>
+                  <div className="absolute w-4 h-4 border-2 border-[#FF0000]/30 rounded-full"></div>
                 </div>
-                <span className="text-xs font-black tracking-[0.3em] uppercase text-[#E2F3F2]" style={{ 
-                  textShadow: '0 0 8px rgba(77,125,163,0.5)',
+                <span className="text-[10px] font-black tracking-[0.25em] uppercase text-[#E2F3F2]" style={{ 
+                  textShadow: '0 0 6px rgba(77,125,163,0.5)',
                 }}>
                   NOW BROADCASTING
                 </span>
-                <div className="px-2 py-1 bg-[#153230] border-2 border-[#4D7DA3] rounded">
-                  <span className="text-[10px] font-mono font-black tracking-wider uppercase text-[#E2F3F2]">
+                <div className="px-1.5 py-0.5 bg-[#153230] border border-[#4D7DA3] rounded">
+                  <span className="text-[9px] font-mono font-black tracking-wider uppercase text-[#E2F3F2]">
                     EP. #{mergedEpisodes.length - selectedIndex}
                   </span>
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-[220px_1fr] gap-4">
+              {/* Fixed height container to prevent layout shifts */}
+              <div className="grid md:grid-cols-[160px_1fr] gap-3 min-h-[180px] md:min-h-[160px]">
                 {/* Episode Thumbnail Display */}
-                <div className="relative">
-                  <div className="bg-[#0a1a18] p-3 rounded-xl border-3 border-[#4D7DA3] shadow-2xl relative" style={{
-                    boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.8), 0 4px 8px rgba(0,0,0,0.5)',
+                <div className="relative h-fit">
+                  <div className="bg-[#0a1a18] p-2 rounded-lg border-2 border-[#4D7DA3] shadow-xl relative" style={{
+                    boxShadow: 'inset 0 2px 6px rgba(0,0,0,0.8), 0 3px 6px rgba(0,0,0,0.4)',
                   }}>
-                    <div className="relative w-full aspect-square rounded-lg overflow-hidden bg-black shadow-inner border border-[#153230]" key={`thumbnail-${selectedIndex}`}>
+                    <div className="relative w-full aspect-square rounded overflow-hidden bg-black shadow-inner border border-[#153230]" key={`thumbnail-${selectedIndex}`}>
                       {selectedEpisode && getThumbnailUrl(selectedEpisode.thumbnail, selectedIndex) ? (
                         <>
                           <img
@@ -430,79 +436,82 @@ export function PodcastRadioTuner({ episodes }: PodcastRadioTunerProps) {
                     </div>
                     
                     {/* Platform indicator bulbs */}
-                    <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 flex gap-3">
+                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 flex gap-2">
                       {selectedEpisode.audioUrl && (
                         <div className="relative">
-                          <div className="w-11 h-11 bg-gradient-to-b from-[#1DB954] to-[#127a3a] rounded-full flex items-center justify-center shadow-2xl border-3 border-[#5c3d2e] animate-pulse" style={{
-                            boxShadow: '0 4px 12px rgba(29,185,84,0.6), inset 0 2px 4px rgba(255,255,255,0.3)',
+                          <div className="w-8 h-8 bg-gradient-to-b from-[#1DB954] to-[#127a3a] rounded-full flex items-center justify-center shadow-xl border-2 border-[#5c3d2e] animate-pulse" style={{
+                            boxShadow: '0 3px 10px rgba(29,185,84,0.6), inset 0 1px 3px rgba(255,255,255,0.3)',
                             animationDuration: '2s',
                           }}>
-                            <svg className="w-5 h-5 text-white drop-shadow-xl" viewBox="0 0 24 24" fill="currentColor">
+                            <svg className="w-4 h-4 text-white drop-shadow-lg" viewBox="0 0 24 24" fill="currentColor">
                               <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/>
                             </svg>
                           </div>
-                          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-6 h-2 bg-[#1DB954]/40 blur-sm"></div>
+                          <div className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-5 h-1.5 bg-[#1DB954]/40 blur-sm"></div>
                         </div>
                       )}
                       {selectedEpisode.videoUrl && (
                         <div className="relative">
-                          <div className="w-11 h-11 bg-gradient-to-b from-[#FF0000] to-[#b30000] rounded-full flex items-center justify-center shadow-2xl border-3 border-[#5c3d2e] animate-pulse" style={{
-                            boxShadow: '0 4px 12px rgba(255,0,0,0.6), inset 0 2px 4px rgba(255,255,255,0.3)',
+                          <div className="w-8 h-8 bg-gradient-to-b from-[#FF0000] to-[#b30000] rounded-full flex items-center justify-center shadow-xl border-2 border-[#5c3d2e] animate-pulse" style={{
+                            boxShadow: '0 3px 10px rgba(255,0,0,0.6), inset 0 1px 3px rgba(255,255,255,0.3)',
                             animationDuration: '2s',
                             animationDelay: '0.5s',
                           }}>
-                            <svg className="w-5 h-5 text-white drop-shadow-xl" viewBox="0 0 24 24" fill="currentColor">
+                            <svg className="w-4 h-4 text-white drop-shadow-lg" viewBox="0 0 24 24" fill="currentColor">
                               <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                             </svg>
                           </div>
-                          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-6 h-2 bg-[#FF0000]/40 blur-sm"></div>
+                          <div className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-5 h-1.5 bg-[#FF0000]/40 blur-sm"></div>
                         </div>
                       )}
                     </div>
                   </div>
                 </div>
 
-                {/* Episode Details */}
-                <div className="flex flex-col justify-between">
-                  <div>
-                    <div className="flex flex-wrap items-center gap-3 mb-3">
-                      <span className="text-xs font-mono font-bold text-[#4D7DA3] tracking-wider">
+                {/* Episode Details - Fixed height layout */}
+                <div className="flex flex-col justify-between min-h-[160px]">
+                  <div className="flex-1">
+                    {/* Metadata row - fixed height */}
+                    <div className="flex flex-wrap items-center gap-2 mb-2 h-5">
+                      <span className="text-[10px] font-mono font-bold text-[#4D7DA3] tracking-wide">
                         {formatDate(selectedEpisode.publishDate)}
                       </span>
                       {selectedEpisode.duration && (
                         <>
                           <span className="text-[#4D7DA3]/40">●</span>
-                          <span className="text-xs font-mono font-bold text-[#E2F3F2]/80 tracking-wider">
+                          <span className="text-[10px] font-mono font-bold text-[#E2F3F2]/80 tracking-wide">
                             {selectedEpisode.duration}
                           </span>
                         </>
                       )}
                     </div>
 
-                    <h3 className="text-2xl md:text-3xl font-black text-[#E2F3F2] mb-4 leading-tight" style={{ 
-                      textShadow: '0 2px 4px rgba(0,0,0,0.8)',
+                    {/* Title - fixed height for up to 2 lines */}
+                    <h3 className="text-base md:text-lg font-black text-[#E2F3F2] mb-2 leading-snug line-clamp-2 h-[42px] md:h-[48px] overflow-hidden" style={{ 
+                      textShadow: '0 1px 3px rgba(0,0,0,0.8)',
                     }}>
                       {selectedEpisode.title}
                     </h3>
                     
-                    <p className="text-sm md:text-base text-[#E2F3F2]/70 leading-relaxed line-clamp-3 mb-6">
+                    {/* Description - fixed height for 2 lines */}
+                    <p className="text-xs text-[#E2F3F2]/70 leading-relaxed line-clamp-2 mb-3 h-[36px] overflow-hidden">
                       {selectedEpisode.description}
                     </p>
                   </div>
 
-                  {/* Platform buttons with retro style */}
-                  <div className="flex flex-wrap gap-3">
+                  {/* Platform buttons with retro style - fixed at bottom */}
+                  <div className="flex gap-2">
                     {selectedEpisode.audioUrl && (
                       <a
                         href={selectedEpisode.audioUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group/sp relative flex items-center gap-2 bg-gradient-to-b from-[#1ed760] to-[#1DB954] hover:from-[#1DB954] hover:to-[#158c3e] text-white px-6 py-4 font-black text-xs uppercase tracking-[0.25em] transition-all duration-300 shadow-xl border-2 border-[#127a3a] hover:-translate-y-1 overflow-hidden"
+                        className="group/sp relative flex items-center gap-1.5 bg-gradient-to-b from-[#1ed760] to-[#1DB954] hover:from-[#1DB954] hover:to-[#158c3e] text-white px-3 py-2 font-black text-[10px] uppercase tracking-wider transition-all duration-300 shadow-lg border-2 border-[#127a3a] hover:-translate-y-0.5 overflow-hidden"
                         style={{
-                          boxShadow: '0 4px 8px rgba(29,185,84,0.4), inset 0 1px 2px rgba(255,255,255,0.3)',
+                          boxShadow: '0 3px 6px rgba(29,185,84,0.4), inset 0 1px 2px rgba(255,255,255,0.3)',
                         }}
                       >
-                        <svg className="w-5 h-5 relative z-10" viewBox="0 0 24 24" fill="currentColor">
+                        <svg className="w-3.5 h-3.5 relative z-10" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/>
                         </svg>
                         <span className="relative z-10">SPOTIFY</span>
@@ -515,12 +524,12 @@ export function PodcastRadioTuner({ episodes }: PodcastRadioTunerProps) {
                         href={selectedEpisode.videoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group/yt relative flex items-center gap-2 bg-gradient-to-b from-[#ff3333] to-[#FF0000] hover:from-[#FF0000] hover:to-[#cc0000] text-white px-6 py-4 font-black text-xs uppercase tracking-[0.25em] transition-all duration-300 shadow-xl border-2 border-[#b30000] hover:-translate-y-1 overflow-hidden"
+                        className="group/yt relative flex items-center gap-1.5 bg-gradient-to-b from-[#ff3333] to-[#FF0000] hover:from-[#FF0000] hover:to-[#cc0000] text-white px-3 py-2 font-black text-[10px] uppercase tracking-wider transition-all duration-300 shadow-lg border-2 border-[#b30000] hover:-translate-y-0.5 overflow-hidden"
                         style={{
-                          boxShadow: '0 4px 8px rgba(255,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.3)',
+                          boxShadow: '0 3px 6px rgba(255,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.3)',
                         }}
                       >
-                        <svg className="w-5 h-5 relative z-10" viewBox="0 0 24 24" fill="currentColor">
+                        <svg className="w-3.5 h-3.5 relative z-10" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                         </svg>
                         <span className="relative z-10">YOUTUBE</span>
@@ -530,7 +539,11 @@ export function PodcastRadioTuner({ episodes }: PodcastRadioTunerProps) {
                   </div>
                 </div>
               </div>
+              </div>
             </div>
+            
+            {/* RIGHT SPACER - matches knob width */}
+            <div className="flex-shrink-0 w-14 md:w-16"></div>
           </div>
 
           {/* SPEAKER GRILLE - Compact */}
