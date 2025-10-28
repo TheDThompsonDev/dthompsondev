@@ -26,43 +26,55 @@ interface PodcastPageClientProps {
 }
 
 export function PodcastPageClient({ episodes, error }: PodcastPageClientProps) {
-  // Merge episodes by publish date - same date = same episode on different platforms
+  // Merge episodes by order/index - YouTube and Spotify episodes are now perfectly aligned after filtering deleted videos
   const mergedEpisodes = useMemo(() => {
-    const dateMap = new Map<string, Episode>();
+    // Separate YouTube and Spotify episodes
+    const youtubeEpisodes = episodes.filter(ep => ep.platform === 'youtube');
+    const spotifyEpisodes = episodes.filter(ep => ep.platform === 'spotify');
     
-    episodes.forEach(episode => {
-      // Use just the date (YYYY-MM-DD) for comparison
-      const dateKey = episode.publishDate; // Already in YYYY-MM-DD format
+    console.log(`Found ${youtubeEpisodes.length} YouTube and ${spotifyEpisodes.length} Spotify episodes`);
+    
+    // Since they're now perfectly aligned after filtering deleted videos,
+    // we can merge them by index (order)
+    const merged: Episode[] = [];
+    const maxLength = Math.max(youtubeEpisodes.length, spotifyEpisodes.length);
+    
+    for (let i = 0; i < maxLength; i++) {
+      const youtube = youtubeEpisodes[i];
+      const spotify = spotifyEpisodes[i];
       
-      const existing = dateMap.get(dateKey);
-      if (existing) {
-        // Merge platform links if we find a match on the same date
-        if (episode.platform === 'youtube') {
-          existing.videoUrl = episode.videoUrl;
-          // Keep the longer/better title
-          if (episode.title.length > existing.title.length) {
-            existing.title = episode.title;
-          }
-        } else if (episode.platform === 'spotify') {
-          existing.audioUrl = episode.audioUrl;
-          // Keep Spotify as primary if it exists
-          if (!existing.audioUrl) {
-            existing.title = episode.title;
-            existing.description = episode.description;
-          }
-        }
-      } else {
-        // Add new episode
-        dateMap.set(dateKey, { ...episode });
+      if (youtube && spotify) {
+        // Both exist - merge them, prioritizing YouTube thumbnail and Spotify metadata
+        merged.push({
+          ...spotify, // Use Spotify as base (title, description, audioUrl)
+          videoUrl: youtube.videoUrl,
+          thumbnail: youtube.thumbnail, // Prioritize YouTube thumbnail
+          duration: youtube.duration || spotify.duration,
+          externalUrl: youtube.videoUrl || youtube.externalUrl,
+        });
+        console.log(`Merged by index ${i}: "${spotify.title.substring(0, 40)}"`);
+      } else if (youtube) {
+        // Only YouTube exists
+        merged.push(youtube);
+        console.log(`YouTube only at index ${i}: "${youtube.title.substring(0, 40)}"`);
+      } else if (spotify) {
+        // Only Spotify exists
+        merged.push(spotify);
+        console.log(`Spotify only at index ${i}: "${spotify.title.substring(0, 40)}"`);
       }
-    });
+    }
     
-    // Sort by date, newest first
-    return Array.from(dateMap.values()).sort((a, b) => {
-      const dateA = new Date(a.pubDate).getTime();
-      const dateB = new Date(b.pubDate).getTime();
-      return dateB - dateA;
-    });
+    console.log('Top 3 merged episodes:', merged.slice(0, 3).map((ep, idx) => ({
+      index: idx + 1,
+      title: ep.title.substring(0, 40),
+      platform: ep.platform,
+      hasAudio: !!ep.audioUrl,
+      hasVideo: !!ep.videoUrl,
+      videoUrl: ep.videoUrl?.substring(0, 60),
+      externalUrl: ep.externalUrl?.substring(0, 60),
+    })));
+    
+    return merged;
   }, [episodes]);
 
   return (
@@ -82,7 +94,11 @@ export function PodcastPageClient({ episodes, error }: PodcastPageClientProps) {
         <div className="grid grid-cols-1 gap-8">
           {mergedEpisodes.map((episode, index) => (
             <ScrollReveal key={episode.id} delay={index * 50}>
-              <PodcastEpisode episode={episode as PodcastEpisodeType} index={index} />
+              <PodcastEpisode 
+                episode={episode as PodcastEpisodeType}
+                // Reverse numbering: Episode 1 = oldest, highest number = newest
+                index={mergedEpisodes.length - index - 1} 
+              />
             </ScrollReveal>
           ))}
         </div>

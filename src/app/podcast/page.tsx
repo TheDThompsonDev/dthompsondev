@@ -1,6 +1,7 @@
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { PodcastPageClient } from '@/components/PodcastPageClient';
 import Link from 'next/link';
+import { headers } from 'next/headers';
 
 export const revalidate = 3600; // Revalidate every hour
 
@@ -32,14 +33,13 @@ export default async function PodcastPage() {
   let error: string | null = null;
 
   try {
-    // Get base URL - ensure it's absolute
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL;
+    // Dynamically get the current host and protocol
+    const headersList = await headers();
+    const host = headersList.get('host') || 'localhost:3000';
+    const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+    const baseUrl = `${protocol}://${host}`;
     
-    if (!baseUrl) {
-      throw new Error('NEXT_PUBLIC_APP_URL environment variable is not configured. Please set it in your Vercel project settings.');
-    }
-    
-    // Ensure the URL is absolute and properly formatted
+    // Construct API URL
     const apiUrl = `${baseUrl}/api/podcast.json`;
     console.log('Fetching podcast data from:', apiUrl);
     

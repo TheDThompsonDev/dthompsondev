@@ -1,3 +1,5 @@
+import React from 'react';
+
 export interface PodcastEpisode {
   id: string;
   title: string;
@@ -17,6 +19,9 @@ interface PodcastEpisodeProps {
 }
 
 export function PodcastEpisode({ episode, index = 0 }: PodcastEpisodeProps) {
+  const [thumbnailUrl, setThumbnailUrl] = React.useState(episode.thumbnail);
+  const [errorCount, setErrorCount] = React.useState(0);
+  
   const formatDate = (dateString: string) => {
     // Use UTC to avoid timezone issues with YYYY-MM-DD dates
     const date = new Date(dateString + 'T12:00:00Z'); // Add noon UTC to avoid timezone shift
@@ -26,6 +31,22 @@ export function PodcastEpisode({ episode, index = 0 }: PodcastEpisodeProps) {
       day: 'numeric',
       timeZone: 'UTC' // Force UTC to match the publishDate
     });
+  };
+  
+  // Handle thumbnail load errors with quality fallbacks
+  const handleThumbnailError = () => {
+    if (!episode.thumbnail || errorCount >= 2) return;
+    
+    // YouTube thumbnail quality levels
+    const qualities = ['hqdefault.jpg', 'mqdefault.jpg', 'default.jpg'];
+    const nextQuality = qualities[errorCount + 1];
+    
+    if (episode.thumbnail.includes('i.ytimg.com') && nextQuality) {
+      const newUrl = episode.thumbnail.replace(/hqdefault\.jpg|mqdefault\.jpg/, nextQuality);
+      console.log(`Thumbnail failed, trying fallback: ${nextQuality}`);
+      setThumbnailUrl(newUrl);
+      setErrorCount(prev => prev + 1);
+    }
   };
 
   const hasMultiplePlatforms = episode.audioUrl && episode.videoUrl;
@@ -40,11 +61,13 @@ export function PodcastEpisode({ episode, index = 0 }: PodcastEpisodeProps) {
           {/* Thumbnail with play overlay */}
           <div className="shrink-0 relative">
             <div className="w-full lg:w-72 h-48 lg:h-48 bg-[#153230] overflow-hidden relative">
-              {episode.thumbnail ? (
+              {thumbnailUrl ? (
                 <img 
-                  src={episode.thumbnail} 
+                  key={`${episode.id}-${errorCount}`}
+                  src={thumbnailUrl} 
                   alt={episode.title}
                   className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                  onError={handleThumbnailError}
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">

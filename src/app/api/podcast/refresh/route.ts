@@ -93,12 +93,20 @@ async function saveJSON(key: string, data: unknown) {
 
 async function fetchYouTubeEpisodes() {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    // Auto-detect environment: Vercel production, preview, or local
+    const baseUrl = process.env.VERCEL_URL 
+      ? `https://${process.env.VERCEL_URL}` 
+      : (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000');
     const youtubeUrl = `${baseUrl}/api/podcast/youtube`;
     
     console.log('Fetching YouTube episodes from:', youtubeUrl);
     
-    const response = await fetch(youtubeUrl, { cache: "no-store" });
+    const response = await fetch(youtubeUrl, { 
+      cache: "no-store",
+      // Add timeout to prevent hanging
+      signal: AbortSignal.timeout(10000) // 10 second timeout
+    });
+    
     if (!response.ok) {
       console.error('YouTube fetch failed:', response.status);
       return [];
@@ -121,19 +129,26 @@ export async function GET() {
   try {
     console.log('Starting podcast refresh (Spotify + YouTube)...');
     
-    // Fetch Spotify episodes
-    const rssRes = await fetch(RSS_URL, { cache: "no-store" });
-    if (!rssRes.ok) throw new Error(`RSS fetch failed: ${rssRes.status}`);
+    // Fetch both sources in parallel for better performance
+    const [spotifyResult, youtubeResult] = await Promise.allSettled([
+      fetch(RSS_URL, { cache: "no-store" }).then(res => {
+        if (!res.ok) throw new Error(`RSS fetch failed: ${res.status}`);
+        return res.text();
+      }).then(parseRss),
+      fetchYouTubeEpisodes()
+    ]);
     
-    const xml = await rssRes.text();
-    console.log('Spotify RSS feed fetched, length:', xml.length);
+    // Handle Spotify result
+    const spotifyData = spotifyResult.status === 'fulfilled' 
+      ? spotifyResult.value 
+      : { episodes: [] };
+    console.log('Spotify episodes:', spotifyData.episodes.length);
     
-    const spotifyData = await parseRss(xml);
-    console.log('Spotify RSS parsed, episodes found:', spotifyData.episodes.length);
-
-    // Fetch YouTube episodes
-    const youtubeEpisodes = await fetchYouTubeEpisodes();
-    console.log('YouTube episodes fetched:', youtubeEpisodes.length);
+    // Handle YouTube result
+    const youtubeEpisodes = youtubeResult.status === 'fulfilled'
+      ? youtubeResult.value
+      : [];
+    console.log('YouTube episodes:', youtubeEpisodes.length);
 
     // Merge episodes from both sources
     const allEpisodes = [...spotifyData.episodes, ...youtubeEpisodes];

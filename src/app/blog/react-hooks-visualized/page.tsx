@@ -9,6 +9,7 @@ import { CodeMorph } from '@/components/CodeMorph';
 import { FloatingTOC } from '@/components/FloatingTOC';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { CodePlayground } from '@/components/CodePlayground';
 
 export default function ReactHooksVisualizedPost() {
   const [count, setCount] = useState(0);
@@ -164,14 +165,14 @@ increment();`,
   ];
 
   return (
-  <>
-    <ScrollProgress />
-    <FloatingTOC items={tocItems} />
-      
+    <>
+      <ScrollProgress />
+      <FloatingTOC items={tocItems} />
+
       <div className="min-h-screen bg-[#E2F3F2]">
         <div className="max-w-[1400px] mx-auto">
           <div className="bg-white rounded-[32px] shadow-xl m-4 border border-[#4D7DA3]/10">
-            
+
             <header className="px-8 md:px-16 py-6 flex justify-between items-center border-b border-[#4D7DA3]/10">
               <Link href="/blog" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
                 <div className="w-10 h-10 bg-[#153230] rounded-xl flex items-center justify-center text-white text-lg font-bold">
@@ -195,12 +196,12 @@ increment();`,
                     </span>
                     <span className="text-[#153230]/60 text-sm">March 15, 2025 • 12 min read</span>
                   </div>
-                  
+
                   <h1 className="text-5xl md:text-6xl font-bold text-[#153230] leading-[1.1] mb-6">
                     React Hooks,<br />
                     <span className="text-[#4D7DA3]">Visualized</span>
                   </h1>
-                  
+
                   <p className="text-xl text-[#153230]/70 leading-relaxed">
                     Hooks fundamentally changed how we write React components. Let's explore how they work through interactive examples and visual diagrams.
                   </p>
@@ -215,7 +216,7 @@ increment();`,
                   <p className="text-[#153230]/80 leading-relaxed mb-6">
                     Hooks are functions that let you "hook into" React state and lifecycle features from function components. Before Hooks, you could only use state and lifecycle methods in class components. Now, you can use them in function components too!
                   </p>
-                  
+
                   <div className="bg-blue-50 rounded-2xl p-6 border-l-4 border-[#4D7DA3] my-8">
                     <p className="text-[#153230] font-semibold mb-2 flex items-center gap-2">
                       <span className="text-2xl">💡</span>
@@ -268,6 +269,9 @@ increment();`,
                 <InteractiveCode examples={useStateExamples} title="useState Patterns" />
               </ScrollReveal>
 
+              <ScrollReveal delay={600}>
+                <CodePlayground />
+              </ScrollReveal>
               <ScrollReveal delay={500}>
                 <h2 className="text-3xl font-bold text-[#153230] mb-6 mt-16">
                   useEffect: Side Effects
@@ -278,10 +282,10 @@ increment();`,
               </ScrollReveal>
 
               <ScrollReveal delay={700}>
-                <AnimatedDiagram 
+                <AnimatedDiagram
                   title="The useEffect Lifecycle"
                   steps={useEffectSteps}
-                  
+
                 />
               </ScrollReveal>
 
@@ -290,7 +294,7 @@ increment();`,
                   <h3 className="text-2xl font-bold text-[#153230] mb-6">
                     Common useEffect Patterns
                   </h3>
-                  
+
                   <div className="space-y-8">
                     <div className="border border-gray-200 rounded-lg overflow-hidden">
                       <div className="bg-gray-50 px-6 py-3 border-b border-gray-200 flex items-center gap-3">
@@ -365,10 +369,10 @@ increment();`,
               </ScrollReveal>
 
               <ScrollReveal delay={1100}>
-                <AnimatedDiagram 
+                <AnimatedDiagram
                   title="Rules of Hooks"
                   steps={hookRulesSteps}
-                  
+
                 />
               </ScrollReveal>
 
@@ -380,7 +384,7 @@ increment();`,
                   <p className="text-[#153230]/80 leading-relaxed mb-6">
                     Custom Hooks let you extract component logic into reusable functions. They're just JavaScript functions that can call other Hooks.
                   </p>
-                  
+
                   <div className="border border-gray-200 rounded-lg overflow-hidden">
                     <div className="bg-gray-50 px-6 py-3 border-b border-gray-200 flex items-center gap-3">
                       <div className="w-2 h-2 rounded-lg bg-purple-500"></div>
@@ -459,7 +463,7 @@ function App() {
               <ScrollReveal delay={1400}>
                 <div className="mt-16 pt-8 border-t border-[#4D7DA3]/20">
                   <div className="flex items-center justify-between">
-                    <Link 
+                    <Link
                       href="/blog"
                       className="text-[#4D7DA3] hover:text-[#153230] font-bold flex items-center gap-2 transition-colors"
                     >
