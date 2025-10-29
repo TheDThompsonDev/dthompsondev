@@ -1064,3 +1064,53 @@ button:focus-visible {
   transform-style: preserve-3d;
   backface-visibility: hidden;
 }
+
+/* Mobile Bottom Navigation Styles */
+@supports (padding: max(0px)) {
+  .mobile-nav-safe-area {
+    padding-bottom: max(env(safe-area-inset-bottom), 20px);
+  }
+}
+
+/* Smooth scroll behavior for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Mobile hero section improvements */
+@media (max-width: 1024px) {
+  body {
+    overscroll-behavior-y: none;
+  }
+}
+
+/* Bottom nav animation */
+@keyframes slideUpNav {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+nav[class*="fixed bottom-0"] {
+  animation: slideUpNav 0.3s ease-out;
+}
+
+/* Mobile BentoGrid touch optimizations */
+@media (max-width: 1024px) {
+  /* Improve touch targets for mobile grid */
+  .grid-cols-3 > div {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Smooth transitions for grid items */
+  .grid-cols-3 img {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+}

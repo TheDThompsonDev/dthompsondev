@@ -6,6 +6,7 @@ import RotarySelector from "@/components/RotarySelector";
 import { PodcastRadioTuner } from "@/components/PodcastRadioTuner";
 import { PodcastRadioSkeleton } from "@/components/PodcastSkeleton";
 import { PodcastErrorBoundary } from "@/components/PodcastErrorBoundary";
+import BottomNav from "@/components/BottomNav";
 import Link from "next/link";
 import { headers } from "next/headers";
 import { Suspense } from "react";
@@ -48,19 +49,20 @@ export default async function Home() {
     // Failed to fetch episodes
   }
   return (
-    <div className="min-h-screen bg-[#E2F3F2]">
-      <div className="max-w-[1400px] mx-auto">
+    <>
+      <div className="min-h-screen bg-[#E2F3F2] pb-20 lg:pb-0">
+        <div className="max-w-[1400px] mx-auto">
         <div className="bg-white rounded-[32px] shadow-xl m-4 overflow-hidden border border-[#4D7DA3]/10">
           <header className="px-6 md:px-16 py-6 md:py-8">
-            <div className="flex items-center justify-between gap-8">
+            <div className="flex items-center justify-between gap-4 md:gap-8">
               <Link
                 href="/"
                 className="flex items-center gap-3 hover:opacity-80 transition-opacity"
               >
-                <div className="w-12 h-12 bg-[#153230] rounded-2xl flex items-center justify-center text-white text-2xl font-bold">
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-[#153230] rounded-2xl flex items-center justify-center text-white text-xl md:text-2xl font-bold">
                   DT
                 </div>
-                <span className="text-xl font-bold tracking-tight text-[#153230] hidden sm:block">
+                <span className="text-lg md:text-xl font-bold tracking-tight text-[#153230] hidden sm:block">
                   DTHOMPSONDEV
                 </span>
               </Link>
@@ -98,30 +100,30 @@ export default async function Home() {
                 </Link>
               </nav>
 
-              <button className="bg-[#153230] text-white px-6 md:px-8 py-3 md:py-4 rounded-full hover:bg-[#4D7DA3] hover:scale-105 transition-all duration-300 font-semibold text-sm md:text-base whitespace-nowrap">
+              <button className="hidden lg:flex bg-[#153230] text-white px-6 md:px-8 py-3 md:py-4 rounded-full hover:bg-[#4D7DA3] hover:scale-105 transition-all duration-300 font-semibold text-sm md:text-base whitespace-nowrap">
                 Attend a Meetup
               </button>
             </div>
           </header>
 
-          <section className="relative px-8 md:px-16 md:py-12">
+          <section className="relative px-4 sm:px-8 md:px-16 py-8 md:py-12">
             <div className="absolute top-0 right-0 w-[600px] h-[700px] bg-gradient-to-br from-[#4D7DA3]/10 to-transparent rounded-full blur-3xl"></div>
             <div className="absolute bottom-0 left-0 w-[400px] h-[700px] bg-gradient-to-tr from-[#84803E]/8 to-transparent rounded-full blur-3xl"></div>
 
             <div className="relative z-10 max-w-6xl mx-auto">
-              <div className="grid lg:grid-cols-2 gap-16 items-center">
-                <div className="space-y-8">
-                  <div className="inline-flex items-center gap-2.5 bg-[#153230] text-white px-4 py-2 rounded-full shadow-lg">
+              <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+                <div className="space-y-6 lg:space-y-8">
+                  <div className="inline-flex items-center gap-2.5 bg-[#153230] text-white px-3 py-1.5 md:px-4 md:py-2 rounded-full shadow-lg">
                     <div className="relative flex items-center justify-center">
-                      <div className="w-2 h-2 bg-[#4ade80] rounded-full animate-pulse"></div>
-                      <div className="absolute w-2 h-2 bg-[#4ade80] rounded-full animate-ping"></div>
+                      <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-[#4ade80] rounded-full animate-pulse"></div>
+                      <div className="absolute w-1.5 h-1.5 md:w-2 md:h-2 bg-[#4ade80] rounded-full animate-ping"></div>
                     </div>
-                    <span className="text-sm font-bold tracking-wide">
+                    <span className="text-xs md:text-sm font-bold tracking-wide">
                       ACCEPTING COMPANY CALLS
                     </span>
                   </div>
 
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-[#153230] leading-[1] tracking-tight">
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-[#153230] leading-tight lg:leading-[1] tracking-tight">
                     Director of Tech,{" "}
                     <span className="text-[#4D7DA3]">
                       Executive Advisor,
@@ -130,7 +132,7 @@ export default async function Home() {
                     & Community Leader.
                   </h1>
 
-                  <p className="text-xl text-[#153230]/70 leading-relaxed max-w-xl">
+                  <p className="text-base sm:text-lg lg:text-xl text-[#153230]/70 leading-relaxed max-w-xl">
                     When organizations have engineering teams that have too many
                     priorities, too much complexity, and not enough clarity.
                     <span className="text-[#4D7DA3] font-bold">
@@ -138,13 +140,13 @@ export default async function Home() {
                       They call me.{" "}
                     </span>{" "}
                     I fix team alignment, simplify their systems, and deliver
-                    results they’re proud of.
+                    results they're proud of.
                   </p>
-                  <div className="flex flex-wrap items-center gap-4 pt-4">
-                    <p className="text-2xl text-[#4D7DA3] font-bold leading-relaxed max-w-xl">
+                  <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-3 sm:gap-4 pt-2 lg:pt-4">
+                    <p className="text-xl sm:text-2xl text-[#4D7DA3] font-bold leading-relaxed">
                       Clarity. Confidence. Code.
                     </p>
-                    <button className="group relative bg-[#4D7DA3] text-white px-10 py-5 rounded-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 font-bold text-md overflow-hidden">
+                    <button className="group relative bg-[#4D7DA3] text-white px-8 py-4 lg:px-10 lg:py-5 rounded-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 font-bold text-sm lg:text-md overflow-hidden w-full sm:w-auto">
                       <span className="relative z-10">
                         Let's work together!
                       </span>
@@ -152,32 +154,32 @@ export default async function Home() {
                     </button>
                   </div>
 
-                  <section aria-label="Impact and Reach" className="mt-10">
-                    <div className="-mt-6 grid gap-6">
+                  <section aria-label="Impact and Reach" className="mt-6 lg:mt-10">
+                    <div className="-mt-4 lg:-mt-6 grid gap-4 lg:gap-6">
                       <div>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-center">
-                          <div className="rounded-2xl border border-slate-200 p-3 bg-white/60">
-                            <div className="text-3xl font-extrabold tracking-tight text-[#4D7DA3]">
-                              450,000
+                        <div className="grid grid-cols-3 gap-2 text-center">
+                          <div className="rounded-xl lg:rounded-2xl border border-slate-200 p-2 lg:p-3 bg-white/60">
+                            <div className="text-2xl lg:text-3xl font-extrabold tracking-tight text-[#4D7DA3]">
+                              450K
                             </div>
-                            <div className="text-sm text-slate-600">
-                              Qualified Dev reach
+                            <div className="text-xs lg:text-sm text-slate-600">
+                              Dev reach
                             </div>
                           </div>
-                          <div className="rounded-2xl border border-slate-200 p-3 bg-white/60">
-                            <div className="text-3xl font-extrabold tracking-tight text-[#4D7DA3]">
+                          <div className="rounded-xl lg:rounded-2xl border border-slate-200 p-2 lg:p-3 bg-white/60">
+                            <div className="text-2xl lg:text-3xl font-extrabold tracking-tight text-[#4D7DA3]">
                               200
                             </div>
-                            <div className="text-sm text-slate-600">
-                              Talks/Workshops
+                            <div className="text-xs lg:text-sm text-slate-600">
+                              Talks
                             </div>
                           </div>
-                          <div className="rounded-2xl border border-slate-200 p-3 bg-white/60">
-                            <div className="text-3xl font-extrabold tracking-tight text-[#4D7DA3]">
+                          <div className="rounded-xl lg:rounded-2xl border border-slate-200 p-2 lg:p-3 bg-white/60">
+                            <div className="text-2xl lg:text-3xl font-extrabold tracking-tight text-[#4D7DA3]">
                               22
                             </div>
-                            <div className="text-sm text-slate-600">
-                              Brands partnered
+                            <div className="text-xs lg:text-sm text-slate-600">
+                              Brands
                             </div>
                           </div>
                         </div>
@@ -974,7 +976,9 @@ export default async function Home() {
             </h2>
           </section>
         </div>
+        </div>
       </div>
-    </div>
+      <BottomNav />
+    </>
   );
 }
