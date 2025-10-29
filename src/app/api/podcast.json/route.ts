@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import type { PodcastData } from "@/types/podcast";
+import { logger } from "@/lib/logger";
 
 export const runtime = "edge";
 
@@ -33,8 +34,13 @@ async function readJSONFromBlob(): Promise<PodcastData> {
     }
     
     const data = await response.json();
+    logger.info('Podcast data loaded from Blob storage', {
+      episodeCount: data.episodes?.length || 0,
+      source: data.source
+    });
     return data;
   } catch (error) {
+    logger.warn('Failed to read from Blob storage', { error });
     throw error; // Re-throw to trigger fallback
   }
 }
@@ -54,7 +60,7 @@ export async function GET() {
       });
     }
   } catch (blobError) {
-    // Blob failed, try fallback
+    logger.warn('Blob storage unavailable, trying refresh endpoint', { error: blobError });
   }
   
   // If blob fails or returns no episodes, try refresh endpoint as fallback
@@ -82,10 +88,11 @@ export async function GET() {
       }
     }
   } catch (fallbackError) {
-    // Fallback also failed
+    logger.error('Refresh endpoint also failed', fallbackError);
   }
   
-  // If everything fails, return error
+  // If everything fails, return error response
+  logger.error('All podcast data sources failed');
   return new NextResponse(JSON.stringify({ 
     episodes: [], 
     error: "Failed to load podcast episodes from all sources",

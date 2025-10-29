@@ -113,16 +113,82 @@ export function PodcastRadioTuner({ episodes }: PodcastRadioTunerProps) {
     }
   }, [isHovering, isDragging, mergedEpisodes.length]);
 
-  // Handle tuning knob interaction
-  const handleKnobClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const knob = e.currentTarget;
-    const rect = knob.getBoundingClientRect();
+  // Calculate angle from client coordinates
+  const calculateAngle = (clientX: number, clientY: number, knobElement: HTMLElement) => {
+    const rect = knobElement.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-    const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
+    const angle = Math.atan2(clientY - centerY, clientX - centerX);
     const normalizedAngle = (angle + Math.PI) / (2 * Math.PI); // 0 to 1
-    const newIndex = Math.floor(normalizedAngle * mergedEpisodes.length) % mergedEpisodes.length;
+    return Math.floor(normalizedAngle * mergedEpisodes.length) % mergedEpisodes.length;
+  };
+
+  // Handle tuning knob interaction (click)
+  const handleKnobClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const newIndex = calculateAngle(e.clientX, e.clientY, e.currentTarget);
     setSelectedIndex(newIndex);
+  };
+
+  // Mouse drag support
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    setIsDragging(true);
+    const newIndex = calculateAngle(e.clientX, e.clientY, e.currentTarget);
+    setSelectedIndex(newIndex);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isDragging) {
+      const newIndex = calculateAngle(e.clientX, e.clientY, e.currentTarget);
+      setSelectedIndex(newIndex);
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  // Touch support for mobile
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    setIsDragging(true);
+    const touch = e.touches[0];
+    const newIndex = calculateAngle(touch.clientX, touch.clientY, e.currentTarget);
+    setSelectedIndex(newIndex);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (isDragging) {
+      const touch = e.touches[0];
+      const newIndex = calculateAngle(touch.clientX, touch.clientY, e.currentTarget);
+      setSelectedIndex(newIndex);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+  };
+
+  // Keyboard support for accessibility
+  const handleKnobKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    switch (e.key) {
+      case 'ArrowRight':
+      case 'ArrowUp':
+        e.preventDefault();
+        setSelectedIndex(prev => (prev + 1) % mergedEpisodes.length);
+        break;
+      case 'ArrowLeft':
+      case 'ArrowDown':
+        e.preventDefault();
+        setSelectedIndex(prev => (prev - 1 + mergedEpisodes.length) % mergedEpisodes.length);
+        break;
+      case 'Home':
+        e.preventDefault();
+        setSelectedIndex(0);
+        break;
+      case 'End':
+        e.preventDefault();
+        setSelectedIndex(mergedEpisodes.length - 1);
+        break;
+    }
   };
 
   if (!mergedEpisodes.length) {
@@ -324,6 +390,21 @@ export function PodcastRadioTuner({ episodes }: PodcastRadioTunerProps) {
                   <div 
                     className="w-full h-full rounded-full bg-gradient-to-b from-[#5c3d2e] to-[#3d2817] border-4 border-[#2a1810] shadow-2xl relative cursor-pointer hover:from-[#6a4838] hover:to-[#4a3020] transition-all"
                     onClick={handleKnobClick}
+                    onMouseDown={handleMouseDown}
+                    onMouseMove={handleMouseMove}
+                    onMouseUp={handleMouseUp}
+                    onMouseLeave={handleMouseUp}
+                    onTouchStart={handleTouchStart}
+                    onTouchMove={handleTouchMove}
+                    onTouchEnd={handleTouchEnd}
+                    onKeyDown={handleKnobKeyDown}
+                    tabIndex={0}
+                    role="slider"
+                    aria-label="Episode selector - use arrow keys or drag to change episodes"
+                    aria-valuemin={0}
+                    aria-valuemax={mergedEpisodes.length - 1}
+                    aria-valuenow={selectedIndex}
+                    aria-valuetext={`Episode ${selectedIndex + 1} of ${mergedEpisodes.length}: ${selectedEpisode.title}`}
                     style={{
                       boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.1), inset 0 -2px 4px rgba(0,0,0,0.5), 0 6px 12px rgba(0,0,0,0.6)',
                     }}

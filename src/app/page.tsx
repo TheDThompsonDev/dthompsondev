@@ -4,8 +4,11 @@ import { OrbitSwitcher } from "@/components/OrbitSwitcher";
 import { BentoGrid } from "@/components/BentoGrid";
 import RotarySelector from "@/components/RotarySelector";
 import { PodcastRadioTuner } from "@/components/PodcastRadioTuner";
+import { PodcastRadioSkeleton } from "@/components/PodcastSkeleton";
+import { PodcastErrorBoundary } from "@/components/PodcastErrorBoundary";
 import Link from "next/link";
 import { headers } from "next/headers";
+import { Suspense } from "react";
 
 type Episode = {
   id: string;
@@ -249,7 +252,19 @@ export default async function Home() {
         {/* Podcast Radio Tuner Section */}
         <section className="relative z-[50] bg-white rounded-[32px] mx-4 mt-6 px-6 md:px-12 py-16 shadow-lg border border-[#E2F3F2]">
           <ScrollReveal>
-            <PodcastRadioTuner episodes={episodes} />
+            <PodcastErrorBoundary 
+              fallback={
+                <div className="text-center py-8 text-[#153230]/70">
+                  <p>Unable to load podcast player. Please refresh the page.</p>
+                </div>
+              }
+            >
+              {episodes.length > 0 ? (
+                <PodcastRadioTuner episodes={episodes} />
+              ) : (
+                <PodcastRadioSkeleton />
+              )}
+            </PodcastErrorBoundary>
           </ScrollReveal>
         </section>
 

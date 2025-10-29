@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { formatPodcastDate, getYouTubeThumbnailUrl, hasMultiplePlatforms, getEpisodeLink } from '@/lib/podcast-utils';
+import { useState, useCallback, useMemo } from 'react';
+import { formatPodcastDate, hasMultiplePlatforms } from '@/lib/podcast-utils';
 import type { Episode } from '@/types/podcast';
 
 interface PodcastEpisodeProps {
@@ -9,20 +9,42 @@ interface PodcastEpisodeProps {
   index?: number;
 }
 
+const THUMBNAIL_QUALITIES = ['hqdefault.jpg', 'mqdefault.jpg', 'default.jpg'];
+const FALLBACK_IMAGE = 'https://twxvicohcixbzang.public.blob.vercel-storage.com/podcast.jpg';
+
 export function PodcastEpisode({ episode, index = 0 }: PodcastEpisodeProps) {
-  const [errorCount, setErrorCount] = useState(0);
-  
-  // Get thumbnail URL with fallback quality
-  const thumbnailUrl = getYouTubeThumbnailUrl(episode.thumbnail, errorCount);
+  const [currentQuality, setCurrentQuality] = useState(0);
+  const [hasFailed, setHasFailed] = useState(false);
   
   // Handle thumbnail load errors with quality fallbacks
-  const handleThumbnailError = () => {
-    if (!episode.thumbnail || errorCount >= 2) return;
+  const handleThumbnailError = useCallback(() => {
+    if (!episode.thumbnail || !episode.thumbnail.includes('i.ytimg.com')) {
+      setHasFailed(true);
+      return;
+    }
+    
+    if (currentQuality >= THUMBNAIL_QUALITIES.length - 1) {
+      setHasFailed(true);
+      return;
+    }
+    
+    setCurrentQuality(prev => prev + 1);
+  }, [currentQuality, episode.thumbnail]);
+  
+  // Get thumbnail URL with current quality level
+  const thumbnailUrl = useMemo(() => {
+    if (hasFailed) return FALLBACK_IMAGE;
+    if (!episode.thumbnail) return FALLBACK_IMAGE;
     
     if (episode.thumbnail.includes('i.ytimg.com')) {
-      setErrorCount(prev => prev + 1);
+      return episode.thumbnail.replace(
+        /\/[^\/]+\.jpg$/,
+        `/${THUMBNAIL_QUALITIES[currentQuality]}`
+      );
     }
-  };
+    
+    return episode.thumbnail;
+  }, [episode.thumbnail, currentQuality, hasFailed]);
 
   const isMultiPlatform = hasMultiplePlatforms(episode);
 
@@ -38,7 +60,7 @@ export function PodcastEpisode({ episode, index = 0 }: PodcastEpisodeProps) {
             <div className="w-full lg:w-72 h-48 lg:h-48 bg-[#153230] overflow-hidden relative">
               {thumbnailUrl ? (
                 <img 
-                  key={`${episode.id}-${errorCount}`}
+                  key={`${episode.id}-${currentQuality}`}
                   src={thumbnailUrl} 
                   alt={episode.title}
                   className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"

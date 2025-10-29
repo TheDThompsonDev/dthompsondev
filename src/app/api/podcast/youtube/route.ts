@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { logger } from "@/lib/logger";
 
 export const runtime = "edge";
 
@@ -243,9 +244,14 @@ export async function GET() {
     });
 
   } catch (err: any) {
+    logger.error('YouTube fetch error', err, {
+      playlistId: extractPlaylistId(YOUTUBE_RSS_URL || ''),
+      hasApiKey: !!YOUTUBE_API_KEY,
+    });
+    
     return new NextResponse(JSON.stringify({
       ok: false,
-      error: err.message,
+      error: err.message || 'Failed to fetch YouTube episodes',
       episodes: [],
       timestamp: new Date().toISOString(),
     }), {
