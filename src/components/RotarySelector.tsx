@@ -193,10 +193,15 @@ function RotarySelectorComponent() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [magneticField, setMagneticField] = useState<{ x: number; y: number; strength: number } | null>(null);
   const [isMounted, setIsMounted] = useState(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
   
   const containerRef = useRef<HTMLDivElement>(null);
   const dialRef = useRef<HTMLDivElement>(null);
   const particleIdRef = useRef(0);
+
+  // Minimum swipe distance (in px) to trigger navigation
+  const minSwipeDistance = 50;
 
   const itemCount = contentItems.length;
   const anglePerItem = 360 / itemCount;
@@ -330,6 +335,30 @@ function RotarySelectorComponent() {
     };
   }, [isDragging, handleMouseMove, handleMouseUp]);
 
+  // Touch handlers for mobile swipe
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isLeftSwipe) {
+      handleNext();
+    } else if (isRightSwipe) {
+      handlePrev();
+    }
+  };
+
   // Keyboard controls
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -376,11 +405,11 @@ function RotarySelectorComponent() {
   }
 
   return (
-    <div className="rounded-3xl -mt-8 bg-white p-8 shadow-xl border-2 border-[#4D7DA3]/20" style={{ boxShadow: '0 -10px 30px -10px rgba(77, 125, 163, 0.3), 0 10px 30px -10px rgba(0, 0, 0, 0.1)' }}>
+    <div className="rounded-3xl -mt-8 bg-white p-4 sm:p-8 shadow-xl border-2 border-[#4D7DA3]/20" style={{ boxShadow: '0 -10px 30px -10px rgba(77, 125, 163, 0.3), 0 10px 30px -10px rgba(0, 0, 0, 0.1)' }}>
       {/* Magnetic Field Visualization */}
       {isMounted && magneticField && (
         <div 
-          className="absolute pointer-events-none z-10"
+          className="absolute pointer-events-none z-10 hidden lg:block"
           style={{
             left: magneticField.x - 50,
             top: magneticField.y - 50,
@@ -393,35 +422,37 @@ function RotarySelectorComponent() {
         />
       )}
       
-      <div className="max-w-[1400px] mx-auto p-8 py-20">
+      <div className="max-w-[1400px] mx-auto p-4 sm:p-8 py-4 sm:py-20 lg:min-h-0 min-h-[calc(100vh-8rem)]">
         {/* White Card Container */}
 
         {/* Enhanced Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-7xl font-black text-[#153230] mb-4">
+        <div className="text-center mb-4 sm:mb-16">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-black text-[#153230] mb-2 sm:mb-4">
             My Content <span className="text-[#4D7DA3]">Ecosystem</span>
           </h2>
-          <p className="text-[#153230]/70 text-xl mb-8 max-w-2xl mx-auto">
-            Drag to rotate • Arrow keys to navigate
+          <p className="text-[#153230]/70 text-sm sm:text-lg lg:text-xl mb-3 sm:mb-8 max-w-2xl mx-auto px-4">
+            <span className="hidden lg:inline">Drag to rotate • Arrow keys to navigate</span>
+            <span className="lg:hidden">Swipe through my content</span>
           </p>
           
           {/* Enhanced Controls */}
-          <div className="flex gap-4 justify-center flex-wrap">
+          <div className="flex gap-2 sm:gap-4 justify-center flex-wrap px-4">
             <button
               onClick={handlePrev}
-              className="group bg-[#153230] hover:bg-[#4D7DA3] w-[160px] text-white px-8 py-4 rounded-full font-bold transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              className="group bg-[#153230] hover:bg-[#4D7DA3] w-[100px] sm:w-[160px] text-white px-3 sm:px-8 py-2 sm:py-4 rounded-full font-bold text-xs sm:text-base transition-all duration-300 hover:scale-105 hover:shadow-xl"
             >
-              <span className="flex items-center gap-2">
+              <span className="flex items-center gap-1 sm:gap-2 justify-center">
                 <span>←</span>
-                <span>Previous</span>
+                <span className="hidden sm:inline">Previous</span>
+                <span className="sm:hidden">Prev</span>
               </span>
             </button>
               
             <button
               onClick={handleNext}
-              className="group bg-[#153230] hover:bg-[#4D7DA3] w-[160px] text-center flex justify-center text-white px-8 py-4 rounded-full font-bold transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              className="group bg-[#153230] hover:bg-[#4D7DA3] w-[100px] sm:w-[160px] text-center flex justify-center text-white px-3 sm:px-8 py-2 sm:py-4 rounded-full font-bold text-xs sm:text-base transition-all duration-300 hover:scale-105 hover:shadow-xl"
             >
-              <span className="flex items-center gap-2">
+              <span className="flex items-center gap-1 sm:gap-2 justify-center">
                 <span>Next</span>
                 <span>→</span>
               </span>
@@ -429,8 +460,9 @@ function RotarySelectorComponent() {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Enhanced Rotary Dial */}
+        {/* Desktop View - Rotary Dial */}
+        <div className="hidden lg:grid lg:grid-cols-2 gap-16 items-center">
+          {/* Enhanced Rotary Dial - Desktop Only */}
           <div className="relative" ref={containerRef}>
             <div className="relative w-full aspect-square max-w-[700px] mx-auto">
               {/* Outer Ring */}
@@ -614,6 +646,144 @@ function RotarySelectorComponent() {
             </div>
           </div>
         </div>
+
+        {/* Mobile View - Card Layout */}
+        <div className="lg:hidden flex flex-col h-full">
+          <div 
+            className="flex-1 flex flex-col space-y-4"
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+          >
+            {/* Mobile Icon Selector - MOVED TO TOP */}
+            <div className="flex flex-col items-center shrink-0">
+              <p className="text-[#153230]/60 text-xs font-semibold mb-2 animate-pulse">
+                👇 Tap any icon to explore
+              </p>
+              <div className="inline-flex gap-2 flex-wrap justify-center p-3 bg-[#E2F3F2] rounded-xl max-w-full relative">
+                {contentItems.map((item, index) => {
+                  const isSelected = index === selectedIndex;
+                  const itemColor = item.color || '#4D7DA3';
+                  
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => rotateToIndex(index, false)}
+                      className={`relative w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white border-2 overflow-hidden transition-all duration-300 ${
+                        isSelected ? 'scale-110 shadow-lg' : 'scale-100 shadow-sm hover:scale-105 animate-subtle-pulse'
+                      }`}
+                      style={{
+                        borderColor: isSelected ? itemColor : '#E2F3F2',
+                        boxShadow: isSelected ? `0 2px 8px ${itemColor}40` : undefined,
+                      }}
+                      aria-label={`View ${item.title}`}
+                    >
+                      <Image
+                        src={item.icon}
+                        alt={item.title}
+                        width={48}
+                        height={48}
+                        className="w-full h-full object-cover rounded-full"
+                      />
+                      {isSelected && (
+                        <div 
+                          className="absolute inset-0 border-2 rounded-full"
+                          style={{ borderColor: itemColor }}
+                        />
+                      )}
+                      {!isSelected && (
+                        <div className="absolute inset-0 bg-black/0 hover:bg-black/5 transition-colors rounded-full" />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Mobile Card Display */}
+            <div 
+              className="bg-white rounded-2xl p-4 border-2 relative overflow-hidden shadow-lg flex-1 flex flex-col"
+              style={{
+                borderColor: currentColor,
+                boxShadow: `0 8px 32px ${currentColor}20, 0 4px 16px rgba(0,0,0,0.1)`,
+              }}
+            >
+              <div className="relative z-10 flex flex-col h-full">
+                {/* Image Section */}
+                <div className="mb-3 shrink-0">
+                  <Image
+                    src={selectedItem.image || selectedItem.icon}
+                    alt={selectedItem.title}
+                    width={500}
+                    height={160}
+                    className="w-full h-36 object-cover rounded-xl"
+                  />
+                </div>
+
+                {/* Title Section */}
+                <div className="mb-3 shrink-0">
+                  <h3 className="text-xl sm:text-2xl font-black text-[#153230] leading-tight mb-1">{selectedItem.title}</h3>
+                  <p 
+                    className="text-base sm:text-lg font-bold"
+                    style={{ color: currentColor }}
+                  >
+                    {selectedItem.subtitle}
+                  </p>
+                </div>
+                
+                {/* Selected Badge */}
+                <div className="mb-3 shrink-0">
+                  <span 
+                    className="inline-block px-3 py-1 rounded-full text-xs font-bold border-2"
+                    style={{
+                      backgroundColor: `${currentColor}20`,
+                      borderColor: currentColor,
+                      color: currentColor,
+                    }}
+                  >
+                    {selectedIndex + 1} OF {contentItems.length}
+                  </span>
+                </div>
+
+                {/* Description */}
+                <p className="text-[#153230]/80 text-sm mb-3 leading-relaxed line-clamp-3 shrink-0">
+                  {selectedItem.description}
+                </p>
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-2 mb-4 shrink-0">
+                  {selectedItem.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1 rounded-lg text-xs font-bold border"
+                      style={{
+                        backgroundColor: `${currentColor}15`,
+                        borderColor: `${currentColor}40`,
+                        color: currentColor,
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex flex-col gap-2 shrink-0 mt-auto">
+                  {selectedItem.link?.map((linkItem, index) => (
+                    <button 
+                      key={index}
+                      onClick={() => window.open(linkItem.url, '_blank')}
+                      className="w-full bg-[#153230] hover:bg-[#4D7DA3] text-white px-4 py-2.5 rounded-full font-bold text-sm transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2"
+                    >
+                      <span className="truncate">{linkItem.text}</span>
+                      <span>→</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
        
       </div>
     </div>
@@ -624,19 +794,19 @@ function RotarySelectorComponent() {
 const RotarySelector = dynamic(() => Promise.resolve(RotarySelectorComponent), {
   ssr: false,
   loading: () => (
-    <div className="relative bg-[#E2F3F2] py-16 px-4 overflow-hidden">
+    <div className="relative bg-[#E2F3F2] py-8 sm:py-16 px-4 overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
-        <div className="bg-white rounded-[32px] p-8 md:p-12 shadow-xl border border-[#4D7DA3]/10">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-7xl font-black text-[#153230] mb-4">
-              Content <span className="text-[#4D7DA3]">Ecosystem</span>
+        <div className="bg-white rounded-[32px] p-6 sm:p-8 md:p-12 shadow-xl border border-[#4D7DA3]/10">
+          <div className="text-center mb-8 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black text-[#153230] mb-3 sm:mb-4">
+              My Content <span className="text-[#4D7DA3]">Ecosystem</span>
             </h2>
-            <p className="text-[#153230]/70 text-xl mb-8 max-w-2xl mx-auto">
+            <p className="text-[#153230]/70 text-base sm:text-lg lg:text-xl mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
               Loading interactive experience...
             </p>
           </div>
           <div className="flex justify-center">
-            <Loader2 className="w-16 h-16 text-[#4D7DA3] animate-spin" />
+            <Loader2 className="w-12 h-12 sm:w-16 sm:h-16 text-[#4D7DA3] animate-spin" />
           </div>
         </div>
       </div>

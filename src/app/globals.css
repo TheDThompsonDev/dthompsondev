@@ -5,6 +5,20 @@
   --foreground: #171717;
 }
 
+/* Animated Gradient for Text */
+@keyframes gradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient {
+  animation: gradient 8s ease infinite;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -1113,4 +1127,77 @@ nav[class*="fixed bottom-0"] {
     user-select: none;
     -webkit-user-select: none;
   }
+
+  /* Mobile Content Ecosystem optimizations */
+  .space-y-6 {
+    touch-action: pan-x pan-y;
+    -webkit-user-select: none;
+    user-select: none;
+  }
 }
+
+/* Swipe indicator animation for mobile */
+@keyframes swipeHint {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-10px);
+  }
+}
+
+/* Mobile card transitions */
+@media (max-width: 1024px) {
+  .detail-panel-enhanced {
+    animation: none;
+  }
+  
+  /* Smooth card transitions */
+  .bg-white.rounded-2xl {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+}
+
+/* Text truncation utilities */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Subtle pulse animation for non-selected icons */
+@keyframes subtle-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.95;
+  }
+}
+
+.animate-subtle-pulse {
+  animation: subtle-pulse 3s ease-in-out infinite;
+}
+
+/* Stagger animation delays for icons */
+.animate-subtle-pulse:nth-child(1) { animation-delay: 0s; }
+.animate-subtle-pulse:nth-child(2) { animation-delay: 0.1s; }
+.animate-subtle-pulse:nth-child(3) { animation-delay: 0.2s; }
+.animate-subtle-pulse:nth-child(4) { animation-delay: 0.3s; }
+.animate-subtle-pulse:nth-child(5) { animation-delay: 0.4s; }
+.animate-subtle-pulse:nth-child(6) { animation-delay: 0.5s; }
+.animate-subtle-pulse:nth-child(7) { animation-delay: 0.6s; }
+.animate-subtle-pulse:nth-child(8) { animation-delay: 0.7s; }
+.animate-subtle-pulse:nth-child(9) { animation-delay: 0.8s; }
+.animate-subtle-pulse:nth-child(10) { animation-delay: 0.9s; }
+.animate-subtle-pulse:nth-child(11) { animation-delay: 1s; }

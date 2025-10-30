@@ -242,13 +242,13 @@ export function OrbitSwitcher() {
   ];
 
   return (
-    <div className="rounded-3xl bg-white p-8 shadow-xl border-2 -mt-8 border-[#4D7DA3]/20" style={{ boxShadow: '0 -10px 30px -10px rgba(77, 125, 163, 0.3), 0 10px 30px -10px rgba(0, 0, 0, 0.1)' }}>
-      <div className="mb-6 inline-flex rounded-full bg-[#E2F3F2] p-1.5 shadow-inner">
+    <div className="rounded-3xl bg-white p-4 sm:p-8 shadow-xl border-2 -mt-8 border-[#4D7DA3]/20" style={{ boxShadow: '0 -10px 30px -10px rgba(77, 125, 163, 0.3), 0 10px 30px -10px rgba(0, 0, 0, 0.1)' }}>
+      <div className="mb-4 sm:mb-6 inline-flex rounded-full bg-[#E2F3F2] p-1.5 shadow-inner w-full sm:w-auto justify-center">
         {(["orbit", "rooms"] as const).map((t) => (
           <button
             key={t}
             onClick={() => setMode(t)}
-            className={`rounded-full px-6 py-2.5 text-sm font-bold transition-all duration-300 ${
+            className={`rounded-full px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-bold transition-all duration-300 flex-1 sm:flex-initial ${
               mode === t ? "bg-white shadow-lg text-[#153230]" : "text-[#153230]/60 hover:text-[#153230]"
             }`}
           >
@@ -265,16 +265,46 @@ export function OrbitSwitcher() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.3 }}
-            className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-[#E2F3F2] to-white p-12"
+            className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-[#E2F3F2] to-white p-4 sm:p-12"
             style={{ position: 'relative' }}
           >
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-black text-[#153230] mb-2">What persona matches you?</h3>
-              <p className="text-sm text-[#153230]/60">Click to discover tailored resources for your role</p>
+            <div className="text-center mb-4 sm:mb-8">
+              <h3 className="text-xl sm:text-2xl font-black text-[#153230] mb-2">What persona matches you?</h3>
+              <p className="text-xs sm:text-sm text-[#153230]/60">
+                <span className="hidden sm:inline">Click to discover tailored resources for your role</span>
+                <span className="sm:hidden">Tap a card to learn more</span>
+              </p>
             </div>
 
+            {/* Mobile Card Grid */}
+            <div className="lg:hidden grid grid-cols-2 gap-3 sm:gap-4">
+              {VISITOR_ARCHETYPES.map((p) => (
+                <motion.div
+                  key={`mobile-${p.id}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  onClick={() => setSelectedPerson(selectedPerson === p.id ? null : p.id)}
+                  className={`rounded-xl p-3 sm:p-4 cursor-pointer transition-all duration-300 border-2 ${
+                    selectedPerson === p.id
+                      ? 'bg-white border-[#4D7DA3] shadow-lg scale-105'
+                      : 'bg-white border-[#E2F3F2] shadow-sm hover:shadow-md hover:border-[#4D7DA3]/40'
+                  }`}
+                >
+                  <div className="flex flex-col items-center text-center space-y-2">
+                    <ArchetypeAvatar archetype={p} size={56} />
+                    <div>
+                      <div className="text-sm font-black text-[#153230] leading-tight">{p.label}</div>
+                      <div className="text-xs text-[#153230]/60 mt-0.5">{p.description}</div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Desktop Orbit View */}
             <div
-              className="relative w-full mx-auto"
+              className="hidden lg:block relative w-full mx-auto"
               style={{ height: `${containerHeight}px`, maxWidth: `${containerWidth}px` }}
               onMouseEnter={() => setIsOrbitHovered(true)}
               onMouseLeave={() => setIsOrbitHovered(false)}
@@ -430,66 +460,66 @@ export function OrbitSwitcher() {
                   animate={{ x: 0 }}
                   exit={{ x: "100%" }}
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  className="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl p-8 border-l-2 border-[#4D7DA3] z-50 overflow-y-auto rounded-r-2xl"
+                  className="absolute right-0 top-0 h-full w-full lg:max-w-md bg-white shadow-2xl p-4 sm:p-6 lg:p-8 border-l-2 border-[#4D7DA3] z-50 overflow-y-auto rounded-r-2xl"
                 >
                   <button
                     onClick={() => setSelectedPerson(null)}
-                    className="absolute top-4 right-4 w-8 h-8 rounded-full bg-[#153230]/10 hover:bg-[#153230]/20 flex items-center justify-center transition-colors font-bold text-[#153230]"
+                    className="absolute top-2 right-2 sm:top-4 sm:right-4 w-8 h-8 rounded-full bg-[#153230]/10 hover:bg-[#153230]/20 flex items-center justify-center transition-colors font-bold text-[#153230] z-10"
                   >
                     ✕
                   </button>
                   
-                  <div className="flex items-center gap-4 mb-6">
-                    <ArchetypeAvatar archetype={selected} size={80} />
-                    <div>
-                      <h3 className="font-black text-2xl text-[#153230] mb-1">{selected.label}</h3>
-                      <p className="text-base text-[#153230]/60 font-medium">{selected.description}</p>
+                  <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+                    <ArchetypeAvatar archetype={selected} size={64} />
+                    <div className="flex-1 pr-8">
+                      <h3 className="font-black text-lg sm:text-2xl text-[#153230] mb-1 leading-tight">{selected.label}</h3>
+                      <p className="text-sm sm:text-base text-[#153230]/60 font-medium">{selected.description}</p>
                     </div>
                   </div>
 
                   {/* Challenges Section */}
-                  <div className="bg-red-50/30 rounded-2xl p-5 mb-5 border border-red-200/30">
-                    <p className="text-sm font-bold text-[#153230]/70 uppercase tracking-wider mb-4 flex items-center gap-2">
-                      <span className="text-lg">🎯</span> Common Challenges
+                  <div className="bg-red-50/30 rounded-xl sm:rounded-2xl p-3 sm:p-5 mb-3 sm:mb-5 border border-red-200/30">
+                    <p className="text-xs sm:text-sm font-bold text-[#153230]/70 uppercase tracking-wider mb-3 sm:mb-4 flex items-center gap-2">
+                      <span className="text-base sm:text-lg">🎯</span> Common Challenges
                     </p>
-                    <div className="space-y-2.5">
-                      {selected.challenges?.map((challenge, i) => (
-                        <div key={i} className="flex items-start gap-2.5">
-                          <div className="w-1.5 h-1.5 bg-red-400 rounded-full flex-shrink-0 mt-2"></div>
-                          <span className="text-sm text-[#153230]/80 leading-snug">{challenge}</span>
+                    <div className="space-y-2 sm:space-y-2.5">
+                      {selected.challenges?.slice(0, 3).map((challenge, i) => (
+                        <div key={i} className="flex items-start gap-2 sm:gap-2.5">
+                          <div className="w-1.5 h-1.5 bg-red-400 rounded-full shrink-0 mt-1.5 sm:mt-2"></div>
+                          <span className="text-xs sm:text-sm text-[#153230]/80 leading-snug">{challenge}</span>
                         </div>
                       ))}
                     </div>
                   </div>
 
                   {/* Resources Section */}
-                  <div className="bg-gradient-to-br from-[#E2F3F2] to-[#E2F3F2]/30 rounded-2xl p-5 mb-5 border border-[#4D7DA3]/20">
-                    <p className="text-sm font-bold text-[#153230]/70 uppercase tracking-wider mb-4 flex items-center gap-2">
-                      <span className="text-lg">📚</span> What You Get
+                  <div className="bg-gradient-to-br from-[#E2F3F2] to-[#E2F3F2]/30 rounded-xl sm:rounded-2xl p-3 sm:p-5 mb-3 sm:mb-5 border border-[#4D7DA3]/20">
+                    <p className="text-xs sm:text-sm font-bold text-[#153230]/70 uppercase tracking-wider mb-3 sm:mb-4 flex items-center gap-2">
+                      <span className="text-base sm:text-lg">📚</span> What You Get
                     </p>
-                    <div className="space-y-2.5">
-                      {selected.whatYouGet.map((item, i) => (
-                        <div key={i} className="flex items-start gap-2.5">
-                          <div className="w-5 h-5 bg-[#4D7DA3] rounded-md flex items-center justify-center flex-shrink-0 mt-0">
-                            <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <div className="space-y-2 sm:space-y-2.5">
+                      {selected.whatYouGet.slice(0, 3).map((item, i) => (
+                        <div key={i} className="flex items-start gap-2 sm:gap-2.5">
+                          <div className="w-4 h-4 sm:w-5 sm:h-5 bg-[#4D7DA3] rounded-md flex items-center justify-center shrink-0 mt-0">
+                            <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                             </svg>
                           </div>
-                          <span className="text-sm text-[#153230] font-medium">{item}</span>
+                          <span className="text-xs sm:text-sm text-[#153230] font-medium">{item}</span>
                         </div>
                       ))}
                     </div>
                   </div>
 
                   {/* Resources Available */}
-                  <div className="bg-emerald-50/30 rounded-2xl p-5 mb-5 border border-emerald-200/30">
+                  <div className="hidden sm:block bg-emerald-50/30 rounded-2xl p-5 mb-5 border border-emerald-200/30">
                     <p className="text-sm font-bold text-[#153230]/70 uppercase tracking-wider mb-4 flex items-center gap-2">
                       <span className="text-lg">🎓</span> Resources Available
                     </p>
                     <div className="space-y-2.5">
-                      {selected.resources?.map((resource, i) => (
+                      {selected.resources?.slice(0, 3).map((resource, i) => (
                         <div key={i} className="flex items-start gap-2.5">
-                          <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full flex-shrink-0 mt-2.5"></div>
+                          <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0 mt-2.5"></div>
                           <span className="text-sm text-[#153230]/80 leading-snug">{resource}</span>
                         </div>
                       ))}
@@ -497,16 +527,16 @@ export function OrbitSwitcher() {
                   </div>
 
                   {/* Impact Section */}
-                  <div className="bg-gradient-to-r from-[#4D7DA3] to-[#3d6a8a] rounded-2xl p-5 mb-6 text-white border border-[#4D7DA3]/40">
+                  <div className="bg-gradient-to-r from-[#4D7DA3] to-[#3d6a8a] rounded-xl sm:rounded-2xl p-4 sm:p-5 mb-4 sm:mb-6 text-white border border-[#4D7DA3]/40">
                     <p className="text-xs font-bold uppercase tracking-wider mb-2 opacity-90">🚀 Real Impact</p>
-                    <p className="text-base font-bold leading-tight">{selected.impact}</p>
+                    <p className="text-sm sm:text-base font-bold leading-tight">{selected.impact}</p>
                   </div>
 
                   <button 
                     onClick={() => {
                       window.location.href = `/blog?persona=${selectedPerson}`;
                     }}
-                    className="w-full bg-gradient-to-r from-[#4D7DA3] to-[#3d6a8a] text-white py-4 rounded-xl font-bold text-base hover:shadow-xl hover:scale-105 transition-all duration-300"
+                    className="w-full bg-gradient-to-r from-[#4D7DA3] to-[#3d6a8a] text-white py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base hover:shadow-xl hover:scale-105 transition-all duration-300"
                   >
                     {selected.cta} →
                   </button>
@@ -521,19 +551,19 @@ export function OrbitSwitcher() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.3 }}
-            style={{ minHeight: '700px' }}
-            className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 content-start"
+            style={{ minHeight: '400px' }}
+            className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 content-start"
           >
             {ROOMS.map((room) => (
-              <div key={room.id} className="rounded-2xl bg-[#E2F3F2] p-5 shadow-lg border border-[#4D7DA3]/20 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                <div className="mb-4 flex items-center justify-between">
-                  <div className="text-sm font-bold text-[#153230]">{room.icon} {room.title}</div>
+              <div key={room.id} className="rounded-xl sm:rounded-2xl bg-[#E2F3F2] p-4 sm:p-5 shadow-lg border border-[#4D7DA3]/20 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div className="mb-3 sm:mb-4 flex items-center justify-between">
+                  <div className="text-sm sm:text-base font-bold text-[#153230]">{room.icon} {room.title}</div>
                 </div>
 
-                <div className="mb-4 flex -space-x-2">
+                <div className="mb-3 sm:mb-4 flex -space-x-2">
                   {VISITOR_ARCHETYPES.filter((p) => p.rooms.includes(room.id)).map((p) => (
                     <motion.div key={p.id} layoutId={`avatar-${p.id}`} className="inline-block">
-                      <ArchetypeAvatar archetype={p} size={44} />
+                      <ArchetypeAvatar archetype={p} size={40} />
                     </motion.div>
                   ))}
                 </div>
@@ -542,7 +572,7 @@ export function OrbitSwitcher() {
                   {room.pins.map((pin) => (
                     <div
                       key={pin.id}
-                      className="flex items-center justify-between rounded-xl bg-white px-3 py-2.5 text-xs font-medium shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border border-[#4D7DA3]/10"
+                      className="flex items-center justify-between rounded-lg sm:rounded-xl bg-white px-3 py-2.5 text-xs font-medium shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border border-[#4D7DA3]/10"
                     >
                       <span className="text-[#153230]">{pin.title}</span>
                       <span className="text-[#4D7DA3] font-bold">→</span>
@@ -555,7 +585,7 @@ export function OrbitSwitcher() {
         )}
       </AnimatePresence>
 
-      <div className="mt-6 text-center text-sm text-[#153230]/60 font-medium">
+      <div className="mt-4 sm:mt-6 text-center text-xs sm:text-sm text-[#153230]/60 font-medium px-2">
         <span className="font-bold text-[#153230]">Orbit View:</span> Discover your path • <span className="font-bold text-[#153230]">Room View:</span> Explore resources by topic
       </div>
     </div>
