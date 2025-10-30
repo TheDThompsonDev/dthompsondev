@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { fetchYouTubeEpisodes } from "@/lib/youtube-fetcher";
 
 export const runtime = "edge";
 
@@ -86,35 +87,6 @@ async function saveJSON(key: string, data: unknown) {
   }
   
   // Fallback: return only, no persistence
-}
-
-async function fetchYouTubeEpisodes() {
-  try {
-    // Auto-detect environment: Vercel production, preview, or local
-    const baseUrl = process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}` 
-      : (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000');
-    const youtubeUrl = `${baseUrl}/api/podcast/youtube`;
-    
-    const response = await fetch(youtubeUrl, { 
-      cache: "no-store",
-      // Add timeout to prevent hanging
-      signal: AbortSignal.timeout(10000) // 10 second timeout
-    });
-    
-    if (!response.ok) {
-      return [];
-    }
-    
-    const data = await response.json();
-    if (data.ok && data.episodes) {
-      return data.episodes;
-    }
-    
-    return [];
-  } catch (error) {
-    return [];
-  }
 }
 
 export async function GET() {
