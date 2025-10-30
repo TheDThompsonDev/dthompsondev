@@ -106,48 +106,56 @@ function areTitlesSimilar(title1: string, title2: string, threshold: number = 0.
 /**
  * Merge YouTube and Spotify episodes by index
  * 
- * Strategy: Simple index-based merging that works because:
- * 1. Deleted videos are filtered out before this function is called
- * 2. Both platforms publish episodes in the same order
- * 3. Arrays are perfectly aligned after filtering
- * 
- * This simple approach prevents duplicate episodes that complex matching can create.
+ * Strategy: Simple index-based matching
+ * Since both platforms have the same number of episodes (51 each) published in order,
+ * we can safely match by index position after sorting both arrays by date.
  */
 export function mergeEpisodesByIndex(episodes: Episode[]): Episode[] {
-  const youtubeEpisodes = episodes.filter(ep => ep.platform === 'youtube');
-  const spotifyEpisodes = episodes.filter(ep => ep.platform === 'spotify');
+  const youtubeEpisodes = episodes
+    .filter(ep => ep.platform === 'youtube')
+    .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
+  
+  const spotifyEpisodes = episodes
+    .filter(ep => ep.platform === 'spotify')
+    .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
+  
+  console.log('[MERGE] Input:', {
+    youtube: youtubeEpisodes.length,
+    spotify: spotifyEpisodes.length,
+    total: episodes.length
+  });
   
   const merged: Episode[] = [];
   const maxLength = Math.max(youtubeEpisodes.length, spotifyEpisodes.length);
   
-  // Simple index-based merging - arrays are aligned after deleted video filtering
+  // Match by index position (both arrays are sorted newest-first)
   for (let i = 0; i < maxLength; i++) {
     const youtube = youtubeEpisodes[i];
     const spotify = spotifyEpisodes[i];
     
     if (youtube && spotify) {
-      // Both exist at this index - merge them
+      // Both exist - merge them, keeping Spotify as base but adding YouTube video
       merged.push({
         ...spotify,
-        videoUrl: youtube.videoUrl,
-        thumbnail: youtube.thumbnail,
+        videoUrl: youtube.videoUrl || youtube.externalUrl,
+        thumbnail: youtube.thumbnail || spotify.thumbnail,
         duration: youtube.duration || spotify.duration,
-        externalUrl: youtube.videoUrl || youtube.externalUrl,
+        // audioUrl and externalUrl stay from Spotify for the Spotify link
       });
     } else if (youtube) {
-      // YouTube-only episode
+      // YouTube-only
       merged.push(youtube);
     } else if (spotify) {
-      // Spotify-only episode
+      // Spotify-only
       merged.push(spotify);
     }
   }
   
-  // Sort by publish date (newest first)
-  merged.sort((a, b) => {
-    const dateA = new Date(a.publishDate).getTime();
-    const dateB = new Date(b.publishDate).getTime();
-    return dateB - dateA;
+  console.log('[MERGE] Output:', {
+    merged: merged.length,
+    withBoth: merged.filter(e => e.videoUrl && e.audioUrl).length,
+    youtubeOnly: merged.filter(e => e.videoUrl && !e.audioUrl).length,
+    spotifyOnly: merged.filter(e => !e.videoUrl && e.audioUrl).length,
   });
   
   return merged;
