@@ -119,12 +119,6 @@ export function mergeEpisodesByIndex(episodes: Episode[]): Episode[] {
     .filter(ep => ep.platform === 'spotify')
     .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
   
-  console.log('[MERGE] Input:', {
-    youtube: youtubeEpisodes.length,
-    spotify: spotifyEpisodes.length,
-    total: episodes.length
-  });
-  
   const merged: Episode[] = [];
   const maxLength = Math.max(youtubeEpisodes.length, spotifyEpisodes.length);
   
@@ -150,13 +144,6 @@ export function mergeEpisodesByIndex(episodes: Episode[]): Episode[] {
       merged.push(spotify);
     }
   }
-  
-  console.log('[MERGE] Output:', {
-    merged: merged.length,
-    withBoth: merged.filter(e => e.videoUrl && e.audioUrl).length,
-    youtubeOnly: merged.filter(e => e.videoUrl && !e.audioUrl).length,
-    spotifyOnly: merged.filter(e => !e.videoUrl && e.audioUrl).length,
-  });
   
   return merged;
 }
