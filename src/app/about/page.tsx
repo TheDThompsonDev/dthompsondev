@@ -5,117 +5,254 @@ import { TiltCard } from "@/components/TiltCard";
 import BottomNav from "@/components/BottomNav";
 import Link from "next/link";
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
-interface Achievement {
-  year: string;
+type ContentTab = "all" | "talks" | "podcasts" | "conferences";
+
+interface VideoTalk {
+  id: string;
   title: string;
   description: string;
+  thumbnail: string;
+  youtubeUrl: string;
+  views?: string;
+  duration?: string;
+  category: "talk" | "tutorial" | "interview";
+}
+
+interface PodcastAppearance {
+  id: string;
+  podcastName: string;
+  episodeTitle: string;
+  description: string;
+  coverArt: string;
+  listenUrl: string;
+  date: string;
+  platform: string;
+}
+
+interface ConferenceAppearance {
+  id: string;
+  conferenceName: string;
+  talkTitle: string;
+  description: string;
+  date: string;
+  location: string;
+  attendees?: string;
+  photo: string;
   color: string;
 }
 
-interface Service {
-  icon: string;
-  title: string;
-  description: string;
-  features: string[];
-  audience: "executive" | "developer";
-  color: string;
-}
-
-const achievements: Achievement[] = [
+const videoTalks: VideoTalk[] = [
   {
-    year: "2025",
-    title: "Commit Your Code Conference 2025",
-    description: "Grew conference to 8,960 attendees (300% YoY growth), trending globally on social media",
+    id: "1",
+    title: "Playing the Developer Job Search Game to Win in 2025",
+    description: "Discussion with Leon Noel on freeCodeCamp about winning the developer job search in 2025.",
+    thumbnail: "https://img.youtube.com/vi/6_qwLx8jwBY/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=6_qwLx8jwBY",
+    category: "interview"
+  },
+  {
+    id: "2",
+    title: "From Gas Station Cook To Google Engineer",
+    description: "My journey from working at a gas station to becoming a software engineer, featured on NoDegree podcast.",
+    thumbnail: "https://img.youtube.com/vi/67SEA5QGqtA/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=67SEA5QGqtA",
+    category: "interview"
+  },
+  {
+    id: "3",
+    title: "Open Source and AI with Danny Thompson",
+    description: "Discussion with GitHub about the intersection of open source development and artificial intelligence.",
+    thumbnail: "https://img.youtube.com/vi/68qYBxBiofE/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=68qYBxBiofE",
+    category: "talk"
+  },
+  {
+    id: "4",
+    title: "How to Become a Software Developer with No Experience",
+    description: "Interview with Du'An Lightfoot about breaking into tech without traditional experience.",
+    thumbnail: "https://img.youtube.com/vi/4LSjr30UhKE/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=4LSjr30UhKE",
+    category: "interview"
+  },
+  {
+    id: "5",
+    title: "Stop Worrying About AI",
+    description: "Backend Banter podcast discussing AI's impact on software development and why developers shouldn't panic.",
+    thumbnail: "https://img.youtube.com/vi/Cc93qz4wPw4/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=Cc93qz4wPw4",
+    category: "interview"
+  },
+  {
+    id: "6",
+    title: "The Amazing, But Unsettling Future for Developers",
+    description: "Appwrite discussion about the evolving landscape of software development and what's coming next.",
+    thumbnail: "https://img.youtube.com/vi/PfnKyXo2k6o/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=PfnKyXo2k6o",
+    category: "talk"
+  },
+  {
+    id: "7",
+    title: "Making It In Tech: Danny Thompson",
+    description: "Pluralsight feature on my career journey and advice for aspiring developers.",
+    thumbnail: "https://img.youtube.com/vi/A1HPmebIFQc/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=A1HPmebIFQc",
+    category: "interview"
+  },
+  {
+    id: "8",
+    title: "Interviews, Standing Out And Portfolio Projects",
+    description: "Dennis Ivy interview covering job interviews, how to stand out, and building impressive portfolio projects.",
+    thumbnail: "https://img.youtube.com/vi/j00vPfrYrsU/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=j00vPfrYrsU",
+    category: "interview"
+  },
+  {
+    id: "9",
+    title: "Coding Entrepreneurs Podcast",
+    description: "Discussion about building a career in tech, community building, and the entrepreneurial side of coding.",
+    thumbnail: "https://img.youtube.com/vi/rr0Dkip5dcg/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=rr0Dkip5dcg",
+    category: "interview"
+  },
+  {
+    id: "10",
+    title: "From Frying Chicken to This Dot Labs",
+    description: "Career Stories with Rob Ocel on The Dev Leader Podcast about my unconventional path into tech.",
+    thumbnail: "https://img.youtube.com/vi/PFhvur-Zpxs/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=PFhvur-Zpxs",
+    category: "interview"
+  },
+  {
+    id: "11",
+    title: "Forever Employable Stories",
+    description: "Jeff Gothelf interviews me about being a software developer and community leader.",
+    thumbnail: "https://img.youtube.com/vi/--Iyd6biNA4/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=--Iyd6biNA4",
+    category: "interview"
+  },
+  {
+    id: "12",
+    title: "4 Hours to Build a Haunted App",
+    description: "Web Dev Challenge on CodeTV - building a complete application under time pressure.",
+    thumbnail: "https://img.youtube.com/vi/fNDSDWJaj2M/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=fNDSDWJaj2M",
+    category: "tutorial"
+  },
+  {
+    id: "13",
+    title: "Gas Station Cook to Software Developer",
+    description: "Mintbean io conversation about my journey from working at a gas station to becoming a software developer.",
+    thumbnail: "https://img.youtube.com/vi/ODtz06-uSn8/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=ODtz06-uSn8",
+    category: "interview"
+  }
+];
+
+const podcastAppearances: PodcastAppearance[] = [
+  {
+    id: "1",
+    podcastName: "The Scrimba Podcast",
+    episodeTitle: "From Retail to Tech: Danny Thompson's Journey",
+    description: "Discussing career transitions, community building, and how to break into tech without a CS degree.",
+    coverArt: "https://via.placeholder.com/400x400/4D7DA3/ffffff?text=Scrimba",
+    listenUrl: "https://podcast.link",
+    date: "March 2024",
+    platform: "Spotify"
+  },
+  {
+    id: "2",
+    podcastName: "Frontend Happy Hour",
+    episodeTitle: "Building Communities & Personal Brands",
+    description: "How developers can build authentic personal brands and leverage community for career growth.",
+    coverArt: "https://via.placeholder.com/400x400/84803E/ffffff?text=Frontend+HH",
+    listenUrl: "https://podcast.link",
+    date: "January 2024",
+    platform: "Apple Podcasts"
+  },
+  {
+    id: "3",
+    podcastName: "Developer Tea",
+    episodeTitle: "The Art of Developer Mentorship",
+    description: "Insights from 700+ mentorship calls on what truly helps developers level up their careers.",
+    coverArt: "https://via.placeholder.com/400x400/153230/ffffff?text=Dev+Tea",
+    listenUrl: "https://podcast.link",
+    date: "November 2023",
+    platform: "Spotify"
+  },
+  {
+    id: "4",
+    podcastName: "CodeNewbie",
+    episodeTitle: "Organizing a 9,000-Person Conference",
+    description: "Behind the scenes of Commit Your Code Conference: challenges, wins, and lessons learned.",
+    coverArt: "https://via.placeholder.com/400x400/4D7DA3/ffffff?text=CodeNewbie",
+    listenUrl: "https://podcast.link",
+    date: "February 2025",
+    platform: "Apple Podcasts"
+  }
+];
+
+const conferenceAppearances: ConferenceAppearance[] = [
+  {
+    id: "1",
+    conferenceName: "Commit Your Code Conference",
+    talkTitle: "Organizer & Host",
+    description: "Organized Dallas's premier tech conference with 8,960 attendees, 60 speakers, and speakers from Google, Microsoft, and Spotify.",
+    date: "February 2025",
+    location: "Dallas, TX",
+    attendees: "8,960",
+    photo: "https://twxvicohcixbzang.public.blob.vercel-storage.com/polaroid/3.jpg",
     color: "#4D7DA3"
   },
   {
-    year: "2024",
-    title: "Director of Technology",
-    description: "Leading technical strategy, team development, and engineering excellence initiatives",
-    color: "#153230"
-  },
-  {
-    year: "2023",
-    title: "Community Scale: 12K+ Members",
-    description: "Built Dallas Software Developers Group into one of the most active dev communities globally",
+    id: "2",
+    conferenceName: "React Summit",
+    talkTitle: "Building Developer Communities at Scale",
+    description: "Keynote on strategies for growing authentic developer communities from 0 to 10K+ members.",
+    date: "June 2024",
+    location: "Amsterdam, Netherlands",
+    photo: "https://twxvicohcixbzang.public.blob.vercel-storage.com/polaroid/1.jpg",
     color: "#84803E"
   },
   {
-    year: "2022",
-    title: "500+ Career Placements",
-    description: "Directly helped 500+ developers land roles at top companies through mentorship and community",
+    id: "3",
+    conferenceName: "DevRelCon",
+    talkTitle: "The Economics of Free: Community-Driven Growth",
+    description: "How free resources and genuine community building drive sustainable business growth.",
+    date: "December 2023",
+    location: "San Francisco, CA",
+    photo: "https://twxvicohcixbzang.public.blob.vercel-storage.com/polaroid/2.jpg",
+    color: "#153230"
+  },
+  {
+    id: "4",
+    conferenceName: "All Things Open",
+    talkTitle: "Career Development for Self-Taught Developers",
+    description: "Panel discussion on breaking into tech and advancing careers without traditional CS backgrounds.",
+    date: "October 2023",
+    location: "Raleigh, NC",
+    photo: "https://twxvicohcixbzang.public.blob.vercel-storage.com/polaroid/4.jpg",
     color: "#4D7DA3"
   }
 ];
 
-const services: Service[] = [
-  {
-    icon: "🎯",
-    title: "Technical Advisory",
-    description: "Strategic guidance for organizations navigating complex technical challenges and scaling their engineering teams.",
-    features: [
-      "Engineering team structure & scaling",
-      "Technical strategy & roadmap planning",
-      "Developer experience optimization",
-      "Community building for technical brands"
-    ],
-    audience: "executive",
-    color: "#153230"
-  },
-  {
-    icon: "🚀",
-    title: "Executive Consulting",
-    description: "Leadership consulting for companies looking to build developer communities, improve retention, or enhance technical culture.",
-    features: [
-      "Engineering leadership coaching",
-      "Team alignment & productivity",
-      "Technical hiring & retention strategies",
-      "Developer relations programs"
-    ],
-    audience: "executive",
-    color: "#4D7DA3"
-  },
-  {
-    icon: "💡",
-    title: "1-on-1 Career Mentorship",
-    description: "Personalized guidance to help developers at any level advance their careers, nail interviews, and negotiate better offers.",
-    features: [
-      "Career transition strategy",
-      "Technical interview preparation",
-      "Resume & portfolio review",
-      "Salary negotiation coaching"
-    ],
-    audience: "developer",
-    color: "#84803E"
-  },
-  {
-    icon: "🎤",
-    title: "Speaking & Workshops",
-    description: "Engaging keynotes and workshops on community building, career development, and technical leadership.",
-    features: [
-      "Conference keynotes",
-      "Technical workshops",
-      "Corporate training sessions",
-      "Panel moderation"
-    ],
-    audience: "executive",
-    color: "#4D7DA3"
-  }
+const brandMetrics = [
+  { value: "450K+", label: "Developer Reach", icon: "🌍" },
+  { value: "12K+", label: "Community Members", icon: "👥" },
+  { value: "60+", label: "Speaking Events", icon: "🎤" },
+  { value: "8,960", label: "Conference Attendees", icon: "🎪" },
+  { value: "700+", label: "Mentorship Calls", icon: "💬" },
+  { value: "200+", label: "Content Pieces", icon: "📺" }
 ];
 
-const companyLogos = [
-  "Google", "Microsoft", "Amazon", "Spotify", "Stripe", 
-  "Digital Ocean", "GitHub", "Grafana Labs", "Vonage", "Appwrite"
+const brandPartners = [
+  "GitHub", "Microsoft", "Google", "Spotify", "Digital Ocean",
+  "Grafana Labs", "Vonage", "Appwrite", "Agora", "TuxCare"
 ];
 
 export default function AboutPage() {
-  const [activeAudience, setActiveAudience] = useState<"all" | "executive" | "developer">("all");
-
-  const filteredServices = activeAudience === "all" 
-    ? services 
-    : services.filter(s => s.audience === activeAudience);
+  const [activeTab, setActiveTab] = useState<ContentTab>("all");
 
   return (
     <>
@@ -181,62 +318,50 @@ export default function AboutPage() {
 
             {/* Hero Section */}
             <section className="relative px-4 sm:px-8 md:px-16 py-12 md:py-20">
-              <div className="absolute top-0 right-0 w-[600px] h-[500px] bg-gradient-to-br from-[#4D7DA3]/10 to-transparent rounded-full blur-3xl"></div>
-              <div className="absolute bottom-0 left-0 w-[400px] h-[500px] bg-gradient-to-tr from-[#84803E]/8 to-transparent rounded-full blur-3xl"></div>
+              <div className="absolute top-0 right-0 w-[600px] h-[500px] bg-linear-to-br from-[#4D7DA3]/10 to-transparent rounded-full blur-3xl"></div>
+              <div className="absolute bottom-0 left-0 w-[400px] h-[500px] bg-linear-to-tr from-[#84803E]/8 to-transparent rounded-full blur-3xl"></div>
 
-              <div className="relative z-10 max-w-5xl mx-auto">
+              <div className="relative z-10 max-w-5xl mx-auto text-center">
                 <ScrollReveal>
-                  <div className="text-center mb-12">
-                    <div className="inline-flex items-center gap-2.5 bg-[#153230] text-white px-4 py-2 rounded-full shadow-lg mb-6">
-                      <div className="relative flex items-center justify-center">
-                        <div className="w-2 h-2 bg-[#4ade80] rounded-full animate-pulse"></div>
-                        <div className="absolute w-2 h-2 bg-[#4ade80] rounded-full animate-ping"></div>
-                      </div>
-                      <span className="text-sm font-bold tracking-wide">
-                        ACCEPTING EXECUTIVE CALLS & MENTORSHIP BOOKINGS
-                      </span>
+                  <div className="inline-flex items-center gap-2.5 bg-[#153230] text-white px-4 py-2 rounded-full shadow-lg mb-8">
+                    <div className="relative flex items-center justify-center">
+                      <div className="w-2 h-2 bg-[#4ade80] rounded-full animate-pulse"></div>
+                      <div className="absolute w-2 h-2 bg-[#4ade80] rounded-full animate-ping"></div>
                     </div>
-
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-[#153230] leading-tight mb-6">
-                      Danny Thompson
-                    </h1>
-
-                    <p className="text-xl md:text-2xl font-bold text-[#4D7DA3] mb-6">
-                      Director of Technology • Executive Advisor • Community Leader
-                    </p>
-
-                    <p className="text-lg md:text-xl text-[#153230]/70 leading-relaxed max-w-3xl mx-auto">
-                      I help organizations scale their engineering teams and build thriving developer 
-                      communities, while mentoring individual developers to accelerate their careers. 
-                      <span className="text-[#4D7DA3] font-bold"> When things are too complex, 
-                      priorities are unclear, and results matter—they call me.</span>
-                    </p>
+                    <span className="text-sm font-bold tracking-wide">
+                      AVAILABLE FOR BRAND PARTNERSHIPS & SPEAKING
+                    </span>
                   </div>
-                </ScrollReveal>
 
-                {/* Key Metrics */}
-                <ScrollReveal delay={100}>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-                    {[
-                      { value: "450K+", label: "Developer Reach", icon: "🌍" },
-                      { value: "12K+", label: "Community Built", icon: "👥" },
-                      { value: "700+", label: "Mentorship Calls", icon: "💬" },
-                      { value: "200+", label: "Events Organized", icon: "🎪" }
-                    ].map((metric, index) => (
+                  <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-[#153230] leading-tight mb-6">
+                    Speaking, Content
+                    <br />
+                    <span className="text-[#4D7DA3]">& Community</span>
+                  </h1>
+
+                  <p className="text-lg md:text-xl text-[#153230]/70 leading-relaxed max-w-3xl mx-auto mb-12">
+                    Conference speaker, podcast guest, and community leader reaching 
+                    <span className="text-[#4D7DA3] font-bold"> 450,000+ developers globally</span>. 
+                    Available for keynotes, brand partnerships, and content collaborations.
+                  </p>
+
+                  {/* Metrics Grid */}
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                    {brandMetrics.map((metric, index) => (
                       <motion.div
                         key={metric.label}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 + index * 0.05 }}
-                        className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-[#4D7DA3]/10 text-center hover:scale-105 transition-all group"
+                        transition={{ delay: index * 0.05 }}
+                        className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 border border-[#4D7DA3]/10 hover:scale-105 transition-all group"
                       >
-                        <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">
+                        <div className="text-2xl mb-1 group-hover:scale-110 transition-transform">
                           {metric.icon}
                         </div>
-                        <div className="text-2xl md:text-3xl font-black text-[#4D7DA3] mb-1">
+                        <div className="text-xl md:text-2xl font-black text-[#4D7DA3] mb-1">
                           {metric.value}
                         </div>
-                        <div className="text-xs md:text-sm text-[#153230]/70 font-bold">
+                        <div className="text-[10px] md:text-xs text-[#153230]/70 font-bold">
                           {metric.label}
                         </div>
                       </motion.div>
@@ -247,342 +372,310 @@ export default function AboutPage() {
             </section>
           </div>
 
-          {/* The Value I Bring Section */}
+          {/* Why Partner With Me Section */}
           <section className="mx-4 mt-6">
-            <div className="bg-white rounded-[32px] p-8 md:p-12 shadow-xl border border-[#4D7DA3]/10">
-              <ScrollReveal>
-                <h2 className="text-3xl md:text-4xl font-black text-[#153230] mb-8 text-center">
-                  The Value I Bring
-                </h2>
-                <div className="grid md:grid-cols-3 gap-6 mb-12">
-                  <TiltCard>
-                    <div className="bg-gradient-to-br from-[#153230]/10 to-transparent rounded-2xl p-6 h-full border border-[#153230]/10">
-                      <div className="w-16 h-16 bg-[#153230] rounded-2xl flex items-center justify-center text-3xl mb-4 shadow-lg">
-                        🎯
-                      </div>
-                      <h3 className="text-xl font-black text-[#153230] mb-3">
-                        Clarity in Complexity
-                      </h3>
-                      <p className="text-sm text-[#153230]/70 leading-relaxed">
-                        I cut through technical debt, alignment issues, and organizational chaos 
-                        to deliver clear strategies that actually work. No fluff, no theory—just 
-                        actionable solutions.
-                      </p>
-                    </div>
-                  </TiltCard>
-
-                  <TiltCard>
-                    <div className="bg-gradient-to-br from-[#4D7DA3]/10 to-transparent rounded-2xl p-6 h-full border border-[#4D7DA3]/10">
-                      <div className="w-16 h-16 bg-[#4D7DA3] rounded-2xl flex items-center justify-center text-3xl mb-4 shadow-lg">
-                        🚀
-                      </div>
-                      <h3 className="text-xl font-black text-[#153230] mb-3">
-                        Proven Track Record
-                      </h3>
-                      <p className="text-sm text-[#153230]/70 leading-relaxed">
-                        From scaling a conference to 9,000 attendees to building communities of 
-                        12K+ members, I don't just advise—I execute. My results speak for themselves.
-                      </p>
-                    </div>
-                  </TiltCard>
-
-                  <TiltCard>
-                    <div className="bg-gradient-to-br from-[#84803E]/10 to-transparent rounded-2xl p-6 h-full border border-[#84803E]/10">
-                      <div className="w-16 h-16 bg-[#84803E] rounded-2xl flex items-center justify-center text-3xl mb-4 shadow-lg">
-                        💪
-                      </div>
-                      <h3 className="text-xl font-black text-[#153230] mb-3">
-                        Developer-First Mindset
-                      </h3>
-                      <p className="text-sm text-[#153230]/70 leading-relaxed">
-                        I understand developers because I am one. I know what motivates them, 
-                        what frustrates them, and how to build cultures where they thrive.
-                      </p>
-                    </div>
-                  </TiltCard>
-                </div>
-              </ScrollReveal>
-            </div>
-          </section>
-
-          {/* Journey/Timeline Section */}
-          <section className="mx-4 mt-6">
-            <div className="bg-white rounded-[32px] p-8 md:p-12 shadow-xl border border-[#4D7DA3]/10">
-              <ScrollReveal>
-                <h2 className="text-3xl md:text-4xl font-black text-[#153230] mb-8 text-center">
-                  Journey & Milestones
-                </h2>
-                <div className="max-w-4xl mx-auto">
-                  <div className="space-y-6">
-                    {achievements.map((achievement, index) => (
-                      <ScrollReveal key={achievement.year} delay={index * 100}>
-                        <div className="flex gap-6 group">
-                          <div className="flex flex-col items-center">
-                            <div 
-                              className="w-16 h-16 rounded-full flex items-center justify-center font-black text-white text-sm shadow-lg group-hover:scale-110 transition-transform"
-                              style={{ backgroundColor: achievement.color }}
-                            >
-                              {achievement.year}
-                            </div>
-                            {index < achievements.length - 1 && (
-                              <div className="w-1 flex-1 bg-gradient-to-b from-[#4D7DA3] to-[#4D7DA3]/20 mt-2"></div>
-                            )}
-                          </div>
-                          <div className="flex-1 pb-8">
-                            <div className="bg-gradient-to-r from-[#E2F3F2] to-white rounded-2xl p-6 border border-[#4D7DA3]/10 hover:shadow-xl hover:scale-105 transition-all">
-                              <h3 className="text-xl font-black text-[#153230] mb-2">
-                                {achievement.title}
-                              </h3>
-                              <p className="text-sm text-[#153230]/70 leading-relaxed">
-                                {achievement.description}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </ScrollReveal>
-                    ))}
-                  </div>
-                </div>
-              </ScrollReveal>
-            </div>
-          </section>
-
-          {/* Companies I've Worked With */}
-          <section className="mx-4 mt-6">
-            <div className="bg-gradient-to-br from-[#153230] to-[#4D7DA3] rounded-[32px] p-8 md:p-12 shadow-xl overflow-hidden relative">
+            <div className="bg-linear-to-br from-[#153230] to-[#4D7DA3] rounded-[32px] p-8 md:p-12 shadow-xl overflow-hidden relative">
               <div className="absolute inset-0 opacity-10">
-                <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
-                <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+                <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+                <div className="absolute bottom-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
               </div>
               <ScrollReveal>
                 <div className="relative z-10">
-                  <h2 className="text-3xl md:text-4xl font-black text-white mb-4 text-center">
-                    Speakers & Sponsors I've Worked With
+                  <h2 className="text-3xl md:text-4xl font-black text-white mb-8 text-center">
+                    Why Brands Partner With Me
                   </h2>
-                  <p className="text-white/80 text-center mb-8 max-w-2xl mx-auto">
-                    Through conferences, community events, and advisory work, I've collaborated 
-                    with leading tech companies and industry experts.
-                  </p>
-                  <div className="flex flex-wrap justify-center gap-4">
-                    {companyLogos.map((company, index) => (
-                      <motion.div
-                        key={company}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: index * 0.05 }}
-                        className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-6 py-3 hover:bg-white/20 hover:scale-110 transition-all"
-                      >
-                        <span className="text-white font-bold">{company}</span>
-                      </motion.div>
-                    ))}
+                  <div className="grid md:grid-cols-3 gap-6">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all">
+                      <div className="text-4xl mb-4">🎯</div>
+                      <h3 className="text-xl font-black text-white mb-3">Authentic Reach</h3>
+                      <p className="text-white/90 text-sm leading-relaxed">
+                        450K+ developer reach built on genuine relationships, not bought followers. 
+                        My audience trusts my recommendations because I only promote what I believe in.
+                      </p>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all">
+                      <div className="text-4xl mb-4">🚀</div>
+                      <h3 className="text-xl font-black text-white mb-3">Proven Execution</h3>
+                      <p className="text-white/90 text-sm leading-relaxed">
+                        From organizing 9,000-person conferences to building 12K+ communities, 
+                        I deliver measurable results and ROI for partners.
+                      </p>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all">
+                      <div className="text-4xl mb-4">💎</div>
+                      <h3 className="text-xl font-black text-white mb-3">Premium Content</h3>
+                      <p className="text-white/90 text-sm leading-relaxed">
+                        High-quality keynotes, workshops, and content that elevate your brand 
+                        and create lasting impressions with developer audiences.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </ScrollReveal>
             </div>
           </section>
 
-          {/* Services Section */}
+          {/* Tab Navigation */}
           <section className="mx-4 mt-6">
-            <div className="bg-white rounded-[32px] p-8 md:p-12 shadow-xl border border-[#4D7DA3]/10">
-              <ScrollReveal>
-                <h2 className="text-3xl md:text-4xl font-black text-[#153230] mb-4 text-center">
-                  How I Can Help You
-                </h2>
-                <p className="text-center text-[#153230]/70 mb-8 max-w-3xl mx-auto">
-                  Whether you're an executive looking to scale your engineering organization or 
-                  a developer looking to accelerate your career, I provide tailored guidance that delivers results.
-                </p>
-
-                {/* Audience Filter */}
-                <div className="flex justify-center gap-3 mb-8">
+            <ScrollReveal>
+              <div className="bg-white rounded-2xl p-3 shadow-lg border border-[#4D7DA3]/10 overflow-x-auto">
+                <div className="flex gap-2 min-w-max md:min-w-0 md:justify-center">
                   {[
-                    { id: "all" as const, label: "All Services", icon: "🌟" },
-                    { id: "executive" as const, label: "For Executives", icon: "👔" },
-                    { id: "developer" as const, label: "For Developers", icon: "💻" }
-                  ].map((option) => (
+                    { id: "all" as ContentTab, label: "All Content", icon: "🌟" },
+                    { id: "talks" as ContentTab, label: "YouTube Talks", icon: "📺" },
+                    { id: "podcasts" as ContentTab, label: "Podcasts", icon: "🎙️" },
+                    { id: "conferences" as ContentTab, label: "Conferences", icon: "🎪" },
+                  ].map((tab) => (
                     <button
-                      key={option.id}
-                      onClick={() => setActiveAudience(option.id)}
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
                       className={`
-                        px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300
-                        ${activeAudience === option.id
+                        px-4 md:px-6 py-3 rounded-xl font-bold text-sm whitespace-nowrap transition-all duration-300
+                        ${activeTab === tab.id
                           ? "bg-[#153230] text-white scale-105 shadow-lg"
-                          : "bg-[#E2F3F2] text-[#153230]/70 hover:text-[#153230] hover:scale-105"
+                          : "bg-transparent text-[#153230]/70 hover:text-[#153230] hover:bg-[#E2F3F2]"
                         }
                       `}
                     >
-                      <span className="mr-2">{option.icon}</span>
-                      {option.label}
+                      <span className="mr-2">{tab.icon}</span>
+                      {tab.label}
                     </button>
                   ))}
                 </div>
-
-                {/* Services Grid */}
-                <div className="grid md:grid-cols-2 gap-6">
-                  {filteredServices.map((service, index) => (
-                    <ScrollReveal key={service.title} delay={index * 100}>
-                      <TiltCard>
-                        <div className="bg-gradient-to-br from-white to-[#E2F3F2] rounded-2xl p-6 border border-[#4D7DA3]/10 h-full hover:shadow-xl transition-all">
-                          <div 
-                            className="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl mb-4 shadow-lg"
-                            style={{ backgroundColor: `${service.color}15` }}
-                          >
-                            {service.icon}
-                          </div>
-                          <div className="flex items-center gap-2 mb-3">
-                            <h3 className="text-xl font-black text-[#153230]">
-                              {service.title}
-                            </h3>
-                            <span 
-                              className="px-2 py-1 rounded-full text-[10px] font-black text-white"
-                              style={{ backgroundColor: service.color }}
-                            >
-                              {service.audience === "executive" ? "EXEC" : "DEV"}
-                            </span>
-                          </div>
-                          <p className="text-sm text-[#153230]/70 leading-relaxed mb-4">
-                            {service.description}
-                          </p>
-                          <ul className="space-y-2">
-                            {service.features.map((feature, idx) => (
-                              <li key={idx} className="flex items-start gap-2 text-sm text-[#153230]/70">
-                                <svg className="w-5 h-5 text-[#4D7DA3] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                                </svg>
-                                {feature}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </TiltCard>
-                    </ScrollReveal>
-                  ))}
-                </div>
-              </ScrollReveal>
-            </div>
+              </div>
+            </ScrollReveal>
           </section>
 
-          {/* Testimonials Section */}
+          {/* Content Grid */}
           <section className="mx-4 mt-6">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                {/* YouTube Talks */}
+                {(activeTab === "all" || activeTab === "talks") && (
+                  <div className="mb-8">
+                    <h2 className="text-2xl md:text-3xl font-black text-[#153230] mb-6 px-2">
+                      📺 YouTube Talks & Interviews
+                    </h2>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {videoTalks.map((video, index) => (
+                        <ScrollReveal key={video.id} delay={index * 100}>
+                          <a
+                            href={video.youtubeUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block bg-white rounded-2xl overflow-hidden border border-[#4D7DA3]/10 hover:border-[#4D7DA3]/30 hover:shadow-xl hover:scale-105 transition-all group"
+                          >
+                            <div className="relative">
+                              <img
+                                src={video.thumbnail}
+                                alt={video.title}
+                                className="w-full h-48 md:h-56 object-cover"
+                              />
+                              <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center">
+                                  <svg className="w-8 h-8 text-[#153230] ml-1" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                                  </svg>
+                                </div>
+                              </div>
+                              {video.duration && (
+                                <div className="absolute bottom-2 right-2 bg-black/80 text-white px-2 py-1 rounded text-xs font-bold">
+                                  {video.duration}
+                                </div>
+                              )}
+                            </div>
+                            <div className="p-6">
+                              <div className="flex items-center gap-2 mb-3">
+                                <span className="px-2 py-1 bg-[#4D7DA3]/10 text-[#4D7DA3] rounded-full text-[10px] font-black uppercase">
+                                  {video.category}
+                                </span>
+                                {video.views && (
+                                  <span className="text-xs text-[#153230]/60 font-semibold">
+                                    👁️ {video.views} views
+                                  </span>
+                                )}
+                              </div>
+                              <h3 className="text-lg font-black text-[#153230] mb-2 leading-tight">
+                                {video.title}
+                              </h3>
+                              <p className="text-sm text-[#153230]/70 leading-relaxed">
+                                {video.description}
+                              </p>
+                            </div>
+                          </a>
+                        </ScrollReveal>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Podcast Appearances */}
+                {(activeTab === "all" || activeTab === "podcasts") && (
+                  <div className="mb-8">
+                    <h2 className="text-2xl md:text-3xl font-black text-[#153230] mb-6 px-2">
+                      🎙️ Podcast Appearances
+                    </h2>
+                    <div className="grid md:grid-cols-2 gap-6">
+                      {podcastAppearances.map((podcast, index) => (
+                        <ScrollReveal key={podcast.id} delay={index * 100}>
+                          <a
+                            href={podcast.listenUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex gap-4 bg-white rounded-2xl p-6 border border-[#4D7DA3]/10 hover:border-[#4D7DA3]/30 hover:shadow-xl hover:scale-105 transition-all group"
+                          >
+                            <img
+                              src={podcast.coverArt}
+                              alt={podcast.podcastName}
+                              className="w-24 h-24 rounded-xl object-cover shrink-0"
+                            />
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-2">
+                                <span className="text-xs font-black text-[#153230]/50">
+                                  {podcast.platform}
+                                </span>
+                                <span className="text-xs text-[#153230]/40">•</span>
+                                <span className="text-xs text-[#153230]/60">
+                                  {podcast.date}
+                                </span>
+                              </div>
+                              <h3 className="text-base font-black text-[#153230] mb-1">
+                                {podcast.podcastName}
+                              </h3>
+                              <p className="text-sm font-semibold text-[#4D7DA3] mb-2">
+                                {podcast.episodeTitle}
+                              </p>
+                              <p className="text-xs text-[#153230]/70 leading-relaxed">
+                                {podcast.description}
+                              </p>
+                            </div>
+                          </a>
+                        </ScrollReveal>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Conference Appearances */}
+                {(activeTab === "all" || activeTab === "conferences") && (
+                  <div>
+                    <h2 className="text-2xl md:text-3xl font-black text-[#153230] mb-6 px-2">
+                      🎪 Conference Speaking
+                    </h2>
+                    <div className="grid md:grid-cols-2 gap-6">
+                      {conferenceAppearances.map((conference, index) => (
+                        <ScrollReveal key={conference.id} delay={index * 100}>
+                          <div className="bg-white rounded-2xl overflow-hidden border border-[#4D7DA3]/10 hover:shadow-xl hover:scale-105 transition-all">
+                            <img
+                              src={conference.photo}
+                              alt={conference.conferenceName}
+                              className="w-full h-48 md:h-64 object-cover"
+                            />
+                            <div className="p-6">
+                              <div className="flex items-center justify-between mb-3">
+                                <span 
+                                  className="px-3 py-1 rounded-full text-xs font-black text-white"
+                                  style={{ backgroundColor: conference.color }}
+                                >
+                                  {conference.date}
+                                </span>
+                                {conference.attendees && (
+                                  <span className="text-xs text-[#153230]/60 font-semibold">
+                                    👥 {conference.attendees} attendees
+                                  </span>
+                                )}
+                              </div>
+                              <h3 className="text-xl font-black text-[#153230] mb-1">
+                                {conference.conferenceName}
+                              </h3>
+                              <p className="text-sm font-bold text-[#4D7DA3] mb-3">
+                                {conference.talkTitle}
+                              </p>
+                              <p className="text-sm text-[#153230]/70 leading-relaxed mb-3">
+                                {conference.description}
+                              </p>
+                              <p className="text-xs text-[#153230]/50 flex items-center gap-1">
+                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                                </svg>
+                                {conference.location}
+                              </p>
+                            </div>
+                          </div>
+                        </ScrollReveal>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </motion.div>
+            </AnimatePresence>
+          </section>
+
+          {/* Past Brand Partners */}
+          <section className="mx-4 mt-12">
             <div className="bg-white rounded-[32px] p-8 md:p-12 shadow-xl border border-[#4D7DA3]/10">
               <ScrollReveal>
-                <h2 className="text-3xl md:text-4xl font-black text-[#153230] mb-8 text-center">
-                  What People Say
+                <h2 className="text-3xl md:text-4xl font-black text-[#153230] mb-6 text-center">
+                  Past Brand Partners & Collaborations
                 </h2>
-                <div className="grid md:grid-cols-2 gap-6">
-                  {[
-                    {
-                      type: "Executive",
-                      name: "Sarah Johnson",
-                      role: "VP of Engineering @ Tech Startup",
-                      quote: "Danny's guidance helped us restructure our engineering team and improve retention by 40%. His understanding of both technical and people challenges is unmatched.",
-                      color: "#153230"
-                    },
-                    {
-                      type: "Developer",
-                      name: "Michael Chen",
-                      role: "Senior Engineer @ Google",
-                      quote: "Danny's mentorship was instrumental in my transition from mid-level to senior. His practical advice on interviewing and negotiation helped me increase my offer by $60K.",
-                      color: "#4D7DA3"
-                    },
-                    {
-                      type: "Executive",
-                      name: "Jennifer Martinez",
-                      role: "CTO @ Series B Startup",
-                      quote: "We brought Danny in to help build our developer community strategy. Within 6 months, we went from 0 to 3,000 engaged developers. His execution is flawless.",
-                      color: "#84803E"
-                    },
-                    {
-                      type: "Developer",
-                      name: "Alex Williams",
-                      role: "Full Stack Developer @ Stripe",
-                      quote: "I was stuck in my career for 2 years. After 3 calls with Danny, I had a clear roadmap, revamped my approach, and landed my dream role at Stripe within 8 weeks.",
-                      color: "#4D7DA3"
-                    }
-                  ].map((testimonial, index) => (
-                    <ScrollReveal key={testimonial.name} delay={index * 100}>
-                      <div className="bg-gradient-to-br from-[#E2F3F2] to-white rounded-2xl p-6 border border-[#4D7DA3]/10 hover:shadow-xl hover:scale-105 transition-all h-full">
-                        <div className="flex items-center gap-3 mb-4">
-                          <div 
-                            className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold"
-                            style={{ backgroundColor: testimonial.color }}
-                          >
-                            {testimonial.name.split(' ').map(n => n[0]).join('')}
-                          </div>
-                          <div>
-                            <div className="font-black text-[#153230]">{testimonial.name}</div>
-                            <div className="text-xs text-[#153230]/60">{testimonial.role}</div>
-                          </div>
-                          <span 
-                            className="ml-auto px-2 py-1 rounded-full text-[10px] font-black text-white"
-                            style={{ backgroundColor: testimonial.color }}
-                          >
-                            {testimonial.type}
-                          </span>
-                        </div>
-                        <p className="text-sm text-[#153230]/80 leading-relaxed italic">
-                          "{testimonial.quote}"
-                        </p>
-                      </div>
-                    </ScrollReveal>
+                <p className="text-center text-[#153230]/70 mb-8 max-w-2xl mx-auto">
+                  I've had the privilege of working with and featuring speakers from leading tech 
+                  companies through conferences, events, and content collaborations.
+                </p>
+                <div className="flex flex-wrap justify-center gap-4">
+                  {brandPartners.map((brand, index) => (
+                    <motion.div
+                      key={brand}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: index * 0.05 }}
+                      className="bg-linear-to-r from-[#E2F3F2] to-white border border-[#4D7DA3]/10 rounded-xl px-6 py-3 hover:scale-110 hover:shadow-lg transition-all"
+                    >
+                      <span className="text-[#153230] font-bold">{brand}</span>
+                    </motion.div>
                   ))}
                 </div>
               </ScrollReveal>
             </div>
           </section>
 
-          {/* Dual CTA Section */}
-          <section className="mx-4 mt-6 mb-6">
-            <div className="grid md:grid-cols-2 gap-6">
-              {/* Executive CTA */}
-              <ScrollReveal>
-                <div className="relative overflow-hidden rounded-[32px] group">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#153230] to-[#4D7DA3]"></div>
-                  <div className="absolute inset-0 opacity-20">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }}></div>
-                  </div>
-                  <div className="relative p-8 md:p-12 text-center">
-                    <div className="text-5xl mb-4">👔</div>
-                    <h3 className="text-2xl md:text-3xl font-black text-white mb-4">
-                      For Executives & Leaders
-                    </h3>
-                    <p className="text-white/90 mb-6 leading-relaxed">
-                      Strategic advisory for engineering teams, community building, and 
-                      organizational challenges that require proven expertise.
-                    </p>
-                    <Link
-                      href="/#contact"
-                      className="inline-block bg-white text-[#153230] px-8 py-4 rounded-full font-bold hover:scale-105 hover:shadow-2xl transition-all duration-300"
-                    >
-                      Schedule Executive Call
-                    </Link>
-                  </div>
-                </div>
-              </ScrollReveal>
+          {/* CTA Section */}
+          <section className="relative mx-4 mt-6 mb-6 overflow-hidden">
+            <div className="absolute inset-0 bg-linear-to-br from-[#153230] via-[#4D7DA3] to-[#84803E] rounded-[32px]" />
+            
+            <div className="absolute inset-0 opacity-20">
+              <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full mix-blend-overlay filter blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
+              <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full mix-blend-overlay filter blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }} />
+            </div>
 
-              {/* Developer CTA */}
-              <ScrollReveal delay={100}>
-                <div className="relative overflow-hidden rounded-[32px] group">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#84803E] to-[#4D7DA3]"></div>
-                  <div className="absolute inset-0 opacity-20">
-                    <div className="absolute bottom-0 left-0 w-64 h-64 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }}></div>
-                  </div>
-                  <div className="relative p-8 md:p-12 text-center">
-                    <div className="text-5xl mb-4">💻</div>
-                    <h3 className="text-2xl md:text-3xl font-black text-white mb-4">
-                      For Software Developers
-                    </h3>
-                    <p className="text-white/90 mb-6 leading-relaxed">
-                      1-on-1 mentorship to accelerate your career, nail interviews, and 
-                      negotiate offers that reflect your true value.
-                    </p>
-                    <Link
-                      href="/#contact"
-                      className="inline-block bg-white text-[#84803E] px-8 py-4 rounded-full font-bold hover:scale-105 hover:shadow-2xl transition-all duration-300"
-                    >
-                      Book Mentorship Call
-                    </Link>
-                  </div>
+            <div className="relative px-8 md:px-16 py-16 md:py-20 text-center">
+              <ScrollReveal>
+                <h2 className="text-3xl md:text-5xl font-black text-white mb-6 leading-tight">
+                  Let's Create Something Together
+                </h2>
+                <p className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed">
+                  Available for keynotes, brand partnerships, podcast appearances, and content collaborations. 
+                  Let's reach and inspire developers together.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link
+                    href="/#contact"
+                    className="bg-white text-[#153230] px-8 py-4 rounded-full font-bold hover:scale-105 hover:shadow-2xl transition-all duration-300"
+                  >
+                    Book Me to Speak
+                  </Link>
+                  <a
+                    href="mailto:contact@dthompsondev.com"
+                    className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-[#153230] hover:scale-105 transition-all duration-300"
+                  >
+                    Partner With Me
+                  </a>
                 </div>
               </ScrollReveal>
             </div>
@@ -593,4 +686,3 @@ export default function AboutPage() {
     </>
   );
 }
-
