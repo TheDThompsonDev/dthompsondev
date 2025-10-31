@@ -47,7 +47,7 @@ export default function BottomNav() {
     },
     {
       name: "Resources",
-      href: "#resources",
+      href: "/resources",
       icon: (
         <svg
           className="w-6 h-6"
@@ -66,7 +66,7 @@ export default function BottomNav() {
     },
     {
       name: "Community",
-      href: "#community",
+      href: "/community",
       icon: (
         <svg
           className="w-6 h-6"
@@ -85,7 +85,7 @@ export default function BottomNav() {
     },
     {
       name: "About",
-      href: "#about",
+      href: "/about",
       icon: (
         <svg
           className="w-6 h-6"

@@ -82,19 +82,19 @@ export default async function Home() {
                   Podcast
                 </Link>
                 <Link
-                  href="#resources"
+                  href="/resources"
                   className="text-[#153230]/70 hover:text-[#153230] font-semibold transition-colors"
                 >
                   Resources
                 </Link>
                 <Link
-                  href="#community"
+                  href="/community"
                   className="text-[#153230]/70 hover:text-[#153230] font-semibold transition-colors"
                 >
                   Community
                 </Link>
                 <Link
-                  href="#about"
+                  href="/about"
                   className="text-[#153230]/70 hover:text-[#153230] font-semibold transition-colors"
                 >
                   About
