@@ -147,6 +147,150 @@ const videoTalks: VideoTalk[] = [
     thumbnail: "https://img.youtube.com/vi/ODtz06-uSn8/maxresdefault.jpg",
     youtubeUrl: "https://www.youtube.com/watch?v=ODtz06-uSn8",
     category: "interview"
+  },
+  {
+    id: "14",
+    title: "Developer Career Insights",
+    description: "In-depth discussion about career development, breaking into tech, and building sustainable growth as a developer.",
+    thumbnail: "https://img.youtube.com/vi/blsgaR56jNs/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=blsgaR56jNs",
+    category: "talk"
+  },
+  {
+    id: "15",
+    title: "Tech Career Growth Strategies",
+    description: "Exploring strategies for advancing your career in tech and making meaningful progress as a developer.",
+    thumbnail: "https://img.youtube.com/vi/HEwx64EBMBw/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=HEwx64EBMBw",
+    category: "talk"
+  },
+  {
+    id: "16",
+    title: "Building Your Developer Brand",
+    description: "Discussion about personal branding, online presence, and standing out in the competitive tech landscape.",
+    thumbnail: "https://img.youtube.com/vi/bttuRc-RXqs/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=bttuRc-RXqs",
+    category: "interview"
+  },
+  {
+    id: "17",
+    title: "Community Building in Tech",
+    description: "Deep dive into building and scaling tech communities, fostering engagement, and creating value for members.",
+    thumbnail: "https://img.youtube.com/vi/CvjgNm_O2n4/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=CvjgNm_O2n4",
+    category: "talk"
+  },
+  {
+    id: "18",
+    title: "Developer Success Stories",
+    description: "Sharing success stories, lessons learned, and practical advice from my journey in tech.",
+    thumbnail: "https://img.youtube.com/vi/jR4k0rcgxEg/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=jR4k0rcgxEg",
+    category: "interview"
+  },
+  {
+    id: "19",
+    title: "Tech Industry Insights",
+    description: "Discussion about current trends in tech, what's changing, and how developers can stay ahead.",
+    thumbnail: "https://img.youtube.com/vi/YuL_JoDeBDM/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=YuL_JoDeBDM",
+    category: "talk"
+  },
+  {
+    id: "20",
+    title: "Breaking Barriers in Tech",
+    description: "Conversation about overcoming obstacles, dealing with impostor syndrome, and building confidence as a developer.",
+    thumbnail: "https://img.youtube.com/vi/ieRuo0YZg-I/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=ieRuo0YZg-I",
+    category: "interview"
+  },
+  {
+    id: "21",
+    title: "Career Transition Advice",
+    description: "Practical guidance for career changers looking to break into tech from non-traditional backgrounds.",
+    thumbnail: "https://img.youtube.com/vi/f7zdJAPgGUA/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=f7zdJAPgGUA",
+    category: "interview"
+  },
+  {
+    id: "22",
+    title: "Developer Networking Strategies",
+    description: "How to network effectively, build meaningful connections, and leverage relationships for career growth.",
+    thumbnail: "https://img.youtube.com/vi/gXmFs9RlCuI/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=gXmFs9RlCuI",
+    category: "talk"
+  },
+  {
+    id: "23",
+    title: "Tech Career Mentorship",
+    description: "Discussion about mentorship in tech, finding mentors, and becoming a mentor to others.",
+    thumbnail: "https://img.youtube.com/vi/85pfWXmjxVE/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=85pfWXmjxVE",
+    category: "interview"
+  },
+  {
+    id: "24",
+    title: "Developer Job Search Tips",
+    description: "Proven strategies for job searching in tech, optimizing your applications, and landing interviews.",
+    thumbnail: "https://img.youtube.com/vi/bXafpkI6JZI/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=bXafpkI6JZI",
+    category: "talk"
+  },
+  {
+    id: "25",
+    title: "Building Tech Communities",
+    description: "Insights on creating thriving tech communities, organizing events, and driving engagement.",
+    thumbnail: "https://img.youtube.com/vi/ZxlzNTzIoqQ/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=ZxlzNTzIoqQ",
+    category: "talk"
+  },
+  {
+    id: "26",
+    title: "Software Developer Career Path",
+    description: "Exploring different career paths in software development and how to navigate your journey.",
+    thumbnail: "https://img.youtube.com/vi/SdcW_gCx6IM/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=SdcW_gCx6IM",
+    category: "interview"
+  },
+  {
+    id: "27",
+    title: "Tech Career Growth & Development",
+    description: "Strategies for continuous learning, skill development, and advancing in your tech career.",
+    thumbnail: "https://img.youtube.com/vi/nrRLzASgeqE/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=nrRLzASgeqE",
+    category: "talk"
+  },
+  {
+    id: "28",
+    title: "Developer Success Mindset",
+    description: "Building the right mindset for success in tech, staying motivated, and overcoming challenges.",
+    thumbnail: "https://img.youtube.com/vi/JbJD98UF1fg/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=JbJD98UF1fg",
+    category: "interview"
+  },
+  {
+    id: "29",
+    title: "Tech Industry Conversations",
+    description: "Engaging discussions about the tech industry, trends, and what the future holds for developers.",
+    thumbnail: "https://img.youtube.com/vi/W_8La1xYNrQ/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=W_8La1xYNrQ",
+    category: "interview"
+  },
+  {
+    id: "30",
+    title: "Software Development Insights",
+    description: "Deep dive into software development practices, methodologies, and career advancement strategies.",
+    thumbnail: "https://img.youtube.com/vi/2GhuUdAzx2U/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=2GhuUdAzx2U",
+    category: "talk"
+  },
+  {
+    id: "31",
+    title: "Tech Career Workshop",
+    description: "Workshop-style discussion covering essential topics for building a successful career in technology.",
+    thumbnail: "https://img.youtube.com/vi/_M_dYZeqhfc/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=_M_dYZeqhfc",
+    category: "tutorial"
   }
 ];
 
@@ -243,7 +387,7 @@ const brandMetrics = [
   { value: "60+", label: "Speaking Events", icon: "🎤" },
   { value: "8,960", label: "Conference Attendees", icon: "🎪" },
   { value: "700+", label: "Mentorship Calls", icon: "💬" },
-  { value: "200+", label: "Content Pieces", icon: "📺" }
+  { value: "30+", label: "Video Appearances", icon: "📺" }
 ];
 
 const brandPartners = [

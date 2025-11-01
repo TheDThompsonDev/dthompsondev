@@ -82,8 +82,8 @@ export default async function PodcastPage() {
                 <Link href="/community" className="text-[#153230]/70 hover:text-[#153230] font-semibold transition-colors">
                   Community
                 </Link>
-                <Link href="/about" className="text-[#153230]/70 hover:text-[#153230] font-semibold transition-colors">
-                  About
+                <Link href="/talks" className="text-[#153230]/70 hover:text-[#153230] font-semibold transition-colors">
+                  Talks
                 </Link>
               </nav>
             </div>

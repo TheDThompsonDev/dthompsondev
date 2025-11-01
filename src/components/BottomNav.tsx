@@ -84,8 +84,8 @@ export default function BottomNav() {
       ),
     },
     {
-      name: "About",
-      href: "/about",
+      name: "Talks",
+      href: "/talks",
       icon: (
         <svg
           className="w-6 h-6"

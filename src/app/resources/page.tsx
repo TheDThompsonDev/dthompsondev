@@ -247,10 +247,10 @@ export default function ResourcesPage() {
                     Community
                   </Link>
                   <Link
-                    href="/about"
+                    href="/talks"
                     className="text-[#153230]/70 hover:text-[#153230] font-semibold transition-colors"
                   >
-                    About
+                    Talks
                   </Link>
                 </nav>
 
