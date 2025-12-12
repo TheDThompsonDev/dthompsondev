@@ -1,5 +1,6 @@
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { PodcastPageClient } from '@/components/PodcastPageClient';
+import Navbar from '@/components/Navbar';
 import Link from 'next/link';
 import { headers } from 'next/headers';
 import type { Episode, PodcastData } from '@/types/podcast';
@@ -59,35 +60,7 @@ export default async function PodcastPage() {
     <div className="min-h-screen bg-[#E2F3F2]">
       <div className="max-w-[1400px] mx-auto">
         <div className="bg-white rounded-[32px] shadow-xl m-4 overflow-hidden border border-[#4D7DA3]/10">
-          {/* Header */}
-          <header className="px-6 md:px-16 py-6 md:py-8">
-            <div className="flex items-center justify-between gap-8">
-              <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                <div className="w-12 h-12 bg-[#153230] rounded-2xl flex items-center justify-center text-white text-2xl font-bold">
-                  DT
-                </div>
-                <span className="text-xl font-bold tracking-tight text-[#153230] hidden sm:block">DTHOMPSONDEV</span>
-              </Link>
-              
-              <nav className="hidden lg:flex items-center gap-8">
-                <Link href="/blog" className="text-[#153230]/70 hover:text-[#153230] font-semibold transition-colors">
-                  Blog
-                </Link>
-                <Link href="/podcast" className="text-[#153230] font-semibold transition-colors">
-                  Podcast
-                </Link>
-                <Link href="/resources" className="text-[#153230]/70 hover:text-[#153230] font-semibold transition-colors">
-                  Resources
-                </Link>
-                <Link href="/community" className="text-[#153230]/70 hover:text-[#153230] font-semibold transition-colors">
-                  Community
-                </Link>
-                <Link href="/talks" className="text-[#153230]/70 hover:text-[#153230] font-semibold transition-colors">
-                  Talks
-                </Link>
-              </nav>
-            </div>
-          </header>
+          <Navbar />
 
           {/* Hero Section */}
           <section className="px-8 md:px-16 py-16 md:py-24 border-b-2 border-[#153230]/10">

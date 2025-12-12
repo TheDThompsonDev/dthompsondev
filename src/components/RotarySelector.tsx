@@ -405,7 +405,7 @@ function RotarySelectorComponent() {
   }
 
   return (
-    <div className="rounded-3xl -mt-8 bg-white p-4 sm:p-8 shadow-xl border-2 border-[#4D7DA3]/20" style={{ boxShadow: '0 -10px 30px -10px rgba(77, 125, 163, 0.3), 0 10px 30px -10px rgba(0, 0, 0, 0.1)' }}>
+    <div className="rounded-3xl -mt-8 bg-white p-4 sm:p-8 shadow-xl border-2 border-[#4D7DA3]/20 relative z-20" style={{ boxShadow: '0 -10px 30px -10px rgba(77, 125, 163, 0.3), 0 10px 30px -10px rgba(0, 0, 0, 0.1)' }}>
       {/* Magnetic Field Visualization */}
       {isMounted && magneticField && (
         <div 

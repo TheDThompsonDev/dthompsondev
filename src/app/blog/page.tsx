@@ -2,6 +2,7 @@
 
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { TiltCard } from '@/components/TiltCard';
+import Navbar from '@/components/Navbar';
 import Link from 'next/link';
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
@@ -24,6 +25,22 @@ function getColorForPost(index: number): string {
 }
 
 const samplePosts: BlogPost[] = [
+  {
+    id: 3,
+    title: 'The Death of Magic: Welcome to AI Engineering',
+    slug: 'death-of-magic-ai-engineering',
+    excerpt: 'The "Magic Era" of AI is dead. Learn the four architectural pillars that separate weekend prompt-tinkerers from production AI engineers.',
+    content: { blocks: [] },
+    category: 'AI Engineering',
+    featured: true,
+    read_time: '15 min',
+    status: 'published',
+    author_name: 'Danny Thompson',
+    created_at: new Date('2025-12-11').toISOString(),
+    updated_at: new Date('2025-12-11').toISOString(),
+    published_at: new Date('2025-12-11').toISOString(),
+    targetPersonas: ['p2', 'p3'], // Senior Engineer, Engineering Manager
+  },
   {
     id: 1,
     title: 'Closures Visualized: Understanding JavaScript\'s Secret Weapon',
@@ -69,7 +86,7 @@ function BlogContent() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>(samplePosts);
   const [loading, setLoading] = useState(false);
-  const [categories, setCategories] = useState<string[]>(['All', 'JavaScript', 'React']);
+  const [categories, setCategories] = useState<string[]>(['All', 'AI Engineering', 'JavaScript', 'React']);
 
   useEffect(() => {
     // fetchPosts(); // Disabled - showing sample posts only
@@ -125,20 +142,7 @@ function BlogContent() {
     <div className="min-h-screen bg-[#E2F3F2]">
       <div className="max-w-[1400px] mx-auto">
         <div className="bg-white rounded-[32px] shadow-xl m-4 overflow-hidden border border-[#4D7DA3]/10">
-          <header className="px-8 md:px-16 py-8 flex justify-between items-center border-b border-[#4D7DA3]/10">
-            <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-              <div className="w-12 h-12 bg-[#153230] rounded-2xl flex items-center justify-center text-white text-2xl font-bold">
-                DT
-              </div>
-              <span className="text-xl font-bold tracking-tight text-[#153230]">DTHOMPSONDEV</span>
-            </Link>
-            <Link 
-              href="/"
-              className="bg-[#153230] text-white px-8 py-4 rounded-full hover:bg-[#4D7DA3] hover:scale-105 transition-all duration-300 font-semibold"
-            >
-              Back to Home
-            </Link>
-          </header>
+          <Navbar />
 
           <section className="relative px-8 md:px-16 py-20 md:py-32">
             <div className="max-w-6xl mx-auto">
