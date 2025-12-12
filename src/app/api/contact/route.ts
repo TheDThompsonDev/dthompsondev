@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { escapeHtml } from '@/lib/sanitize';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -25,25 +26,31 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Sanitize user inputs to prevent XSS
+    const safeName = escapeHtml(name);
+    const safeEmail = escapeHtml(email);
+    const safeCompany = company ? escapeHtml(company) : '';
+    const safeMessage = escapeHtml(message);
+
     // Send email using Resend
     const { data, error } = await resend.emails.send({
       from: 'Contact Form <onboarding@resend.dev>', // Change this to your verified domain
       to: process.env.CONTACT_EMAIL || 'your-email@example.com', // Your email
       replyTo: email,
-      subject: `New Contact Form Submission from ${name}`,
+      subject: `New Contact Form Submission from ${safeName}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #153230;">New Contact Form Submission</h2>
           
           <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
-            <p style="margin: 10px 0;"><strong>Name:</strong> ${name}</p>
-            <p style="margin: 10px 0;"><strong>Email:</strong> ${email}</p>
-            ${company ? `<p style="margin: 10px 0;"><strong>Company:</strong> ${company}</p>` : ''}
+            <p style="margin: 10px 0;"><strong>Name:</strong> ${safeName}</p>
+            <p style="margin: 10px 0;"><strong>Email:</strong> ${safeEmail}</p>
+            ${safeCompany ? `<p style="margin: 10px 0;"><strong>Company:</strong> ${safeCompany}</p>` : ''}
           </div>
           
           <div style="margin: 20px 0;">
             <h3 style="color: #153230;">Message:</h3>
-            <p style="line-height: 1.6; white-space: pre-wrap;">${message}</p>
+            <p style="line-height: 1.6; white-space: pre-wrap;">${safeMessage}</p>
           </div>
           
           <hr style="border: none; border-top: 1px solid #e2e2e2; margin: 30px 0;" />

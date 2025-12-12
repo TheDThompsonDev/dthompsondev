@@ -41,7 +41,7 @@ export function ContactForm() {
       setStatus('success');
       setFormData({ name: '', email: '', company: '', message: '' });
       setTouchedFields(new Set());
-      
+
       // Reset success message after 5 seconds
       setTimeout(() => setStatus('idle'), 5000);
     } catch (error) {
@@ -52,17 +52,17 @@ export function ContactForm() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    
+
     // Limit message length
     if (name === 'message' && value.length > messageMaxLength) {
       return;
     }
-    
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
-    
+
     // Mark field as touched
     setTouchedFields(prev => new Set(prev).add(name));
   };
@@ -77,7 +77,7 @@ export function ContactForm() {
 
   const getFieldValidation = (fieldName: string, value: string) => {
     if (!touchedFields.has(fieldName) || focusedField === fieldName) return null;
-    
+
     switch (fieldName) {
       case 'name':
         return value.trim().length >= 2 ? 'valid' : 'invalid';
@@ -92,9 +92,9 @@ export function ContactForm() {
   };
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+    <form ref={formRef} onSubmit={handleSubmit} className="space-y-3 sm:space-y-6">
       {/* Name and Email Row */}
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid md:grid-cols-2 gap-3 sm:gap-6">
         {/* Name Field with Floating Label */}
         <div className="relative group">
           <input
@@ -107,17 +107,17 @@ export function ContactForm() {
             onFocus={() => handleFocus('name')}
             onBlur={handleBlur}
             className={`
-              peer w-full px-5 py-4 pt-6 rounded-xl border-2 
+              peer w-full px-4 sm:px-5 py-3 sm:py-4 pt-5 sm:pt-6 rounded-xl border-2 
               bg-white/80 backdrop-blur-sm
               transition-all duration-300
-              text-[#153230] text-base font-medium
+              text-[#153230] text-sm sm:text-base font-medium
               placeholder-transparent
               focus:outline-none focus:ring-4 focus:ring-[#4D7DA3]/20
-              ${getFieldValidation('name', formData.name) === 'valid' 
-                ? 'border-green-400 focus:border-green-500' 
+              ${getFieldValidation('name', formData.name) === 'valid'
+                ? 'border-green-400 focus:border-green-500'
                 : getFieldValidation('name', formData.name) === 'invalid'
-                ? 'border-red-400 focus:border-red-500'
-                : 'border-[#E2F3F2] focus:border-[#4D7DA3] hover:border-[#4D7DA3]/50'
+                  ? 'border-red-400 focus:border-red-500'
+                  : 'border-[#E2F3F2] focus:border-[#4D7DA3] hover:border-[#4D7DA3]/50'
               }
             `}
             placeholder="Your Name"
@@ -135,7 +135,7 @@ export function ContactForm() {
           >
             Your Name <span className="text-[#4D7DA3]">*</span>
           </label>
-          
+
           {/* Validation Icon */}
           {getFieldValidation('name', formData.name) === 'valid' && (
             <div className="absolute right-4 top-1/2 -translate-y-1/2">
@@ -165,17 +165,17 @@ export function ContactForm() {
             onFocus={() => handleFocus('email')}
             onBlur={handleBlur}
             className={`
-              peer w-full px-5 py-4 pt-6 rounded-xl border-2 
+              peer w-full px-4 sm:px-5 py-3 sm:py-4 pt-5 sm:pt-6 rounded-xl border-2 
               bg-white/80 backdrop-blur-sm
               transition-all duration-300
-              text-[#153230] text-base font-medium
+              text-[#153230] text-sm sm:text-base font-medium
               placeholder-transparent
               focus:outline-none focus:ring-4 focus:ring-[#4D7DA3]/20
-              ${getFieldValidation('email', formData.email) === 'valid' 
-                ? 'border-green-400 focus:border-green-500' 
+              ${getFieldValidation('email', formData.email) === 'valid'
+                ? 'border-green-400 focus:border-green-500'
                 : getFieldValidation('email', formData.email) === 'invalid'
-                ? 'border-red-400 focus:border-red-500'
-                : 'border-[#E2F3F2] focus:border-[#4D7DA3] hover:border-[#4D7DA3]/50'
+                  ? 'border-red-400 focus:border-red-500'
+                  : 'border-[#E2F3F2] focus:border-[#4D7DA3] hover:border-[#4D7DA3]/50'
               }
             `}
             placeholder="Your Email"
@@ -193,7 +193,7 @@ export function ContactForm() {
           >
             Email Address <span className="text-[#4D7DA3]">*</span>
           </label>
-          
+
           {/* Validation Icon */}
           {getFieldValidation('email', formData.email) === 'valid' && (
             <div className="absolute right-4 top-1/2 -translate-y-1/2">
@@ -223,10 +223,10 @@ export function ContactForm() {
           onFocus={() => handleFocus('company')}
           onBlur={handleBlur}
           className={`
-            peer w-full px-5 py-4 pt-6 rounded-xl border-2 
+            peer w-full px-4 sm:px-5 py-3 sm:py-4 pt-5 sm:pt-6 rounded-xl border-2 
             bg-white/80 backdrop-blur-sm
             transition-all duration-300
-            text-[#153230] text-base font-medium
+            text-[#153230] text-sm sm:text-base font-medium
             placeholder-transparent
             focus:outline-none focus:ring-4 focus:ring-[#4D7DA3]/20
             border-[#E2F3F2] focus:border-[#4D7DA3] hover:border-[#4D7DA3]/50
@@ -253,24 +253,24 @@ export function ContactForm() {
           id="message"
           name="message"
           required
-          rows={6}
+          rows={4}
           value={formData.message}
           onChange={handleChange}
           onFocus={() => handleFocus('message')}
           onBlur={handleBlur}
           maxLength={messageMaxLength}
           className={`
-            peer w-full px-5 py-4 pt-6 rounded-xl border-2 
+            peer w-full px-4 sm:px-5 py-3 sm:py-4 pt-5 sm:pt-6 rounded-xl border-2 
             bg-white/80 backdrop-blur-sm
             transition-all duration-300
-            text-[#153230] text-base font-medium leading-relaxed
+            text-[#153230] text-sm sm:text-base font-medium leading-relaxed
             placeholder-transparent resize-none
             focus:outline-none focus:ring-4 focus:ring-[#4D7DA3]/20
-            ${getFieldValidation('message', formData.message) === 'valid' 
-              ? 'border-green-400 focus:border-green-500' 
+            ${getFieldValidation('message', formData.message) === 'valid'
+              ? 'border-green-400 focus:border-green-500'
               : getFieldValidation('message', formData.message) === 'invalid'
-              ? 'border-red-400 focus:border-red-500'
-              : 'border-[#E2F3F2] focus:border-[#4D7DA3] hover:border-[#4D7DA3]/50'
+                ? 'border-red-400 focus:border-red-500'
+                : 'border-[#E2F3F2] focus:border-[#4D7DA3] hover:border-[#4D7DA3]/50'
             }
           `}
           placeholder="Your Message"
@@ -288,15 +288,15 @@ export function ContactForm() {
         >
           Tell Me About Your Project <span className="text-[#4D7DA3]">*</span>
         </label>
-        
+
         {/* Character Counter */}
         <div className={`
           absolute bottom-3 right-4 text-xs font-semibold transition-colors
-          ${messageLength > messageMaxLength * 0.9 
-            ? 'text-orange-500' 
-            : messageLength > 0 
-            ? 'text-[#4D7DA3]' 
-            : 'text-[#153230]/30'
+          ${messageLength > messageMaxLength * 0.9
+            ? 'text-orange-500'
+            : messageLength > 0
+              ? 'text-[#4D7DA3]'
+              : 'text-[#153230]/30'
           }
         `}>
           {messageLength} / {messageMaxLength}
@@ -364,7 +364,7 @@ export function ContactForm() {
         >
           {/* Animated Background Gradient */}
           <div className="absolute inset-0 bg-linear-to-r from-[#4D7DA3] via-[#5a8fb5] to-[#4D7DA3] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          
+
           {/* Button Content */}
           <span className="relative flex items-center justify-center gap-3">
             {status === 'loading' ? (
@@ -378,10 +378,10 @@ export function ContactForm() {
             ) : (
               <>
                 <span>SEND MESSAGE</span>
-                <svg 
-                  className="w-6 h-6 transition-transform duration-300 group-hover:translate-x-1" 
-                  fill="none" 
-                  stroke="currentColor" 
+                <svg
+                  className="w-6 h-6 transition-transform duration-300 group-hover:translate-x-1"
+                  fill="none"
+                  stroke="currentColor"
                   viewBox="0 0 24 24"
                   strokeWidth={2.5}
                 >
@@ -398,7 +398,7 @@ export function ContactForm() {
             <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
           </svg>
           <p>
-            Your information is secure and will only be used to respond to your inquiry. 
+            Your information is secure and will only be used to respond to your inquiry.
             I respect your privacy and never share contact details with third parties.
           </p>
         </div>

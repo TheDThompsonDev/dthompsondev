@@ -1201,3 +1201,19 @@ nav[class*="fixed bottom-0"] {
 .animate-subtle-pulse:nth-child(9) { animation-delay: 0.8s; }
 .animate-subtle-pulse:nth-child(10) { animation-delay: 0.9s; }
 .animate-subtle-pulse:nth-child(11) { animation-delay: 1s; }
+
+/* Mobile Menu Overlay Animation */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.4s ease-out both;
+}

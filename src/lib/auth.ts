@@ -57,14 +57,16 @@ export async function deleteSession() {
 
 export async function checkAdminPassword(password: string): Promise<boolean> {
   const adminPassword = process.env.ADMIN_PASSWORD;
-  
+
   if (!adminPassword) {
     throw new Error('ADMIN_PASSWORD not configured');
   }
 
-  if (adminPassword.startsWith('$2')) {
-    return verifyPassword(password, adminPassword);
-  } else {
-    return password === adminPassword;
+  // Always require hashed passwords (bcrypt hashes start with $2)
+  if (!adminPassword.startsWith('$2')) {
+    console.error('ADMIN_PASSWORD must be a bcrypt hash. Generate one using: npx bcryptjs hash "your-password"');
+    throw new Error('ADMIN_PASSWORD must be a bcrypt hash, not plaintext');
   }
+
+  return verifyPassword(password, adminPassword);
 }

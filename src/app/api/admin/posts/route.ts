@@ -50,18 +50,17 @@ export async function POST(request: Request) {
     return NextResponse.json(post, { status: 201 });
   } catch (error: any) {
     console.error('Error creating post:', error);
-    
+
     if (error.code === 'P2002') {
       return NextResponse.json(
         { error: 'A post with this slug already exists' },
         { status: 409 }
       );
     }
-    
+
     return NextResponse.json(
       {
-        error: 'Failed to create post',
-        details: error.message
+        error: 'Failed to create post'
       },
       { status: 500 }
     );
