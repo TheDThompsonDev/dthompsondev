@@ -121,15 +121,13 @@ const conferenceAppearances: ConferenceAppearance[] = [
 
 const JourneySlider = () => {
   return (
-    <div className="relative w-full aspect-[4/5] rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white group [&_*]:!transition-none">
+    <div className="relative w-full aspect-square rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white group [&_*]:!transition-none">
       <ReactCompareSlider
         itemOne={
           <div className="relative w-full h-full">
-            {/* Gritty B&W Kitchen/Gas Station Photo Placeholder */}
             <ReactCompareSliderImage
-              src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1000&auto=format&fit=crop"
+              src="/photos/frying.jpg"
               alt="The Beginning - Gas Station Kitchen"
-              style={{ filter: 'grayscale(100%) contrast(120%)' }}
             />
             <div className="absolute bottom-8 left-8 bg-black/80 backdrop-blur-md px-4 py-2 rounded-lg border-l-4 border-red-500">
               <p className="text-white font-mono text-sm font-bold">2014: The Kitchen</p>
@@ -139,9 +137,8 @@ const JourneySlider = () => {
         }
         itemTwo={
           <div className="relative w-full h-full">
-            {/* Speaking/Tech Photo */}
             <ReactCompareSliderImage
-              src="https://twxvicohcixbzang.public.blob.vercel-storage.com/polaroid/4.jpg"
+              src="https://twxvicohcixbzang.public.blob.vercel-storage.com/polaroid/6.jpg"
               alt="The Destination - Tech Leadership"
             />
             <div className="absolute bottom-8 right-8 bg-[#153230]/90 backdrop-blur-md px-4 py-2 rounded-lg border-r-4 border-[#4D7DA3] text-right">
@@ -226,7 +223,7 @@ export default function AboutPage() {
 
       {/* --- SECTION 1: THE ORIGIN --- */}
       <section id="origin" className="px-6 sm:px-12 md:px-20 py-24 relative bg-[#F8FAFC]">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-[55%_45%] gap-12 items-center">
           <ScrollReveal>
             <div className="relative">
               <div className="absolute -inset-4 bg-[#84803E] rounded-[2rem] rotate-[-3deg] opacity-20"></div>
@@ -269,7 +266,6 @@ export default function AboutPage() {
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10">
           <ScrollReveal>
             <div className="order-2 lg:order-1">
-              <span className="text-[#4ade80] font-black text-sm tracking-[0.2em] uppercase mb-4 block">The 4 AM Contract</span>
               <h2 className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">
                 Motivation is Fleeting. Discipline is Reliable.
               </h2>
@@ -304,15 +300,18 @@ export default function AboutPage() {
           <ScrollReveal delay={200}>
             <div className="relative order-1 lg:order-2">
               <div className="absolute -inset-4 bg-[#4ade80] rounded-[2rem] rotate-[3deg] opacity-20"></div>
-              <div className="relative aspect-video rounded-[2rem] overflow-hidden bg-black/50 backdrop-blur-sm border border-white/10 shadow-2xl flex items-center justify-center">
-                <div className="text-left font-mono text-[#4ade80] p-8">
-                  <p className="opacity-50">// 04:03:12 AM</p>
-                  <p className="mb-4"><span className="text-purple-400">while</span> (<span className="text-yellow-300">!success</span>) {"{"}</p>
-                  <p className="pl-4">study();</p>
-                  <p className="pl-4">build();</p>
-                  <p className="pl-4">fail();</p>
-                  <p className="pl-4">retry();</p>
-                  <p>{"}"}</p>
+              <div className="relative aspect-video rounded-[2rem] overflow-hidden bg-black/50 border border-white/10 shadow-2xl group">
+                <img
+                  src="https://twxvicohcixbzang.public.blob.vercel-storage.com/polaroid/firstMeetup.png"
+                  alt="My First Local Meetup"
+                  className="object-cover w-full h-full transform transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#153230] via-transparent to-transparent opacity-80"></div>
+                <div className="absolute bottom-6 left-6">
+                  <div className="text-white font-mono text-xs sm:text-sm font-bold bg-black/60 backdrop-blur-md px-4 py-2 rounded-lg border-l-4 border-[#4ade80] inline-block mb-1">
+                    07:30 PM
+                  </div>
+                  <p className="text-white/90 text-sm font-mono pl-1">The First Meetup that changed everything.</p>
                 </div>
               </div>
             </div>

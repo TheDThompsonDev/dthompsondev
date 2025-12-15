@@ -51,7 +51,7 @@ export function NewsletterForm() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 disabled={status === 'loading'}
-                                className="flex-1 px-6 py-4 rounded-full text-[#153230] font-semibold focus:outline-none focus:ring-4 focus:ring-white/30 transition-all disabled:opacity-50"
+                                className="flex-1 px-6 py-4 rounded-full bg-white border border-white/20 text-[#153230] font-semibold focus:outline-none focus:ring-4 focus:ring-white/30 transition-all disabled:opacity-50"
                             />
                             <button
                                 type="submit"

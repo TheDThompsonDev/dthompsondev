@@ -5,7 +5,6 @@ import { TiltCard } from '@/components/TiltCard';
 import Link from 'next/link';
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { NewsletterForm } from '@/components/NewsletterForm';
 import { BlogPost } from '@/types/blog';
 
 const colors = ['#4D7DA3', '#84803E', '#A34D7D', '#7DA34D', '#D87D4A'];
@@ -382,8 +381,6 @@ function BlogContent() {
           )}
         </div>
       </section>
-
-      <NewsletterForm />
 
       <footer className="px-8 md:px-16 py-8 border-t border-[#4D7DA3]/10">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">

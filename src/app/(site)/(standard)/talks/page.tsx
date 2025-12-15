@@ -2,8 +2,6 @@
 
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { TiltCard } from "@/components/TiltCard";
-import BottomNav from "@/components/BottomNav";
-import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -365,363 +363,353 @@ export default function TalksPage() {
   const filteredVideos = activeFilter === "all"
     ? videoTalks
     : activeFilter === "featured"
-    ? videoTalks.filter(v => v.featured)
-    : activeFilter === "interviews"
-    ? videoTalks.filter(v => v.category === "interview")
-    : activeFilter === "tutorials"
-    ? videoTalks.filter(v => v.category === "tutorial")
-    : videoTalks.filter(v => v.category === "talk");
+      ? videoTalks.filter(v => v.featured)
+      : activeFilter === "interviews"
+        ? videoTalks.filter(v => v.category === "interview")
+        : activeFilter === "tutorials"
+          ? videoTalks.filter(v => v.category === "tutorial")
+          : videoTalks.filter(v => v.category === "talk");
 
   const featuredVideos = videoTalks.filter(v => v.featured).slice(0, 3);
 
   return (
     <>
-      <div className="min-h-screen bg-[#E2F3F2] pb-20 lg:pb-0">
-        <div className="max-w-[1600px] mx-auto">
-          {/* Header */}
-          <div className="bg-white rounded-[32px] shadow-xl m-4 overflow-hidden border border-[#4D7DA3]/10">
-            <Navbar />
+      {/* Hero Section */}
+      <section className="relative px-4 sm:px-8 md:px-16 py-16 md:py-24">
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-linear-to-br from-[#4D7DA3]/15 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-linear-to-tr from-[#84803E]/10 to-transparent rounded-full blur-3xl"></div>
 
-            {/* Hero Section */}
-            <section className="relative px-4 sm:px-8 md:px-16 py-16 md:py-24">
-              <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-linear-to-br from-[#4D7DA3]/15 to-transparent rounded-full blur-3xl"></div>
-              <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-linear-to-tr from-[#84803E]/10 to-transparent rounded-full blur-3xl"></div>
-
-              <div className="relative z-10 max-w-6xl mx-auto text-center">
-                <ScrollReveal>
-                  <div className="inline-flex items-center gap-2.5 bg-[#153230] text-white px-5 py-2.5 rounded-full shadow-lg mb-8">
-                    <div className="relative flex items-center justify-center">
-                      <div className="w-2.5 h-2.5 bg-[#4ade80] rounded-full animate-pulse"></div>
-                      <div className="absolute w-2.5 h-2.5 bg-[#4ade80] rounded-full animate-ping"></div>
-                    </div>
-                    <span className="text-sm font-bold tracking-wide">
-                      BOOKING NOW FOR 2025 EVENTS
-                    </span>
-                  </div>
-
-                  <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-[#153230] leading-[1.1] mb-8">
-                    Speaker.
-                    <br />
-                    <span className="text-[#4D7DA3]">Storyteller.</span>
-                    <br />
-                    <span className="text-[#84803E]">Community Leader.</span>
-                  </h1>
-
-                  <p className="text-xl md:text-2xl text-[#153230]/70 leading-relaxed max-w-4xl mx-auto mb-12">
-                    Conference keynotes • Podcast appearances • Corporate workshops • Panel moderation
-                    <br />
-                    <span className="text-[#4D7DA3] font-bold text-2xl md:text-3xl">
-                      Reaching 450,000+ developers globally
-                    </span>
-                  </p>
-
-                  {/* Speaking Stats */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto mb-12">
-                    {speakingStats.map((stat, index) => (
-                      <motion.div
-                        key={stat.label}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.1 }}
-                        className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 border-2 border-[#4D7DA3]/20 hover:border-[#4D7DA3] hover:scale-110 transition-all duration-300 group"
-                      >
-                        <div className="text-3xl md:text-4xl font-black text-[#4D7DA3] mb-2 group-hover:scale-110 transition-transform">
-                          {stat.value}
-                        </div>
-                        <div className="text-sm md:text-base text-[#153230]/70 font-bold">
-                          {stat.label}
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Link
-                      href="/#contact"
-                      className="group relative bg-[#153230] text-white px-10 py-5 rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300 font-bold text-lg overflow-hidden"
-                    >
-                      <span className="relative z-10">Book Me to Speak</span>
-                      <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
-                    </Link>
-                    <a
-                      href="#speaking-topics"
-                      className="bg-transparent border-2 border-[#153230] text-[#153230] px-10 py-5 rounded-full hover:bg-[#153230] hover:text-white hover:scale-105 transition-all duration-300 font-bold text-lg"
-                    >
-                      View Speaking Topics
-                    </a>
-                  </div>
-                </ScrollReveal>
+        <div className="relative z-10 max-w-6xl mx-auto text-center">
+          <ScrollReveal>
+            <div className="inline-flex items-center gap-2.5 bg-[#153230] text-white px-5 py-2.5 rounded-full shadow-lg mb-8">
+              <div className="relative flex items-center justify-center">
+                <div className="w-2.5 h-2.5 bg-[#4ade80] rounded-full animate-pulse"></div>
+                <div className="absolute w-2.5 h-2.5 bg-[#4ade80] rounded-full animate-ping"></div>
               </div>
-            </section>
+              <span className="text-sm font-bold tracking-wide">
+                BOOKING NOW FOR 2025 EVENTS
+              </span>
+            </div>
+
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-[#153230] leading-[1.1] mb-8">
+              Speaker.
+              <br />
+              <span className="text-[#4D7DA3]">Storyteller.</span>
+              <br />
+              <span className="text-[#84803E]">Community Leader.</span>
+            </h1>
+
+            <p className="text-xl md:text-2xl text-[#153230]/70 leading-relaxed max-w-4xl mx-auto mb-12">
+              Conference keynotes • Podcast appearances • Corporate workshops • Panel moderation
+              <br />
+              <span className="text-[#4D7DA3] font-bold text-2xl md:text-3xl">
+                Reaching 450,000+ developers globally
+              </span>
+            </p>
+
+            {/* Speaking Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto mb-12">
+              {speakingStats.map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 border-2 border-[#4D7DA3]/20 hover:border-[#4D7DA3] hover:scale-110 transition-all duration-300 group"
+                >
+                  <div className="text-3xl md:text-4xl font-black text-[#4D7DA3] mb-2 group-hover:scale-110 transition-transform">
+                    {stat.value}
+                  </div>
+                  <div className="text-sm md:text-base text-[#153230]/70 font-bold">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/#contact"
+                className="group relative bg-[#153230] text-white px-10 py-5 rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300 font-bold text-lg overflow-hidden"
+              >
+                <span className="relative z-10">Book Me to Speak</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+              </Link>
+              <a
+                href="#speaking-topics"
+                className="bg-transparent border-2 border-[#153230] text-[#153230] px-10 py-5 rounded-full hover:bg-[#153230] hover:text-white hover:scale-105 transition-all duration-300 font-bold text-lg"
+              >
+                View Speaking Topics
+              </a>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Featured Talks Section */}
+      <section className="mx-4 mt-8">
+        <ScrollReveal>
+          <div className="text-center mb-8">
+            <h2 className="text-4xl md:text-5xl font-black text-[#153230] mb-4">
+              🌟 Featured Talks
+            </h2>
+            <p className="text-lg md:text-xl text-[#153230]/70 max-w-3xl mx-auto">
+              Highlights from my most impactful speaking engagements and interviews
+            </p>
+          </div>
+        </ScrollReveal>
+
+        <div className="grid md:grid-cols-3 gap-6 mb-12">
+          {featuredVideos.map((video, index) => (
+            <ScrollReveal key={video.id} delay={index * 100}>
+              <motion.a
+                href={video.youtubeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block bg-white rounded-3xl overflow-hidden border-2 border-[#4D7DA3]/20 hover:border-[#4D7DA3] hover:shadow-2xl transition-all duration-500"
+                whileHover={{ y: -8, scale: 1.02 }}
+              >
+                <div className="relative overflow-hidden">
+                  <img
+                    src={video.thumbnail}
+                    alt={video.title}
+                    className="w-full h-56 md:h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl">
+                      <svg className="w-10 h-10 text-[#153230] ml-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="absolute top-4 left-4 bg-[#4D7DA3] text-white px-3 py-1 rounded-full text-xs font-black uppercase">
+                    Featured
+                  </div>
+                </div>
+                <div className="p-6">
+                  {video.channel && (
+                    <div className="text-xs font-bold text-[#4D7DA3] mb-2 uppercase tracking-wide">
+                      {video.channel}
+                    </div>
+                  )}
+                  <h3 className="text-xl font-black text-[#153230] mb-3 leading-tight group-hover:text-[#4D7DA3] transition-colors">
+                    {video.title}
+                  </h3>
+                  <p className="text-sm text-[#153230]/70 leading-relaxed">
+                    {video.description}
+                  </p>
+                </div>
+              </motion.a>
+            </ScrollReveal>
+          ))}
+        </div>
+      </section>
+
+      {/* Speaking Topics Section */}
+      <section id="speaking-topics" className="mx-4 mt-12">
+        <div className="bg-gradient-to-br from-[#153230] to-[#4D7DA3] rounded-[32px] p-8 md:p-16 shadow-2xl overflow-hidden relative">
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }}></div>
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }}></div>
           </div>
 
-          {/* Featured Talks Section */}
-          <section className="mx-4 mt-8">
-            <ScrollReveal>
-              <div className="text-center mb-8">
-                <h2 className="text-4xl md:text-5xl font-black text-[#153230] mb-4">
-                  🌟 Featured Talks
+          <ScrollReveal>
+            <div className="relative z-10">
+              <div className="text-center mb-12">
+                <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
+                  🎤 Speaking Topics
                 </h2>
-                <p className="text-lg md:text-xl text-[#153230]/70 max-w-3xl mx-auto">
-                  Highlights from my most impactful speaking engagements and interviews
+                <p className="text-xl text-white/90 max-w-3xl mx-auto">
+                  Engaging, authentic talks that inspire developers and drive action
                 </p>
               </div>
-            </ScrollReveal>
 
-            <div className="grid md:grid-cols-3 gap-6 mb-12">
-              {featuredVideos.map((video, index) => (
-                <ScrollReveal key={video.id} delay={index * 100}>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {speakingTopics.map((topic, index) => (
+                  <motion.div
+                    key={topic.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 hover:scale-105 transition-all duration-300"
+                  >
+                    <div className="text-5xl mb-4">{topic.icon}</div>
+                    <h3 className="text-xl font-black text-white mb-3">{topic.title}</h3>
+                    <p className="text-white/80 text-sm leading-relaxed">{topic.description}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* All Talks Library */}
+      <section className="mx-4 mt-12">
+        <ScrollReveal>
+          <div className="bg-white rounded-[32px] p-8 md:p-12 shadow-xl border border-[#4D7DA3]/10">
+            <div className="text-center mb-8">
+              <h2 className="text-4xl md:text-5xl font-black text-[#153230] mb-4">
+                📺 Complete Talk Library
+              </h2>
+              <p className="text-lg md:text-xl text-[#153230]/70 max-w-3xl mx-auto mb-8">
+                30+ speaking engagements covering career development, community building, and technical leadership
+              </p>
+
+              {/* Filter Buttons */}
+              <div className="flex flex-wrap justify-center gap-3">
+                {[
+                  { id: "all" as ContentFilter, label: "All Talks", count: videoTalks.length },
+                  { id: "featured" as ContentFilter, label: "Featured", count: videoTalks.filter(v => v.featured).length },
+                  { id: "interviews" as ContentFilter, label: "Interviews", count: videoTalks.filter(v => v.category === "interview").length },
+                  { id: "conferences" as ContentFilter, label: "Talks", count: videoTalks.filter(v => v.category === "talk").length },
+                  { id: "tutorials" as ContentFilter, label: "Workshops", count: videoTalks.filter(v => v.category === "tutorial").length },
+                ].map((filter) => (
+                  <button
+                    key={filter.id}
+                    onClick={() => setActiveFilter(filter.id)}
+                    className={`
+                      px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300
+                      ${activeFilter === filter.id
+                        ? "bg-[#153230] text-white scale-105 shadow-lg"
+                        : "bg-[#E2F3F2] text-[#153230]/70 hover:text-[#153230] hover:scale-105"
+                      }
+                    `}
+                  >
+                    {filter.label} <span className="text-xs">({filter.count})</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeFilter}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="grid md:grid-cols-3 lg:grid-cols-4 gap-6"
+              >
+                {filteredVideos.map((video, index) => (
                   <motion.a
+                    key={video.id}
                     href={video.youtubeUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group block bg-white rounded-3xl overflow-hidden border-2 border-[#4D7DA3]/20 hover:border-[#4D7DA3] hover:shadow-2xl transition-all duration-500"
-                    whileHover={{ y: -8, scale: 1.02 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                    className="group block bg-gradient-to-br from-white to-[#E2F3F2]/30 rounded-2xl overflow-hidden border border-[#4D7DA3]/10 hover:border-[#4D7DA3]/40 hover:shadow-xl transition-all duration-300"
+                    whileHover={{ y: -4 }}
                   >
                     <div className="relative overflow-hidden">
                       <img
                         src={video.thumbnail}
                         alt={video.title}
-                        className="w-full h-56 md:h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                        className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl">
-                          <svg className="w-10 h-10 text-[#153230] ml-1" fill="currentColor" viewBox="0 0 20 20">
+                      <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                          <svg className="w-6 h-6 text-[#153230] ml-0.5" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
                           </svg>
                         </div>
                       </div>
-                      <div className="absolute top-4 left-4 bg-[#4D7DA3] text-white px-3 py-1 rounded-full text-xs font-black uppercase">
-                        Featured
-                      </div>
+                      {video.featured && (
+                        <div className="absolute top-2 right-2 bg-[#4D7DA3] text-white px-2 py-1 rounded text-[10px] font-black">
+                          ★
+                        </div>
+                      )}
                     </div>
-                    <div className="p-6">
+                    <div className="p-4">
                       {video.channel && (
-                        <div className="text-xs font-bold text-[#4D7DA3] mb-2 uppercase tracking-wide">
+                        <div className="text-[10px] font-bold text-[#4D7DA3] mb-1 uppercase">
                           {video.channel}
                         </div>
                       )}
-                      <h3 className="text-xl font-black text-[#153230] mb-3 leading-tight group-hover:text-[#4D7DA3] transition-colors">
+                      <h3 className="text-sm font-black text-[#153230] mb-2 leading-tight line-clamp-2 group-hover:text-[#4D7DA3] transition-colors">
                         {video.title}
                       </h3>
-                      <p className="text-sm text-[#153230]/70 leading-relaxed">
+                      <p className="text-xs text-[#153230]/60 line-clamp-2 leading-relaxed">
                         {video.description}
                       </p>
                     </div>
                   </motion.a>
-                </ScrollReveal>
+                ))}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </ScrollReveal>
+      </section>
+
+      {/* Featured Channels */}
+      <section className="mx-4 mt-12">
+        <div className="bg-white rounded-[32px] p-8 md:p-12 shadow-xl border border-[#4D7DA3]/10">
+          <ScrollReveal>
+            <h2 className="text-3xl md:text-4xl font-black text-[#153230] mb-6 text-center">
+              Featured On Leading Tech Platforms
+            </h2>
+            <p className="text-center text-[#153230]/70 mb-8 max-w-2xl mx-auto">
+              Trusted by top tech brands and media outlets to share insights with developer audiences
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              {brandLogos.map((brand, index) => (
+                <motion.div
+                  key={brand}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.05 }}
+                  className="bg-linear-to-r from-[#E2F3F2] to-white border border-[#4D7DA3]/10 rounded-xl px-6 py-3 hover:scale-110 hover:shadow-lg hover:border-[#4D7DA3]/30 transition-all"
+                >
+                  <span className="text-[#153230] font-bold">{brand}</span>
+                </motion.div>
               ))}
             </div>
-          </section>
-
-          {/* Speaking Topics Section */}
-          <section id="speaking-topics" className="mx-4 mt-12">
-            <div className="bg-gradient-to-br from-[#153230] to-[#4D7DA3] rounded-[32px] p-8 md:p-16 shadow-2xl overflow-hidden relative">
-              <div className="absolute inset-0 opacity-10">
-                <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }}></div>
-                <div className="absolute bottom-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }}></div>
-              </div>
-
-              <ScrollReveal>
-                <div className="relative z-10">
-                  <div className="text-center mb-12">
-                    <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
-                      🎤 Speaking Topics
-                    </h2>
-                    <p className="text-xl text-white/90 max-w-3xl mx-auto">
-                      Engaging, authentic talks that inspire developers and drive action
-                    </p>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {speakingTopics.map((topic, index) => (
-                      <motion.div
-                        key={topic.title}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.1 }}
-                        viewport={{ once: true }}
-                        className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 hover:scale-105 transition-all duration-300"
-                      >
-                        <div className="text-5xl mb-4">{topic.icon}</div>
-                        <h3 className="text-xl font-black text-white mb-3">{topic.title}</h3>
-                        <p className="text-white/80 text-sm leading-relaxed">{topic.description}</p>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </ScrollReveal>
-            </div>
-          </section>
-
-          {/* All Talks Library */}
-          <section className="mx-4 mt-12">
-            <ScrollReveal>
-              <div className="bg-white rounded-[32px] p-8 md:p-12 shadow-xl border border-[#4D7DA3]/10">
-                <div className="text-center mb-8">
-                  <h2 className="text-4xl md:text-5xl font-black text-[#153230] mb-4">
-                    📺 Complete Talk Library
-                  </h2>
-                  <p className="text-lg md:text-xl text-[#153230]/70 max-w-3xl mx-auto mb-8">
-                    30+ speaking engagements covering career development, community building, and technical leadership
-                  </p>
-
-                  {/* Filter Buttons */}
-                  <div className="flex flex-wrap justify-center gap-3">
-                    {[
-                      { id: "all" as ContentFilter, label: "All Talks", count: videoTalks.length },
-                      { id: "featured" as ContentFilter, label: "Featured", count: videoTalks.filter(v => v.featured).length },
-                      { id: "interviews" as ContentFilter, label: "Interviews", count: videoTalks.filter(v => v.category === "interview").length },
-                      { id: "conferences" as ContentFilter, label: "Talks", count: videoTalks.filter(v => v.category === "talk").length },
-                      { id: "tutorials" as ContentFilter, label: "Workshops", count: videoTalks.filter(v => v.category === "tutorial").length },
-                    ].map((filter) => (
-                      <button
-                        key={filter.id}
-                        onClick={() => setActiveFilter(filter.id)}
-                        className={`
-                          px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300
-                          ${activeFilter === filter.id
-                            ? "bg-[#153230] text-white scale-105 shadow-lg"
-                            : "bg-[#E2F3F2] text-[#153230]/70 hover:text-[#153230] hover:scale-105"
-                          }
-                        `}
-                      >
-                        {filter.label} <span className="text-xs">({filter.count})</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeFilter}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="grid md:grid-cols-3 lg:grid-cols-4 gap-6"
-                  >
-                    {filteredVideos.map((video, index) => (
-                      <motion.a
-                        key={video.id}
-                        href={video.youtubeUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.05 }}
-                        className="group block bg-gradient-to-br from-white to-[#E2F3F2]/30 rounded-2xl overflow-hidden border border-[#4D7DA3]/10 hover:border-[#4D7DA3]/40 hover:shadow-xl transition-all duration-300"
-                        whileHover={{ y: -4 }}
-                      >
-                        <div className="relative overflow-hidden">
-                          <img
-                            src={video.thumbnail}
-                            alt={video.title}
-                            className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
-                          />
-                          <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                              <svg className="w-6 h-6 text-[#153230] ml-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                              </svg>
-                            </div>
-                          </div>
-                          {video.featured && (
-                            <div className="absolute top-2 right-2 bg-[#4D7DA3] text-white px-2 py-1 rounded text-[10px] font-black">
-                              ★
-                            </div>
-                          )}
-                        </div>
-                        <div className="p-4">
-                          {video.channel && (
-                            <div className="text-[10px] font-bold text-[#4D7DA3] mb-1 uppercase">
-                              {video.channel}
-                            </div>
-                          )}
-                          <h3 className="text-sm font-black text-[#153230] mb-2 leading-tight line-clamp-2 group-hover:text-[#4D7DA3] transition-colors">
-                            {video.title}
-                          </h3>
-                          <p className="text-xs text-[#153230]/60 line-clamp-2 leading-relaxed">
-                            {video.description}
-                          </p>
-                        </div>
-                      </motion.a>
-                    ))}
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-            </ScrollReveal>
-          </section>
-
-          {/* Featured Channels */}
-          <section className="mx-4 mt-12">
-            <div className="bg-white rounded-[32px] p-8 md:p-12 shadow-xl border border-[#4D7DA3]/10">
-              <ScrollReveal>
-                <h2 className="text-3xl md:text-4xl font-black text-[#153230] mb-6 text-center">
-                  Featured On Leading Tech Platforms
-                </h2>
-                <p className="text-center text-[#153230]/70 mb-8 max-w-2xl mx-auto">
-                  Trusted by top tech brands and media outlets to share insights with developer audiences
-                </p>
-                <div className="flex flex-wrap justify-center gap-4">
-                  {brandLogos.map((brand, index) => (
-                    <motion.div
-                      key={brand}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: index * 0.05 }}
-                      className="bg-linear-to-r from-[#E2F3F2] to-white border border-[#4D7DA3]/10 rounded-xl px-6 py-3 hover:scale-110 hover:shadow-lg hover:border-[#4D7DA3]/30 transition-all"
-                    >
-                      <span className="text-[#153230] font-bold">{brand}</span>
-                    </motion.div>
-                  ))}
-                </div>
-              </ScrollReveal>
-            </div>
-          </section>
-
-          {/* CTA Section */}
-          <section className="relative mx-4 mt-12 mb-6 overflow-hidden">
-            <div className="absolute inset-0 bg-linear-to-br from-[#153230] via-[#4D7DA3] to-[#84803E] rounded-[32px]" />
-            
-            <div className="absolute inset-0 opacity-20">
-              <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full mix-blend-overlay filter blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
-              <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full mix-blend-overlay filter blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }} />
-            </div>
-
-            <div className="relative px-8 md:px-16 py-20 md:py-28 text-center">
-              <ScrollReveal>
-                <h2 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
-                  Let's Create Something
-                  <br />
-                  Amazing Together
-                </h2>
-                <p className="text-xl md:text-2xl text-white/90 mb-10 max-w-3xl mx-auto leading-relaxed">
-                  Available for conference keynotes, podcast appearances, corporate workshops, 
-                  and brand partnerships. Let's inspire developers together.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                  <Link
-                    href="/#contact"
-                    className="group relative bg-white text-[#153230] px-12 py-6 rounded-full font-black text-xl hover:scale-110 hover:shadow-2xl transition-all duration-300 overflow-hidden"
-                  >
-                    <span className="relative z-10">Book Me to Speak</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#4D7DA3]/10 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
-                  </Link>
-                  <a
-                    href="mailto:contact@dthompsondev.com"
-                    className="bg-transparent border-3 border-white text-white px-12 py-6 rounded-full font-black text-xl hover:bg-white hover:text-[#153230] hover:scale-110 transition-all duration-300"
-                  >
-                    Download Speaker Kit
-                  </a>
-                </div>
-              </ScrollReveal>
-            </div>
-          </section>
+          </ScrollReveal>
         </div>
-      </div>
-      <BottomNav />
+      </section>
+
+      {/* CTA Section */}
+      <section className="relative mx-4 mt-12 mb-6 overflow-hidden">
+        <div className="absolute inset-0 bg-linear-to-br from-[#153230] via-[#4D7DA3] to-[#84803E] rounded-[32px]" />
+
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full mix-blend-overlay filter blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full mix-blend-overlay filter blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }} />
+        </div>
+
+        <div className="relative px-8 md:px-16 py-20 md:py-28 text-center">
+          <ScrollReveal>
+            <h2 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
+              Let's Create Something
+              <br />
+              Amazing Together
+            </h2>
+            <p className="text-xl md:text-2xl text-white/90 mb-10 max-w-3xl mx-auto leading-relaxed">
+              Available for conference keynotes, podcast appearances, corporate workshops,
+              and brand partnerships. Let's inspire developers together.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Link
+                href="/#contact"
+                className="group relative bg-white text-[#153230] px-12 py-6 rounded-full font-black text-xl hover:scale-110 hover:shadow-2xl transition-all duration-300 overflow-hidden"
+              >
+                <span className="relative z-10">Book Me to Speak</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#4D7DA3]/10 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+              </Link>
+              <a
+                href="mailto:contact@dthompsondev.com"
+                className="bg-transparent border-3 border-white text-white px-12 py-6 rounded-full font-black text-xl hover:bg-white hover:text-[#153230] hover:scale-110 transition-all duration-300"
+              >
+                Download Speaker Kit
+              </a>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
     </>
   );
 }

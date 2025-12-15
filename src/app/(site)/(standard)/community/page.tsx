@@ -2,8 +2,6 @@
 
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { TiltCard } from "@/components/TiltCard";
-import BottomNav from "@/components/BottomNav";
-import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -59,196 +57,186 @@ export default function CommunityPage() {
 
   return (
     <>
-      <div className="min-h-screen bg-[#E2F3F2] pb-20 lg:pb-0">
-        <div className="max-w-[1400px] mx-auto">
-          {/* Header Card */}
-          <div className="bg-white rounded-[32px] shadow-xl m-4 overflow-hidden border border-[#4D7DA3]/10">
-            <Navbar />
+      {/* Hero Section */}
+      <section className="relative px-4 sm:px-8 md:px-16 py-12 md:py-20">
+        <div className="absolute top-0 right-0 w-[600px] h-[400px] bg-gradient-to-br from-[#4D7DA3]/10 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-[#84803E]/8 to-transparent rounded-full blur-3xl"></div>
 
-            {/* Hero Section */}
-            <section className="relative px-4 sm:px-8 md:px-16 py-12 md:py-20">
-              <div className="absolute top-0 right-0 w-[600px] h-[400px] bg-gradient-to-br from-[#4D7DA3]/10 to-transparent rounded-full blur-3xl"></div>
-              <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-[#84803E]/8 to-transparent rounded-full blur-3xl"></div>
+        <div className="relative z-10 max-w-5xl mx-auto text-center">
+          <ScrollReveal>
+            <div className="inline-flex items-center gap-2.5 bg-[#153230] text-white px-4 py-2 rounded-full shadow-lg mb-8">
+              <div className="relative flex items-center justify-center">
+                <div className="w-2 h-2 bg-[#4ade80] rounded-full animate-pulse"></div>
+                <div className="absolute w-2 h-2 bg-[#4ade80] rounded-full animate-ping"></div>
+              </div>
+              <span className="text-sm font-bold tracking-wide">
+                BUILDING COMMUNITIES • CHANGING LIVES
+              </span>
+            </div>
 
-              <div className="relative z-10 max-w-5xl mx-auto text-center">
-                <ScrollReveal>
-                  <div className="inline-flex items-center gap-2.5 bg-[#153230] text-white px-4 py-2 rounded-full shadow-lg mb-8">
-                    <div className="relative flex items-center justify-center">
-                      <div className="w-2 h-2 bg-[#4ade80] rounded-full animate-pulse"></div>
-                      <div className="absolute w-2 h-2 bg-[#4ade80] rounded-full animate-ping"></div>
-                    </div>
-                    <span className="text-sm font-bold tracking-wide">
-                      BUILDING COMMUNITIES • CHANGING LIVES
-                    </span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-[#153230] leading-tight mb-6">
+              Community{" "}
+              <span className="text-[#4D7DA3]">
+                Builder,
+              </span>
+              <br />
+              Career{" "}
+              <span className="text-[#84803E]">
+                Champion
+              </span>
+            </h1>
+
+            <p className="text-lg md:text-xl text-[#153230]/70 leading-relaxed max-w-3xl mx-auto mb-12">
+              From organizing Dallas's premier tech conference to building one of the most active developer
+              communities globally, I've dedicated my career to creating spaces where developers thrive.
+              <span className="text-[#4D7DA3] font-bold"> Real impact. Real careers. Real community.</span>
+            </p>
+
+            {/* Quick Stats Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {metrics.map((metric, index) => (
+                <motion.div
+                  key={metric.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 md:p-6 border border-[#4D7DA3]/10 hover:border-[#4D7DA3]/30 hover:scale-105 transition-all duration-300 group"
+                >
+                  <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">
+                    {metric.icon}
                   </div>
+                  <div className="text-2xl md:text-3xl font-black mb-1" style={{ color: metric.color }}>
+                    {metric.value}
+                  </div>
+                  <div className="text-xs md:text-sm text-[#153230]/70 font-bold">
+                    {metric.label}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
 
-                  <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-[#153230] leading-tight mb-6">
-                    Community{" "}
-                    <span className="text-[#4D7DA3]">
-                      Builder,
-                    </span>
-                    <br />
-                    Career{" "}
-                    <span className="text-[#84803E]">
-                      Champion
-                    </span>
-                  </h1>
+      {/* Tab Navigation */}
+      <section className="mx-4 mt-6">
+        <ScrollReveal>
+          <div className="bg-white rounded-2xl p-3 shadow-lg border border-[#4D7DA3]/10 overflow-x-auto">
+            <div className="flex gap-2 min-w-max md:min-w-0 md:justify-center">
+              {[
+                { id: "overview" as CommunityTab, label: "Overview", icon: "🌟" },
+                { id: "conferences" as CommunityTab, label: "Conferences", icon: "🎪" },
+                { id: "meetups" as CommunityTab, label: "Meetups", icon: "🤝" },
+                { id: "mentorship" as CommunityTab, label: "Mentorship", icon: "💡" },
+                { id: "speaking" as CommunityTab, label: "Speaking", icon: "🎤" },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`
+                    px-4 md:px-6 py-3 rounded-xl font-bold text-sm whitespace-nowrap transition-all duration-300
+                    ${activeTab === tab.id
+                      ? "bg-[#153230] text-white scale-105 shadow-lg"
+                      : "bg-transparent text-[#153230]/70 hover:text-[#153230] hover:bg-[#E2F3F2]"
+                    }
+                  `}
+                >
+                  <span className="mr-2">{tab.icon}</span>
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </ScrollReveal>
+      </section>
 
-                  <p className="text-lg md:text-xl text-[#153230]/70 leading-relaxed max-w-3xl mx-auto mb-12">
-                    From organizing Dallas's premier tech conference to building one of the most active developer 
-                    communities globally, I've dedicated my career to creating spaces where developers thrive.
-                    <span className="text-[#4D7DA3] font-bold"> Real impact. Real careers. Real community.</span>
-                  </p>
+      {/* Tab Content */}
+      <section className="mx-4 mt-6">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            {activeTab === "overview" && <OverviewTab />}
+            {activeTab === "conferences" && <ConferencesTab />}
+            {activeTab === "meetups" && <MeetupsTab />}
+            {activeTab === "mentorship" && <MentorshipTab />}
+            {activeTab === "speaking" && <SpeakingTab />}
+          </motion.div>
+        </AnimatePresence>
+      </section>
 
-                  {/* Quick Stats Grid */}
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    {metrics.map((metric, index) => (
-                      <motion.div
-                        key={metric.label}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.1 }}
-                        className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 md:p-6 border border-[#4D7DA3]/10 hover:border-[#4D7DA3]/30 hover:scale-105 transition-all duration-300 group"
-                      >
-                        <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">
-                          {metric.icon}
-                        </div>
-                        <div className="text-2xl md:text-3xl font-black mb-1" style={{ color: metric.color }}>
-                          {metric.value}
-                        </div>
-                        <div className="text-xs md:text-sm text-[#153230]/70 font-bold">
-                          {metric.label}
-                        </div>
-                      </motion.div>
-                    ))}
+      {/* Testimonials Section */}
+      <section className="mx-4 mt-12 mb-6">
+        <ScrollReveal>
+          <div className="bg-white rounded-[32px] p-8 md:p-12 shadow-xl border border-[#4D7DA3]/10">
+            <h2 className="text-3xl md:text-4xl font-black text-[#153230] mb-8 text-center">
+              What the Community Says
+            </h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              {testimonials.map((testimonial, index) => (
+                <ScrollReveal key={testimonial.name} delay={index * 100}>
+                  <div className="bg-gradient-to-br from-[#E2F3F2] to-white rounded-2xl p-6 border border-[#4D7DA3]/10 hover:shadow-xl hover:scale-105 transition-all duration-300">
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="w-12 h-12 bg-[#4D7DA3] rounded-full flex items-center justify-center text-white font-bold">
+                        {testimonial.avatar}
+                      </div>
+                      <div>
+                        <div className="font-black text-[#153230]">{testimonial.name}</div>
+                        <div className="text-xs text-[#153230]/60">{testimonial.role}</div>
+                      </div>
+                    </div>
+                    <p className="text-sm text-[#153230]/80 leading-relaxed italic">
+                      "{testimonial.quote}"
+                    </p>
                   </div>
                 </ScrollReveal>
-              </div>
-            </section>
+              ))}
+            </div>
           </div>
+        </ScrollReveal>
+      </section>
 
-          {/* Tab Navigation */}
-          <section className="mx-4 mt-6">
-            <ScrollReveal>
-              <div className="bg-white rounded-2xl p-3 shadow-lg border border-[#4D7DA3]/10 overflow-x-auto">
-                <div className="flex gap-2 min-w-max md:min-w-0 md:justify-center">
-                  {[
-                    { id: "overview" as CommunityTab, label: "Overview", icon: "🌟" },
-                    { id: "conferences" as CommunityTab, label: "Conferences", icon: "🎪" },
-                    { id: "meetups" as CommunityTab, label: "Meetups", icon: "🤝" },
-                    { id: "mentorship" as CommunityTab, label: "Mentorship", icon: "💡" },
-                    { id: "speaking" as CommunityTab, label: "Speaking", icon: "🎤" },
-                  ].map((tab) => (
-                    <button
-                      key={tab.id}
-                      onClick={() => setActiveTab(tab.id)}
-                      className={`
-                        px-4 md:px-6 py-3 rounded-xl font-bold text-sm whitespace-nowrap transition-all duration-300
-                        ${activeTab === tab.id
-                          ? "bg-[#153230] text-white scale-105 shadow-lg"
-                          : "bg-transparent text-[#153230]/70 hover:text-[#153230] hover:bg-[#E2F3F2]"
-                        }
-                      `}
-                    >
-                      <span className="mr-2">{tab.icon}</span>
-                      {tab.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </ScrollReveal>
-          </section>
+      {/* CTA Section */}
+      <section className="relative mx-4 mb-6 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#153230] to-[#4D7DA3] rounded-[32px]" />
 
-          {/* Tab Content */}
-          <section className="mx-4 mt-6">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTab}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-              >
-                {activeTab === "overview" && <OverviewTab />}
-                {activeTab === "conferences" && <ConferencesTab />}
-                {activeTab === "meetups" && <MeetupsTab />}
-                {activeTab === "mentorship" && <MentorshipTab />}
-                {activeTab === "speaking" && <SpeakingTab />}
-              </motion.div>
-            </AnimatePresence>
-          </section>
-
-          {/* Testimonials Section */}
-          <section className="mx-4 mt-12 mb-6">
-            <ScrollReveal>
-              <div className="bg-white rounded-[32px] p-8 md:p-12 shadow-xl border border-[#4D7DA3]/10">
-                <h2 className="text-3xl md:text-4xl font-black text-[#153230] mb-8 text-center">
-                  What the Community Says
-                </h2>
-                <div className="grid md:grid-cols-3 gap-6">
-                  {testimonials.map((testimonial, index) => (
-                    <ScrollReveal key={testimonial.name} delay={index * 100}>
-                      <div className="bg-gradient-to-br from-[#E2F3F2] to-white rounded-2xl p-6 border border-[#4D7DA3]/10 hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        <div className="flex items-center gap-4 mb-4">
-                          <div className="w-12 h-12 bg-[#4D7DA3] rounded-full flex items-center justify-center text-white font-bold">
-                            {testimonial.avatar}
-                          </div>
-                          <div>
-                            <div className="font-black text-[#153230]">{testimonial.name}</div>
-                            <div className="text-xs text-[#153230]/60">{testimonial.role}</div>
-                          </div>
-                        </div>
-                        <p className="text-sm text-[#153230]/80 leading-relaxed italic">
-                          "{testimonial.quote}"
-                        </p>
-                      </div>
-                    </ScrollReveal>
-                  ))}
-                </div>
-              </div>
-            </ScrollReveal>
-          </section>
-
-          {/* CTA Section */}
-          <section className="relative mx-4 mb-6 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-[#153230] to-[#4D7DA3] rounded-[32px]" />
-            
-            <div className="absolute inset-0 opacity-20">
-              <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full mix-blend-overlay filter blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
-              <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full mix-blend-overlay filter blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }} />
-            </div>
-
-            <div className="relative px-8 md:px-16 py-16 md:py-20 text-center">
-              <ScrollReveal>
-                <h2 className="text-3xl md:text-5xl font-black text-white mb-6 leading-tight">
-                  Ready to Join the Community?
-                </h2>
-                <p className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed">
-                  Whether you're looking to connect, learn, or grow your career, 
-                  there's a place for you in our community.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <a
-                    href="https://discord.gg/dallasdevs"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-white text-[#153230] px-8 py-4 rounded-full font-bold hover:scale-105 hover:shadow-2xl transition-all duration-300"
-                  >
-                    Join Discord Community
-                  </a>
-                  <Link
-                    href="/#contact"
-                    className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-[#153230] hover:scale-105 transition-all duration-300"
-                  >
-                    Work With Me
-                  </Link>
-                </div>
-              </ScrollReveal>
-            </div>
-          </section>
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full mix-blend-overlay filter blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full mix-blend-overlay filter blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }} />
         </div>
-      </div>
-      <BottomNav />
+
+        <div className="relative px-8 md:px-16 py-16 md:py-20 text-center">
+          <ScrollReveal>
+            <h2 className="text-3xl md:text-5xl font-black text-white mb-6 leading-tight">
+              Ready to Join the Community?
+            </h2>
+            <p className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed">
+              Whether you're looking to connect, learn, or grow your career,
+              there's a place for you in our community.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href="https://discord.gg/dallasdevs"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white text-[#153230] px-8 py-4 rounded-full font-bold hover:scale-105 hover:shadow-2xl transition-all duration-300"
+              >
+                Join Discord Community
+              </a>
+              <Link
+                href="/#contact"
+                className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-[#153230] hover:scale-105 transition-all duration-300"
+              >
+                Work With Me
+              </Link>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
     </>
   );
 }
@@ -262,21 +250,21 @@ function OverviewTab() {
         </h2>
         <div className="prose prose-lg max-w-none">
           <p className="text-lg text-[#153230]/80 leading-relaxed mb-6">
-            Over the past 5+ years, I've built and scaled multiple community initiatives that have 
-            directly impacted thousands of developers' careers. From organizing conferences that 
-            trend globally to running weekly meetups that foster genuine connections, my approach 
-            to community building focuses on <span className="text-[#4D7DA3] font-bold">authenticity, 
-            accessibility, and measurable impact</span>.
+            Over the past 5+ years, I've built and scaled multiple community initiatives that have
+            directly impacted thousands of developers' careers. From organizing conferences that
+            trend globally to running weekly meetups that foster genuine connections, my approach
+            to community building focuses on <span className="text-[#4D7DA3] font-bold">authenticity,
+              accessibility, and measurable impact</span>.
           </p>
-          
+
           <div className="grid md:grid-cols-2 gap-6 mt-8">
             <TiltCard>
               <div className="bg-gradient-to-br from-[#4D7DA3]/10 to-[#4D7DA3]/5 rounded-2xl p-6 h-full">
                 <div className="text-3xl mb-3">🎯</div>
                 <h3 className="text-xl font-black text-[#153230] mb-3">Mission-Driven</h3>
                 <p className="text-sm text-[#153230]/70 leading-relaxed">
-                  Every initiative is designed to create real opportunities for developers, 
-                  whether that's landing their first job, transitioning careers, or advancing 
+                  Every initiative is designed to create real opportunities for developers,
+                  whether that's landing their first job, transitioning careers, or advancing
                   to senior positions.
                 </p>
               </div>
@@ -287,7 +275,7 @@ function OverviewTab() {
                 <div className="text-3xl mb-3">🌍</div>
                 <h3 className="text-xl font-black text-[#153230] mb-3">Global Reach</h3>
                 <p className="text-sm text-[#153230]/70 leading-relaxed">
-                  While rooted in Dallas, our community has grown to include developers 
+                  While rooted in Dallas, our community has grown to include developers
                   worldwide, with online events and resources reaching 450K+ developers globally.
                 </p>
               </div>
@@ -298,7 +286,7 @@ function OverviewTab() {
                 <div className="text-3xl mb-3">💪</div>
                 <h3 className="text-xl font-black text-[#153230] mb-3">Sustainable Growth</h3>
                 <p className="text-sm text-[#153230]/70 leading-relaxed">
-                  Our communities aren't built on hype—they're built on systems, processes, 
+                  Our communities aren't built on hype—they're built on systems, processes,
                   and genuine value that keeps members engaged for years, not weeks.
                 </p>
               </div>
@@ -309,7 +297,7 @@ function OverviewTab() {
                 <div className="text-3xl mb-3">🔓</div>
                 <h3 className="text-xl font-black text-[#153230] mb-3">Always Accessible</h3>
                 <p className="text-sm text-[#153230]/70 leading-relaxed">
-                  Free conferences, free resources, open Discord—we believe in removing 
+                  Free conferences, free resources, open Discord—we believe in removing
                   barriers so everyone has access to opportunities regardless of budget.
                 </p>
               </div>
@@ -380,9 +368,9 @@ function ConferencesTab() {
         <div className="bg-gradient-to-r from-[#4D7DA3]/10 to-[#84803E]/10 rounded-xl p-6 border border-[#4D7DA3]/20">
           <h4 className="text-xl font-black text-[#153230] mb-3">Why It Matters</h4>
           <p className="text-[#153230]/80 leading-relaxed">
-            Commit Your Code Conference proves that high-quality technical education doesn't 
-            have to come with a $1,000+ price tag. By making it 100% free and accessible, 
-            we've democratized access to world-class speakers and created pathways for 
+            Commit Your Code Conference proves that high-quality technical education doesn't
+            have to come with a $1,000+ price tag. By making it 100% free and accessible,
+            we've democratized access to world-class speakers and created pathways for
             developers who otherwise couldn't afford traditional conferences.
           </p>
         </div>
@@ -430,8 +418,8 @@ function MeetupsTab() {
           <div className="bg-gradient-to-br from-[#84803E]/10 to-transparent rounded-xl p-6 border border-[#84803E]/20">
             <h3 className="text-xl font-black text-[#153230] mb-3">Weekly Meetups</h3>
             <p className="text-sm text-[#153230]/70 mb-4 leading-relaxed">
-              Every week, we bring together developers of all levels for networking, 
-              learning, and collaboration. From technical workshops to career panels, 
+              Every week, we bring together developers of all levels for networking,
+              learning, and collaboration. From technical workshops to career panels,
               there's always something valuable happening.
             </p>
             <div className="flex flex-wrap gap-2">
@@ -450,8 +438,8 @@ function MeetupsTab() {
           <div className="bg-gradient-to-br from-[#4D7DA3]/10 to-transparent rounded-xl p-6 border border-[#4D7DA3]/20">
             <h3 className="text-xl font-black text-[#153230] mb-3">Discord Community</h3>
             <p className="text-sm text-[#153230]/70 mb-4 leading-relaxed">
-              Our Discord server is active 24/7 with job postings, technical discussions, 
-              code help, and genuine friendships. It's not just a Slack alternative—it's 
+              Our Discord server is active 24/7 with job postings, technical discussions,
+              code help, and genuine friendships. It's not just a Slack alternative—it's
               where careers are built.
             </p>
             <div className="flex flex-wrap gap-2">
@@ -569,14 +557,14 @@ function MentorshipTab() {
         <div className="bg-[#4D7DA3]/10 rounded-xl p-6 border border-[#4D7DA3]/20">
           <h4 className="text-xl font-black text-[#153230] mb-3">My Approach to Mentorship</h4>
           <p className="text-[#153230]/80 leading-relaxed mb-4">
-            I don't believe in generic advice. Every mentorship call is tailored to your specific 
-            situation, goals, and challenges. Whether you're a bootcamp grad trying to land your 
-            first role or a senior engineer looking to make the leap to leadership, I provide 
+            I don't believe in generic advice. Every mentorship call is tailored to your specific
+            situation, goals, and challenges. Whether you're a bootcamp grad trying to land your
+            first role or a senior engineer looking to make the leap to leadership, I provide
             actionable, practical guidance based on real experience—not theory.
           </p>
           <p className="text-[#153230]/80 leading-relaxed">
-            My mentorship has helped developers land roles at Google, Microsoft, Amazon, Stripe, 
-            and hundreds of other companies. But more importantly, it's helped them build careers 
+            My mentorship has helped developers land roles at Google, Microsoft, Amazon, Stripe,
+            and hundreds of other companies. But more importantly, it's helped them build careers
             they're genuinely excited about.
           </p>
         </div>
@@ -648,7 +636,7 @@ function SpeakingTab() {
               }
             ].map((topic, index) => (
               <div key={index} className="bg-white border border-[#4D7DA3]/10 rounded-xl p-6 hover:shadow-lg hover:scale-105 transition-all group">
-                <div 
+                <div
                   className="w-12 h-12 rounded-lg flex items-center justify-center mb-4 text-white font-bold text-xl"
                   style={{ backgroundColor: topic.color }}
                 >
@@ -664,9 +652,9 @@ function SpeakingTab() {
         <div className="bg-gradient-to-r from-[#4D7DA3]/10 via-[#84803E]/10 to-[#153230]/10 rounded-2xl p-8 border border-[#4D7DA3]/20">
           <h3 className="text-2xl font-black text-[#153230] mb-4">Book Me to Speak</h3>
           <p className="text-[#153230]/80 leading-relaxed mb-6">
-            I'm available for conference keynotes, workshop facilitation, panel discussions, 
-            and corporate training. My speaking style is energetic, authentic, and packed with 
-            actionable takeaways. I don't do generic motivation—I share real strategies, real 
+            I'm available for conference keynotes, workshop facilitation, panel discussions,
+            and corporate training. My speaking style is energetic, authentic, and packed with
+            actionable takeaways. I don't do generic motivation—I share real strategies, real
             stories, and real results.
           </p>
           <div className="flex flex-wrap gap-3">
@@ -688,4 +676,3 @@ function SpeakingTab() {
     </div>
   );
 }
-
