@@ -1,19 +1,32 @@
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { TrustedBy } from "@/components/TrustedBy";
-import { WallOfLove } from "@/components/WallOfLove";
+import { NewsletterForm } from "@/components/NewsletterForm";
 import { TiltCard } from "@/components/TiltCard";
-import { OrbitSwitcher } from "@/components/OrbitSwitcher";
 import { BentoGrid } from "@/components/BentoGrid";
 import RotarySelector from "@/components/RotarySelector";
 import { PodcastRadioTuner } from "@/components/PodcastRadioTuner";
 import { PodcastRadioSkeleton } from "@/components/PodcastSkeleton";
 import { PodcastErrorBoundary } from "@/components/PodcastErrorBoundary";
-import { ContactForm } from "@/components/ContactForm";
 import Navbar from "@/components/Navbar";
 import { HeroContactButton } from "@/components/HeroContactButton";
 import Link from "next/link";
 import { headers } from "next/headers";
 import { Suspense } from "react";
+import dynamic from "next/dynamic";
+import { Loader2 } from "lucide-react";
+
+// Lazy load below-the-fold components
+const WallOfLove = dynamic(() => import("@/components/WallOfLove").then(mod => mod.WallOfLove), {
+  loading: () => <div className="h-[600px] bg-[#F8FDFF] animate-pulse" />
+});
+
+const ContactForm = dynamic(() => import("@/components/ContactForm").then(mod => mod.ContactForm), {
+  loading: () => <div className="h-[400px] bg-white rounded-[32px] animate-pulse" />
+});
+
+const OrbitSwitcher = dynamic(() => import("@/components/OrbitSwitcher").then(mod => mod.OrbitSwitcher), {
+  loading: () => <div className="h-[400px] bg-transparent" />
+});
 
 type Episode = {
   id: string;
@@ -221,12 +234,21 @@ export default async function Home() {
           </ScrollReveal>
         </section>
 
-        {/* Option 1: Wall of Love */}
+        {/* Option 1: Wall of Love
         <div className="relative z-40 mt-8 mb-8">
           <div className="mx-4 rounded-[32px] overflow-hidden shadow-xl border border-[#E2F3F2]">
             <WallOfLove />
           </div>
         </div>
+        */}
+
+        {/* Newsletter Section - Moved from global layout */}
+        <div className="relative z-40 mt-8 mb-8">
+          <div className="mx-4 rounded-[32px] overflow-hidden shadow-xl border border-[#E2F3F2]">
+            <NewsletterForm />
+          </div>
+        </div>
+
 
       </div>
 

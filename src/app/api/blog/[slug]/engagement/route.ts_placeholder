@@ -1,0 +1,13 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma'; // Assuming lib/prisma exists, or I will use global Prisma client pattern if needed.
+// Checking project structure for prisma client location in next step if this fails, but usually it's lib/prisma or lib/db.
+// I'll stick to a standard pattern and if it errors I'll fix it.
+// Actually, let me verify the prisma client import path first before writing this file to avoid errors. 
+// I'll assume it's standard for now but I'll check file list in parallel or just assume standard. 
+// Wait, I can't check in parallel with write_to_file reliably if I depend on it. 
+// I'll peek at `src/lib` in a separate turn if I was unsure, but usually `import { PrismaClient } from '@prisma/client'` is enough if I instantiate it here, 
+// BUT best practice is a singleton.
+// Let's create `src/lib/prisma.ts` if it doesn't exist, OR just use a quick instance for this tool call.
+// User has `init-db` folder, maybe there's a client there?
+// I'll assume `import { PrismaClient } from '@prisma/client'; const prisma = new PrismaClient();` for this route is "safe enough" for a quick task but bad for connection limits.
+// Let's try to find an existing prisma client first.

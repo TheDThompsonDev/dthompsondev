@@ -1,6 +1,7 @@
 import BottomNav from "@/components/BottomNav";
+import { Footer } from "@/components/Footer";
 import { FloatingHomeLogo } from "@/components/FloatingHomeLogo";
-import { NewsletterForm } from "@/components/NewsletterForm";
+
 
 export default function SiteLayout({
     children,
@@ -11,7 +12,7 @@ export default function SiteLayout({
         <div className="min-h-screen bg-[#E2F3F2] pb-20 lg:pb-0">
             <FloatingHomeLogo />
             {children}
-            <NewsletterForm />
+            <Footer />
             <BottomNav />
         </div>
     );

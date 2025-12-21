@@ -12,51 +12,68 @@ interface CodeStep {
 interface CodeMorphProps {
   steps: CodeStep[];
   title?: string;
+  subtitle?: string;
 }
 
 interface Token {
   value: string;
-  type: 'keyword' | 'string' | 'operator' | 'text';
+  type: 'keyword' | 'string' | 'operator' | 'text' | 'number';
   key: string;
 }
 
-export function CodeMorph({ steps, title }: CodeMorphProps) {
+export function CodeMorph({ steps, title, subtitle }: CodeMorphProps) {
   const [activeStep, setActiveStep] = useState(0);
 
-  const tokenizeLine = (line: string, lineIdx: number): Token[] => {
-    if (!line) return [];
-    
-    const tokens: Token[] = [];
-    const regex = /([a-zA-Z_$][a-zA-Z0-9_$]*)|(\s+)|([(){}[\];,.<>=!+\-*/]|=>)|(['"`][^'"`]*['"`])/g;
-    let match;
-    const wordCounts: Record<string, number> = {};
-    
-    while ((match = regex.exec(line)) !== null) {
-      const value = match[0];
-      let type: Token['type'] = 'text';
-      
-      const trimmed = value.trim();
-      if (['const', 'let', 'var', 'function', 'return', 'if', 'else', 'import', 'export', 'from', 'use', 'client', 'useState', 'setCount', 'setIsActive', 'prevCount'].includes(trimmed)) {
-        type = 'keyword';
-      } else if (value.match(/^['"`]/)) {
-        type = 'string';
-      } else if (value.match(/^[=<>!+\-*/(){}[\];,.]/) || value === '=>') {
-        type = 'operator';
+  // Tokenize the full text at once to track global occurrence counts
+  const getGlobalTokens = (fullCode: string) => {
+    const lines = fullCode.split('\n');
+    const globalWordCounts: Record<string, number> = {};
+    const lineTokenGroups: Token[][] = [];
+
+    const regex = /([a-zA-Z_$][a-zA-Z0-9_$]*)|(\s+)|([(){}[\];,.<>=!+\-*/]|=>)|(['"`][^'"`]*['"`])|(\d+)/g;
+
+    lines.forEach((line, lineIdx) => {
+      const tokens: Token[] = [];
+      let match;
+
+      // If empty line, push empty array
+      if (!line) {
+        lineTokenGroups.push([]);
+        return;
       }
-      
-      const wordKey = trimmed || `space`;
-      wordCounts[wordKey] = (wordCounts[wordKey] || 0) + 1;
-      
-      const uniqueKey = `${wordKey}-L${lineIdx}-N${wordCounts[wordKey]}`;
-      
-      tokens.push({
-        value,
-        type,
-        key: uniqueKey
-      });
-    }
-    
-    return tokens;
+
+      while ((match = regex.exec(line)) !== null) {
+        const value = match[0];
+        let type: Token['type'] = 'text';
+
+        const trimmed = value.trim();
+        if (['const', 'let', 'var', 'function', 'return', 'if', 'else', 'import', 'export', 'from', 'use', 'client', 'useState', 'setCount', 'setIsActive', 'prevCount'].includes(trimmed)) {
+          type = 'keyword';
+        } else if (value.match(/^['"`]/)) {
+          type = 'string';
+        } else if (value.match(/^\d+$/)) {
+          type = 'number';
+        } else if (value.match(/^[=<>!+\-*/(){}[\];,.]/) || value === '=>') {
+          type = 'operator';
+        }
+
+        // Count occurrences globally to create stable IDs across lines
+        const wordKey = trimmed || 'space';
+        globalWordCounts[wordKey] = (globalWordCounts[wordKey] || 0) + 1;
+
+        // UNIQUE ID: This allows "const" #1 to move from Line 2 to Line 8
+        const uniqueLayoutId = `${wordKey}-${globalWordCounts[wordKey]}`;
+
+        tokens.push({
+          value,
+          type,
+          key: uniqueLayoutId
+        });
+      }
+      lineTokenGroups.push(tokens);
+    });
+
+    return lineTokenGroups;
   };
 
   const getColor = (type: Token['type']): string => {
@@ -64,6 +81,7 @@ export function CodeMorph({ steps, title }: CodeMorphProps) {
       case 'keyword': return '#ff79c6';
       case 'string': return '#50fa7b';
       case 'operator': return '#8be9fd';
+      case 'number': return '#bd93f9';
       default: return '#f8f8f2';
     }
   };
@@ -73,20 +91,20 @@ export function CodeMorph({ steps, title }: CodeMorphProps) {
     setActiveStep(newStep);
   };
 
-  const currentCode = steps[activeStep].code;
-  const lines = currentCode.split('\n');
+  const groupedTokens = getGlobalTokens(steps[activeStep].code);
 
   return (
     <div className="my-16">
       {title && (
         <div className="mb-8">
           <h3 className="text-3xl font-bold text-gray-900 tracking-tight mb-2">{title}</h3>
-          <p className="text-gray-600">Watch each word smoothly slide into place</p>
+          {subtitle && <p className="text-gray-600">{subtitle}</p>}
         </div>
       )}
 
       <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
         <div className="grid lg:grid-cols-[2fr,3fr]">
+          {/* Left Panel: Description */}
           <div className="p-8 lg:p-12 border-b lg:border-b-0 lg:border-r border-gray-100">
             <div className="lg:sticky lg:top-24 space-y-8">
               <div>
@@ -121,9 +139,8 @@ export function CodeMorph({ steps, title }: CodeMorphProps) {
                     <button
                       key={index}
                       onClick={() => handleStepChange(index)}
-                      className={`flex-1 h-1.5 rounded-lg transition-all duration-500 ${
-                        index === activeStep ? 'bg-gray-900' : index < activeStep ? 'bg-gray-400' : 'bg-gray-200'
-                      }`}
+                      className={`flex-1 h-1.5 rounded-lg transition-all duration-500 ${index === activeStep ? 'bg-gray-900' : index < activeStep ? 'bg-gray-400' : 'bg-gray-200'
+                        }`}
                     />
                   ))}
                 </div>
@@ -147,7 +164,8 @@ export function CodeMorph({ steps, title }: CodeMorphProps) {
             </div>
           </div>
 
-          <div className="bg-[#0d1117] p-8 lg:p-12 min-h-[600px]">
+          {/* Right Panel: Code */}
+          <div className="bg-[#0d1117] p-8 lg:p-12 min-h-[600px] overflow-hidden">
             <div className="flex items-center gap-2 mb-6 pb-4 border-b border-gray-800">
               <div className="flex gap-1.5">
                 <div className="w-3 h-3 rounded-lg bg-[#ff5f56]"></div>
@@ -158,44 +176,40 @@ export function CodeMorph({ steps, title }: CodeMorphProps) {
             </div>
 
             <div className="font-mono text-sm leading-loose">
-              {lines.map((line, lineIdx) => {
-                const lineTokens = tokenizeLine(line, lineIdx);
-                
-                return (
-                  <div key={`line-${lineIdx}`} className="flex min-h-[1.75rem]">
-                    <span className="inline-block w-10 text-gray-600 select-none text-right mr-4 text-xs flex-shrink-0">
-                      {lineIdx + 1}
-                    </span>
-                    <div className="flex-1">
-                      <AnimatePresence initial={false} mode="popLayout">
-                        {lineTokens.map((token) => (
-                          <motion.span
-                            key={token.key}
-                            layout="position"
-                            initial={{ opacity: 0, filter: 'blur(4px)' }}
-                            animate={{ opacity: 1, filter: 'blur(0px)' }}
-                            exit={{ opacity: 0, filter: 'blur(4px)' }}
-                            transition={{
-                              layout: { 
-                                duration: 0.7,
-                                ease: [0.4, 0, 0.2, 1]
-                              },
-                              opacity: { duration: 0.5 },
-                              filter: { duration: 0.5 }
-                            }}
-                            style={{ 
-                              color: getColor(token.type),
-                              whiteSpace: 'pre'
-                            }}
-                          >
-                            {token.value}
-                          </motion.span>
-                        ))}
-                      </AnimatePresence>
-                    </div>
+              {groupedTokens.map((lineTokens, lineIdx) => (
+                <div key={`line-${lineIdx}`} className="flex min-h-[1.75rem]">
+                  <span className="inline-block w-10 text-gray-600 select-none text-right mr-4 text-xs flex-shrink-0">
+                    {lineIdx + 1}
+                  </span>
+                  <div className="flex-1 whitespace-pre-wrap">
+                    <AnimatePresence initial={false} mode="popLayout">
+                      {lineTokens.map((token) => (
+                        <motion.span
+                          key={token.key}
+                          layoutId={token.key} // Matches ID across lines!
+                          initial={{ opacity: 0, filter: 'blur(4px)' }}
+                          animate={{ opacity: 1, filter: 'blur(0px)' }}
+                          exit={{ opacity: 0, filter: 'blur(4px)' }}
+                          transition={{
+                            layout: {
+                              duration: 0.6,
+                              type: "spring",
+                              bounce: 0.15
+                            },
+                            opacity: { duration: 0.4 }
+                          }}
+                          className="inline-block" // Crucial for layout animations
+                          style={{
+                            color: getColor(token.type)
+                          }}
+                        >
+                          {token.value}
+                        </motion.span>
+                      ))}
+                    </AnimatePresence>
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
           </div>
         </div>

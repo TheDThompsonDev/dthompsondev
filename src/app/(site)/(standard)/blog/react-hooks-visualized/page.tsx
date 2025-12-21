@@ -1,502 +1,416 @@
 'use client';
 
-import { ScrollProgress } from '@/components/ScrollProgress';
+import { BlogPostLayout } from '@/components/blog/BlogPostLayout';
 import { InteractiveCode } from '@/components/InteractiveCode';
 import { AnimatedDiagram } from '@/components/AnimatedDiagram';
-import { ScrollReveal } from '@/components/ScrollReveal';
 import { VirtualWhiteboard } from '@/components/VirtualWhiteboard';
 import { CodeMorph } from '@/components/CodeMorph';
 import { FloatingTOC } from '@/components/FloatingTOC';
-import Link from 'next/link';
-import { useState, useEffect } from 'react';
-import { CodePlayground } from '@/components/CodePlayground';
+import { ScrollReveal } from '@/components/ScrollReveal';
 
 export default function ReactHooksVisualizedPost() {
-  const [count, setCount] = useState(0);
-  const [isVisible, setIsVisible] = useState(true);
-
+  // Data for CodeMorph (Array Model)
   const stateEvolutionSteps = [
     {
-      title: 'Start with a Simple Variable',
-      description: 'In traditional JavaScript, we might use a variable to track state. But this doesn\'t cause re-renders in React.',
-      code: `let count = 0;
-
-function increment() {
-  count = count + 1;
-  console.log(count);
+      title: 'The Golden Rule',
+      description: 'The first hook is always Index 0. The second is Index 1. The order must never change.',
+      code: `function Form() {
+  const [name, setName] = useState(''); // Index 0
+  const [age, setAge] = useState(0);    // Index 1
 }`,
-      highlights: [1],
+      highlights: [2, 3],
     },
     {
-      title: 'Add useState Hook',
-      description: 'React\'s useState Hook provides both the state value and a setter function. This triggers re-renders when state changes.',
-      code: `const [count, setCount] = useState(0);
+      title: '❌ The Conditional Trap',
+      description: 'If you wrap a hook in a condition, you risk breaking the chain.',
+      code: `function Form({ showEmail }) {
+  const [name, setName] = useState(''); // Index 0
 
-function increment() {
-  setCount(count + 1);
-  console.log(count);
+  if (showEmail) {
+    //  If this runs, it takes Index 1
+    const [email, setEmail] = useState(''); 
+  }
+
+  const [age, setAge] = useState(0); // Index 1 or 2 Chaos.
 }`,
-      highlights: [1, 4],
+      highlights: [4, 5, 8],
     },
     {
-      title: 'Use Functional Updates',
-      description: 'For more reliable updates, especially with multiple rapid changes, use the functional form that receives the previous state.',
-      code: `const [count, setCount] = useState(0);
-
-function increment() {
-  setCount(prevCount => prevCount + 1);
-  console.log(count);
-}`,
-      highlights: [4],
-    },
-    {
-      title: 'Add Multiple State Variables',
-      description: 'You can call useState multiple times in a component to manage different pieces of state independently.',
-      code: `const [count, setCount] = useState(0);
-const [isActive, setIsActive] = useState(false);
-
-function increment() {
-  setCount(prevCount => prevCount + 1);
-  setIsActive(true);
-}`,
-      highlights: [1, 2, 6],
+      title: 'The Crash',
+      description: 'React tries to assign "Age" (number) to "Email" (string) slot. The app crashes.',
+      code: `// Reacts Internal Clipboard
+[
+  "John", // Index 0
+  25 // Index 1 - Wait, this was email!
+]
+// Error: Rendered fewer hooks than expected.`,
+      highlights: [4, 5],
     },
   ];
 
   const tocItems = [
-    { id: 'what-are-hooks', title: 'What are Hooks?', level: 1 },
-    { id: 'usestate', title: 'useState: Managing State', level: 1 },
-    { id: 'state-evolution', title: 'Evolution of State Management', level: 2 },
-    { id: 'useeffect', title: 'useEffect: Side Effects', level: 1 },
-    { id: 'rules-of-hooks', title: 'Rules of Hooks', level: 1 },
-    { id: 'custom-hooks', title: 'Custom Hooks', level: 1 },
-    { id: 'key-takeaways', title: 'Key Takeaways', level: 1 },
+    { id: 'array-model', title: '1. The Array Model', level: 1 },
+    { id: 'stale-closures', title: '2. Stale Closures', level: 1 },
+    { id: 'synchronization', title: '3. Synchronization', level: 1 },
+    { id: 'useref-pocket', title: '4. useRef Secret Pocket', level: 1 },
+    { id: 'performance-myth', title: '5. The Performance Myth', level: 1 },
+    { id: 'context-cost', title: '6. The Cost of Context', level: 1 },
   ];
 
-  const useStateExamples = [
+  const staleClosureExamples = [
     {
-      title: 'Basic Counter',
-      code: `const [count, setCount] = useState(0);
+      title: '❌ THE BUG: Stale closure',
+      code: `function Counter() {
+  const [count, setCount] = useState(0);
 
-return (
-  <button onClick={() => setCount(count + 1)}>
-    Clicked {count} times
-  </button>
-);`,
-      explanation: 'useState returns a stateful value and a function to update it. The component re-renders whenever the state changes.',
-      color: '#4D7DA3',
+  const handleClick = () => {
+    // If count is 0 when this function runs, 
+    // it effectively captures "0" forever in this scope.
+    setTimeout(() => {
+      setCount(count + 1);  // Always sets to 0 + 1 = 1
+    }, 1000);
+  };
+
+  return <button onClick={handleClick}>Add after 1s</button>;
+}`,
+      explanation: 'When you clicked that button, the function "captured" the state *at that specific moment in time*. It’s like taking a photograph.',
+      color: '#EF4444',
     },
     {
-      title: 'With Objects',
-      code: `const [user, setUser] = useState({
-  name: 'Danny',
-  age: 25
-});
-
-const updateName = () => {
-  setUser({ ...user, name: 'New Name' });
+      title: '✅ THE FIX: Functional updates',
+      code: `const handleClick = () => {
+  setTimeout(() => {
+    // Tell React HOW to update it, not WHAT to set it to.
+    setCount(prev => prev + 1);  // Always uses the LATEST value
+  }, 1000);
 };`,
-      explanation: 'When updating objects, always spread the previous state to maintain other properties. This ensures you don\'t lose data.',
-      color: '#84803E',
-    },
-    {
-      title: 'Functional Updates',
-      code: `const [count, setCount] = useState(0);
-
-const increment = () => {
-  setCount(prev => prev + 1);
-};
-
-// Multiple updates work correctly
-increment();
-increment();
-increment();`,
-      explanation: 'Use functional updates when the new state depends on the previous state. This ensures accuracy with multiple rapid updates.',
+      explanation: 'Functional updates bypass the closure and ask React for the current value in the latest frame.',
       color: '#10B981',
     },
   ];
 
   const useEffectSteps = [
     {
-      title: 'Component Mounts',
-      description: 'When the component first appears on screen, useEffect runs for the first time.',
+      title: 'Mount (Run Effect)',
+      description: 'React paints the screen, then runs your effect to synchronize with the outside world.',
       color: '#4D7DA3',
-      icon: '🚀',
+      icon: 'MOUNT',
     },
     {
-      title: 'Dependencies Change',
-      description: 'If any dependency in the array changes, useEffect runs again to sync with the new values.',
-      color: '#84803E',
-      icon: '🔄',
-    },
-    {
-      title: 'Cleanup Function',
-      description: 'Before re-running or unmounting, the cleanup function (if provided) runs to prevent memory leaks.',
+      title: 'Unmount (Cleanup)',
+      description: 'Strict Mode: React immediately unmounts to check if you provided a cleanup function.',
       color: '#F59E0B',
-      icon: '🧹',
+      icon: 'CHECK',
     },
     {
-      title: 'Component Unmounts',
-      description: 'When the component is removed from the screen, the cleanup function runs one final time.',
-      color: '#8B5CF6',
-      icon: '👋',
-    },
-  ];
-
-  const hookRulesSteps = [
-    {
-      title: 'Only Call at Top Level',
-      description: 'Don\'t call Hooks inside loops, conditions, or nested functions. Keep them at the top of your component.',
-      color: '#EF4444',
-      icon: '⚠️',
-    },
-    {
-      title: 'Only Call from React Functions',
-      description: 'Call Hooks from React function components or custom Hooks, not regular JavaScript functions.',
-      color: '#F59E0B',
-      icon: '✅',
-    },
-    {
-      title: 'Custom Hooks Start with "use"',
-      description: 'If you extract Hook logic, name it starting with "use" so linters can detect issues automatically.',
+      title: 'Remount (Run Again)',
+      description: 'React mounts again. If your API call fires twice, it is testing your resilience.',
       color: '#10B981',
-      icon: '🎣',
+      icon: 'SYNC',
     },
   ];
 
   return (
     <>
-      <ScrollProgress />
       <FloatingTOC items={tocItems} />
+      <BlogPostLayout
+        category="React"
+        date="November 22, 2025"
+        readTime="15 min read"
+        title={<>React Hooks: <br /><span className="text-[#4D7DA3]">The Mental Models You're Missing</span></>}
+        subtitle="Hooks fundamentally changed how we write React components. But too many developers are coding with superstition. Let's build the mental models."
+        slug="react-hooks-visualized"
+        coverImage="/blog-covers/react-hooks-visualized.jpeg"
+        short={{
+          content: (
+            <>
+              <p className="mb-6 font-bold text-xl text-[#153230]">
+                The "Senior Dev" Cheat Sheet
+              </p>
 
-      <div className="min-h-screen bg-[#E2F3F2]">
-        <div className="max-w-[1400px] mx-auto">
-          <div className="bg-white rounded-[32px] shadow-xl m-4 border border-[#4D7DA3]/10">
+              <ul className="space-y-4 mb-8">
+                <li className="flex gap-3">
+                  <span className="text-[#4D7DA3] font-bold">1.</span>
+                  <span><strong>The Golden Rule of Order.</strong> React tracks hooks using a simple array index (0, 1, 2). It does not know names. <em>Rule: Never put a hook inside an if statement, loop, or nested function.</em></span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-[#4D7DA3] font-bold">2.</span>
+                  <span><strong>The useState Trap.</strong> State variables inside functions (like setTimeout) are stale "photographs" of the past. <em>Rule: If your update depends on the previous value, always use the functional update: <code>setCount(prev {'=>'} prev + 1)</code>.</em></span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-[#4D7DA3] font-bold">3.</span>
+                  <span><strong>The useEffect Mindset.</strong> useEffect is not componentDidMount. It is a synchronization engine. <em>Rule: Your effect must handle being run twice (Strict Mode). If it breaks, your cleanup logic is missing.</em></span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-[#4D7DA3] font-bold">4.</span>
+                  <span><strong>The Performance Lie.</strong> Wrapping functions in useCallback does not make your app faster. It adds memory overhead. <em>Rule: Only use useCallback if the child component receiving the function is wrapped in React.memo. Otherwise, delete it.</em></span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-[#4D7DA3] font-bold">5.</span>
+                  <span><strong>The Context Warning.</strong> Context is not a state manager; it is a dependency injection tool. <em>Rule: When Context changes, every component consuming it re-renders. Use it for Theme/Auth only.</em></span>
+                </li>
+              </ul>
+            </>
+          )
+        }}
+        medium={{
+          content: (
+            <>
+              <p className="mb-6 font-medium text-xl text-[#153230]">
+                The Logic Behind The Magic
+              </p>
 
-            <header className="px-8 md:px-16 py-6 flex justify-between items-center border-b border-[#4D7DA3]/10">
-              <Link href="/blog" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                <div className="w-10 h-10 bg-[#153230] rounded-xl flex items-center justify-center text-white text-lg font-bold">
-                  ←
-                </div>
-                <span className="text-lg font-bold tracking-tight text-[#153230]">Back to Blog</span>
-              </Link>
-            </header>
+              <h3 className="font-bold text-[#153230] text-lg mb-2">1. The Array Model (Why Hooks Can’t Be Conditional)</h3>
+              <p className="mb-4">You can't call hooks conditionally because React relies on call order to identify state. React has a clipboard with a list: <code>[State A, State B, Effect A]</code>. If you hide State A behind an <code>if (false)</code>, React tries to assign State B's data to State A's slot. The entire index mapping shifts, causing data corruption.</p>
 
-            <article className="px-8 md:px-16 py-12 max-w-4xl mx-auto">
-              <VirtualWhiteboard
-                title="Take Notes while you read!"
-                height={400}
-              />
+              <h3 className="font-bold text-[#153230] text-lg mb-2 mt-8">2. Stale Closures (Why Your State Isn’t Updating)</h3>
+              <p className="mb-4">JavaScript functions "capture" variables when they are created. This is called a Closure. Think of a render as a "frame" in a movie. When you click a button, that function runs inside Frame 1. Even if the movie moves to Frame 10, that function is still holding onto the data from Frame 1.</p>
+              <div className="bg-blue-50 p-4 rounded-lg text-sm mb-4"><strong>The Solution:</strong> Functional updates (prev {'=>'} prev + 1) bypass the closure and ask React for the current value.</div>
 
-              <ScrollReveal delay={200}>
-                <div className="mb-12">
-                  <div className="flex items-center gap-3 mb-6">
-                    <span className="px-4 py-2 rounded-lg text-sm font-bold text-white bg-[#4D7DA3]">
-                      React
-                    </span>
-                    <span className="text-[#153230]/60 text-sm">March 15, 2025 • 12 min read</span>
-                  </div>
+              <h3 className="font-bold text-[#153230] text-lg mb-2 mt-8">3. Synchronization (Why Effects Run Twice)</h3>
+              <p className="mb-4">useEffect is a machine that keeps external systems (DOM, API) in sync with internal state. React 18+ intentionally mounts, unmounts, and remounts your component to ensure your cleanup function works. If your effect creates a subscription but doesn't clean it up, the double-fire exposes the memory leak immediately.</p>
 
-                  <h1 className="text-5xl md:text-6xl font-bold text-[#153230] leading-[1.1] mb-6">
-                    React Hooks,<br />
-                    <span className="text-[#4D7DA3]">Visualized</span>
-                  </h1>
+              <h3 className="font-bold text-[#153230] text-lg mb-2 mt-8">4. useRef (The Secret Pocket)</h3>
+              <p className="mb-4">useState is a doorbell,it rings (re-renders) every time you change it. useRef is a secret pocket. You can put things in and take them out, and React’s rendering engine doesn't even know you did it.</p>
 
-                  <p className="text-xl text-[#153230]/70 leading-relaxed">
-                    Hooks fundamentally changed how we write React components. Let's explore how they work through interactive examples and visual diagrams.
-                  </p>
-                </div>
-              </ScrollReveal>
+              <h3 className="font-bold text-[#153230] text-lg mb-2 mt-8">5. The Memoization Equation</h3>
+              <p className="mb-4">useCallback stabilizes the reference of a function. But if the Child component isn't checking for stable references (via React.memo), it re-renders anyway because the Parent re-rendered. <strong>Formula:</strong> useCallback (Parent) + React.memo (Child) = Performance. One without the other is waste.</p>
+
+              <h3 className="font-bold text-[#153230] text-lg mb-2 mt-8">6. The "Nuclear" Context</h3>
+              <p className="mb-4">There is no way to "subscribe" to just part of a Context. If the Provider updates value, every consumer re-renders. Don't put currentUser (rare change) and mousePosition (fast change) in the same Context.</p>
+            </>
+          )
+        }}
+        long={{
+          content: (
+            <>
+              <VirtualWhiteboard title="Take Notes while you read!" height={400} />
 
               <ScrollReveal delay={100}>
                 <div className="prose prose-lg max-w-none">
                   <h2 className="text-3xl font-bold text-[#153230] mb-4 mt-12">
-                    What are Hooks?
+                    React Hooks: From "Magic" to Mental Models
                   </h2>
                   <p className="text-[#153230]/80 leading-relaxed mb-6">
-                    Hooks are functions that let you "hook into" React state and lifecycle features from function components. Before Hooks, you could only use state and lifecycle methods in class components. Now, you can use them in function components too!
+                    Since they dropped in 2019, hooks have fundamentally changed how we build UI. But I see a problem in the industry right now. Too many developers are just memorizing the syntax. They know <em>how</em> to write <code>useEffect</code>, but they don't understand <em>why</em> it behaves the way it does. They are coding with superstition, not understanding.
                   </p>
-
-                  <div className="bg-blue-50 rounded-2xl p-6 border-l-4 border-[#4D7DA3] my-8">
-                    <p className="text-[#153230] font-semibold mb-2 flex items-center gap-2">
-                      <span className="text-2xl">💡</span>
-                      <span>Key Insight</span>
-                    </p>
-                    <p className="text-[#153230]/80 leading-relaxed">
-                      Hooks don't work inside classes — they let you use React without classes. You can think of them as a way to "hook into" React's internal mechanisms.
-                    </p>
-                  </div>
+                  <p className="text-[#153230]/80 leading-relaxed mb-6">
+                    Today, we are going to fix that. We aren't just going to look at syntax; we are going to break down the <strong>Mental Models</strong>,the invisible rules of physics inside React,that will take you from a junior "guesser" to a senior engineer.
+                  </p>
+                  <p className="text-[#153230]/80 leading-relaxed mb-8">
+                    Get your notebooks out. This is a Gem City deep dive.
+                  </p>
                 </div>
               </ScrollReveal>
 
-              <ScrollReveal delay={400}>
-                <h2 className="text-3xl font-bold text-[#153230] mb-6 mt-16">
-                  useState: Managing State
+              <ScrollReveal delay={200}>
+                <h2 className="text-3xl font-bold text-[#153230] mb-6 mt-16" id="array-model">
+                  1. What Are Hooks, Really? (The "Array" Model)
                 </h2>
-                <p className="text-[#153230]/80 leading-relaxed mb-8">
-                  The useState Hook lets you add state to function components. It's the most commonly used Hook and forms the foundation of interactive React applications.
+                <p className="text-[#153230]/80 leading-relaxed mb-6">
+                  Hooks are functions that let you "hook into" React's internal systems. But here is the key insight that most tutorials miss: <strong>React relies strictly on call order.</strong>
                 </p>
+                <p className="text-[#153230]/80 leading-relaxed mb-6">
+                  Imagine React keeps a clipboard for every component. On that clipboard is a simple list of values.
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-8 text-[#153230]/80">
+                  <li>The first <code>useState</code> you call is <strong>Index 0</strong>.</li>
+                  <li>The second <code>useState</code> is <strong>Index 1</strong>.</li>
+                  <li>The <code>useEffect</code> is <strong>Index 2</strong>.</li>
+                </ul>
+                <p className="text-[#153230]/80 leading-relaxed mb-8">
+                  *(Technically, under the hood, React uses a linked list of Fiber nodes, not a simple array. But the "Array Mental Model" is the best way to visualize why breaking the order crashes your app.)*
+                </p>
+
+                <CodeMorph
+                  steps={stateEvolutionSteps}
+                  title="React's Internal Arrays"
+                  subtitle="Visualize how React tracks Hooks using a simple array index. Breaking the order corrupts the data."
+                />
+
+                <div className="bg-amber-50 rounded-2xl p-6 border-l-4 border-amber-500 my-8">
+                  <p className="text-amber-900 font-semibold mb-2">
+                    Ask yourself
+                  </p>
+                  <p className="text-amber-900/80 leading-relaxed">
+                    When you write code, are you following rules because you memorized them, or because you understand the mechanical consequence (the index mismatch) of breaking them?
+                  </p>
+                </div>
               </ScrollReveal>
 
               <ScrollReveal delay={300}>
-                <div className="border border-gray-200 rounded-2xl shadow-lg p-8 my-8 bg-white">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6 tracking-tight">Try it yourself</h3>
-                  <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
-                    <button
-                      onClick={() => setCount(count + 1)}
-                      className="bg-gray-900 text-white px-8 py-4 rounded-lg font-semibold text-base hover:bg-gray-800 transition-all"
-                    >
-                      Click me
-                    </button>
-                    <div className="text-4xl font-bold text-gray-900 tabular-nums">
-                      {count} {count === 1 ? 'click' : 'clicks'}
-                    </div>
-                    <button
-                      onClick={() => setCount(0)}
-                      className="border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:border-gray-400 hover:bg-gray-50 transition-all"
-                    >
-                      Reset
-                    </button>
-                  </div>
+                <h2 className="text-3xl font-bold text-[#153230] mb-6 mt-16" id="stale-closures">
+                  2. <code>useState</code> and the "Stale Closure" Trap
+                </h2>
+                <p className="text-[#153230]/80 leading-relaxed mb-6">
+                  The <code>useState</code> hook gives your component memory. But there is one bug that catches every single developer at least once. I call it the <strong>Stale Closure Trap</strong>.
+                </p>
+                <p className="text-[#153230]/80 leading-relaxed mb-6">
+                  Picture this: You have a counter. You click a button that sets a timeout to update that counter. You click it 5 times fast. You expect the count to go up to 5. Instead, it stays at 1.
+                </p>
+
+                <InteractiveCode examples={staleClosureExamples} title="The Stale Closure Bug" />
+
+                <div className="bg-blue-50 rounded-2xl p-6 border-l-4 border-blue-500 my-8">
+                  <p className="text-blue-900 font-semibold mb-2">Rule of Thumb:</p>
+                  <p className="text-blue-900/80 leading-relaxed">
+                    If your update logic depends on the <em>previous</em> value (especially in async code), always use the functional form.
+                  </p>
                 </div>
               </ScrollReveal>
+
               <ScrollReveal delay={400}>
-                <CodeMorph steps={stateEvolutionSteps} title="Evolution of State Management" />
+                <h2 className="text-3xl font-bold text-[#153230] mb-6 mt-16" id="synchronization">
+                  3. <code>useEffect</code>: Synchronization, Not Lifecycle
+                </h2>
+                <p className="text-[#153230]/80 leading-relaxed mb-6">
+                  This is the hardest mental shift. We want to think in terms of "Mount," "Update," and "Unmount." <strong>Stop it.</strong>
+                </p>
+                <p className="text-[#153230]/80 leading-relaxed mb-8">
+                  Think about <strong>Synchronization</strong>. The mental model is: <em>"Keep this external thing (API, Title, DOM) in sync with this React state."</em>
+                </p>
+
+                <div className="bg-[#1e293b] text-gray-100 p-6 rounded-xl overflow-x-auto text-sm my-6 font-mono">
+                  <pre>{`useEffect(() => {
+  // This runs after render to synchronize the document title
+  document.title = \`You clicked \${count} times\`;
+}, [count]); // Only re-sync when 'count' changes`}</pre>
+                </div>
+
+                <AnimatedDiagram steps={useEffectSteps} title="Synchronization Lifecycle" />
+
+                <h3 className="text-lg font-bold text-[#153230] mt-8 mb-4">The Strict Mode "Gotcha" (React 18+)</h3>
+                <p className="text-[#153230]/80 leading-relaxed mb-6">
+                  If you are running this in development, you might notice your API calls firing twice. You might panic. <em>"Is my code broken?"</em>
+                </p>
+                <p className="text-[#153230]/80 leading-relaxed mb-6">
+                  No. React is doing that on purpose. It mounts, unmounts, and mounts again immediately to see if you wrote a <strong>cleanup function</strong>.
+                </p>
+
+                <div className="bg-[#1e293b] text-gray-100 p-6 rounded-xl overflow-x-auto text-sm my-6 font-mono">
+                  <pre>{`useEffect(() => {
+  let cancelled = false;
+
+  async function fetchData() {
+    const data = await api.get();
+    if (!cancelled) setUser(data);
+  }
+  
+  fetchData();
+
+  // The Cleanup Function
+  return () => { cancelled = true; };
+}, [userId]);`}</pre>
+                </div>
+
+                <p className="text-[#153230]/80 leading-relaxed my-6">
+                  If your effect breaks when it runs twice, your synchronization logic is flawed. Don't fight the framework; let it teach you resiliency.
+                </p>
               </ScrollReveal>
 
+              <ScrollReveal delay={500}>
+                <h2 className="text-3xl font-bold text-[#153230] mb-6 mt-16" id="useref-pocket">
+                  4. <code>useRef</code>: The Silent Storage (Bonus)
+                </h2>
+                <p className="text-[#153230]/80 leading-relaxed mb-6">
+                  <code>useState</code> is great, but every time you change it, you ring the doorbell and force the component to re-render. Sometimes, you want to store a value <em>without</em> the re-render.
+                </p>
+                <p className="text-[#153230]/80 leading-relaxed mb-6">
+                  Enter <strong><code>useRef</code></strong>. Think of <code>useRef</code> as a "Secret Pocket." You can put things in it and take things out, but the component doesn't know you did it, so it doesn't update the UI.
+                </p>
 
-              <ScrollReveal delay={800}>
-                <InteractiveCode examples={useStateExamples} title="useState Patterns" />
+                <div className="bg-[#1e293b] text-gray-100 p-6 rounded-xl overflow-x-auto text-sm my-6 font-mono">
+                  <pre>{`function Timer() {
+  const [count, setCount] = useState(0);
+  const intervalRef = useRef(null); // The secret pocket
+
+  const start = () => {
+    // We store the ID, but we don't need a re-render just to store a number
+    intervalRef.current = setInterval(() => {
+      setCount(c => c + 1);
+    }, 1000);
+  };
+  
+  const stop = () => clearInterval(intervalRef.current);
+  // ...
+}`}</pre>
+                </div>
               </ScrollReveal>
 
               <ScrollReveal delay={600}>
-                <CodePlayground />
-              </ScrollReveal>
-              <ScrollReveal delay={500}>
-                <h2 className="text-3xl font-bold text-[#153230] mb-6 mt-16">
-                  useEffect: Side Effects
+                <h2 className="text-3xl font-bold text-[#153230] mb-6 mt-16" id="performance-myth">
+                  5. The Performance Myth (<code>useCallback</code> & <code>useMemo</code>)
                 </h2>
-                <p className="text-[#153230]/80 leading-relaxed mb-8">
-                  The useEffect Hook lets you perform side effects in function components. Think of it as componentDidMount, componentDidUpdate, and componentWillUnmount combined, but with a cleaner API.
+                <p className="text-[#153230]/80 leading-relaxed mb-6">
+                  I need to have some real talk with y'all. I see so many codebases where every single function is wrapped in <code>useCallback</code> "just in case."
                 </p>
-              </ScrollReveal>
+                <p className="text-[#153230]/80 leading-relaxed mb-6">
+                  <strong>Stop it.</strong> <code>useCallback</code> alone does nothing. It does not make your app faster. In fact, it adds memory overhead. It is only useful if the <strong>child component</strong> you are passing it to is wrapped in <code>React.memo</code>.
+                </p>
 
-              <ScrollReveal delay={700}>
-                <AnimatedDiagram
-                  title="The useEffect Lifecycle"
-                  steps={useEffectSteps}
-
-                />
-              </ScrollReveal>
-
-              <ScrollReveal delay={700}>
-                <div className="my-12">
-                  <h3 className="text-2xl font-bold text-[#153230] mb-6">
-                    Common useEffect Patterns
-                  </h3>
-
-                  <div className="space-y-8">
-                    <div className="border border-gray-200 rounded-lg overflow-hidden">
-                      <div className="bg-gray-50 px-6 py-3 border-b border-gray-200 flex items-center gap-3">
-                        <div className="w-2 h-2 rounded-lg bg-blue-500"></div>
-                        <h4 className="text-sm font-semibold text-gray-700">Running Once (On Mount)</h4>
-                      </div>
-                      <div className="p-6">
-                        <pre className="bg-[#0d1117] text-gray-100 p-6 rounded-lg overflow-x-auto text-sm border border-gray-800">
-                          <code>{`useEffect(() => {
-  console.log('Component mounted!');
-  // Fetch data, set up subscriptions, etc.
-}, []); // Empty array = run once`}</code>
-                        </pre>
-                      </div>
-                    </div>
-
-                    <div className="border border-gray-200 rounded-lg overflow-hidden">
-                      <div className="bg-gray-50 px-6 py-3 border-b border-gray-200 flex items-center gap-3">
-                        <div className="w-2 h-2 rounded-lg bg-amber-500"></div>
-                        <h4 className="text-sm font-semibold text-gray-700">Running on Specific Changes</h4>
-                      </div>
-                      <div className="p-6">
-                        <pre className="bg-[#0d1117] text-gray-100 p-6 rounded-lg overflow-x-auto text-sm border border-gray-800">
-                          <code>{`useEffect(() => {
-  console.log(\`Count changed to \${count}\`);
-  // React to count changes
-}, [count]); // Runs when count changes`}</code>
-                        </pre>
-                      </div>
-                    </div>
-
-                    <div className="border border-gray-200 rounded-lg overflow-hidden">
-                      <div className="bg-gray-50 px-6 py-3 border-b border-gray-200 flex items-center gap-3">
-                        <div className="w-2 h-2 rounded-lg bg-emerald-500"></div>
-                        <h4 className="text-sm font-semibold text-gray-700">Cleanup Function</h4>
-                      </div>
-                      <div className="p-6">
-                        <pre className="bg-[#0d1117] text-gray-100 p-6 rounded-lg overflow-x-auto text-sm border border-gray-800">
-                          <code>{`useEffect(() => {
-  const timer = setInterval(() => {
-    console.log('Tick');
-  }, 1000);
-  
-  return () => clearInterval(timer);
-}, []); // Cleanup when unmounting`}</code>
-                        </pre>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </ScrollReveal>
-
-              <ScrollReveal delay={1000}>
-                <div className="border border-gray-200 rounded-2xl shadow-lg p-8 my-12 bg-white">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6 tracking-tight">Interactive Example</h3>
-                  <div className="flex flex-col gap-4">
-                    <button
-                      onClick={() => setIsVisible(!isVisible)}
-                      className="bg-gray-900 text-white px-8 py-4 rounded-lg font-semibold text-base hover:bg-gray-800 transition-all"
-                    >
-                      {isVisible ? 'Hide' : 'Show'} Component
-                    </button>
-                    {isVisible && (
-                      <div className="bg-blue-50 border-2 border-blue-200 p-8 rounded-xl text-center animate-[fadeIn_0.5s_ease-in-out]">
-                        <p className="text-xl font-semibold text-gray-900">
-                          Component is mounted! Check the console for lifecycle messages.
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </ScrollReveal>
-
-              <ScrollReveal delay={1100}>
-                <AnimatedDiagram
-                  title="Rules of Hooks"
-                  steps={hookRulesSteps}
-
-                />
-              </ScrollReveal>
-
-              <ScrollReveal delay={1100}>
-                <div className="my-12">
-                  <h2 className="text-3xl font-bold text-[#153230] mb-6">
-                    Custom Hooks: Reusable Logic
-                  </h2>
-                  <p className="text-[#153230]/80 leading-relaxed mb-6">
-                    Custom Hooks let you extract component logic into reusable functions. They're just JavaScript functions that can call other Hooks.
-                  </p>
-
-                  <div className="border border-gray-200 rounded-lg overflow-hidden">
-                    <div className="bg-gray-50 px-6 py-3 border-b border-gray-200 flex items-center gap-3">
-                      <div className="w-2 h-2 rounded-lg bg-purple-500"></div>
-                      <h4 className="text-sm font-semibold text-gray-700">Example: useLocalStorage Hook</h4>
-                    </div>
-                    <div className="p-6">
-                      <pre className="bg-[#0d1117] text-gray-100 p-6 rounded-lg overflow-x-auto text-sm border border-gray-800">
-                        <code>{`function useLocalStorage(key, initialValue) {
-  const [value, setValue] = useState(() => {
-    const saved = localStorage.getItem(key);
-    return saved ? JSON.parse(saved) : initialValue;
-  });
-
-  useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(value));
-  }, [key, value]);
-
-  return [value, setValue];
+                <div className="bg-[#1e293b] text-gray-100 p-6 rounded-xl overflow-x-auto text-sm my-6 font-mono">
+                  <pre>{`// ❌ POINTLESS: Child isn't memoized, so it re-renders anyway
+function Parent() {
+  const handleClick = useCallback(() => {}, []);
+  return <Child onClick={handleClick} />; 
 }
 
-// Usage
-function App() {
-  const [name, setName] = useLocalStorage('name', 'Guest');
-  
-  return (
-    <input 
-      value={name}
-      onChange={e => setName(e.target.value)}
-    />
-  );
-}`}</code>
-                      </pre>
-                    </div>
-                  </div>
+// ✅ EFFECTIVE: Child is memoized AND callback is stable
+const Child = React.memo(({ onClick }) => <button onClick={onClick}>Click</button>);
+
+function Parent() {
+  const handleClick = useCallback(() => {}, []);
+  return <Child onClick={handleClick} />; // Child skips re-render ✓
+}`}</pre>
+                </div>
+
+                <div className="bg-purple-50 rounded-2xl p-6 border-l-4 border-purple-500 my-8">
+                  <p className="text-purple-900 font-semibold mb-2">
+                    Ask yourself
+                  </p>
+                  <p className="text-purple-900/80 leading-relaxed">
+                    Are you optimizing for performance, or are you optimizing for your own anxiety? Measure first. If it's not slow, keep it simple.
+                  </p>
                 </div>
               </ScrollReveal>
 
-              <ScrollReveal delay={1300}>
-                <div className="border-2 border-gray-900 rounded-2xl p-8 my-16 bg-white">
-                  <h2 className="text-3xl font-bold mb-6 text-gray-900 tracking-tight">Key Takeaways</h2>
-                  <ul className="space-y-4">
-                    <li className="flex items-start gap-4 text-gray-700 leading-relaxed">
-                      <div className="w-6 h-6 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <div className="w-2 h-2 rounded-lg bg-blue-600"></div>
-                      </div>
-                      <span>Hooks let you use state and other React features without writing a class</span>
-                    </li>
-                    <li className="flex items-start gap-4 text-gray-700 leading-relaxed">
-                      <div className="w-6 h-6 rounded-lg bg-purple-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <div className="w-2 h-2 rounded-lg bg-purple-600"></div>
-                      </div>
-                      <span>useState manages local component state with a simple, functional API</span>
-                    </li>
-                    <li className="flex items-start gap-4 text-gray-700 leading-relaxed">
-                      <div className="w-6 h-6 rounded-lg bg-amber-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <div className="w-2 h-2 rounded-lg bg-amber-600"></div>
-                      </div>
-                      <span>useEffect handles side effects and replaces lifecycle methods</span>
-                    </li>
-                    <li className="flex items-start gap-4 text-gray-700 leading-relaxed">
-                      <div className="w-6 h-6 rounded-lg bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <div className="w-2 h-2 rounded-lg bg-emerald-600"></div>
-                      </div>
-                      <span>Custom Hooks let you extract and reuse stateful logic across components</span>
-                    </li>
-                    <li className="flex items-start gap-4 text-gray-700 leading-relaxed">
-                      <div className="w-6 h-6 rounded-lg bg-pink-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <div className="w-2 h-2 rounded-lg bg-pink-600"></div>
-                      </div>
-                      <span>Always follow the Rules of Hooks to avoid bugs and issues</span>
-                    </li>
-                  </ul>
-                </div>
-              </ScrollReveal>
-
-              <ScrollReveal delay={1400}>
-                <div className="mt-16 pt-8 border-t border-[#4D7DA3]/20">
-                  <div className="flex items-center justify-between">
-                    <Link
-                      href="/blog"
-                      className="text-[#4D7DA3] hover:text-[#153230] font-bold flex items-center gap-2 transition-colors"
-                    >
-                      ← Back to all posts
-                    </Link>
-                    <div className="flex gap-4">
-                      <button className="text-[#4D7DA3] hover:text-[#153230] font-bold transition-colors">
-                        Share →
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </ScrollReveal>
-            </article>
-
-            <footer className="px-8 md:px-16 py-8 border-t border-[#4D7DA3]/10 bg-[#f8fcfe]">
-              <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                <p className="text-[#153230]/60 text-sm">
-                  © 2025 DTHOMPSONDEV. All rights reserved.
+              <ScrollReveal delay={700}>
+                <h2 className="text-3xl font-bold text-[#153230] mb-6 mt-16" id="context-cost">
+                  6. The Hidden Cost of <code>useContext</code>
+                </h2>
+                <p className="text-[#153230]/80 leading-relaxed mb-6">
+                  We love <code>useContext</code>. It saves us from prop-drilling hell. But there is a hidden cost that nobody talks about.
                 </p>
-                <div className="flex gap-6">
-                  <Link href="/" className="text-[#153230]/60 hover:text-[#4D7DA3] text-sm font-semibold transition-colors">
-                    Home
-                  </Link>
-                  <Link href="/blog" className="text-[#153230]/60 hover:text-[#4D7DA3] text-sm font-semibold transition-colors">
-                    Blog
-                  </Link>
+                <p className="text-[#153230]/80 leading-relaxed mb-6">
+                  <strong>Context is a nuclear option for state updates.</strong> When a Context value changes, <strong>every single component</strong> that consumes that context re-renders. Even if they only use a tiny slice of data that didn't change.
+                </p>
+
+                <div className="bg-[#1e293b] text-gray-100 p-6 rounded-xl overflow-x-auto text-sm my-6 font-mono">
+                  <pre>{`// ⚠️ WARNING
+const AppContext = createContext();
+
+function ThemeToggle() {
+  // If 'searchQuery' changes in the Provider, THIS component re-renders
+  // even though it only cares about 'theme'.
+  const { theme } = useContext(AppContext); 
+  return <button>{theme}</button>;
+}`}</pre>
                 </div>
-              </div>
-            </footer>
-          </div>
-        </div>
-      </div>
+
+                <div className="mt-12 pt-8 border-t border-[#4D7DA3]/20">
+                  <h3 className="text-2xl font-black text-[#153230] mb-4">The Bottom Line</h3>
+                  <p className="text-lg leading-relaxed text-[#153230]/80">
+                    Hooks aren't just syntax sugar. They are a mindset shift. They force us to think about <strong>synchronization</strong> instead of <strong>lifecycle</strong>. They force us to think about <strong>referential stability</strong> instead of just <strong>values</strong>.
+                  </p>
+                  <p className="text-lg leading-relaxed text-[#153230]/80 mt-4">
+                    If you want to move from "coder" to "engineer," stop memorizing the docs. Start visualizing the array. Start visualizing the closure. Start asking <em>why</em>. That’s how you level up. Using tools like <strong>CodePlayground</strong> below can help!
+                  </p>
+                </div>
+              </ScrollReveal>
+            </>
+          )
+        }}
+      />
     </>
   );
 }

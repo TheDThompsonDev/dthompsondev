@@ -81,7 +81,7 @@ const VISITOR_ARCHETYPES = [
       "Career path strategy for reports"
     ],
     challenges: [
-      "Transitioning from IC to manager—maintaining credibility without hands-on code",
+      "Transitioning from IC to manager,maintaining credibility without hands-on code",
       "Building and scaling high-performing engineering teams",
       "Having difficult conversations: performance reviews, feedback, and terminations",
       "Balancing technical decisions with business constraints and team well-being"
@@ -187,10 +187,10 @@ const VISITOR_ARCHETYPES = [
 ];
 
 const ROOMS: { id: string; title: string; icon: string; pins: { id: string; title: string }[] }[] = [
-  { id: "Leadership", title: "Leadership", icon: "👔", pins: [ { id: "r1", title: "Exec workshops" }, { id: "r2", title: "Strategy calls" } ] },
-  { id: "Tech", title: "Tech", icon: "💻", pins: [ { id: "r3", title: "Code reviews" }, { id: "r4", title: "Architecture" } ] },
-  { id: "Content", title: "Content", icon: "📝", pins: [ { id: "r5", title: "Podcast" }, { id: "r6", title: "Blog posts" } ] },
-  { id: "Community", title: "Community", icon: "🫱🏻‍🫲🏽", pins: [ { id: "r7", title: "Discord (12K+)" }, { id: "r8", title: "Meetups" } ] },
+  { id: "Leadership", title: "Leadership", icon: "👔", pins: [{ id: "r1", title: "Exec workshops" }, { id: "r2", title: "Strategy calls" }] },
+  { id: "Tech", title: "Tech", icon: "💻", pins: [{ id: "r3", title: "Code reviews" }, { id: "r4", title: "Architecture" }] },
+  { id: "Content", title: "Content", icon: "📝", pins: [{ id: "r5", title: "Podcast" }, { id: "r6", title: "Blog posts" }] },
+  { id: "Community", title: "Community", icon: "🫱🏻‍🫲🏽", pins: [{ id: "r7", title: "Discord (12K+)" }, { id: "r8", title: "Meetups" }] },
 ];
 
 function ArchetypeAvatar({ archetype, size = 64, isCenter = false }: { archetype: any; size?: number; isCenter?: boolean }) {
@@ -203,9 +203,9 @@ function ArchetypeAvatar({ archetype, size = 64, isCenter = false }: { archetype
     p5: "from-[#84803E] to-[#6a6731]",
     p6: "from-[#153230] to-[#0f2624]",
   };
-  
+
   const gradient = colors[archetype.id as keyof typeof colors] || colors.danny;
-  
+
   return (
     <div className="flex items-center justify-center">
       <div
@@ -233,7 +233,7 @@ export function OrbitSwitcher() {
   const activePersonId = selectedPerson || hoveredPerson;
 
   const personPositions = [
-    { angle: 155, radiusOffset: 1.25, curveDir: 1.5},
+    { angle: 155, radiusOffset: 1.25, curveDir: 1.5 },
     { angle: 340, radiusOffset: 1.7, curveDir: -1.5 },
     { angle: 225, radiusOffset: 1.45, curveDir: 1 },
     { angle: 190, radiusOffset: 1.65, curveDir: -1 },
@@ -243,6 +243,7 @@ export function OrbitSwitcher() {
 
   return (
     <div className="rounded-3xl bg-white p-4 sm:p-8 shadow-xl border-2 -mt-8 border-[#4D7DA3]/20 relative z-30" style={{ boxShadow: '0 -10px 30px -10px rgba(77, 125, 163, 0.3), 0 10px 30px -10px rgba(0, 0, 0, 0.1)' }}>
+      {/* Toggle hidden for now per user request
       <div className="mb-4 sm:mb-6 inline-flex rounded-full bg-[#E2F3F2] p-1.5 shadow-inner w-full sm:w-auto justify-center">
         {(["orbit", "rooms"] as const).map((t) => (
           <button
@@ -256,6 +257,7 @@ export function OrbitSwitcher() {
           </button>
         ))}
       </div>
+      */}
 
       <AnimatePresence mode="wait">
         {mode === "orbit" ? (
@@ -285,11 +287,10 @@ export function OrbitSwitcher() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
                   onClick={() => setSelectedPerson(selectedPerson === p.id ? null : p.id)}
-                  className={`rounded-xl p-3 sm:p-4 cursor-pointer transition-all duration-300 border-2 ${
-                    selectedPerson === p.id
-                      ? 'bg-white border-[#4D7DA3] shadow-lg scale-105'
-                      : 'bg-white border-[#E2F3F2] shadow-sm hover:shadow-md hover:border-[#4D7DA3]/40'
-                  }`}
+                  className={`rounded-xl p-3 sm:p-4 cursor-pointer transition-all duration-300 border-2 ${selectedPerson === p.id
+                    ? 'bg-white border-[#4D7DA3] shadow-lg scale-105'
+                    : 'bg-white border-[#E2F3F2] shadow-sm hover:shadow-md hover:border-[#4D7DA3]/40'
+                    }`}
                 >
                   <div className="flex flex-col items-center text-center space-y-2">
                     <ArchetypeAvatar archetype={p} size={56} />
@@ -320,19 +321,19 @@ export function OrbitSwitcher() {
                   const pos = personPositions[i];
                   const angle = (pos.angle * Math.PI) / 180;
                   const effectiveRadius = radius * pos.radiusOffset;
-                  
+
                   const centerX = containerWidth / 2;
                   const centerY = containerHeight / 2;
                   const px = centerX + effectiveRadius * Math.cos(angle);
                   const py = centerY + effectiveRadius * Math.sin(angle);
                   const isActive = activePersonId === p.id;
-                  
+
                   const midX = (centerX + px) / 2;
                   const midY = (centerY + py) / 2;
                   const curveMagnitude = 60 * pos.curveDir;
                   const controlX = midX + curveMagnitude * Math.cos(angle + Math.PI / 2);
                   const controlY = midY + curveMagnitude * Math.sin(angle + Math.PI / 2);
-                  
+
                   return (
                     <React.Fragment key={`line-group-${p.id}`}>
                       <motion.path
@@ -389,7 +390,7 @@ export function OrbitSwitcher() {
                 const isSelected = selectedPerson === p.id;
                 const isHovered = hoveredPerson === p.id;
                 const isActive = isSelected || isHovered;
-                
+
                 return (
                   <motion.div
                     key={p.id}
@@ -468,7 +469,7 @@ export function OrbitSwitcher() {
                   >
                     ✕
                   </button>
-                  
+
                   <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
                     <ArchetypeAvatar archetype={selected} size={64} />
                     <div className="flex-1 pr-8">
@@ -502,7 +503,7 @@ export function OrbitSwitcher() {
                         <div key={i} className="flex items-start gap-2 sm:gap-2.5">
                           <div className="w-4 h-4 sm:w-5 sm:h-5 bg-[#4D7DA3] rounded-md flex items-center justify-center shrink-0 mt-0">
                             <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                             </svg>
                           </div>
                           <span className="text-xs sm:text-sm text-[#153230] font-medium">{item}</span>
@@ -532,7 +533,7 @@ export function OrbitSwitcher() {
                     <p className="text-sm sm:text-base font-bold leading-tight">{selected.impact}</p>
                   </div>
 
-                  <button 
+                  <button
                     onClick={() => {
                       window.location.href = `/blog?persona=${selectedPerson}`;
                     }}

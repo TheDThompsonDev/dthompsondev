@@ -34,7 +34,6 @@ export type ContentBlock =
   | WhiteboardBlock
   | ImageBlock
   | QuoteBlock
-  | CodeStepsBlock
   | CalloutBlock
   | CodeBlock
   | ButtonBlock
@@ -104,14 +103,7 @@ export interface QuoteBlock {
   author?: string;
 }
 
-export interface CodeStepsBlock {
-  type: 'code-steps';
-  steps: {
-    title: string;
-    description: string;
-    code: string;
-  }[];
-}
+
 
 export interface CalloutBlock {
   type: 'callout';

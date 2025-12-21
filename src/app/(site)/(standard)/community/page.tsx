@@ -1,678 +1,336 @@
 "use client";
 
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { TiltCard } from "@/components/TiltCard";
+import { motion } from "framer-motion";
 import Link from "next/link";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { TiltCard } from "@/components/TiltCard";
 
-type CommunityTab = "overview" | "conferences" | "meetups" | "mentorship" | "speaking";
-
-interface CommunityMetric {
-  value: string;
-  label: string;
-  icon: string;
-  color: string;
-}
-
-interface Testimonial {
-  name: string;
-  role: string;
-  quote: string;
-  avatar: string;
-}
-
-const metrics: CommunityMetric[] = [
-  { value: "12K+", label: "Community Members", icon: "👥", color: "#4D7DA3" },
-  { value: "8,960", label: "Conference Attendees", icon: "🎉", color: "#84803E" },
-  { value: "700+", label: "Mentorship Calls", icon: "💬", color: "#153230" },
-  { value: "60+", label: "Speaking Events", icon: "🎤", color: "#4D7DA3" },
-  { value: "500+", label: "Career Placements", icon: "💼", color: "#84803E" },
-  { value: "200+", label: "Meetups Hosted", icon: "📅", color: "#153230" },
-];
-
-const testimonials: Testimonial[] = [
-  {
-    name: "Sarah Chen",
-    role: "Senior Software Engineer @ Google",
-    quote: "Danny's mentorship was instrumental in helping me transition from bootcamp grad to landing my dream job at Google. His practical advice and genuine support made all the difference.",
-    avatar: "SC"
-  },
-  {
-    name: "Marcus Johnson",
-    role: "Engineering Manager @ Microsoft",
-    quote: "The Dallas Software Developers community Danny built is unlike anything else. It's where I found my first job, my best friends, and countless opportunities to grow.",
-    avatar: "MJ"
-  },
-  {
-    name: "Priya Patel",
-    role: "Full Stack Developer @ Stripe",
-    quote: "Commit Your Code Conference changed my career trajectory. The accessibility and quality of speakers was world-class, and it's 100% free. Incredible.",
-    avatar: "PP"
-  }
+const events = [
+  { date: "June 4", name: "DSD Meetup (In Person)", type: "The Local Chapter" },
+  { date: "June 10", name: "Discord Resume Review Night", type: "Community Event" },
+  { date: "July 15", name: "CYC Early Bird Tickets End", type: "Conference" }
 ];
 
 export default function CommunityPage() {
-  const [activeTab, setActiveTab] = useState<CommunityTab>("overview");
-
   return (
-    <>
-      {/* Hero Section */}
-      <section className="relative px-4 sm:px-8 md:px-16 py-12 md:py-20">
-        <div className="absolute top-0 right-0 w-[600px] h-[400px] bg-gradient-to-br from-[#4D7DA3]/10 to-transparent rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-[#84803E]/8 to-transparent rounded-full blur-3xl"></div>
+    <div className="text-[#153230] selection:bg-[#4D7DA3] selection:text-white pb-12">
 
-        <div className="relative z-10 max-w-5xl mx-auto text-center">
+      {/* 
+        HERO SECTION 
+        Brand Aligned: No Discord Blue. Uses Brand Green/Teal.
+      */}
+      <section className="relative px-4 sm:px-8 md:px-16 py-8 md:py-12 overflow-hidden">
+        {/* Exact Homepage Gradients */}
+        <div className="absolute top-0 right-0 w-[600px] h-[700px] bg-gradient-to-br from-[#4D7DA3]/10 to-transparent rounded-full blur-3xl opacity-60 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-[400px] h-[700px] bg-gradient-to-tr from-[#84803E]/8 to-transparent rounded-full blur-3xl opacity-60 pointer-events-none"></div>
+
+        <div className="relative z-10 max-w-6xl mx-auto text-center">
           <ScrollReveal>
-            <div className="inline-flex items-center gap-2.5 bg-[#153230] text-white px-4 py-2 rounded-full shadow-lg mb-8">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2.5 bg-[#153230] text-white px-3 py-1.5 md:px-4 md:py-2 rounded-full shadow-lg mb-6 md:mb-8 animate-float">
               <div className="relative flex items-center justify-center">
-                <div className="w-2 h-2 bg-[#4ade80] rounded-full animate-pulse"></div>
-                <div className="absolute w-2 h-2 bg-[#4ade80] rounded-full animate-ping"></div>
+                <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-[#4ade80] rounded-full animate-pulse"></div>
+                <div className="absolute w-1.5 h-1.5 md:w-2 md:h-2 bg-[#4ade80] rounded-full animate-ping"></div>
               </div>
-              <span className="text-sm font-bold tracking-wide">
-                BUILDING COMMUNITIES • CHANGING LIVES
+              <span className="text-xs md:text-sm font-bold tracking-wide">
+                JOIN 12,000+ DEVELOPERS
               </span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-[#153230] leading-tight mb-6">
-              Community{" "}
-              <span className="text-[#4D7DA3]">
-                Builder,
-              </span>
-              <br />
-              Career{" "}
-              <span className="text-[#84803E]">
-                Champion
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-[#153230] leading-tight lg:leading-[1] tracking-tight mb-6 md:mb-8">
+              Code is better <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4D7DA3] to-[#153230]">
+                with company.
               </span>
             </h1>
 
-            <p className="text-lg md:text-xl text-[#153230]/70 leading-relaxed max-w-3xl mx-auto mb-12">
-              From organizing Dallas's premier tech conference to building one of the most active developer
-              communities globally, I've dedicated my career to creating spaces where developers thrive.
-              <span className="text-[#4D7DA3] font-bold"> Real impact. Real careers. Real community.</span>
+            <p className="text-base sm:text-lg lg:text-xl text-[#153230]/70 font-medium leading-relaxed max-w-2xl mx-auto mb-8 md:mb-12">
+              From the heart of Dallas to a global community. <br className="hidden md:block" />
+              Connect with developers who are leveling up together.
             </p>
 
-            {/* Quick Stats Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {metrics.map((metric, index) => (
-                <motion.div
-                  key={metric.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 md:p-6 border border-[#4D7DA3]/10 hover:border-[#4D7DA3]/30 hover:scale-105 transition-all duration-300 group"
-                >
-                  <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">
-                    {metric.icon}
-                  </div>
-                  <div className="text-2xl md:text-3xl font-black mb-1" style={{ color: metric.color }}>
-                    {metric.value}
-                  </div>
-                  <div className="text-xs md:text-sm text-[#153230]/70 font-bold">
-                    {metric.label}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* Tab Navigation */}
-      <section className="mx-4 mt-6">
-        <ScrollReveal>
-          <div className="bg-white rounded-2xl p-3 shadow-lg border border-[#4D7DA3]/10 overflow-x-auto">
-            <div className="flex gap-2 min-w-max md:min-w-0 md:justify-center">
-              {[
-                { id: "overview" as CommunityTab, label: "Overview", icon: "🌟" },
-                { id: "conferences" as CommunityTab, label: "Conferences", icon: "🎪" },
-                { id: "meetups" as CommunityTab, label: "Meetups", icon: "🤝" },
-                { id: "mentorship" as CommunityTab, label: "Mentorship", icon: "💡" },
-                { id: "speaking" as CommunityTab, label: "Speaking", icon: "🎤" },
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`
-                    px-4 md:px-6 py-3 rounded-xl font-bold text-sm whitespace-nowrap transition-all duration-300
-                    ${activeTab === tab.id
-                      ? "bg-[#153230] text-white scale-105 shadow-lg"
-                      : "bg-transparent text-[#153230]/70 hover:text-[#153230] hover:bg-[#E2F3F2]"
-                    }
-                  `}
-                >
-                  <span className="mr-2">{tab.icon}</span>
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </ScrollReveal>
-      </section>
-
-      {/* Tab Content */}
-      <section className="mx-4 mt-6">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            {activeTab === "overview" && <OverviewTab />}
-            {activeTab === "conferences" && <ConferencesTab />}
-            {activeTab === "meetups" && <MeetupsTab />}
-            {activeTab === "mentorship" && <MentorshipTab />}
-            {activeTab === "speaking" && <SpeakingTab />}
-          </motion.div>
-        </AnimatePresence>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="mx-4 mt-12 mb-6">
-        <ScrollReveal>
-          <div className="bg-white rounded-[32px] p-8 md:p-12 shadow-xl border border-[#4D7DA3]/10">
-            <h2 className="text-3xl md:text-4xl font-black text-[#153230] mb-8 text-center">
-              What the Community Says
-            </h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              {testimonials.map((testimonial, index) => (
-                <ScrollReveal key={testimonial.name} delay={index * 100}>
-                  <div className="bg-gradient-to-br from-[#E2F3F2] to-white rounded-2xl p-6 border border-[#4D7DA3]/10 hover:shadow-xl hover:scale-105 transition-all duration-300">
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className="w-12 h-12 bg-[#4D7DA3] rounded-full flex items-center justify-center text-white font-bold">
-                        {testimonial.avatar}
-                      </div>
-                      <div>
-                        <div className="font-black text-[#153230]">{testimonial.name}</div>
-                        <div className="text-xs text-[#153230]/60">{testimonial.role}</div>
-                      </div>
-                    </div>
-                    <p className="text-sm text-[#153230]/80 leading-relaxed italic">
-                      "{testimonial.quote}"
-                    </p>
-                  </div>
-                </ScrollReveal>
-              ))}
-            </div>
-          </div>
-        </ScrollReveal>
-      </section>
-
-      {/* CTA Section */}
-      <section className="relative mx-4 mb-6 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#153230] to-[#4D7DA3] rounded-[32px]" />
-
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full mix-blend-overlay filter blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full mix-blend-overlay filter blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }} />
-        </div>
-
-        <div className="relative px-8 md:px-16 py-16 md:py-20 text-center">
-          <ScrollReveal>
-            <h2 className="text-3xl md:text-5xl font-black text-white mb-6 leading-tight">
-              Ready to Join the Community?
-            </h2>
-            <p className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed">
-              Whether you're looking to connect, learn, or grow your career,
-              there's a place for you in our community.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center items-center">
               <a
                 href="https://discord.gg/dallasdevs"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white text-[#153230] px-8 py-4 rounded-full font-bold hover:scale-105 hover:shadow-2xl transition-all duration-300"
+                // UPDATED: Brand Color Button instead of Discord Blue
+                className="w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 bg-[#153230] hover:bg-[#1a3f3c] text-white rounded-full font-bold text-base md:text-lg transition-all transform hover:scale-105 shadow-lg shadow-[#153230]/20 flex items-center justify-center gap-2"
               >
-                Join Discord Community
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.118.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.085 2.176 2.419 0 1.334-.966 2.419-2.176 2.419zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.085 2.176 2.419 0 1.334-.966 2.419-2.176 2.419z" />
+                </svg>
+                Join the Discord
               </a>
-              <Link
-                href="/#contact"
-                className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-[#153230] hover:scale-105 transition-all duration-300"
+              <a
+                href="#bento-grid"
+                className="w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 bg-white hover:bg-gray-50 text-[#153230] border border-[#E2F3F2] rounded-full font-bold text-base md:text-lg transition-all shadow-lg hover:shadow-xl text-center"
               >
-                Work With Me
-              </Link>
+                In Real Life
+              </a>
             </div>
           </ScrollReveal>
         </div>
       </section>
-    </>
-  );
-}
 
-function OverviewTab() {
-  return (
-    <div className="space-y-6">
-      <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg border border-[#4D7DA3]/10">
-        <h2 className="text-3xl md:text-4xl font-black text-[#153230] mb-6">
-          Community Impact Overview
-        </h2>
-        <div className="prose prose-lg max-w-none">
-          <p className="text-lg text-[#153230]/80 leading-relaxed mb-6">
-            Over the past 5+ years, I've built and scaled multiple community initiatives that have
-            directly impacted thousands of developers' careers. From organizing conferences that
-            trend globally to running weekly meetups that foster genuine connections, my approach
-            to community building focuses on <span className="text-[#4D7DA3] font-bold">authenticity,
-              accessibility, and measurable impact</span>.
-          </p>
+      {/* 
+        BENTO GRID - Brand Aligned
+        Promoting Conference & Meetups over Discord
+      */}
+      <section id="bento-grid" className="px-4 sm:px-8 pb-12">
+        <ScrollReveal>
+          <div className="grid md:grid-cols-12 gap-6 h-auto">
 
-          <div className="grid md:grid-cols-2 gap-6 mt-8">
-            <TiltCard>
-              <div className="bg-gradient-to-br from-[#4D7DA3]/10 to-[#4D7DA3]/5 rounded-2xl p-6 h-full">
-                <div className="text-3xl mb-3">🎯</div>
-                <h3 className="text-xl font-black text-[#153230] mb-3">Mission-Driven</h3>
-                <p className="text-sm text-[#153230]/70 leading-relaxed">
-                  Every initiative is designed to create real opportunities for developers,
-                  whether that's landing their first job, transitioning careers, or advancing
-                  to senior positions.
-                </p>
+            {/* Card A: CONFERENCES - Takes center stage (6 cols) */}
+            <div className="md:col-span-12 lg:col-span-8 h-[400px]">
+              <TiltCard className="h-full">
+                <div className="h-full bg-white rounded-2xl overflow-hidden relative group border border-[#E2F3F2] shadow-[0_20px_60px_rgba(0,0,0,0.3)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.4)] transition-all duration-300">
+                  <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1544531586-fde5298cdd40?q=80&w=2940&auto=format&fit=crop')] opacity-[0.2] bg-cover bg-center group-hover:scale-105 transition-transform duration-700 mix-blend-multiply grayscale group-hover:grayscale-0 transition-all" />
+
+                  <div className="relative z-10 p-6 sm:p-10 h-full flex flex-col justify-end">
+                    <div className="bg-[#4D7DA3] w-fit px-3 py-1 rounded-lg text-xs font-black uppercase tracking-wider mb-4 text-white shadow-md">
+                      Flagship Event
+                    </div>
+                    <h2 className="text-3xl sm:text-5xl font-black mb-3 text-[#153230]">Commit Your Code</h2>
+                    <p className="text-[#153230] mb-6 max-w-lg font-bold text-lg">
+                      The Anti-Conference. No sales pitches, just code. We rent out a massive venue and build stuff for 48 hours.
+                    </p>
+                    <div className="flex flex-wrap items-center gap-4">
+                      <span className="bg-[#153230] text-white px-4 py-2 rounded-full font-bold text-sm">Next: Oct 26-28</span>
+                      <a href="#" className="font-bold text-[#153230] hover:text-[#4D7DA3] underline decoration-2 underline-offset-4">View Past Highlights &rarr;</a>
+                    </div>
+                  </div>
+                </div>
+              </TiltCard>
+            </div>
+
+            {/* Card B: COHORT (New) */}
+            <div className="md:col-span-6 lg:col-span-4 h-[400px]">
+              <TiltCard className="h-full">
+                <div className="h-full bg-[#153230] rounded-2xl overflow-hidden relative group border border-[#153230] shadow-[0_20px_60px_rgba(21,50,48,0.4)] hover:shadow-[0_30px_80px_rgba(21,50,48,0.5)] transition-all duration-300">
+                  <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-emerald-500 via-transparent to-transparent" />
+
+                  <div className="relative z-10 p-6 sm:p-10 h-full flex flex-col justify-center text-center">
+                    <div className="mx-auto w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-6 backdrop-blur-sm text-white">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                    </div>
+                    <h2 className="text-3xl font-black mb-3 text-white">The Cohort</h2>
+                    <p className="text-emerald-100/80 mb-6 text-sm font-medium leading-relaxed">
+                      A rigorous 6-week program where we build a production-grade application from scratch.
+                    </p>
+                    <button className="bg-white text-[#153230] px-6 py-2 rounded-full font-bold text-sm w-fit mx-auto hover:bg-emerald-50 transition-colors">
+                      Join Waitlist
+                    </button>
+                  </div>
+                </div>
+              </TiltCard>
+            </div>
+
+
+            {/* Card C: MEETUPS (Local Chapter) */}
+            <div className="md:col-span-6 h-[300px]">
+              <TiltCard className="h-full">
+                <div className="h-full bg-white rounded-2xl overflow-hidden relative group border border-[#E2F3F2] shadow-[0_20px_60px_rgba(0,0,0,0.3)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.4)] transition-all duration-300">
+                  <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2832&auto=format&fit=crop')] opacity-[0.2] bg-cover bg-center group-hover:scale-105 transition-transform duration-700 mix-blend-multiply grayscale group-hover:grayscale-0 transition-all" />
+
+                  <div className="relative z-10 p-6 sm:p-8 h-full flex flex-col justify-end">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="bg-[#84803E] w-fit px-3 py-1 rounded-lg text-xs font-black uppercase tracking-wider text-white shadow-md">
+                        DSD Meetups
+                      </div>
+                      <span className="text-[#84803E] font-bold text-xs uppercase tracking-wider">Dallas, TX</span>
+                    </div>
+
+                    <h2 className="text-3xl font-black mb-2 text-[#153230]">The Local Chapter</h2>
+                    <p className="text-[#153230]/80 text-sm font-bold">
+                      Monthly meetups. Free food. Zero ego. <br /> Come hang out with neighbors who code.
+                    </p>
+                  </div>
+                </div>
+              </TiltCard>
+            </div>
+
+            {/* Card D: DISCORD (Rebranded to Community Hub) */}
+            <div className="md:col-span-6 h-[300px]">
+              <TiltCard className="h-full">
+                {/* BRAND ALIGNED: Using Dark Teal/Blue gradient instead of Discord Blurple */}
+                <div className="h-full bg-gradient-to-br from-[#1e4644] to-[#153230] rounded-2xl overflow-hidden relative group border border-[#153230] shadow-[0_20px_60px_rgba(0,0,0,0.3)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.4)] transition-all duration-300">
+                  <div className="absolute inset-0 bg-[url('https://assets-global.website-files.com/6257adef93867e56f84d3101/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png')] opacity-10 bg-contain bg-right-bottom bg-no-repeat group-hover:scale-110 transition-transform duration-500 hue-rotate-180 grayscale" />
+
+                  <div className="relative z-10 p-6 sm:p-8 h-full flex flex-col justify-center text-white">
+                    <h2 className="text-2xl font-black mb-2 flex items-center gap-2">
+                      Global Chat
+                      <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                    </h2>
+                    <p className="text-white/80 mb-6 text-sm font-medium">
+                      The 24/7 co-working space. Stuck on a bug? <br />
+                      <span className="font-bold text-white">12,000+ devs are online.</span>
+                    </p>
+                    <a href="https://discord.gg/dallasdevs" className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-5 py-2 rounded-full font-bold text-sm w-fit hover:bg-white hover:text-[#153230] transition-all">
+                      Open Discord
+                    </a>
+                  </div>
+                </div>
+              </TiltCard>
+            </div>
+
+          </div>
+        </ScrollReveal>
+      </section>
+
+      {/* 
+        NEW SECTION: Community Moments (Masonry Gallery)
+      */}
+      <section className="px-4 sm:px-8 pb-12">
+        <ScrollReveal>
+          <div className="mb-8 flex items-end justify-between">
+            <div>
+              <h2 className="text-3xl font-black text-[#153230] mb-2">Community Moments</h2>
+              <p className="text-[#153230]/60 font-medium">Pop-up coffees, late night hackathons, and everything in between.</p>
+            </div>
+            <button className="hidden sm:block text-sm font-bold text-[#4D7DA3] hover:text-[#153230] transition-colors">View All Photos &rarr;</button>
+          </div>
+
+          <div className="columns-1 sm:columns-2 md:columns-3 gap-6 space-y-6">
+            {/* Photo 1 */}
+            <div className="relative group break-inside-avoid rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
+              <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=2070&auto=format&fit=crop" alt="Coffee Meetup" className="w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                <p className="text-white text-xs font-bold uppercase tracking-wider mb-1">Pop-up</p>
+                <p className="text-white font-bold text-sm">Design District Coffee</p>
               </div>
-            </TiltCard>
+            </div>
 
-            <TiltCard>
-              <div className="bg-gradient-to-br from-[#84803E]/10 to-[#84803E]/5 rounded-2xl p-6 h-full">
-                <div className="text-3xl mb-3">🌍</div>
-                <h3 className="text-xl font-black text-[#153230] mb-3">Global Reach</h3>
-                <p className="text-sm text-[#153230]/70 leading-relaxed">
-                  While rooted in Dallas, our community has grown to include developers
-                  worldwide, with online events and resources reaching 450K+ developers globally.
-                </p>
+            {/* Photo 2 */}
+            <div className="relative group break-inside-avoid rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
+              <img src="https://images.unsplash.com/photo-1591115765373-5207764f72e7?q=80&w=2070&auto=format&fit=crop" alt="Hackathon" className="w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                <p className="text-white text-xs font-bold uppercase tracking-wider mb-1">Hackathon</p>
+                <p className="text-white font-bold text-sm">Build Weekend '23</p>
               </div>
-            </TiltCard>
+            </div>
 
-            <TiltCard>
-              <div className="bg-gradient-to-br from-[#153230]/10 to-[#153230]/5 rounded-2xl p-6 h-full">
-                <div className="text-3xl mb-3">💪</div>
-                <h3 className="text-xl font-black text-[#153230] mb-3">Sustainable Growth</h3>
-                <p className="text-sm text-[#153230]/70 leading-relaxed">
-                  Our communities aren't built on hype—they're built on systems, processes,
-                  and genuine value that keeps members engaged for years, not weeks.
-                </p>
+            {/* Photo 3 */}
+            <div className="relative group break-inside-avoid rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
+              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop" alt="Cohort Demo Day" className="w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                <p className="text-white text-xs font-bold uppercase tracking-wider mb-1">Cohort</p>
+                <p className="text-white font-bold text-sm">Demo Day: Batch #4</p>
               </div>
-            </TiltCard>
+            </div>
 
-            <TiltCard>
-              <div className="bg-gradient-to-br from-[#4D7DA3]/10 to-[#84803E]/5 rounded-2xl p-6 h-full">
-                <div className="text-3xl mb-3">🔓</div>
-                <h3 className="text-xl font-black text-[#153230] mb-3">Always Accessible</h3>
-                <p className="text-sm text-[#153230]/70 leading-relaxed">
-                  Free conferences, free resources, open Discord—we believe in removing
-                  barriers so everyone has access to opportunities regardless of budget.
-                </p>
+            {/* Photo 4 - Text Card */}
+            <div className="bg-[#84803E] p-8 rounded-2xl break-inside-avoid text-center flex flex-col items-center justify-center min-h-[200px] shadow-lg">
+              <h3 className="text-white font-black text-2xl mb-2">We build in public.</h3>
+              <p className="text-white/80 text-sm">Every Friday. 2 PM CST. On Discord.</p>
+            </div>
+
+            {/* Photo 5 */}
+            <div className="relative group break-inside-avoid rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
+              <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=2070&auto=format&fit=crop" alt="Group Shot" className="w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                <p className="text-white text-xs font-bold uppercase tracking-wider mb-1">Meetup</p>
+                <p className="text-white font-bold text-sm">Holiday Party</p>
               </div>
-            </TiltCard>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ConferencesTab() {
-  return (
-    <div className="space-y-6">
-      <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg border border-[#4D7DA3]/10">
-        <div className="flex items-center gap-4 mb-8">
-          <div className="w-16 h-16 bg-[#4D7DA3] rounded-2xl flex items-center justify-center text-3xl shadow-lg">
-            🎪
-          </div>
-          <div>
-            <h2 className="text-3xl md:text-4xl font-black text-[#153230]">
-              Commit Your Code Conference
-            </h2>
-            <p className="text-[#4D7DA3] font-bold">Dallas's Premier Tech Conference</p>
-          </div>
-        </div>
-
-        <div className="grid md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-[#E2F3F2] rounded-xl p-4 text-center">
-            <div className="text-3xl font-black text-[#4D7DA3]">8,960</div>
-            <div className="text-sm text-[#153230]/70 font-bold">Total Attendees</div>
-          </div>
-          <div className="bg-[#E2F3F2] rounded-xl p-4 text-center">
-            <div className="text-3xl font-black text-[#84803E]">300%</div>
-            <div className="text-sm text-[#153230]/70 font-bold">Growth YoY</div>
-          </div>
-          <div className="bg-[#E2F3F2] rounded-xl p-4 text-center">
-            <div className="text-3xl font-black text-[#153230]">60</div>
-            <div className="text-sm text-[#153230]/70 font-bold">Speakers</div>
-          </div>
-          <div className="bg-[#E2F3F2] rounded-xl p-4 text-center">
-            <div className="text-3xl font-black text-[#4D7DA3]">100%</div>
-            <div className="text-sm text-[#153230]/70 font-bold">Charity Event</div>
-          </div>
-        </div>
-
-        <div className="space-y-4 mb-8">
-          <h3 className="text-2xl font-black text-[#153230]">Conference Highlights</h3>
-          <ul className="space-y-3">
-            {[
-              "Trended globally on social media for 3 weeks post-event",
-              "37% of attendees were first-time conference goers",
-              "3 concurrent tracks covering frontend, backend, and career development",
-              "Speakers from Google, Microsoft, Digital Ocean, Spotify, and more",
-              "Sponsors: GitHub, Grafana Labs, Vonage, Appwrite, Yum! Brands",
-              "Both in-person (860) and online (8,100) attendance options"
-            ].map((highlight, index) => (
-              <li key={index} className="flex items-start gap-3">
-                <svg className="w-6 h-6 text-[#4D7DA3] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <span className="text-[#153230]/80">{highlight}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="bg-gradient-to-r from-[#4D7DA3]/10 to-[#84803E]/10 rounded-xl p-6 border border-[#4D7DA3]/20">
-          <h4 className="text-xl font-black text-[#153230] mb-3">Why It Matters</h4>
-          <p className="text-[#153230]/80 leading-relaxed">
-            Commit Your Code Conference proves that high-quality technical education doesn't
-            have to come with a $1,000+ price tag. By making it 100% free and accessible,
-            we've democratized access to world-class speakers and created pathways for
-            developers who otherwise couldn't afford traditional conferences.
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function MeetupsTab() {
-  return (
-    <div className="space-y-6">
-      <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg border border-[#4D7DA3]/10">
-        <div className="flex items-center gap-4 mb-8">
-          <div className="w-16 h-16 bg-[#84803E] rounded-2xl flex items-center justify-center text-3xl shadow-lg">
-            🤝
-          </div>
-          <div>
-            <h2 className="text-3xl md:text-4xl font-black text-[#153230]">
-              Dallas Software Developers Group
-            </h2>
-            <p className="text-[#84803E] font-bold">12,000+ Active Developer Community</p>
-          </div>
-        </div>
-
-        <div className="grid md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-[#E2F3F2] rounded-xl p-4 text-center">
-            <div className="text-3xl font-black text-[#84803E]">12K+</div>
-            <div className="text-sm text-[#153230]/70 font-bold">Members</div>
-          </div>
-          <div className="bg-[#E2F3F2] rounded-xl p-4 text-center">
-            <div className="text-3xl font-black text-[#4D7DA3]">200+</div>
-            <div className="text-sm text-[#153230]/70 font-bold">Meetups</div>
-          </div>
-          <div className="bg-[#E2F3F2] rounded-xl p-4 text-center">
-            <div className="text-3xl font-black text-[#153230]">500+</div>
-            <div className="text-sm text-[#153230]/70 font-bold">Placements</div>
-          </div>
-          <div className="bg-[#E2F3F2] rounded-xl p-4 text-center">
-            <div className="text-3xl font-black text-[#84803E]">5+</div>
-            <div className="text-sm text-[#153230]/70 font-bold">Years</div>
-          </div>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-gradient-to-br from-[#84803E]/10 to-transparent rounded-xl p-6 border border-[#84803E]/20">
-            <h3 className="text-xl font-black text-[#153230] mb-3">Weekly Meetups</h3>
-            <p className="text-sm text-[#153230]/70 mb-4 leading-relaxed">
-              Every week, we bring together developers of all levels for networking,
-              learning, and collaboration. From technical workshops to career panels,
-              there's always something valuable happening.
-            </p>
-            <div className="flex flex-wrap gap-2">
-              <span className="px-3 py-1 bg-[#84803E] text-white rounded-full text-xs font-bold">
-                Technical Talks
-              </span>
-              <span className="px-3 py-1 bg-[#84803E] text-white rounded-full text-xs font-bold">
-                Networking
-              </span>
-              <span className="px-3 py-1 bg-[#84803E] text-white rounded-full text-xs font-bold">
-                Code Reviews
-              </span>
             </div>
           </div>
+        </ScrollReveal>
+      </section>
 
-          <div className="bg-gradient-to-br from-[#4D7DA3]/10 to-transparent rounded-xl p-6 border border-[#4D7DA3]/20">
-            <h3 className="text-xl font-black text-[#153230] mb-3">Discord Community</h3>
-            <p className="text-sm text-[#153230]/70 mb-4 leading-relaxed">
-              Our Discord server is active 24/7 with job postings, technical discussions,
-              code help, and genuine friendships. It's not just a Slack alternative—it's
-              where careers are built.
-            </p>
-            <div className="flex flex-wrap gap-2">
-              <span className="px-3 py-1 bg-[#4D7DA3] text-white rounded-full text-xs font-bold">
-                Daily Jobs
-              </span>
-              <span className="px-3 py-1 bg-[#4D7DA3] text-white rounded-full text-xs font-bold">
-                Study Groups
-              </span>
-              <span className="px-3 py-1 bg-[#4D7DA3] text-white rounded-full text-xs font-bold">
-                24/7 Support
-              </span>
+      {/* 
+        SOCIAL PROOF & ACTIVITY 
+      */}
+      <section className="px-4 sm:px-8 pb-12">
+        <ScrollReveal>
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 max-w-6xl mx-auto">
+
+            {/* Left: Community Activity Feed */}
+            <div className="bg-white rounded-2xl p-6 md:p-8 border border-[#E2F3F2] shadow-[0_20px_60px_rgba(0,0,0,0.2)]">
+              <h3 className="text-2xl font-black text-[#153230] mb-6 flex items-center gap-3">
+                <span className="w-3 h-3 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_#22c55e]" />
+                Community Activity
+              </h3>
+
+              <div className="space-y-6">
+                <div className="flex items-center justify-between pb-6 border-b border-[#E2F3F2]">
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 bg-green-500 rounded-full" />
+                    <span className="font-mono text-green-600 text-sm font-bold">452 Members Online</span>
+                  </div>
+                  <span className="text-xs text-[#153230]/40 font-bold bg-[#F8FDFF] px-2 py-1 rounded border border-[#E2F3F2]">LIVE</span>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-start gap-4 p-4 hover:bg-[#F8FDFF] rounded-2xl transition-colors border border-transparent hover:border-[#E2F3F2]">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-500 to-pink-500 shrink-0 shadow-md" />
+                    <div>
+                      <p className="text-sm text-[#153230] font-medium leading-relaxed">
+                        <span className="font-black">Sarah C.</span> just landed a job at <span className="text-[#4D7DA3] font-bold">Netflix</span>! 🎉
+                      </p>
+                      <p className="text-xs text-[#153230]/50 mt-1 font-bold">2m ago in #jobs</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4 p-4 hover:bg-[#F8FDFF] rounded-2xl transition-colors border border-transparent hover:border-[#E2F3F2]">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-cyan-500 shrink-0 shadow-md" />
+                    <div>
+                      <p className="text-sm text-[#153230] font-medium leading-relaxed">
+                        <span className="font-black">Marcus</span> is streaming: "React Performance Deep Dive" 📺
+                      </p>
+                      <p className="text-xs text-[#153230]/50 mt-1 font-bold">15m ago in #events</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4 p-4 hover:bg-[#F8FDFF] rounded-2xl transition-colors border border-transparent hover:border-[#E2F3F2]">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-yellow-500 to-orange-500 shrink-0 shadow-md" />
+                    <div>
+                      <p className="text-sm text-[#153230] font-medium leading-relaxed">
+                        <span className="font-black">New thread:</span> "Best resources for System Design?"
+                      </p>
+                      <p className="text-xs text-[#153230]/50 mt-1 font-bold">1h ago in #general</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div className="space-y-4">
-          <h3 className="text-2xl font-black text-[#153230]">Community Offerings</h3>
-          <div className="grid md:grid-cols-3 gap-4">
-            {[
-              { icon: "💼", title: "Job Board", desc: "Exclusive job postings from our network of 200+ companies" },
-              { icon: "🎓", title: "Workshops", desc: "Monthly technical workshops on React, Node.js, system design, and more" },
-              { icon: "🤝", title: "Mentorship", desc: "Connect with experienced developers for guidance and support" },
-              { icon: "📚", title: "Resources", desc: "Curated learning materials, templates, and career guides" },
-              { icon: "🎉", title: "Social Events", desc: "Happy hours, game nights, and casual hangouts for real connections" },
-              { icon: "💡", title: "Project Collab", desc: "Team up on side projects and open source contributions" }
-            ].map((item, index) => (
-              <div key={index} className="bg-white border border-[#4D7DA3]/10 rounded-xl p-4 hover:shadow-lg hover:scale-105 transition-all">
-                <div className="text-2xl mb-2">{item.icon}</div>
-                <h4 className="font-black text-[#153230] mb-1">{item.title}</h4>
-                <p className="text-xs text-[#153230]/70">{item.desc}</p>
+            {/* Right: The Calendar */}
+            <div className="bg-white rounded-2xl p-6 md:p-8 border border-[#E2F3F2] shadow-[0_20px_60px_rgba(0,0,0,0.2)]">
+              <h3 className="text-2xl font-black text-[#153230] mb-8">What's Happening This Month</h3>
+              <div className="space-y-4">
+                {events.map((event, i) => (
+                  <div key={i} className="group bg-white hover:bg-[#F0FDF4] transition-all p-4 rounded-xl border border-[#E2F3F2] flex items-center gap-4 sm:gap-6 cursor-default shadow-sm hover:shadow-md hover:-translate-y-1 duration-300">
+                    <div className="bg-[#F8FDFF] group-hover:bg-white px-3 py-2 sm:px-4 sm:py-3 rounded-lg text-center min-w-[70px] sm:min-w-[80px] transition-colors border border-[#E2F3F2]">
+                      <div className="text-xs text-[#153230]/50 uppercase font-black tracking-wider">{event.date.split(" ")[0]}</div>
+                      <div className="text-lg sm:text-xl font-black text-[#153230]">{event.date.split(" ")[1]}</div>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-[#153230] text-base sm:text-lg group-hover:text-[#4D7DA3] transition-colors">{event.name}</h4>
+                      <p className="text-xs sm:text-sm text-[#153230]/60 font-medium">{event.type}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+            </div>
 
-function MentorshipTab() {
-  return (
-    <div className="space-y-6">
-      <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg border border-[#4D7DA3]/10">
-        <div className="flex items-center gap-4 mb-8">
-          <div className="w-16 h-16 bg-[#153230] rounded-2xl flex items-center justify-center text-3xl shadow-lg">
-            💡
           </div>
-          <div>
-            <h2 className="text-3xl md:text-4xl font-black text-[#153230]">
-              1-on-1 Career Mentorship
-            </h2>
-            <p className="text-[#153230] font-bold">Personalized Guidance for Your Career</p>
-          </div>
-        </div>
+        </ScrollReveal>
+      </section>
 
-        <div className="grid md:grid-cols-3 gap-4 mb-8">
-          <div className="bg-[#E2F3F2] rounded-xl p-6 text-center">
-            <div className="text-4xl font-black text-[#153230]">700+</div>
-            <div className="text-sm text-[#153230]/70 font-bold mt-1">Mentorship Calls</div>
-          </div>
-          <div className="bg-[#E2F3F2] rounded-xl p-6 text-center">
-            <div className="text-4xl font-black text-[#4D7DA3]">130+</div>
-            <div className="text-sm text-[#153230]/70 font-bold mt-1">Five-Star Reviews</div>
-          </div>
-          <div className="bg-[#E2F3F2] rounded-xl p-6 text-center">
-            <div className="text-4xl font-black text-[#84803E]">4.9★</div>
-            <div className="text-sm text-[#153230]/70 font-bold mt-1">Average Rating</div>
+      {/* 
+        LOGOS
+      */}
+      <section className="py-8 border-t border-[#E2F3F2] mt-6">
+        <div className="container mx-auto px-6 text-center">
+          <p className="text-xs md:text-sm text-[#153230]/40 mb-8 font-black uppercase tracking-[0.2em]">Members from companies like</p>
+          <div className="flex flex-wrap justify-center gap-8 md:gap-16 opacity-30 hover:opacity-100 transition-all duration-500 grayscale hover:grayscale-0">
+            <span className="text-xl font-black text-[#153230]">GOOGLE</span>
+            <span className="text-xl font-black text-[#153230]">NETFLIX</span>
+            <span className="text-xl font-black text-[#153230]">MICROSOFT</span>
+            <span className="text-xl font-black text-[#153230]">SPOTIFY</span>
+            <span className="text-xl font-black text-[#153230]">STRIPE</span>
           </div>
         </div>
+      </section>
 
-        <div className="bg-gradient-to-br from-[#153230]/5 to-[#4D7DA3]/5 rounded-2xl p-8 mb-8 border border-[#153230]/10">
-          <h3 className="text-2xl font-black text-[#153230] mb-6">What I Help With</h3>
-          <div className="grid md:grid-cols-2 gap-6">
-            {[
-              {
-                icon: "🎯",
-                title: "Career Transitions",
-                items: ["Breaking into tech", "Switching specializations", "Moving to senior roles", "Management transitions"]
-              },
-              {
-                icon: "💼",
-                title: "Job Search Strategy",
-                items: ["Resume optimization", "Interview preparation", "Salary negotiation", "Offer evaluation"]
-              },
-              {
-                icon: "🚀",
-                title: "Skill Development",
-                items: ["Learning roadmaps", "Project portfolio", "Technical leadership", "Communication skills"]
-              },
-              {
-                icon: "🌱",
-                title: "Career Growth",
-                items: ["Personal branding", "Community building", "Speaking opportunities", "Side projects"]
-              }
-            ].map((category, index) => (
-              <div key={index} className="bg-white rounded-xl p-6 border border-[#4D7DA3]/10">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="text-3xl">{category.icon}</div>
-                  <h4 className="text-lg font-black text-[#153230]">{category.title}</h4>
-                </div>
-                <ul className="space-y-2">
-                  {category.items.map((item, idx) => (
-                    <li key={idx} className="flex items-center gap-2 text-sm text-[#153230]/70">
-                      <div className="w-1.5 h-1.5 bg-[#4D7DA3] rounded-full"></div>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="bg-[#4D7DA3]/10 rounded-xl p-6 border border-[#4D7DA3]/20">
-          <h4 className="text-xl font-black text-[#153230] mb-3">My Approach to Mentorship</h4>
-          <p className="text-[#153230]/80 leading-relaxed mb-4">
-            I don't believe in generic advice. Every mentorship call is tailored to your specific
-            situation, goals, and challenges. Whether you're a bootcamp grad trying to land your
-            first role or a senior engineer looking to make the leap to leadership, I provide
-            actionable, practical guidance based on real experience—not theory.
-          </p>
-          <p className="text-[#153230]/80 leading-relaxed">
-            My mentorship has helped developers land roles at Google, Microsoft, Amazon, Stripe,
-            and hundreds of other companies. But more importantly, it's helped them build careers
-            they're genuinely excited about.
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function SpeakingTab() {
-  return (
-    <div className="space-y-6">
-      <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg border border-[#4D7DA3]/10">
-        <div className="flex items-center gap-4 mb-8">
-          <div className="w-16 h-16 bg-[#4D7DA3] rounded-2xl flex items-center justify-center text-3xl shadow-lg">
-            🎤
-          </div>
-          <div>
-            <h2 className="text-3xl md:text-4xl font-black text-[#153230]">
-              Conference Speaking & Workshops
-            </h2>
-            <p className="text-[#4D7DA3] font-bold">Inspiring Developers Worldwide</p>
-          </div>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-4 mb-8">
-          <div className="bg-[#E2F3F2] rounded-xl p-6 text-center">
-            <div className="text-4xl font-black text-[#4D7DA3]">60+</div>
-            <div className="text-sm text-[#153230]/70 font-bold mt-1">Speaking Engagements</div>
-          </div>
-          <div className="bg-[#E2F3F2] rounded-xl p-6 text-center">
-            <div className="text-4xl font-black text-[#84803E]">450K+</div>
-            <div className="text-sm text-[#153230]/70 font-bold mt-1">Developers Reached</div>
-          </div>
-        </div>
-
-        <div className="space-y-6 mb-8">
-          <h3 className="text-2xl font-black text-[#153230]">Speaking Topics</h3>
-          <div className="grid md:grid-cols-2 gap-4">
-            {[
-              {
-                title: "Community Building at Scale",
-                desc: "How to grow developer communities from 0 to 10,000+ members",
-                color: "#4D7DA3"
-              },
-              {
-                title: "Career Development in Tech",
-                desc: "Strategies for advancing from junior to senior to leadership",
-                color: "#84803E"
-              },
-              {
-                title: "Breaking Into Tech",
-                desc: "Practical advice for career changers and bootcamp grads",
-                color: "#153230"
-              },
-              {
-                title: "Technical Leadership",
-                desc: "Transitioning from IC to management and leading teams effectively",
-                color: "#4D7DA3"
-              },
-              {
-                title: "Personal Branding for Developers",
-                desc: "Building an authentic online presence that opens doors",
-                color: "#84803E"
-              },
-              {
-                title: "Conference Organization",
-                desc: "Behind the scenes of running a 9,000-person tech conference",
-                color: "#153230"
-              }
-            ].map((topic, index) => (
-              <div key={index} className="bg-white border border-[#4D7DA3]/10 rounded-xl p-6 hover:shadow-lg hover:scale-105 transition-all group">
-                <div
-                  className="w-12 h-12 rounded-lg flex items-center justify-center mb-4 text-white font-bold text-xl"
-                  style={{ backgroundColor: topic.color }}
-                >
-                  {index + 1}
-                </div>
-                <h4 className="text-lg font-black text-[#153230] mb-2">{topic.title}</h4>
-                <p className="text-sm text-[#153230]/70 leading-relaxed">{topic.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="bg-gradient-to-r from-[#4D7DA3]/10 via-[#84803E]/10 to-[#153230]/10 rounded-2xl p-8 border border-[#4D7DA3]/20">
-          <h3 className="text-2xl font-black text-[#153230] mb-4">Book Me to Speak</h3>
-          <p className="text-[#153230]/80 leading-relaxed mb-6">
-            I'm available for conference keynotes, workshop facilitation, panel discussions,
-            and corporate training. My speaking style is energetic, authentic, and packed with
-            actionable takeaways. I don't do generic motivation—I share real strategies, real
-            stories, and real results.
-          </p>
-          <div className="flex flex-wrap gap-3">
-            <span className="px-4 py-2 bg-[#4D7DA3] text-white rounded-full text-sm font-bold">
-              In-Person Events
-            </span>
-            <span className="px-4 py-2 bg-[#84803E] text-white rounded-full text-sm font-bold">
-              Virtual Conferences
-            </span>
-            <span className="px-4 py-2 bg-[#153230] text-white rounded-full text-sm font-bold">
-              Corporate Workshops
-            </span>
-            <span className="px-4 py-2 bg-[#4D7DA3] text-white rounded-full text-sm font-bold">
-              Panel Moderation
-            </span>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

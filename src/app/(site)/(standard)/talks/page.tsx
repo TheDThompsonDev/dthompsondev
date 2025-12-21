@@ -21,6 +21,14 @@ interface VideoTalk {
   channel?: string;
 }
 
+interface PastTalk {
+  event: string;
+  location: string;
+  date: string;
+  title: string;
+  link?: string;
+}
+
 interface SpeakingTopic {
   icon: string;
   title: string;
@@ -28,9 +36,121 @@ interface SpeakingTopic {
   color: string;
 }
 
-const featuredVideoIds = ["1", "2", "3", "5", "6", "8"];
+
 
 const rawTalks: VideoTalk[] = [
+
+  {
+    id: "32",
+    title: "IMPROVE YOUR DATA FETCHING WITH REACT QUERY",
+    description: "Breakout Session. How to use React Query successfully and knowing when to utilize it. RenderATL 2023.",
+    thumbnail: "https://img.youtube.com/vi/aNwU0MwwvNY/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=aNwU0MwwvNY",
+    category: "talk",
+    channel: "RenderATL",
+    featured: true
+  },
+  {
+    id: "25",
+    title: "TypeScript and Your Codebase: They Deserve Each Other!",
+    description: "Insights on creating thriving tech communities, organizing events, and driving engagement.",
+    thumbnail: "https://img.youtube.com/vi/ZxlzNTzIoqQ/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=ZxlzNTzIoqQ",
+    category: "talk",
+    channel: "Jetbrains Javascript Day Conference",
+    featured: true
+  },
+  {
+    id: "33",
+    title: "Error Boundaries Save You From Crashes!",
+    description: "Showcasing what an Error Boundary is in React and why you should use them to prevent the UI of your site from crashing. RenderATL 2022.",
+    thumbnail: "https://img.youtube.com/vi/gooW831qwv4/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=gooW831qwv4",
+    category: "talk",
+    channel: "RenderATL"
+  },
+  {
+    id: "34",
+    title: "Death of AI Magic! Welcome to AI Engineering!",
+    description: "Stop using AI like it's a magic wand and learn how to use it correctly.",
+    thumbnail: "https://img.youtube.com/vi/-A3sMIAvqaA/hqdefault.jpg",
+    youtubeUrl: "https://youtu.be/-A3sMIAvqaA?si=PvLKGGOghYNw5G9P&t=443",
+    category: "talk",
+    channel: "Dallas Software Developers Group"
+  },
+  {
+    id: "35",
+    title: "React Detective Danny Thompson! You don't need that useEffect!",
+    description: "Fix your bad habits of using unnecessary useEffect hooks and learn how to use them correctly.",
+    thumbnail: "https://img.youtube.com/vi/1FmgvjczoMs/hqdefault.jpg",
+    youtubeUrl: "https://youtu.be/1FmgvjczoMs?si=M8vYx0V-sEqvEnzq&t=2031",
+    category: "talk",
+    channel: "Dallas Software Developers Group",
+    featured: true
+  },
+  {
+    id: "36",
+    title: "Spanish Language Learning MCP Server!",
+    description: "MCP Server for Spanish Language Learning talk!",
+    thumbnail: "https://img.youtube.com/vi/RDgBnArxFLk/hqdefault.jpg",
+    youtubeUrl: "https://youtu.be/RDgBnArxFLk?si=T8ZYijYbqMyxkN5E&t=5567",
+    category: "talk",
+    channel: "Dallas Software Developers Group"
+  },
+  {
+    id: "40",
+    title: "Keynote: The Community That Developers Built",
+    description: "Building a thriving developer community is both challenging and rewarding. Danny shares insights on creating value and connection.",
+    thumbnail: "https://img.youtube.com/vi/N7CxuV8ynNw/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=N7CxuV8ynNw",
+    category: "talk",
+    channel: "All Things Open"
+  },
+  {
+    id: "41",
+    title: "Keynote: THAT Conference Journey Into Tech",
+    description: "Building a thriving developer community is both challenging and rewarding. Danny shares insights on creating value and connection.",
+    thumbnail: "https://img.youtube.com/vi/pgFBitwKd6g/hqdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/live/pgFBitwKd6g?si=xZEpebC4Q23zmefU&t=1279",
+    category: "talk",
+    channel: "THAT Conference"
+  },
+  {
+    id: "37",
+    title: "The Agentic Shift: Moving from LLMs to Autonomous Systems",
+    description: "Learn how to transition from simple chatbots to autonomous agents that drive revenue by reasoning through tasks and executing complex operations without human intervention.",
+    thumbnail: "https://img.youtube.com/vi/YkiQipeOw3w/hqdefault.jpg",
+    youtubeUrl: "https://youtu.be/YkiQipeOw3w?si=rawJOpMkHSYHNlb9&t=4527",
+    category: "talk",
+    channel: "Dallas Software Developers Group"
+  },
+  {
+    id: "38",
+    title: "The AI Playbook For Companies",
+    description: "Commit Your Code Conference keynote on how companies can effectively leverage AI.",
+    thumbnail: "https://img.youtube.com/vi/2GhuUdAzx2U/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=2GhuUdAzx2U",
+    category: "talk",
+    channel: "Commit Your Code Conference"
+  },
+  {
+    id: "39",
+    title: "AI Conversation with Matt McDole",
+    description: "Conversation with CTO of Yum! Brands Matt McDole and Danny Thompson at Commit Your Code.",
+    thumbnail: "https://img.youtube.com/vi/nrRLzASgeqE/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=nrRLzASgeqE&t=9s",
+    category: "interview",
+    channel: "Commit Your Code Conference"
+  },
+  {
+    id: "12",
+    title: "4 Hours to Build a Haunted App",
+    description: "Web Dev Challenge on CodeTV - building a complete application under time pressure.",
+    thumbnail: "https://img.youtube.com/vi/fNDSDWJaj2M/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=fNDSDWJaj2M",
+    category: "tutorial",
+    channel: "CodeTV"
+  },
   {
     id: "1",
     title: "Playing the Developer Job Search Game to Win in 2025",
@@ -38,8 +158,25 @@ const rawTalks: VideoTalk[] = [
     thumbnail: "https://img.youtube.com/vi/6_qwLx8jwBY/maxresdefault.jpg",
     youtubeUrl: "https://www.youtube.com/watch?v=6_qwLx8jwBY",
     category: "interview",
-    channel: "freeCodeCamp.org",
-    featured: true
+    channel: "freeCodeCamp.org"
+  },
+  {
+    id: "26",
+    title: "Tutorial Purgatory!",
+    description: "Exploring the challenges of learning new skills and how to navigate your journey.",
+    thumbnail: "https://img.youtube.com/vi/SdcW_gCx6IM/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=SdcW_gCx6IM",
+    category: "interview",
+    channel: "Coder Foundry"
+  },
+  {
+    id: "28",
+    title: "AI Gaps 95% of Companies NEED to see!",
+    description: " Danny Thompson and Leon sit down with Matt DeBergalis, CEO of Apollo GraphQL, to unpack what it will take to move from a gold rush of mediocrity to production-grade agentic experiences that users can trust.",
+    thumbnail: "https://img.youtube.com/vi/JbJD98UF1fg/maxresdefault.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=JbJD98UF1fg",
+    category: "interview",
+    channel: "The Programming Podcast"
   },
   {
     id: "2",
@@ -48,8 +185,7 @@ const rawTalks: VideoTalk[] = [
     thumbnail: "https://img.youtube.com/vi/67SEA5QGqtA/maxresdefault.jpg",
     youtubeUrl: "https://www.youtube.com/watch?v=67SEA5QGqtA",
     category: "interview",
-    channel: "NoDegree",
-    featured: true
+    channel: "NoDegree"
   },
   {
     id: "3",
@@ -137,15 +273,6 @@ const rawTalks: VideoTalk[] = [
     channel: "Jeff Gothelf"
   },
   {
-    id: "12",
-    title: "4 Hours to Build a Haunted App",
-    description: "Web Dev Challenge on CodeTV - building a complete application under time pressure.",
-    thumbnail: "https://img.youtube.com/vi/fNDSDWJaj2M/maxresdefault.jpg",
-    youtubeUrl: "https://www.youtube.com/watch?v=fNDSDWJaj2M",
-    category: "tutorial",
-    channel: "CodeTV"
-  },
-  {
     id: "13",
     title: "Gas Station Cook to Software Developer",
     description: "Mintbean io conversation about my journey from working at a gas station to becoming a software developer.",
@@ -156,35 +283,39 @@ const rawTalks: VideoTalk[] = [
   },
   {
     id: "14",
-    title: "Developer Career Insights",
-    description: "In-depth discussion about career development, breaking into tech, and building sustainable growth as a developer.",
+    title: "How To Grow An Audience",
+    description: "Private Talk For Gumroad Creators - Discussion about growing an audience, building a community, and creating value for your audience.",
     thumbnail: "https://img.youtube.com/vi/blsgaR56jNs/maxresdefault.jpg",
     youtubeUrl: "https://www.youtube.com/watch?v=blsgaR56jNs",
-    category: "talk"
+    category: "talk",
+    channel: "Gumroad"
   },
   {
     id: "15",
-    title: "Tech Career Growth Strategies",
-    description: "Exploring strategies for advancing your career in tech and making meaningful progress as a developer.",
+    title: "Journey Into Tech",
+    description: "Private Talk For JDHH Members - Discussion about my journey into tech and the strategies I used to break into the industry.",
     thumbnail: "https://img.youtube.com/vi/HEwx64EBMBw/maxresdefault.jpg",
     youtubeUrl: "https://www.youtube.com/watch?v=HEwx64EBMBw",
-    category: "talk"
+    category: "talk",
+    channel: "JDHH"
   },
   {
     id: "16",
-    title: "Building Your Developer Brand",
+    title: "Don't Stop!",
     description: "Discussion about personal branding, online presence, and standing out in the competitive tech landscape.",
     thumbnail: "https://img.youtube.com/vi/bttuRc-RXqs/maxresdefault.jpg",
     youtubeUrl: "https://www.youtube.com/watch?v=bttuRc-RXqs",
-    category: "interview"
+    category: "interview",
+    channel: "Driven By Doing"
   },
   {
     id: "17",
-    title: "Community Building in Tech",
+    title: "AMA with Danny Thompson - Developer Relations at Google",
     description: "Deep dive into building and scaling tech communities, fostering engagement, and creating value for members.",
     thumbnail: "https://img.youtube.com/vi/CvjgNm_O2n4/maxresdefault.jpg",
     youtubeUrl: "https://www.youtube.com/watch?v=CvjgNm_O2n4",
-    category: "talk"
+    category: "talk",
+    channel: "Pluralsight"
   },
   {
     id: "18",
@@ -192,23 +323,26 @@ const rawTalks: VideoTalk[] = [
     description: "Sharing success stories, lessons learned, and practical advice from my journey in tech.",
     thumbnail: "https://img.youtube.com/vi/jR4k0rcgxEg/maxresdefault.jpg",
     youtubeUrl: "https://www.youtube.com/watch?v=jR4k0rcgxEg",
-    category: "interview"
+    category: "interview",
+    channel: "Dice"
   },
   {
     id: "19",
-    title: "Tech Industry Insights",
+    title: "Optimize your LinkedIn Page with Danny Thompson",
     description: "Discussion about current trends in tech, what's changing, and how developers can stay ahead.",
     thumbnail: "https://img.youtube.com/vi/YuL_JoDeBDM/maxresdefault.jpg",
     youtubeUrl: "https://www.youtube.com/watch?v=YuL_JoDeBDM",
-    category: "talk"
+    category: "talk",
+    channel: "Scrimba"
   },
   {
     id: "20",
-    title: "Breaking Barriers in Tech",
+    title: "Typescript and your codebase, Proof that they deserve each other!",
     description: "Conversation about overcoming obstacles, dealing with impostor syndrome, and building confidence as a developer.",
     thumbnail: "https://img.youtube.com/vi/ieRuo0YZg-I/maxresdefault.jpg",
     youtubeUrl: "https://www.youtube.com/watch?v=ieRuo0YZg-I",
-    category: "interview"
+    category: "interview",
+    channel: "All Things Open"
   },
   {
     id: "21",
@@ -216,94 +350,92 @@ const rawTalks: VideoTalk[] = [
     description: "Practical guidance for career changers looking to break into tech from non-traditional backgrounds.",
     thumbnail: "https://img.youtube.com/vi/f7zdJAPgGUA/maxresdefault.jpg",
     youtubeUrl: "https://www.youtube.com/watch?v=f7zdJAPgGUA",
-    category: "interview"
+    category: "interview",
+    channel: "Faraday Academy"
   },
   {
     id: "22",
     title: "Developer Networking Strategies",
     description: "How to network effectively, build meaningful connections, and leverage relationships for career growth.",
     thumbnail: "https://img.youtube.com/vi/gXmFs9RlCuI/maxresdefault.jpg",
-    youtubeUrl: "https://www.youtube.com/watch?v=gXmFs9RlCuI",
-    category: "talk"
+    youtubeUrl: "https://www.youtube.com/watch?v=GaDsu2aoGEw",
+    category: "talk",
+    channel: "Daily.dev"
   },
   {
     id: "23",
-    title: "Tech Career Mentorship",
+    title: "Tech Career Mentorship Scrimba Schools",
     description: "Discussion about mentorship in tech, finding mentors, and becoming a mentor to others.",
     thumbnail: "https://img.youtube.com/vi/85pfWXmjxVE/maxresdefault.jpg",
     youtubeUrl: "https://www.youtube.com/watch?v=85pfWXmjxVE",
-    category: "interview"
+    category: "interview",
+    channel: "Scrimba"
   },
   {
     id: "24",
-    title: "Developer Job Search Tips",
-    description: "Proven strategies for job searching in tech, optimizing your applications, and landing interviews.",
+    title: "Journey Into Tech",
+    description: "Discussion about my journey into tech and the strategies I used to break into the industry.",
     thumbnail: "https://img.youtube.com/vi/bXafpkI6JZI/maxresdefault.jpg",
     youtubeUrl: "https://www.youtube.com/watch?v=bXafpkI6JZI",
-    category: "talk"
-  },
-  {
-    id: "25",
-    title: "Building Tech Communities",
-    description: "Insights on creating thriving tech communities, organizing events, and driving engagement.",
-    thumbnail: "https://img.youtube.com/vi/ZxlzNTzIoqQ/maxresdefault.jpg",
-    youtubeUrl: "https://www.youtube.com/watch?v=ZxlzNTzIoqQ",
-    category: "talk"
-  },
-  {
-    id: "26",
-    title: "Software Developer Career Path",
-    description: "Exploring different career paths in software development and how to navigate your journey.",
-    thumbnail: "https://img.youtube.com/vi/SdcW_gCx6IM/maxresdefault.jpg",
-    youtubeUrl: "https://www.youtube.com/watch?v=SdcW_gCx6IM",
-    category: "interview"
-  },
-  {
-    id: "27",
-    title: "Tech Career Growth & Development",
-    description: "Strategies for continuous learning, skill development, and advancing in your tech career.",
-    thumbnail: "https://img.youtube.com/vi/nrRLzASgeqE/maxresdefault.jpg",
-    youtubeUrl: "https://www.youtube.com/watch?v=nrRLzASgeqE",
-    category: "talk"
-  },
-  {
-    id: "28",
-    title: "Developer Success Mindset",
-    description: "Building the right mindset for success in tech, staying motivated, and overcoming challenges.",
-    thumbnail: "https://img.youtube.com/vi/JbJD98UF1fg/maxresdefault.jpg",
-    youtubeUrl: "https://www.youtube.com/watch?v=JbJD98UF1fg",
-    category: "interview"
+    category: "talk",
+    channel: "Prentus"
   },
   {
     id: "29",
-    title: "Tech Industry Conversations",
-    description: "Engaging discussions about the tech industry, trends, and what the future holds for developers.",
+    title: "Keynote: From Frying Chicken To Software Engineer",
+    description: "In this talk I will discuss my journey, going from frying chicken to helping 44 people land their first jobs in tech. To helping bring positive change to my city and to becoming a software engineer.",
     thumbnail: "https://img.youtube.com/vi/W_8La1xYNrQ/maxresdefault.jpg",
     youtubeUrl: "https://www.youtube.com/watch?v=W_8La1xYNrQ",
-    category: "interview"
+    category: "interview",
+    channel: "Juneteenth Conference"
   },
-  {
-    id: "30",
-    title: "Software Development Insights",
-    description: "Deep dive into software development practices, methodologies, and career advancement strategies.",
-    thumbnail: "https://img.youtube.com/vi/2GhuUdAzx2U/maxresdefault.jpg",
-    youtubeUrl: "https://www.youtube.com/watch?v=2GhuUdAzx2U",
-    category: "talk"
-  },
+
   {
     id: "31",
-    title: "Tech Career Workshop",
+    title: "From Gas Station Employee to Software Development",
     description: "Workshop-style discussion covering essential topics for building a successful career in technology.",
     thumbnail: "https://img.youtube.com/vi/_M_dYZeqhfc/maxresdefault.jpg",
     youtubeUrl: "https://www.youtube.com/watch?v=_M_dYZeqhfc",
-    category: "tutorial"
+    category: "tutorial",
+    channel: "CodeStories"
+  },
+];
+
+const pastTalks: PastTalk[] = [
+  {
+    event: "RenderATL",
+    location: "Atlanta, GA",
+    date: "June 2024",
+    title: "Building Communities in the AI Era",
+    link: "https://renderatl.com"
+  },
+  {
+    event: "KCDC",
+    location: "Kansas City, MO",
+    date: "June 2023",
+    title: "The Future of DevRel",
+  },
+  {
+    event: "University of Texas at Dallas",
+    location: "Richardson, TX",
+    date: "April 2023",
+    title: "Guest Lecture: Software Engineering Realities",
+  },
+  {
+    event: "React Miami",
+    location: "Miami, FL",
+    date: "April 2023",
+    title: "Panel: The State of React",
+  },
+  {
+    event: "Memphis Dev Group",
+    location: "Memphis, TN",
+    date: "March 2023",
+    title: "Career Growth for Developers",
   }
 ];
 
-const videoTalks: VideoTalk[] = rawTalks.map(talk => ({
-  ...talk,
-  featured: featuredVideoIds.includes(talk.id) || talk.featured
-}));
+const videoTalks: VideoTalk[] = rawTalks;
 
 const speakingTopics: SpeakingTopic[] = [
   {
@@ -358,7 +490,6 @@ const brandLogos = [
 
 export default function TalksPage() {
   const [activeFilter, setActiveFilter] = useState<ContentFilter>("all");
-  const [selectedVideo, setSelectedVideo] = useState<VideoTalk | null>(null);
 
   const filteredVideos = activeFilter === "all"
     ? videoTalks
@@ -644,6 +775,63 @@ export default function TalksPage() {
           </div>
         </ScrollReveal>
       </section>
+
+      {/* Past Engagements List - Hidden for now */}
+      {/* <section className="mx-4 mt-12 mb-20">
+        <div className="max-w-4xl mx-auto">
+          <ScrollReveal>
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-black text-[#153230] mb-4">
+                🗓️ Past Speaking Engagements
+              </h2>
+              <p className="text-lg text-[#153230]/70">
+                A collection of conferences, meetups, and workshops I've had the privilege to speak at
+              </p>
+            </div>
+
+            <div className="bg-white rounded-3xl border border-[#4D7DA3]/10 shadow-lg overflow-hidden">
+              {pastTalks.map((talk, index) => (
+                <div
+                  key={`${talk.event}-${index}`}
+                  className={`
+                    group flex flex-col md:flex-row md:items-center justify-between p-6 md:p-8
+                    hover:bg-[#E2F3F2]/30 transition-colors duration-300
+                    ${index !== pastTalks.length - 1 ? 'border-b border-gray-100' : ''}
+                  `}
+                >
+                  <div className="flex-1 mb-4 md:mb-0">
+                    <div className="flex items-center gap-3 text-sm font-bold text-[#4D7DA3] mb-2">
+                      <span>{talk.date}</span>
+                      <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
+                      <span>{talk.location}</span>
+                    </div>
+                    <h3 className="text-xl font-black text-[#153230] mb-1 group-hover:text-[#4D7DA3] transition-colors">
+                      {talk.title}
+                    </h3>
+                    <div className="text-[#153230]/70 font-medium">
+                      {talk.event}
+                    </div>
+                  </div>
+
+                  {talk.link && (
+                    <a
+                      href={talk.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border-2 border-[#153230]/10 text-[#153230] font-bold text-sm hover:border-[#4D7DA3] hover:text-[#4D7DA3] transition-all group-hover:translate-x-1"
+                    >
+                      View Event
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
+                  )}
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
+        </div>
+      </section> */}
 
       {/* Featured Channels */}
       <section className="mx-4 mt-12">

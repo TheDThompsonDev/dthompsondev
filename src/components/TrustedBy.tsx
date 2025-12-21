@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const brands = [
   { name: "Amazon", slug: "amazon", url: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" },
@@ -24,7 +25,7 @@ const brands = [
 
 export const TrustedBy = () => {
   return (
-    <section 
+    <section
       className="rounded-3xl -mt-8 bg-white pt-10 md:pt-16 pb-24 md:pb-32 shadow-xl border-2 border-[#4D7DA3]/20 relative z-0"
       style={{ boxShadow: '0 -10px 30px -10px rgba(77, 125, 163, 0.3), 0 10px 30px -10px rgba(0, 0, 0, 0.1)' }}
     >
@@ -32,8 +33,8 @@ export const TrustedBy = () => {
         <h3 className="text-center text-[#153230]/60 text-xs md:text-sm font-bold uppercase tracking-[0.2em] mb-8 md:mb-12">
           Trusted By Industry Leaders
         </h3>
-        
-        <div 
+
+        <div
           className="relative flex overflow-hidden"
           style={{
             maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
@@ -46,7 +47,7 @@ export const TrustedBy = () => {
             transition={{
               repeat: Infinity,
               ease: "linear",
-              duration: 50, 
+              duration: 50,
             }}
           >
             {[...brands, ...brands].map((brand, index) => (
@@ -55,12 +56,15 @@ export const TrustedBy = () => {
                 className="relative group flex flex-col items-center justify-center gap-3 min-w-[120px]"
               >
                 <div className="flex items-center justify-center h-16 w-40">
-                  <img
+                  <Image
                     src={brand.url || `https://cdn.simpleicons.org/${brand.slug}`}
                     alt={`${brand.name} logo`}
+                    width={120}
+                    height={40}
                     className={`max-h-[40px] ${brand.slug === 'wix' ? 'max-w-[80px]' : 'max-w-[120px]'} w-auto h-auto object-contain opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300`}
                     onError={(e) => {
-                      e.currentTarget.style.display = 'none';
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
                       // If image fails, we rely on the text below
                     }}
                   />

@@ -5,7 +5,6 @@ import { CodeMorph } from './CodeMorph';
 import { InteractiveCode } from './InteractiveCode';
 import { AnimatedDiagram } from './AnimatedDiagram';
 import { VirtualWhiteboard } from './VirtualWhiteboard';
-import { CodeSteps } from './CodeSteps';
 import { CodePlayground } from './CodePlayground';
 
 interface BlogRendererProps {
@@ -28,7 +27,7 @@ function BlockRenderer({ block }: { block: ContentBlock }) {
       .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
       .replace(/\*(.+?)\*/g, '<em>$1</em>')
       .replace(/__(.+?)__/g, '<u>$1</u>');
-    
+
     return formatted;
   };
 
@@ -48,9 +47,9 @@ function BlockRenderer({ block }: { block: ContentBlock }) {
         2: 'text-3xl md:text-4xl font-black text-[#153230] mb-4',
         3: 'text-2xl md:text-3xl font-bold text-[#153230] mb-3',
       };
-      
+
       return (
-        <HeadingTag 
+        <HeadingTag
           id={block.id || block.content?.toLowerCase().replace(/\s+/g, '-')}
           className={headingStyles[block.level || 2]}
         >
@@ -61,7 +60,7 @@ function BlockRenderer({ block }: { block: ContentBlock }) {
     case 'code-morph':
       return (
         <div className="my-12">
-          <CodeMorph 
+          <CodeMorph
             title={block.title || ''}
             steps={block.steps || []}
           />
@@ -71,7 +70,7 @@ function BlockRenderer({ block }: { block: ContentBlock }) {
     case 'interactive-code':
       return (
         <div className="my-12">
-          <InteractiveCode 
+          <InteractiveCode
             title={block.title}
             examples={block.examples || []}
           />
@@ -81,7 +80,7 @@ function BlockRenderer({ block }: { block: ContentBlock }) {
     case 'animated-diagram':
       return (
         <div className="my-12">
-          <AnimatedDiagram 
+          <AnimatedDiagram
             title={block.title || ''}
             steps={block.steps || []}
           />
@@ -91,7 +90,7 @@ function BlockRenderer({ block }: { block: ContentBlock }) {
     case 'whiteboard':
       return (
         <div className="my-12">
-          <VirtualWhiteboard 
+          <VirtualWhiteboard
             title={block.title}
             height={block.height}
           />
@@ -99,10 +98,12 @@ function BlockRenderer({ block }: { block: ContentBlock }) {
       );
 
     case 'code-steps':
+      // Legacy support: Map code-steps to CodeMorph
       return (
         <div className="my-12">
-          <CodeSteps 
-            steps={block.steps || []}
+          <CodeMorph
+            title={(block as any).title || ((block as any).steps?.[0]?.title) || ''}
+            steps={(block as any).steps || []}
           />
         </div>
       );
@@ -110,9 +111,9 @@ function BlockRenderer({ block }: { block: ContentBlock }) {
     case 'image':
       return (
         <figure className="my-8">
-          <img 
-            src={block.url} 
-            alt={block.alt || ''} 
+          <img
+            src={block.url}
+            alt={block.alt || ''}
             className="w-full rounded-2xl shadow-lg"
           />
           {block.caption && (
@@ -131,7 +132,7 @@ function BlockRenderer({ block }: { block: ContentBlock }) {
           </p>
           {block.author && (
             <footer className="text-sm text-[#153230]/60 mt-2">
-              — {block.author}
+              , {block.author}
             </footer>
           )}
         </blockquote>
@@ -196,26 +197,21 @@ function BlockRenderer({ block }: { block: ContentBlock }) {
           {block.items.map((item, idx) => (
             <li key={idx} className="flex items-start gap-4 text-gray-700 leading-relaxed">
               {block.variant === 'numbered' ? (
-                <span className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold ${
-                  block.colored ? `bg-${colors[idx % colors.length]}-100 text-${colors[idx % colors.length]}-600` : 'bg-gray-100 text-gray-600'
-                }`}>
+                <span className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold ${block.colored ? `bg-${colors[idx % colors.length]}-100 text-${colors[idx % colors.length]}-600` : 'bg-gray-100 text-gray-600'
+                  }`}>
                   {idx + 1}
                 </span>
               ) : block.variant === 'checkmark' ? (
-                <div className={`w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                  block.colored ? `bg-${colors[idx % colors.length]}-100` : 'bg-gray-100'
-                }`}>
-                  <div className={`w-2 h-2 rounded-lg ${
-                    block.colored ? `bg-${colors[idx % colors.length]}-600` : 'bg-gray-600'
-                  }`}></div>
+                <div className={`w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 ${block.colored ? `bg-${colors[idx % colors.length]}-100` : 'bg-gray-100'
+                  }`}>
+                  <div className={`w-2 h-2 rounded-lg ${block.colored ? `bg-${colors[idx % colors.length]}-600` : 'bg-gray-600'
+                    }`}></div>
                 </div>
               ) : (
-                <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                  block.colored ? `bg-${colors[idx % colors.length]}-100` : 'bg-gray-100'
-                }`}>
-                  <div className={`w-2 h-2 rounded-full ${
-                    block.colored ? `bg-${colors[idx % colors.length]}-600` : 'bg-gray-600'
-                  }`}></div>
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${block.colored ? `bg-${colors[idx % colors.length]}-100` : 'bg-gray-100'
+                  }`}>
+                  <div className={`w-2 h-2 rounded-full ${block.colored ? `bg-${colors[idx % colors.length]}-600` : 'bg-gray-600'
+                    }`}></div>
                 </div>
               )}
               <span>{item}</span>
