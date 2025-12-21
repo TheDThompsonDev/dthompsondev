@@ -38,7 +38,8 @@ export type ContentBlock =
   | CodeBlock
   | ButtonBlock
   | ListBlock
-  | CodePlaygroundBlock;
+  | CodePlaygroundBlock
+  | CodeStepsBlock;
 
 export interface TextBlock {
   type: 'text';
@@ -55,6 +56,15 @@ export interface HeadingBlock {
 export interface CodeMorphBlock {
   type: 'code-morph';
   title: string;
+  steps: {
+    title: string;
+    description: string;
+    code: string;
+  }[];
+}
+
+export interface CodeStepsBlock {
+  type: 'code-steps';
   steps: {
     title: string;
     description: string;
