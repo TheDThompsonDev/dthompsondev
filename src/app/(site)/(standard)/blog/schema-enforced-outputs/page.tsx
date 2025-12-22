@@ -317,7 +317,7 @@ const ticket = TicketSchema.parse(JSON.parse(completion.content));`}</pre>
                             <div className="bg-[#f0f9ff] border-l-4 border-[#4D7DA3] p-6 rounded-r-xl my-12">
                                 <h3 className="font-bold text-[#153230] mb-2 text-lg">What Structured Outputs Don't Solve</h3>
                                 <p className="mb-4 text-[#153230]/80">
-                                    Schema enforcement guarantees shape, not truth. If your schema has a <code className="bg-blue-100 px-1 rounded">companyName</code> field, the model will return a string in that field—but it might be the wrong company name.
+                                    Schema enforcement guarantees shape, not truth. If your schema has a <code className="bg-blue-100 px-1 rounded">companyName</code> field, the model will return a string in that field, but it might be the wrong company name.
                                 </p>
                                 <p className="text-[#153230]/80">
                                     Think of structured outputs as solving the <strong>format problem</strong> so you can focus on the <strong>accuracy problem</strong>.
@@ -473,7 +473,7 @@ const result = SupportTicketSchema.parse(JSON.parse(buffer));`}</pre>
                         <ScrollReveal>
                             <h2 className="text-3xl font-bold text-[#153230] mb-6 mt-12">Security Considerations</h2>
                             <p className="mb-6">
-                                Structured outputs don't eliminate prompt injection risks—they just make the attack surface different.
+                                Structured outputs don't eliminate prompt injection risks, they just make the attack surface different.
                             </p>
                             <ul className="list-disc list-inside text-[#153230]/80 space-y-2 mb-8">
                                 <li><strong>Delimit user input tightly:</strong> Use triple quotes or XML tags.</li>

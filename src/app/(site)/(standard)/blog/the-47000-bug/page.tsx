@@ -200,7 +200,7 @@ export default function The47000DollarBugPost() {
                             </div>
 
                             <p className="text-[#153230]/80 leading-relaxed mb-6">
-                                That’s the Nullish Coalescing Operator (<code>??</code>). Two question marks. And it only triggers on null or undefined—the values that actually mean "nothing is here."
+                                That’s the Nullish Coalescing Operator (<code>??</code>). Two question marks. And it only triggers on null or undefined, the values that actually mean "nothing is here."
                             </p>
 
                             <div className="bg-[#1e1e1e] text-gray-300 p-6 rounded-xl my-8 font-mono text-sm border border-gray-700 shadow-xl overflow-x-auto">
@@ -327,7 +327,7 @@ getTenantInfo(tenant2);
                             </div>
 
                             <p className="text-[#153230]/80 leading-relaxed mb-8">
-                                The $47,000 bug was real. The property management company eventually found the fix—a two-character change. But they’ll never get those three weeks back.
+                                The $47,000 bug was real. The property management company eventually found the fix, a two-character change. But they’ll never get those three weeks back.
                             </p>
 
                             <p className="text-[#153230]/60 italic mt-12">

@@ -1,6 +1,10 @@
 'use client';
 
 import { BlogPostLayout } from '@/components/blog/BlogPostLayout';
+import { PivotDecisionMatrix } from '@/components/blog/PivotDecisionMatrix';
+
+import { ScrollReveal } from '@/components/ScrollReveal';
+import Image from 'next/image';
 
 export default function The58BillionPivotPost() {
     return (
@@ -94,10 +98,20 @@ export default function The58BillionPivotPost() {
             long={{
                 content: (
                     <>
+
+                        <div className="my-8 rounded-xl overflow-hidden shadow-lg border border-gray-100">
+                            <Image
+                                src="/blog-images/58-billion-pivot/figma-valuation.jpg"
+                                alt="Figma logo dissolving into pixels"
+                                width={1200}
+                                height={600}
+                                className="w-full"
+                            />
+                        </div>
+
                         <p className="mb-6 font-medium text-xl text-[#153230]">
                             We almost didn't have Figma.
                         </p>
-
                         <p className="mb-6">
                             If you look at the alternate timeline of tech history, Dylan Field and Evan Wallace didn't build the world's most valuable design software. Instead, they took their Ivy League brains, dropped out of Brown, and built the world's best meme generator.
                         </p>
@@ -118,6 +132,20 @@ export default function The58BillionPivotPost() {
                             They fell into a classic engineer's trap: solving a hard technical problem for a low-value use case. They had a "Gem City" moment where they realized that even if they won the meme market, they would still just be a meme company. They wanted greater meaning.
                         </p>
 
+                        <div className="my-8 rounded-xl overflow-hidden shadow-lg border border-gray-100">
+                            <Image
+                                src="/blog-images/58-billion-pivot/technical-trap.jpg"
+                                alt="Steampunk machine representing the trap of solving technically hard but useless problems"
+                                width={1200}
+                                height={600}
+                                className="w-full"
+                            />
+                        </div>
+
+                        <ScrollReveal>
+                            <PivotDecisionMatrix />
+                        </ScrollReveal>
+
                         <div className="bg-[#f8fcfe] border-l-4 border-[#4D7DA3] p-6 rounded-r-xl my-8">
                             <h3 className="font-bold text-[#153230] mb-2 uppercase text-sm tracking-wider">CYT Question for Leaders</h3>
                             <p className="mb-4">Look at your current roadmap. Are you solving a problem because it matters to the market, or simply because it's a "hard problem" that makes you feel smart?</p>
@@ -135,6 +163,16 @@ export default function The58BillionPivotPost() {
                             They didn't build for the world as it was; they built for the world as it was going to be.
                         </p>
 
+                        <div className="my-8 rounded-xl overflow-hidden shadow-lg border border-gray-100">
+                            <Image
+                                src="/blog-images/58-billion-pivot/infrastructure-bet.jpg"
+                                alt="A betting ticket against infrastructure futures on a crumbling bridge"
+                                width={1200}
+                                height={600}
+                                className="w-full"
+                            />
+                        </div>
+
                         <div className="bg-[#f8fcfe] border-l-4 border-[#4D7DA3] p-6 rounded-r-xl my-8">
                             <h3 className="font-bold text-[#153230] mb-2 uppercase text-sm tracking-wider">CYT Question for Leaders</h3>
                             <p className="mb-4">If you are building for the constraints of today, you are already obsolete. Where will the infrastructure be in 3 years?</p>
@@ -149,6 +187,16 @@ export default function The58BillionPivotPost() {
                         <p className="mb-6">
                             Instead of letting his ego drive the ship into the ground, he made a radical decision: <strong className="text-[#4D7DA3]">He fired himself from management.</strong> He hired a professional to handle the people operations so he could focus on the vision.
                         </p>
+
+                        <div className="my-8 rounded-xl overflow-hidden shadow-lg border border-gray-100">
+                            <Image
+                                src="/blog-images/58-billion-pivot/founder-trap.jpg"
+                                alt="A cage representing the Founder's Trap of trying to do everything"
+                                width={1200}
+                                height={600}
+                                className="w-full"
+                            />
+                        </div>
 
                         <div className="bg-[#f8fcfe] border-l-4 border-[#4D7DA3] p-6 rounded-r-xl my-8">
                             <h3 className="font-bold text-[#153230] mb-2 uppercase text-sm tracking-wider">CYT Question for Leaders</h3>
@@ -167,6 +215,16 @@ export default function The58BillionPivotPost() {
                             They stopped competing on "features" (Does it have a pen tool?) and started competing on "workflow" (Can we work on this together?). That distinction opened up a six-lane superhighway of growth that Adobe couldn't touch.
                         </p>
 
+                        <div className="my-8 rounded-xl overflow-hidden shadow-lg border border-gray-100">
+                            <Image
+                                src="/blog-images/58-billion-pivot/changing-rules.jpg"
+                                alt="Chess board comparison: Playing the same game vs Changing the rules"
+                                width={1200}
+                                height={600}
+                                className="w-full"
+                            />
+                        </div>
+
                         <div className="bg-[#f8fcfe] border-l-4 border-[#4D7DA3] p-6 rounded-r-xl my-8">
                             <h3 className="font-bold text-[#153230] mb-2 uppercase text-sm tracking-wider">CYT Question for Leaders</h3>
                             <p className="mb-4">Are you trying to be 10% better than your competitor at the same game, or are you changing the rules of the game entirely?</p>
@@ -180,6 +238,8 @@ export default function The58BillionPivotPost() {
                         <p className="mb-8">
                             When regulators killed the deal, Figma didn't collapse. They took the $1 billion breakup fee and kept building. But that result was only possible because they survived the "Meme Generator" phase. They survived the bad management phase. They survived the skeptics.
                         </p>
+
+
 
                         <div className="mt-16 pt-8 border-t border-[#4D7DA3]/20">
                             <h3 className="text-2xl font-black text-[#153230] mb-4">The Bottom Line</h3>

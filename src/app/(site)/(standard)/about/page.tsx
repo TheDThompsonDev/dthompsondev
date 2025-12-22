@@ -115,7 +115,7 @@ export default function AboutPage() {
 
           <div className="max-w-3xl mx-auto space-y-6 text-lg text-[#153230]/80 leading-relaxed font-medium text-center">
             <p>
-              Around that time, I saw an interview on TV. A rapper named Will.i.am had invested millions into a tech company. The interviewer asked him why. He said simply, "I am learning how to code."
+              Around that time, I saw an interview on TV. A rapper had invested millions into a tech company. The interviewer asked him why. He said simply, "I am learning how to code."
             </p>
             <p>
               It blew my mind. My thought process was that coding was for PhDs and rocket scientists. It wasn't for average people. It certainly wasn't for me. But his reasoning hit me hard. He asked why we wouldn't want to understand the machine we touch ninety percent of our day.
