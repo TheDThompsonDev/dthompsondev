@@ -21,14 +21,21 @@ export function ContentDepthPanel({ depth, children }: ContentDepthPanelProps) {
         return () => mediaQuery.removeEventListener('change', handler);
     }, []);
 
-    // SEO: Content is always in DOM, and now always visible to satisfy user request
-    // The user requested to display all info by default, so we remove the hidden logic.
+    const isActive = activeDepth === depth;
+
     return (
         <div
             id={`content-${depth}`}
-            role="region"
+            role="tabpanel"
             aria-labelledby={`tab-${depth}`}
-            className="block mb-12"
+            aria-hidden={!isActive}
+            className={`
+                ${isActive ? 'block' : 'hidden'}
+                ${!prefersReducedMotion && isActive ? 'animate-fadeIn' : ''}
+            `}
+        // SEO: Content is always in DOM, just visually hidden
+        // The 'hidden' class uses display:none which is fine for SEO
+        // as search engines still index hidden content
         >
             {children}
         </div>
