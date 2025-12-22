@@ -81,7 +81,7 @@ const VISITOR_ARCHETYPES = [
       "Career path strategy for reports"
     ],
     challenges: [
-      "Transitioning from IC to manager,maintaining credibility without hands-on code",
+      "Transitioning from IC to manager, maintaining credibility without hands-on code",
       "Building and scaling high-performing engineering teams",
       "Having difficult conversations: performance reviews, feedback, and terminations",
       "Balancing technical decisions with business constraints and team well-being"

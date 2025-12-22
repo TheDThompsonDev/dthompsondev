@@ -83,7 +83,7 @@ export default function InvisibleFrameworkPost() {
                             </li>
                             <li className="flex gap-3">
                                 <span className="text-emerald-400 font-bold">SHIPPING?</span>
-                                <span>Turn the AI on,but <em>only</em> if you verify the output.</span>
+                                <span>Turn the AI on, but <em>only</em> if you verify the output.</span>
                             </li>
                         </ul>
                     </>
@@ -103,7 +103,7 @@ export default function InvisibleFrameworkPost() {
                         <p className="mb-8 font-bold">But that’s not it.</p>
 
                         <p className="mb-8">
-                            The difference is that senior developers utilize <strong className="text-[#4D7DA3]">Mental Models</strong>,invisible maps of how the world works,that allow them to turn abstract plans into reality, navigate bugs, and, most importantly, defend their decisions.
+                            The difference is that senior developers utilize <strong className="text-[#4D7DA3]">Mental Models</strong>, invisible maps of how the world works, that allow them to turn abstract plans into reality, navigate bugs, and, most importantly, defend their decisions.
                         </p>
 
                         <h2 className="text-3xl font-bold text-[#153230] mb-6 mt-16">1. Radical Intentionality (The "Decision Doc")</h2>
@@ -156,7 +156,7 @@ export default function InvisibleFrameworkPost() {
                             But I prefer this specific phrasing for engineering: <strong className="text-[#4D7DA3]">Among competing hypotheses, the one with the fewest assumptions should be selected.</strong>
                         </p>
                         <p className="mb-8">
-                            We often over-engineer solutions to account for problems we <em>might</em> have in the future. We add layers of abstraction that we don't need "just in case." This creates leaky abstractions and technical debt before we’ve even shipped version 1.0. An educated guess,based on data,will always beat a complex, over-engineered solution.
+                            We often over-engineer solutions to account for problems we <em>might</em> have in the future. We add layers of abstraction that we don't need "just in case." This creates leaky abstractions and technical debt before we’ve even shipped version 1.0. An educated guess, based on data, will always beat a complex, over-engineered solution.
                         </p>
 
                         <h2 className="text-3xl font-bold text-[#153230] mb-6 mt-16">4. The "Toxic Partner" Model (Navigating AI)</h2>
@@ -176,7 +176,7 @@ export default function InvisibleFrameworkPost() {
                                 </li>
                                 <li className="flex gap-3">
                                     <span className="text-emerald-400 font-bold">SHIPPING?</span>
-                                    <span>Turn the AI on,but <em>only</em> if you have the knowledge to verify the output.</span>
+                                    <span>Turn the AI on, but <em>only</em> if you have the knowledge to verify the output.</span>
                                 </li>
                             </ul>
                         </div>

@@ -34,7 +34,7 @@ export default function The58BillionPivotPost() {
                             </li>
                             <li className="flex gap-3">
                                 <span className="text-[#4D7DA3] font-bold">→</span>
-                                <span><strong>Compete on workflow, not features.</strong> Multiplayer wasn't a feature,it was a paradigm shift. Adobe couldn't touch it.</span>
+                                <span><strong>Compete on workflow, not features.</strong> Multiplayer wasn't a feature, it was a paradigm shift. Adobe couldn't touch it.</span>
                             </li>
                             <li className="flex gap-3">
                                 <span className="text-[#4D7DA3] font-bold">→</span>
@@ -69,7 +69,7 @@ export default function The58BillionPivotPost() {
 
                         <div className="bg-[#f8fcfe] border-l-4 border-[#4D7DA3] p-6 rounded-r-xl my-8">
                             <h3 className="font-bold text-[#153230] mb-2">2. Build for Tomorrow's Infrastructure</h3>
-                            <p>In 2012, "professional software" lived on desktop. Figma spent 3 years in stealth building for where the browser *would* be. They didn't wait,they made it happen.</p>
+                            <p>In 2012, "professional software" lived on desktop. Figma spent 3 years in stealth building for where the browser *would* be. They didn't wait, they made it happen.</p>
                         </div>
 
                         <div className="bg-[#f8fcfe] border-l-4 border-[#4D7DA3] p-6 rounded-r-xl my-8">
@@ -79,7 +79,7 @@ export default function The58BillionPivotPost() {
 
                         <div className="bg-[#f8fcfe] border-l-4 border-[#4D7DA3] p-6 rounded-r-xl my-8">
                             <h3 className="font-bold text-[#153230] mb-2">4. Compete on Workflow, Not Features</h3>
-                            <p>Multiplayer wasn't just a feature,it was Google Docs for creativity. They stopped competing on "Does it have a pen tool?" and started competing on "Can we work together?"</p>
+                            <p>Multiplayer wasn't just a feature, it was Google Docs for creativity. They stopped competing on "Does it have a pen tool?" and started competing on "Can we work together?"</p>
                         </div>
 
                         <div className="mt-12 pt-8 border-t border-[#4D7DA3]/20">

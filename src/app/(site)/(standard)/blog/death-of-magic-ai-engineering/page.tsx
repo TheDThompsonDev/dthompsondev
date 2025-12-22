@@ -324,7 +324,7 @@ user = client.messages.create(
                   The Engineering Reality
                 </h2>
                 <p className="text-[#153230]/80 leading-relaxed mb-6">
-                  Sometimes the AI overlords smile on us. We get a perfect function back. We screenshot it. We feel like wizards. But if you've tried to build anything <em>real</em>, something that runs in production at 3 AM without you watching it,you know the truth.
+                  Sometimes the AI overlords smile on us. We get a perfect function back. We screenshot it. We feel like wizards. But if you've tried to build anything <em>real</em>, something that runs in production at 3 AM without you watching it, you know the truth.
                 </p>
                 <p className="text-[#153230]/80 leading-relaxed mb-6">
                   The magic is fragile. It breaks on edge cases. It hallucinates when the inputs get messy. Because here's what we've been ignoring: <strong>we are trying to build deterministic systems on top of probabilistic foundations.</strong>
@@ -357,7 +357,7 @@ user = client.messages.create(
                 We all want to build "agents." But the biggest mistake I see developers make is building the <strong>Monolithic Agent</strong>, stuffing the history, instructions, reasoning, and tools all into one context window and hoping the model figures it out.
               </p>
               <p className="text-[#153230]/80 leading-relaxed mb-6">
-                Here's what actually happens: the context window fills up, recall degrades, and the model gets confused. If you've used agentic coding tools, you've seen this. The moment it hits the context limit, it "magically" gets more space. It doesn't magically get anything,it's dropping context. This is <strong>context rot</strong>.
+                Here's what actually happens: the context window fills up, recall degrades, and the model gets confused. If you've used agentic coding tools, you've seen this. The moment it hits the context limit, it "magically" gets more space. It doesn't magically get anything, it's dropping context. This is <strong>context rot</strong>.
               </p>
 
               <div className="bg-blue-50 rounded-2xl p-6 border-l-4 border-blue-500 my-8">
@@ -432,7 +432,7 @@ user = client.messages.create(
                   <span>Real-World Post-Mortem</span>
                 </p>
                 <p className="text-red-900/80 leading-relaxed mb-4">
-                  Anthropic published a post-mortem tracing a bug where Claude was outputting corrupted text,random characters appearing in responses,down to a <strong>hardware failure in the TPU</strong>.
+                  Anthropic published a post-mortem tracing a bug where Claude was outputting corrupted text, random characters appearing in responses, down to a <strong>hardware failure in the TPU</strong>.
                 </p>
                 <p className="text-red-900/80 leading-relaxed">
                   An optimization for approximate top-k sampling had a floating-point precision mismatch. When outputting English text, the bug would substitute Thai characters, because Thai had the lowest probability of being correct. The precision error was inverting the probability distribution.
@@ -456,7 +456,7 @@ user = client.messages.create(
                 In traditional engineering, we have unit tests. <code className="bg-gray-100 px-2 py-1 rounded">assert(2 + 2 === 4)</code>. In AI, we have "vibe checks." We look at the output and say, "Yeah, looks good."
               </p>
               <p className="text-[#153230]/80 leading-relaxed mb-8">
-                <strong>You cannot scale vibes.</strong> You need <strong>Evals</strong>,regression testing for probabilities.
+                <strong>You cannot scale vibes.</strong> You need <strong>Evals</strong>, regression testing for probabilities.
               </p>
             </ScrollReveal>
 

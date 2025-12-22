@@ -171,7 +171,7 @@ export default function ReactHooksVisualizedPost() {
               <p className="mb-4">useEffect is a machine that keeps external systems (DOM, API) in sync with internal state. React 18+ intentionally mounts, unmounts, and remounts your component to ensure your cleanup function works. If your effect creates a subscription but doesn't clean it up, the double-fire exposes the memory leak immediately.</p>
 
               <h3 className="font-bold text-[#153230] text-lg mb-2 mt-8">4. useRef (The Secret Pocket)</h3>
-              <p className="mb-4">useState is a doorbell,it rings (re-renders) every time you change it. useRef is a secret pocket. You can put things in and take them out, and React’s rendering engine doesn't even know you did it.</p>
+              <p className="mb-4">useState is a doorbell, it rings (re-renders) every time you change it. useRef is a secret pocket. You can put things in and take them out, and React’s rendering engine doesn't even know you did it.</p>
 
               <h3 className="font-bold text-[#153230] text-lg mb-2 mt-8">5. The Memoization Equation</h3>
               <p className="mb-4">useCallback stabilizes the reference of a function. But if the Child component isn't checking for stable references (via React.memo), it re-renders anyway because the Parent re-rendered. <strong>Formula:</strong> useCallback (Parent) + React.memo (Child) = Performance. One without the other is waste.</p>
@@ -195,7 +195,7 @@ export default function ReactHooksVisualizedPost() {
                     Since they dropped in 2019, hooks have fundamentally changed how we build UI. But I see a problem in the industry right now. Too many developers are just memorizing the syntax. They know <em>how</em> to write <code>useEffect</code>, but they don't understand <em>why</em> it behaves the way it does. They are coding with superstition, not understanding.
                   </p>
                   <p className="text-[#153230]/80 leading-relaxed mb-6">
-                    Today, we are going to fix that. We aren't just going to look at syntax; we are going to break down the <strong>Mental Models</strong>,the invisible rules of physics inside React,that will take you from a junior "guesser" to a senior engineer.
+                    Today, we are going to fix that. We aren't just going to look at syntax; we are going to break down the <strong>Mental Models</strong>, the invisible rules of physics inside React, that will take you from a junior "guesser" to a senior engineer.
                   </p>
                   <p className="text-[#153230]/80 leading-relaxed mb-8">
                     Get your notebooks out. This is a Gem City deep dive.
