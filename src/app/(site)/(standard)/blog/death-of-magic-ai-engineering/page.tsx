@@ -2,8 +2,6 @@
 
 import { BlogPostLayout } from '@/components/blog/BlogPostLayout';
 import { InteractiveCode } from '@/components/InteractiveCode';
-import { AnimatedDiagram } from '@/components/AnimatedDiagram';
-import { ScrollReveal } from '@/components/ScrollReveal';
 import { CodeMorph } from '@/components/CodeMorph';
 
 export default function DeathOfMagicPost() {
@@ -270,10 +268,17 @@ user = client.messages.create(
               We've spent fifty years building tools for deterministic systems. Then we threw it all away because the ChatGPT demo looked cool. It's time to bring engineering discipline back to AI.
             </p>
 
-            <AnimatedDiagram
-              title="The 4 Pillars of AI Engineering"
-              steps={architectPillars}
-            />
+            <div className="grid md:grid-cols-2 gap-6 my-12">
+              {architectPillars.map((step, index) => (
+                <div key={index} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4" style={{ backgroundColor: step.color + '20' }}>
+                    {step.icon}
+                  </div>
+                  <h3 className="font-bold text-lg mb-2 text-[#153230]">{step.title}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">{step.description}</p>
+                </div>
+              ))}
+            </div>
 
             <div className="space-y-8 mt-12">
               <div className="bg-[#f8fcfe] border-l-4 border-[#4D7DA3] p-6 rounded-r-xl">
@@ -300,182 +305,176 @@ user = client.messages.create(
                 <p><strong>The Fix:</strong> Build an Eval Pipeline. Defining "Golden Datasets" of correct input/outputs. Use a cheaper "Judge" LLM to grade your production model's outputs. Break the build if the score drops.</p>
               </div>
             </div>
-            <AnimatedDiagram
-              title="The Eval Pipeline: Automated Quality Control"
-              steps={evalPipeline}
-            />
+            <div className="grid md:grid-cols-2 gap-6 my-12">
+              {evalPipeline.map((step, index) => (
+                <div key={index} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4" style={{ backgroundColor: step.color + '20' }}>
+                    {step.icon}
+                  </div>
+                  <h3 className="font-bold text-lg mb-2 text-[#153230]">{step.title}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">{step.description}</p>
+                </div>
+              ))}
+            </div>
           </>
         )
       }}
       long={{
         content: (
           <>
-            <ScrollReveal delay={400}>
-              <div className="mb-12">
-                <p className="text-xl text-[#153230]/70 leading-relaxed">
-                  For the last two years, we've all been guilty of the same workflow. You type something into a box, hit enter, and pray. <strong>Prompt and pray.</strong> As we move into 2026, the "Magic Era" of AI is dead. And honestly? That's the best thing that could happen to us.
+            <div className="mb-12">
+              <p className="text-xl text-[#153230]/70 leading-relaxed">
+                For the last two years, we've all been guilty of the same workflow. You type something into a box, hit enter, and pray. <strong>Prompt and pray.</strong> As we move into 2026, the "Magic Era" of AI is dead. And honestly? That's the best thing that could happen to us.
+              </p>
+            </div>
+
+            <div className="prose prose-lg max-w-none">
+              <h2 className="text-3xl font-bold text-[#153230] mb-4 mt-12">
+                The Engineering Reality
+              </h2>
+              <p className="text-[#153230]/80 leading-relaxed mb-6">
+                Sometimes the AI overlords smile on us. We get a perfect function back. We screenshot it. We feel like wizards. But if you've tried to build anything <em>real</em>, something that runs in production at 3 AM without you watching it, you know the truth.
+              </p>
+              <p className="text-[#153230]/80 leading-relaxed mb-6">
+                The magic is fragile. It breaks on edge cases. It hallucinates when the inputs get messy. Because here's what we've been ignoring: <strong>we are trying to build deterministic systems on top of probabilistic foundations.</strong>
+              </p>
+
+              <div className="bg-amber-50 rounded-2xl p-6 border-l-4 border-amber-500 my-8">
+                <p className="text-amber-900 font-semibold mb-2 flex items-center gap-2">
+                  <span className="text-2xl">⚠️</span>
+                  <span>The Problem</span>
+                </p>
+                <p className="text-amber-900/80 leading-relaxed">
+                  We've spent fifty years building tools for deterministic systems, type checkers, unit tests, state machines, CI/CD pipelines. Then we threw it all out the window because the demo looked cool. It's time to stop doing that.
                 </p>
               </div>
-            </ScrollReveal>
+            </div>
 
-            <ScrollReveal delay={100}>
-              <div className="prose prose-lg max-w-none">
-                <h2 className="text-3xl font-bold text-[#153230] mb-4 mt-12">
-                  The Engineering Reality
-                </h2>
-                <p className="text-[#153230]/80 leading-relaxed mb-6">
-                  Sometimes the AI overlords smile on us. We get a perfect function back. We screenshot it. We feel like wizards. But if you've tried to build anything <em>real</em>, something that runs in production at 3 AM without you watching it, you know the truth.
-                </p>
-                <p className="text-[#153230]/80 leading-relaxed mb-6">
-                  The magic is fragile. It breaks on edge cases. It hallucinates when the inputs get messy. Because here's what we've been ignoring: <strong>we are trying to build deterministic systems on top of probabilistic foundations.</strong>
-                </p>
-
-                <div className="bg-amber-50 rounded-2xl p-6 border-l-4 border-amber-500 my-8">
-                  <p className="text-amber-900 font-semibold mb-2 flex items-center gap-2">
-                    <span className="text-2xl">⚠️</span>
-                    <span>The Problem</span>
-                  </p>
-                  <p className="text-amber-900/80 leading-relaxed">
-                    We've spent fifty years building tools for deterministic systems, type checkers, unit tests, state machines, CI/CD pipelines. Then we threw it all out the window because the demo looked cool. It's time to stop doing that.
-                  </p>
+            <div className="grid md:grid-cols-2 gap-6 my-12">
+              {architectPillars.map((step, index) => (
+                <div key={index} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4" style={{ backgroundColor: step.color + '20' }}>
+                    {step.icon}
+                  </div>
+                  <h3 className="font-bold text-lg mb-2 text-[#153230]">{step.title}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">{step.description}</p>
                 </div>
-              </div>
-            </ScrollReveal>
+              ))}
+            </div>
 
-            <ScrollReveal delay={200}>
-              <AnimatedDiagram
-                title="The Four Pillars of AI Engineering"
-                steps={architectPillars}
-              />
-            </ScrollReveal>
+            <h2 className="text-3xl font-bold text-[#153230] mb-6 mt-16">
+              Pillar 1: State Orchestration
+            </h2>
+            <p className="text-[#153230]/80 leading-relaxed mb-6">
+              We all want to build "agents." But the biggest mistake I see developers make is building the <strong>Monolithic Agent</strong>, stuffing the history, instructions, reasoning, and tools all into one context window and hoping the model figures it out.
+            </p>
+            <p className="text-[#153230]/80 leading-relaxed mb-6">
+              Here's what actually happens: the context window fills up, recall degrades, and the model gets confused. If you've used agentic coding tools, you've seen this. The moment it hits the context limit, it "magically" gets more space. It doesn't magically get anything, it's dropping context. This is <strong>context rot</strong>.
+            </p>
 
-            <ScrollReveal delay={300}>
-              <h2 className="text-3xl font-bold text-[#153230] mb-6 mt-16">
-                Pillar 1: State Orchestration
-              </h2>
-              <p className="text-[#153230]/80 leading-relaxed mb-6">
-                We all want to build "agents." But the biggest mistake I see developers make is building the <strong>Monolithic Agent</strong>, stuffing the history, instructions, reasoning, and tools all into one context window and hoping the model figures it out.
+            <div className="bg-blue-50 rounded-2xl p-6 border-l-4 border-blue-500 my-8">
+              <p className="text-blue-900 font-semibold mb-2 flex items-center gap-2">
+                <span className="text-2xl">💡</span>
+                <span>The Mental Model Shift</span>
               </p>
-              <p className="text-[#153230]/80 leading-relaxed mb-6">
-                Here's what actually happens: the context window fills up, recall degrades, and the model gets confused. If you've used agentic coding tools, you've seen this. The moment it hits the context limit, it "magically" gets more space. It doesn't magically get anything, it's dropping context. This is <strong>context rot</strong>.
+              <p className="text-blue-900/80 leading-relaxed">
+                <strong>The model is not an employee. The model is a stateless CPU.</strong> If you rely on the model to remember what step of the project it's on, you've already failed. Use a Finite State Machine (FSM) pattern.
               </p>
+            </div>
 
-              <div className="bg-blue-50 rounded-2xl p-6 border-l-4 border-blue-500 my-8">
-                <p className="text-blue-900 font-semibold mb-2 flex items-center gap-2">
-                  <span className="text-2xl">💡</span>
-                  <span>The Mental Model Shift</span>
-                </p>
-                <p className="text-blue-900/80 leading-relaxed">
-                  <strong>The model is not an employee. The model is a stateless CPU.</strong> If you rely on the model to remember what step of the project it's on, you've already failed. Use a Finite State Machine (FSM) pattern.
-                </p>
-              </div>
-            </ScrollReveal>
+            <CodeMorph steps={stateOrchestrationEvolution} title="From Monolithic to State-Managed" />
 
-            <ScrollReveal delay={400}>
-              <CodeMorph steps={stateOrchestrationEvolution} title="From Monolithic to State-Managed" />
-            </ScrollReveal>
-
-            <ScrollReveal delay={500}>
-              <div className="bg-emerald-50 rounded-2xl p-6 border-l-4 border-emerald-500 my-8">
-                <p className="text-emerald-900 font-semibold mb-2 flex items-center gap-2">
-                  <span className="text-2xl">✅</span>
-                  <span>Key Insight</span>
-                </p>
-                <p className="text-emerald-900/80 leading-relaxed">
-                  <strong>Senior engineers don't build "smart agents." They build smart orchestrators that manage stateless models.</strong>
-                </p>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal delay={300}>
-              <h2 className="text-3xl font-bold text-[#153230] mb-6 mt-16">
-                Pillar 2: Constrained Generation
-              </h2>
-              <p className="text-[#153230]/80 leading-relaxed mb-6">
-                If the harness is the state machine, what is the prompt? Stop chatting with the bot. "Please," "thank you," "could you maybe...", delete that from your vocabulary when building production systems.
+            <div className="bg-emerald-50 rounded-2xl p-6 border-l-4 border-emerald-500 my-8">
+              <p className="text-emerald-900 font-semibold mb-2 flex items-center gap-2">
+                <span className="text-2xl">✅</span>
+                <span>Key Insight</span>
               </p>
-              <p className="text-[#153230]/80 leading-relaxed mb-8">
-                In 2026, <strong>English is a compiled language.</strong> When you write a prompt, you're writing code that compiles into a probability distribution. Ambiguity is a syntax error.
+              <p className="text-emerald-900/80 leading-relaxed">
+                <strong>Senior engineers don't build "smart agents." They build smart orchestrators that manage stateless models.</strong>
               </p>
-            </ScrollReveal>
+            </div>
 
-            <ScrollReveal delay={400}>
-              <InteractiveCode
-                examples={constrainedGenExamples}
-                title="Constrained Generation Patterns"
-              />
-            </ScrollReveal>
+            <h2 className="text-3xl font-bold text-[#153230] mb-6 mt-16">
+              Pillar 2: Constrained Generation
+            </h2>
+            <p className="text-[#153230]/80 leading-relaxed mb-6">
+              If the harness is the state machine, what is the prompt? Stop chatting with the bot. "Please," "thank you," "could you maybe...", delete that from your vocabulary when building production systems.
+            </p>
+            <p className="text-[#153230]/80 leading-relaxed mb-8">
+              In 2026, <strong>English is a compiled language.</strong> When you write a prompt, you're writing code that compiles into a probability distribution. Ambiguity is a syntax error.
+            </p>
 
-            <ScrollReveal delay={500}>
-              <div className="bg-purple-50 rounded-2xl p-6 border-l-4 border-purple-500 my-8">
-                <p className="text-purple-900 font-semibold mb-2 flex items-center gap-2">
-                  <span className="text-2xl">🧠</span>
-                  <span>Karpathy's Insight: Stop Asking "What Do You Think?"</span>
-                </p>
-                <p className="text-purple-900/80 leading-relaxed">
-                  When you ask a model "what do you think about X?", you're forcing it to sample a random persona from its training distribution. Instead, ask: <strong>"What group of people would identify with X?"</strong> The results are dramatically different. The model stops roleplaying a generic assistant and starts reasoning about actual perspectives.
-                </p>
-              </div>
-            </ScrollReveal>
+            <InteractiveCode
+              examples={constrainedGenExamples}
+              title="Constrained Generation Patterns"
+            />
 
-            <ScrollReveal delay={300}>
-              <h2 className="text-3xl font-bold text-[#153230] mb-6 mt-16">
-                Pillar 3: Infrastructure Reliability
-              </h2>
-              <p className="text-[#153230]/80 leading-relaxed mb-6">
-                "I trust the API. It's Google. It's OpenAI. It's solid." <strong>No. It isn't.</strong>
+            <div className="bg-purple-50 rounded-2xl p-6 border-l-4 border-purple-500 my-8">
+              <p className="text-purple-900 font-semibold mb-2 flex items-center gap-2">
+                <span className="text-2xl">🧠</span>
+                <span>Karpathy's Insight: Stop Asking "What Do You Think?"</span>
               </p>
-
-              <div className="bg-red-50 rounded-2xl p-6 border-l-4 border-red-500 my-8">
-                <p className="text-red-900 font-semibold mb-2 flex items-center gap-2">
-                  <span className="text-2xl">🚨</span>
-                  <span>Real-World Post-Mortem</span>
-                </p>
-                <p className="text-red-900/80 leading-relaxed mb-4">
-                  Anthropic published a post-mortem tracing a bug where Claude was outputting corrupted text, random characters appearing in responses, down to a <strong>hardware failure in the TPU</strong>.
-                </p>
-                <p className="text-red-900/80 leading-relaxed">
-                  An optimization for approximate top-k sampling had a floating-point precision mismatch. When outputting English text, the bug would substitute Thai characters, because Thai had the lowest probability of being correct. The precision error was inverting the probability distribution.
-                </p>
-              </div>
-
-              <p className="text-[#153230]/80 leading-relaxed mb-8">
-                <strong>We treat these APIs like magic black boxes. They aren't.</strong> They're distributed systems running on experimental hardware that gets hot, drops packets, and has bit-flips. If the people <em>building</em> the models are dealing with corrupted tensors, you cannot build your app assuming the AI will work perfectly.
+              <p className="text-purple-900/80 leading-relaxed">
+                When you ask a model "what do you think about X?", you're forcing it to sample a random persona from its training distribution. Instead, ask: <strong>"What group of people would identify with X?"</strong> The results are dramatically different. The model stops roleplaying a generic assistant and starts reasoning about actual perspectives.
               </p>
-            </ScrollReveal>
+            </div>
 
-            <ScrollReveal delay={400}>
-              <CodeMorph steps={infrastructureSteps} title="Infrastructure Resilience Pattern" />
-            </ScrollReveal>
+            <h2 className="text-3xl font-bold text-[#153230] mb-6 mt-16">
+              Pillar 3: Infrastructure Reliability
+            </h2>
+            <p className="text-[#153230]/80 leading-relaxed mb-6">
+              "I trust the API. It's Google. It's OpenAI. It's solid." <strong>No. It isn't.</strong>
+            </p>
 
-            <ScrollReveal delay={300}>
-              <h2 className="text-3xl font-bold text-[#153230] mb-6 mt-16">
-                Pillar 4: Regression Testing (Vibes vs. Evals)
-              </h2>
-              <p className="text-[#153230]/80 leading-relaxed mb-6">
-                In traditional engineering, we have unit tests. <code className="bg-gray-100 px-2 py-1 rounded">assert(2 + 2 === 4)</code>. In AI, we have "vibe checks." We look at the output and say, "Yeah, looks good."
+            <div className="bg-red-50 rounded-2xl p-6 border-l-4 border-red-500 my-8">
+              <p className="text-red-900 font-semibold mb-2 flex items-center gap-2">
+                <span className="text-2xl">🚨</span>
+                <span>Real-World Post-Mortem</span>
               </p>
-              <p className="text-[#153230]/80 leading-relaxed mb-8">
-                <strong>You cannot scale vibes.</strong> You need <strong>Evals</strong>, regression testing for probabilities.
+              <p className="text-red-900/80 leading-relaxed mb-4">
+                Anthropic published a post-mortem tracing a bug where Claude was outputting corrupted text, random characters appearing in responses, down to a <strong>hardware failure in the TPU</strong>.
               </p>
-            </ScrollReveal>
+              <p className="text-red-900/80 leading-relaxed">
+                An optimization for approximate top-k sampling had a floating-point precision mismatch. When outputting English text, the bug would substitute Thai characters, because Thai had the lowest probability of being correct. The precision error was inverting the probability distribution.
+              </p>
+            </div>
 
-            <ScrollReveal delay={400}>
-              <AnimatedDiagram
-                title="Building an Eval Pipeline"
-                steps={evalPipeline}
-              />
-            </ScrollReveal>
+            <p className="text-[#153230]/80 leading-relaxed mb-8">
+              <strong>We treat these APIs like magic black boxes. They aren't.</strong> They're distributed systems running on experimental hardware that gets hot, drops packets, and has bit-flips. If the people <em>building</em> the models are dealing with corrupted tensors, you cannot build your app assuming the AI will work perfectly.
+            </p>
 
-            <ScrollReveal delay={500}>
-              <div className="border border-gray-200 rounded-lg overflow-hidden my-8">
-                <div className="bg-gray-50 px-6 py-3 border-b border-gray-200 flex items-center gap-3">
-                  <div className="w-2 h-2 rounded-lg bg-purple-500"></div>
-                  <h4 className="text-sm font-semibold text-gray-700">Eval Pipeline Implementation (Python)</h4>
+            <CodeMorph steps={infrastructureSteps} title="Infrastructure Resilience Pattern" />
+
+            <h2 className="text-3xl font-bold text-[#153230] mb-6 mt-16">
+              Pillar 4: Regression Testing (Vibes vs. Evals)
+            </h2>
+            <p className="text-[#153230]/80 leading-relaxed mb-6">
+              In traditional engineering, we have unit tests. <code className="bg-gray-100 px-2 py-1 rounded">assert(2 + 2 === 4)</code>. In AI, we have "vibe checks." We look at the output and say, "Yeah, looks good."
+            </p>
+            <p className="text-[#153230]/80 leading-relaxed mb-8">
+              <strong>You cannot scale vibes.</strong> You need <strong>Evals</strong>, regression testing for probabilities.
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-6 my-12">
+              {evalPipeline.map((step, index) => (
+                <div key={index} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4" style={{ backgroundColor: step.color + '20' }}>
+                    {step.icon}
+                  </div>
+                  <h3 className="font-bold text-lg mb-2 text-[#153230]">{step.title}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">{step.description}</p>
                 </div>
-                <div className="p-6">
-                  <pre className="bg-[#0d1117] text-gray-100 p-6 rounded-lg overflow-x-auto text-sm border border-gray-800">
-                    <code>{`from dataclasses import dataclass
+              ))}
+            </div>
+
+            <div className="border border-gray-200 rounded-lg overflow-hidden my-8">
+              <div className="bg-gray-50 px-6 py-3 border-b border-gray-200 flex items-center gap-3">
+                <div className="w-2 h-2 rounded-lg bg-purple-500"></div>
+                <h4 className="text-sm font-semibold text-gray-700">Eval Pipeline Implementation (Python)</h4>
+              </div>
+              <div className="p-6">
+                <pre className="bg-[#0d1117] text-gray-100 p-6 rounded-lg overflow-x-auto text-sm border border-gray-800">
+                  <code>{`from dataclasses import dataclass
 from enum import Enum
 
 class EvalResult(Enum):
@@ -525,22 +524,19 @@ async def run_eval_suite(
     
     pass_count = sum(1 for r in results if r == EvalResult.PASS)
     return (pass_count / len(results)) * 100`}</code>
-                  </pre>
-                </div>
+                </pre>
               </div>
-            </ScrollReveal>
+            </div>
 
-            <ScrollReveal delay={600}>
-              <div className="bg-red-50 rounded-2xl p-6 border-l-4 border-red-500 my-8">
-                <p className="text-red-900 font-semibold mb-2 flex items-center gap-2">
-                  <span className="text-2xl">🛑</span>
-                  <span>The Golden Rule</span>
-                </p>
-                <p className="text-red-900/80 leading-relaxed">
-                  <strong>If your pass rate drops from 94% to 89%, you break the build.</strong> Don't ship it. Even though 89% might seem "pretty good," that 5% degradation is a signal. Investigate before it compounds. This is the only way to refactor prompts without fear.
-                </p>
-              </div>
-            </ScrollReveal>
+            <div className="bg-red-50 rounded-2xl p-6 border-l-4 border-red-500 my-8">
+              <p className="text-red-900 font-semibold mb-2 flex items-center gap-2">
+                <span className="text-2xl">🛑</span>
+                <span>The Golden Rule</span>
+              </p>
+              <p className="text-red-900/80 leading-relaxed">
+                <strong>If your pass rate drops from 94% to 89%, you break the build.</strong> Don't ship it. Even though 89% might seem "pretty good," that 5% degradation is a signal. Investigate before it compounds. This is the only way to refactor prompts without fear.
+              </p>
+            </div>
           </>
         )
       }}

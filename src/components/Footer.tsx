@@ -20,11 +20,23 @@ export function Footer() {
     const socialLinks = [
         { name: "Twitter", href: "https://twitter.com/DThompsonDev", icon: "𝕏" },
         {
+            name: "Bluesky",
+            href: "https://bsky.app/profile/dthompsondev.bsky.social",
+            icon: (
+                <img
+                    src="/logos/bluesky-white-icon.svg"
+                    alt="Bluesky"
+                    className="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity"
+                />
+            ),
+        },
+        {
             name: "LinkedIn",
             href: "https://linkedin.com/in/DThompsonDev",
             icon: "in",
         },
         { name: "YouTube", href: "https://youtube.com/@DThompsonDev", icon: "▶" },
+        { name: "Topmate (1:1s)", href: "https://topmate.io/dthompsondev/", icon: "1:1" },
     ];
 
     return (

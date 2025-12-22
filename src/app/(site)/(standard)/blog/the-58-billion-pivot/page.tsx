@@ -3,7 +3,6 @@
 import { BlogPostLayout } from '@/components/blog/BlogPostLayout';
 import { PivotDecisionMatrix } from '@/components/blog/PivotDecisionMatrix';
 
-import { ScrollReveal } from '@/components/ScrollReveal';
 import Image from 'next/image';
 
 export default function The58BillionPivotPost() {
@@ -132,6 +131,7 @@ export default function The58BillionPivotPost() {
                             They fell into a classic engineer's trap: solving a hard technical problem for a low-value use case. They had a "Gem City" moment where they realized that even if they won the meme market, they would still just be a meme company. They wanted greater meaning.
                         </p>
 
+
                         <div className="my-8 rounded-xl overflow-hidden shadow-lg border border-gray-100">
                             <Image
                                 src="/blog-images/58-billion-pivot/technical-trap.jpg"
@@ -142,11 +142,10 @@ export default function The58BillionPivotPost() {
                             />
                         </div>
 
-                        <ScrollReveal>
-                            <PivotDecisionMatrix />
-                        </ScrollReveal>
+                        <PivotDecisionMatrix />
 
                         <div className="bg-[#f8fcfe] border-l-4 border-[#4D7DA3] p-6 rounded-r-xl my-8">
+
                             <h3 className="font-bold text-[#153230] mb-2 uppercase text-sm tracking-wider">CYT Question for Leaders</h3>
                             <p className="mb-4">Look at your current roadmap. Are you solving a problem because it matters to the market, or simply because it's a "hard problem" that makes you feel smart?</p>
                             <p className="italic text-[#153230]/70">What is the project you are holding onto right now that is technically impressive but strategically useless?</p>
