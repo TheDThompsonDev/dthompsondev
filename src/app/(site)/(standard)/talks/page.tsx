@@ -2,7 +2,7 @@
 
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { TiltCard } from "@/components/TiltCard";
-import Link from "next/link";
+import { ContactModalButton } from "@/components/ContactModalButton";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -559,19 +559,12 @@ export default function TalksPage() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/#contact"
-                className="group relative bg-[#153230] text-white px-10 py-5 rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300 font-bold text-lg overflow-hidden"
+              <ContactModalButton
+                className="group relative bg-[#153230] text-white px-10 py-5 rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300 font-bold text-lg overflow-hidden cursor-pointer"
               >
                 <span className="relative z-10">Book Me to Speak</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
-              </Link>
-              <a
-                href="#speaking-topics"
-                className="bg-transparent border-2 border-[#153230] text-[#153230] px-10 py-5 rounded-full hover:bg-[#153230] hover:text-white hover:scale-105 transition-all duration-300 font-bold text-lg"
-              >
-                View Speaking Topics
-              </a>
+              </ContactModalButton>
             </div>
           </ScrollReveal>
         </div>
@@ -699,114 +692,112 @@ export default function TalksPage() {
             </div>
 
             <div className="mt-12 text-center">
-              <a
-                href="/#contact"
-                className="inline-flex items-center gap-2 text-[#153230] font-black border-b-2 border-[#4D7DA3]/30 hover:border-[#4D7DA3] pb-0.5 transition-all text-sm uppercase tracking-wide"
+              <ContactModalButton
+                className="inline-flex items-center gap-2 text-[#153230] font-black border-b-2 border-[#4D7DA3]/30 hover:border-[#4D7DA3] pb-0.5 transition-all text-sm uppercase tracking-wide cursor-pointer"
               >
                 Inquire about a topic
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-              </a>
+              </ContactModalButton>
             </div>
           </ScrollReveal>
         </div>
       </section>
 
       {/* All Talks Library */}
-      <section className="mx-4 mt-12">
+      <section className="mx-4 mt-12 mb-10">
         <ScrollReveal>
-          <div className="bg-white rounded-[32px] p-8 md:p-12 shadow-xl border border-[#4D7DA3]/10">
-            <div className="text-center mb-8">
-              <h2 className="text-4xl md:text-5xl font-black text-[#153230] mb-4">
-                📺 Complete Talk Library
-              </h2>
-              <p className="text-lg md:text-xl text-[#153230]/70 max-w-3xl mx-auto mb-8">
-                30+ speaking engagements covering career development, community building, and technical leadership
-              </p>
 
-              {/* Filter Buttons */}
-              <div className="flex flex-wrap justify-center gap-3">
-                {[
-                  { id: "all" as ContentFilter, label: "All Talks", count: videoTalks.length },
-                  { id: "featured" as ContentFilter, label: "Featured", count: videoTalks.filter(v => v.featured).length },
-                  { id: "interviews" as ContentFilter, label: "Interviews", count: videoTalks.filter(v => v.category === "interview").length },
-                  { id: "conferences" as ContentFilter, label: "Talks", count: videoTalks.filter(v => v.category === "talk").length },
-                  { id: "tutorials" as ContentFilter, label: "Workshops", count: videoTalks.filter(v => v.category === "tutorial").length },
-                ].map((filter) => (
-                  <button
-                    key={filter.id}
-                    onClick={() => setActiveFilter(filter.id)}
-                    className={`
+          <div className="text-center mb-8">
+            <h2 className="text-4xl md:text-5xl font-black text-[#153230] mb-4">
+              📺 Complete Talk Library
+            </h2>
+            <p className="text-lg md:text-xl text-[#153230]/70 max-w-3xl mx-auto mb-8">
+              30+ speaking engagements covering career development, community building, and technical leadership
+            </p>
+
+            {/* Filter Buttons */}
+            <div className="flex flex-wrap justify-center gap-3">
+              {[
+                { id: "all" as ContentFilter, label: "All Talks", count: videoTalks.length },
+                { id: "featured" as ContentFilter, label: "Featured", count: videoTalks.filter(v => v.featured).length },
+                { id: "interviews" as ContentFilter, label: "Interviews", count: videoTalks.filter(v => v.category === "interview").length },
+                { id: "conferences" as ContentFilter, label: "Talks", count: videoTalks.filter(v => v.category === "talk").length },
+                { id: "tutorials" as ContentFilter, label: "Workshops", count: videoTalks.filter(v => v.category === "tutorial").length },
+              ].map((filter) => (
+                <button
+                  key={filter.id}
+                  onClick={() => setActiveFilter(filter.id)}
+                  className={`
                       px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300
                       ${activeFilter === filter.id
-                        ? "bg-[#153230] text-white scale-105 shadow-lg"
-                        : "bg-[#E2F3F2] text-[#153230]/70 hover:text-[#153230] hover:scale-105"
-                      }
+                      ? "bg-[#153230] text-white scale-105 shadow-lg"
+                      : "bg-[#E2F3F2] text-[#153230]/70 hover:text-[#153230] hover:scale-105"
+                    }
                     `}
-                  >
-                    {filter.label} <span className="text-xs">({filter.count})</span>
-                  </button>
-                ))}
-              </div>
+                >
+                  {filter.label} <span className="text-xs">({filter.count})</span>
+                </button>
+              ))}
             </div>
-
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeFilter}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="grid md:grid-cols-3 lg:grid-cols-4 gap-6"
-              >
-                {filteredVideos.map((video, index) => (
-                  <motion.a
-                    key={video.id}
-                    href={video.youtubeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                    className="group block bg-gradient-to-br from-white to-[#E2F3F2]/30 rounded-2xl overflow-hidden border border-[#4D7DA3]/10 hover:border-[#4D7DA3]/40 hover:shadow-xl transition-all duration-300"
-                    whileHover={{ y: -4 }}
-                  >
-                    <div className="relative overflow-hidden">
-                      <img
-                        src={video.thumbnail}
-                        alt={video.title}
-                        className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                        <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                          <svg className="w-6 h-6 text-[#153230] ml-0.5" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                          </svg>
-                        </div>
-                      </div>
-                      {video.featured && (
-                        <div className="absolute top-2 right-2 bg-[#4D7DA3] text-white px-2 py-1 rounded text-[10px] font-black">
-                          ★
-                        </div>
-                      )}
-                    </div>
-                    <div className="p-4">
-                      {video.channel && (
-                        <div className="text-[10px] font-bold text-[#4D7DA3] mb-1 uppercase">
-                          {video.channel}
-                        </div>
-                      )}
-                      <h3 className="text-sm font-black text-[#153230] mb-2 leading-tight line-clamp-2 group-hover:text-[#4D7DA3] transition-colors">
-                        {video.title}
-                      </h3>
-                      <p className="text-xs text-[#153230]/60 line-clamp-2 leading-relaxed">
-                        {video.description}
-                      </p>
-                    </div>
-                  </motion.a>
-                ))}
-              </motion.div>
-            </AnimatePresence>
           </div>
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeFilter}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="grid md:grid-cols-3 lg:grid-cols-4 gap-6"
+            >
+              {filteredVideos.map((video, index) => (
+                <motion.a
+                  key={video.id}
+                  href={video.youtubeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                  className="group block bg-gradient-to-br from-white to-[#E2F3F2]/30 rounded-2xl overflow-hidden border border-[#4D7DA3]/10 hover:border-[#4D7DA3]/40 hover:shadow-xl transition-all duration-300"
+                  whileHover={{ y: -4 }}
+                >
+                  <div className="relative overflow-hidden">
+                    <img
+                      src={video.thumbnail}
+                      alt={video.title}
+                      className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                        <svg className="w-6 h-6 text-[#153230] ml-0.5" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                        </svg>
+                      </div>
+                    </div>
+                    {video.featured && (
+                      <div className="absolute top-2 right-2 bg-[#4D7DA3] text-white px-2 py-1 rounded text-[10px] font-black">
+                        ★
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-4">
+                    {video.channel && (
+                      <div className="text-[10px] font-bold text-[#4D7DA3] mb-1 uppercase">
+                        {video.channel}
+                      </div>
+                    )}
+                    <h3 className="text-sm font-black text-[#153230] mb-2 leading-tight line-clamp-2 group-hover:text-[#4D7DA3] transition-colors">
+                      {video.title}
+                    </h3>
+                    <p className="text-xs text-[#153230]/60 line-clamp-2 leading-relaxed">
+                      {video.description}
+                    </p>
+                  </div>
+                </motion.a>
+              ))}
+            </motion.div>
+          </AnimatePresence>
         </ScrollReveal>
       </section>
 

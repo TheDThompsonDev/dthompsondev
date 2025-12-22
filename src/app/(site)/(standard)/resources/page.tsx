@@ -1,4 +1,7 @@
+'use client';
+
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { ContactModalButton } from "@/components/ContactModalButton";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -186,12 +189,11 @@ export default function ResourcesPage() {
               early access to new content, and personalized career guidance.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/#contact"
-                className="bg-white text-[#153230] px-8 py-4 rounded-full font-bold hover:scale-105 hover:shadow-2xl transition-all duration-300"
+              <ContactModalButton
+                className="bg-white text-[#153230] px-8 py-4 rounded-full font-bold hover:scale-105 hover:shadow-2xl transition-all duration-300 cursor-pointer"
               >
                 Get in Touch
-              </Link>
+              </ContactModalButton>
               <Link
                 href="/blog"
                 className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-[#153230] hover:scale-105 transition-all duration-300"

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef } from 'react';
+import { ContactModalButton } from './ContactModalButton';
 
 interface MobileMenuOverlayProps {
     isOpen: boolean;
@@ -115,13 +116,12 @@ export function MobileMenuOverlay({ isOpen, onClose }: MobileMenuOverlayProps) {
 
                 {/* Contact CTA */}
                 <div className="mb-8">
-                    <Link
-                        href="/#contact"
+                    <ContactModalButton
                         onClick={onClose}
-                        className="block w-full bg-[#4D7DA3] text-white text-center py-4 rounded-full font-bold text-lg hover:bg-[#5a8fb8] transition-colors shadow-lg"
+                        className="block w-full bg-[#4D7DA3] text-white text-center py-4 rounded-full font-bold text-lg hover:bg-[#5a8fb8] transition-colors shadow-lg cursor-pointer"
                     >
                         Get In Touch
-                    </Link>
+                    </ContactModalButton>
                 </div>
 
                 {/* Social Links */}

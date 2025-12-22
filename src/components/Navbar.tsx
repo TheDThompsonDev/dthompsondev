@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ContactModalButton } from "./ContactModalButton";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -81,12 +82,11 @@ export default function Navbar() {
           </Link>
         </nav>
 
-        <Link
-          href="/#contact"
-          className="hidden lg:flex bg-[#153230] text-white px-6 md:px-8 py-3 md:py-4 rounded-full hover:bg-[#4D7DA3] hover:scale-105 transition-all duration-300 font-semibold text-sm md:text-base whitespace-nowrap"
+        <ContactModalButton
+          className="hidden lg:flex bg-[#153230] text-white px-6 md:px-8 py-3 md:py-4 rounded-full hover:bg-[#4D7DA3] hover:scale-105 transition-all duration-300 font-semibold text-sm md:text-base whitespace-nowrap cursor-pointer"
         >
           Contact Me
-        </Link>
+        </ContactModalButton>
       </div>
     </header>
   );
