@@ -4,6 +4,7 @@ import { Suspense, ReactNode, useState, useEffect, useRef } from 'react';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import Link from 'next/link';
 import { ScrollProgress } from '@/components/ScrollProgress';
+import { VirtualWhiteboard } from '@/components/VirtualWhiteboard';
 import { ContentDepthProvider } from './ContentDepthProvider';
 import { ContentDepthToggle } from './ContentDepthToggle';
 import { ContentDepthPanel } from './ContentDepthPanel';
@@ -129,6 +130,9 @@ function BlogPostLayoutInner({
                     )}
                 </ScrollReveal>
 
+                <div className="my-16">
+                    <VirtualWhiteboard title="Notes & Ideas" showInstructions={true} />
+                </div>
                 {/* Content Depth Toggle - Only shown when depth content is provided */}
                 {hasDepthContent && <ContentDepthToggle />}
 
