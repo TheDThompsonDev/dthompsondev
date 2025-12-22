@@ -4,6 +4,10 @@ import { BlogPostLayout } from '@/components/blog/BlogPostLayout';
 import { InteractiveCode } from '@/components/InteractiveCode';
 import { CodeMorph } from '@/components/CodeMorph';
 import { FloatingTOC } from '@/components/FloatingTOC';
+import {
+  XCircle, CheckCircle2, ArrowDown, RefreshCw,
+  Settings, Database, Zap, Layers
+} from 'lucide-react';
 
 export default function ReactHooksVisualizedPost() {
   // Data for CodeMorph (Array Model)
@@ -18,7 +22,7 @@ export default function ReactHooksVisualizedPost() {
       highlights: [2, 3],
     },
     {
-      title: '❌ The Conditional Trap',
+      title: 'The Conditional Trap',
       description: 'If you wrap a hook in a condition, you risk breaking the chain.',
       code: `function Form({ showEmail }) {
   const [name, setName] = useState(''); // Index 0
@@ -56,7 +60,7 @@ export default function ReactHooksVisualizedPost() {
 
   const staleClosureExamples = [
     {
-      title: '❌ THE BUG: Stale closure',
+      title: 'THE BUG: Stale closure',
       code: `function Counter() {
   const [count, setCount] = useState(0);
 
@@ -74,7 +78,7 @@ export default function ReactHooksVisualizedPost() {
       color: '#EF4444',
     },
     {
-      title: '✅ THE FIX: Functional updates',
+      title: 'THE FIX: Functional updates',
       code: `const handleClick = () => {
   setTimeout(() => {
     // Tell React HOW to update it, not WHAT to set it to.
@@ -91,19 +95,19 @@ export default function ReactHooksVisualizedPost() {
       title: 'Mount (Run Effect)',
       description: 'React paints the screen, then runs your effect to synchronize with the outside world.',
       color: '#4D7DA3',
-      icon: 'MOUNT',
+      icon: <ArrowDown className="w-6 h-6" />,
     },
     {
       title: 'Unmount (Cleanup)',
       description: 'Strict Mode: React immediately unmounts to check if you provided a cleanup function.',
       color: '#F59E0B',
-      icon: 'CHECK',
+      icon: <CheckCircle2 className="w-6 h-6" />,
     },
     {
       title: 'Remount (Run Again)',
       description: 'React mounts again. If your API call fires twice, it is testing your resilience.',
       color: '#10B981',
-      icon: 'SYNC',
+      icon: <RefreshCw className="w-6 h-6" />,
     },
   ];
 

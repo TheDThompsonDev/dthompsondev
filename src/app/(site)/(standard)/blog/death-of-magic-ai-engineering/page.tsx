@@ -3,6 +3,11 @@
 import { BlogPostLayout } from '@/components/blog/BlogPostLayout';
 import { InteractiveCode } from '@/components/InteractiveCode';
 import { CodeMorph } from '@/components/CodeMorph';
+import {
+  BarChart3, RefreshCw, Scale, AlertOctagon,
+  Target, Lock, Construction, CheckCircle2,
+  AlertTriangle, Lightbulb, Brain, XCircle
+} from 'lucide-react';
 
 export default function DeathOfMagicPost() {
   const stateOrchestrationEvolution = [
@@ -166,25 +171,25 @@ user = client.messages.create(
       title: 'Golden Dataset',
       description: '100+ examples of perfect input/output pairs that define "correct" behavior.',
       color: '#4D7DA3',
-      icon: '📊',
+      icon: <BarChart3 className="w-6 h-6" />,
     },
     {
       title: 'Run on Every PR',
       description: 'Any change that touches prompts triggers the eval suite automatically.',
       color: '#F59E0B',
-      icon: '🔄',
+      icon: <RefreshCw className="w-6 h-6" />,
     },
     {
       title: 'LLM-as-Judge',
       description: 'Since you can\'t assert text equality, use a model to grade outputs against criteria.',
       color: '#8B5CF6',
-      icon: '⚖️',
+      icon: <Scale className="w-6 h-6" />,
     },
     {
       title: 'Break the Build',
       description: 'If pass rate drops from 94% to 89%, you break the build. Don\'t ship it.',
       color: '#EF4444',
-      icon: '🛑',
+      icon: <AlertOctagon className="w-6 h-6" />,
     },
   ];
 
@@ -193,25 +198,25 @@ user = client.messages.create(
       title: 'State Orchestration',
       description: 'Build smart orchestrators that manage stateless models with external state persistence.',
       color: '#4D7DA3',
-      icon: '🎯',
+      icon: <Target className="w-6 h-6" />,
     },
     {
       title: 'Constrained Generation',
       description: 'English is a compiled language. Use prefilling and type-safe schemas.',
       color: '#10B981',
-      icon: '🔒',
+      icon: <Lock className="w-6 h-6" />,
     },
     {
       title: 'Infrastructure Reliability',
       description: 'Retry backoffs, fallback providers, assume inference will fail.',
       color: '#F59E0B',
-      icon: '🏗️',
+      icon: <Construction className="w-6 h-6" />,
     },
     {
       title: 'Regression Testing',
       description: 'Evals, not vibes. Golden datasets, LLM-as-judge, break the build on degradation.',
       color: '#8B5CF6',
-      icon: '✅',
+      icon: <CheckCircle2 className="w-6 h-6" />,
     },
   ];
 
@@ -341,7 +346,7 @@ user = client.messages.create(
 
               <div className="bg-amber-50 rounded-2xl p-6 border-l-4 border-amber-500 my-8">
                 <p className="text-amber-900 font-semibold mb-2 flex items-center gap-2">
-                  <span className="text-2xl">⚠️</span>
+                  <AlertTriangle className="w-6 h-6" />
                   <span>The Problem</span>
                 </p>
                 <p className="text-amber-900/80 leading-relaxed">
@@ -374,7 +379,7 @@ user = client.messages.create(
 
             <div className="bg-blue-50 rounded-2xl p-6 border-l-4 border-blue-500 my-8">
               <p className="text-blue-900 font-semibold mb-2 flex items-center gap-2">
-                <span className="text-2xl">💡</span>
+                <Lightbulb className="w-6 h-6" />
                 <span>The Mental Model Shift</span>
               </p>
               <p className="text-blue-900/80 leading-relaxed">
@@ -386,7 +391,7 @@ user = client.messages.create(
 
             <div className="bg-emerald-50 rounded-2xl p-6 border-l-4 border-emerald-500 my-8">
               <p className="text-emerald-900 font-semibold mb-2 flex items-center gap-2">
-                <span className="text-2xl">✅</span>
+                <CheckCircle2 className="w-6 h-6" />
                 <span>Key Insight</span>
               </p>
               <p className="text-emerald-900/80 leading-relaxed">
@@ -411,7 +416,7 @@ user = client.messages.create(
 
             <div className="bg-purple-50 rounded-2xl p-6 border-l-4 border-purple-500 my-8">
               <p className="text-purple-900 font-semibold mb-2 flex items-center gap-2">
-                <span className="text-2xl">🧠</span>
+                <Brain className="w-6 h-6" />
                 <span>Karpathy's Insight: Stop Asking "What Do You Think?"</span>
               </p>
               <p className="text-purple-900/80 leading-relaxed">
@@ -428,7 +433,7 @@ user = client.messages.create(
 
             <div className="bg-red-50 rounded-2xl p-6 border-l-4 border-red-500 my-8">
               <p className="text-red-900 font-semibold mb-2 flex items-center gap-2">
-                <span className="text-2xl">🚨</span>
+                <AlertTriangle className="w-6 h-6" />
                 <span>Real-World Post-Mortem</span>
               </p>
               <p className="text-red-900/80 leading-relaxed mb-4">
@@ -530,7 +535,7 @@ async def run_eval_suite(
 
             <div className="bg-red-50 rounded-2xl p-6 border-l-4 border-red-500 my-8">
               <p className="text-red-900 font-semibold mb-2 flex items-center gap-2">
-                <span className="text-2xl">🛑</span>
+                <AlertOctagon className="w-6 h-6" />
                 <span>The Golden Rule</span>
               </p>
               <p className="text-red-900/80 leading-relaxed">

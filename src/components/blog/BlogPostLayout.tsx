@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, ReactNode, useState, useEffect, useRef } from 'react';
+import { ReactNode } from 'react';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import Link from 'next/link';
 import { ScrollProgress } from '@/components/ScrollProgress';
@@ -9,7 +9,7 @@ import { ContentDepthProvider } from './ContentDepthProvider';
 import { ContentDepthToggle } from './ContentDepthToggle';
 import { ContentDepthPanel } from './ContentDepthPanel';
 import { EngagementBar } from './EngagementBar';
-import { ShareMenu } from './ShareMenu';
+import { samplePosts } from '@/data/blogPosts';
 
 interface DepthContent {
     content: ReactNode;
@@ -66,23 +66,15 @@ function BlogPostLayoutInner({
 }: Omit<BlogPostLayoutProps, 'slug'> & { children?: ReactNode; slug?: string; coverImage?: string }) {
     const hasDepthContent = short && medium && long;
 
-    const [showShareMenu, setShowShareMenu] = useState(false);
-    const shareMenuRef = useRef<HTMLDivElement>(null);
+    // Logic to find the next post
+    const sortedPosts = [...samplePosts].sort((a, b) =>
+        new Date(b.published_at || b.created_at).getTime() - new Date(a.published_at || a.created_at).getTime()
+    );
 
-    useEffect(() => {
-        function handleClickOutside(event: MouseEvent) {
-            if (shareMenuRef.current && !shareMenuRef.current.contains(event.target as Node)) {
-                setShowShareMenu(false);
-            }
-        }
-
-        if (showShareMenu) {
-            document.addEventListener('mousedown', handleClickOutside);
-        }
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [showShareMenu]);
+    const currentIndex = sortedPosts.findIndex(p => p.slug === slug);
+    const nextPost = currentIndex !== -1 && currentIndex < sortedPosts.length - 1
+        ? sortedPosts[currentIndex + 1]
+        : null;
 
     return (
         <>
@@ -100,39 +92,73 @@ function BlogPostLayoutInner({
                 </Link>
             </header>
 
-            <article className="px-8 md:px-12 py-12 max-w-5xl mx-auto">
+            <article className="px-6 md:px-12 py-8 max-w-[1400px] mx-auto w-full">
                 <ScrollReveal delay={100}>
-                    <div className={hasDepthContent ? "mb-8" : "mb-12"}>
-                        <div className="flex items-center gap-3 mb-6">
-                            <span className="px-4 py-2 rounded-lg text-sm font-bold text-white bg-[#4D7DA3]">
-                                {category}
-                            </span>
-                            <span className="text-[#153230]/60 text-sm">{date} • {readTime}</span>
-                        </div>
-
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-[#153230] leading-[1.1] mb-6">
-                            {title}
-                        </h1>
-
-                        <p className="text-xl text-[#153230]/70 leading-relaxed max-w-4xl">
-                            {subtitle}
-                        </p>
-                    </div>
-
+                    {/* 1. Hero Image (Full Width) */}
                     {coverImage && (
-                        <div className="mb-12 rounded-2xl overflow-hidden shadow-2xl border border-[#4D7DA3]/10">
+                        <div className="mb-8 md:mb-12 rounded-2xl overflow-hidden shadow-2xl border border-[#4D7DA3]/10 max-w-5xl mx-auto">
                             <img
                                 src={coverImage}
                                 alt={typeof title === 'string' ? title : 'Blog post cover'}
-                                className="w-full h-auto rounded-2xl"
+                                className="w-full h-auto max-h-[600px] object-cover rounded-2xl"
                             />
                         </div>
                     )}
+
+                    {/* 2. Split Header: Title + Compact Whiteboard */}
+                    <div className="flex flex-col lg:flex-row gap-8 md:gap-12 items-start mb-12 max-w-5xl mx-auto">
+                        {/* Left: Metadata & Typography */}
+                        <div className="flex-1 space-y-6">
+                            <div className="flex items-center gap-3 mb-4 md:mb-6">
+                                <span className="px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-xs md:text-sm font-bold text-white bg-[#4D7DA3]">
+                                    {category}
+                                </span>
+                                <span className="text-[#153230]/60 text-xs md:text-sm">{date} • {readTime}</span>
+                            </div>
+
+                            <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-[#153230] leading-[1.1] tracking-tight">
+                                {title}
+                            </h1>
+
+                            <p className="text-lg md:text-xl text-[#153230]/70 leading-relaxed max-w-4xl">
+                                {subtitle}
+                            </p>
+                        </div>
+
+                        {/* Right: Compact Whiteboard (Desktop Only) */}
+                        <div className="hidden lg:block w-[350px] flex-shrink-0 sticky top-8">
+                            <div className="bg-[#f8fcfe] rounded-2xl p-1 border border-[#4D7DA3]/10 shadow-sm">
+                                <VirtualWhiteboard
+                                    title="Quick Notes"
+                                    variant="compact"
+                                    height={250}
+                                    showInstructions={false}
+                                />
+                            </div>
+                            <p className="text-center text-xs text-[#4D7DA3] mt-2 font-medium bg-[#E5F4FF]/50 py-1 rounded-lg">
+                                💡 Pin this to keep notes while reading!
+                            </p>
+                        </div>
+                    </div>
                 </ScrollReveal>
 
-                <div className="my-16">
-                    <VirtualWhiteboard title="Notes & Ideas" showInstructions={true} />
+                {/* Mobile Notes Toggle (Collapsible) - Kept for small screens */}
+                <div className="lg:hidden mb-12">
+                    <details className="group bg-[#f8fcfe] rounded-xl border border-[#4D7DA3]/10 open:border-[#4D7DA3]/30 transition-all">
+                        <summary className="flex items-center justify-between p-4 cursor-pointer list-none font-bold text-[#153230] select-none">
+                            <span className="flex items-center gap-2">
+                                📝 Show Notes & Ideas
+                            </span>
+                            <span className="transform group-open:rotate-180 transition-transform">
+                                ▼
+                            </span>
+                        </summary>
+                        <div className="p-4 pt-0 border-t border-[#4D7DA3]/10 mt-2">
+                            <VirtualWhiteboard title="Notes & Ideas" showInstructions={true} />
+                        </div>
+                    </details>
                 </div>
+
                 {/* Content Depth Toggle - Only shown when depth content is provided */}
                 {hasDepthContent && <ContentDepthToggle />}
 
@@ -168,19 +194,15 @@ function BlogPostLayoutInner({
                             >
                                 ← Back to all posts
                             </Link>
-                            <div className="relative" ref={shareMenuRef}>
-                                <button
-                                    onClick={() => setShowShareMenu(!showShareMenu)}
-                                    className="text-[#4D7DA3] hover:text-[#153230] font-bold transition-colors min-w-[80px] text-right"
+
+                            {nextPost && (
+                                <Link
+                                    href={`/blog/${nextPost.slug}`}
+                                    className="text-[#4D7DA3] hover:text-[#153230] font-bold flex items-center gap-2 transition-colors text-right"
                                 >
-                                    Share →
-                                </button>
-                                <ShareMenu
-                                    isOpen={showShareMenu}
-                                    onClose={() => setShowShareMenu(false)}
-                                    className="absolute bottom-full right-0 mb-2"
-                                />
-                            </div>
+                                    Next Post →
+                                </Link>
+                            )}
                         </div>
                     </div>
                 </ScrollReveal>
@@ -194,6 +216,14 @@ function BlogPostLayoutInner({
                     <p className="text-[#153230]/60 text-sm">
                         © {new Date().getFullYear()} DTHOMPSONDEV. All rights reserved.
                     </p>
+                    <Link
+                        href="/feed.xml"
+                        className="text-[#153230]/40 hover:text-[#4D7DA3] text-sm font-medium transition-colors flex items-center gap-2"
+                        target="_blank"
+                    >
+                        <span className="w-4 h-4 flex items-center justify-center rounded-sm border border-current font-serif font-bold text-[10px] leading-none">R</span>
+                        RSS Feed
+                    </Link>
                 </div>
             </footer>
         </>

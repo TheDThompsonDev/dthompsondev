@@ -6,21 +6,30 @@ interface VirtualWhiteboardProps {
   title?: string;
   height?: number;
   showInstructions?: boolean;
+  defaultCollapsed?: boolean;
+  variant?: 'default' | 'compact';
 }
 
-export function VirtualWhiteboard({ 
-  title = "Take Notes", 
+export function VirtualWhiteboard({
+  title = "Take Notes",
   height = 400,
-  showInstructions = true 
+  showInstructions = true, // Kept for API compatibility, but effectively unused in sticky mode now
+  defaultCollapsed = false,
+  variant = 'default'
 }: VirtualWhiteboardProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const textInputRef = useRef<HTMLInputElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const currentDragPos = useRef({ x: 16, y: 80 });
+
   const [isDrawing, setIsDrawing] = useState(false);
   const [currentColor, setCurrentColor] = useState('#1f2937');
   const [lineWidth, setLineWidth] = useState(3);
   const [tool, setTool] = useState<'pen' | 'eraser' | 'text'>('pen');
   const [isSticky, setIsSticky] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
+  // Removed isExpanded state - sticky is always "expanded" (showing tools) but compact in size
+  const [isInlineCollapsed, setIsInlineCollapsed] = useState(defaultCollapsed && variant !== 'compact');
+
   const [isDragging, setIsDragging] = useState(false);
   const [position, setPosition] = useState({ x: 16, y: 80 });
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
@@ -37,17 +46,38 @@ export function VirtualWhiteboard({
     { name: 'Black', value: '#000000' },
   ];
 
-  const brushSizes = [
-    { label: 'S', value: 2 },
-    { label: 'M', value: 4 },
-    { label: 'L', value: 8 },
-  ];
+  const savedImageRef = useRef<HTMLCanvasElement | null>(null); // To persist data during resize
+  const [pinnedExpanded, setPinnedExpanded] = useState(false); // Toggle for pinned height (250px vs 500px)
 
-  const fontSizes = [
-    { label: 'S', value: 12 },
-    { label: 'M', value: 16 },
-    { label: 'L', value: 24 },
-  ];
+  // ... (drawing state)
+
+  // Helper to save current canvas content
+  const saveContent = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    // Create a temp canvas to store the exact current image
+    const temp = document.createElement('canvas');
+    temp.width = canvas.width;
+    temp.height = canvas.height;
+    const tCtx = temp.getContext('2d');
+    if (tCtx) tCtx.drawImage(canvas, 0, 0);
+    savedImageRef.current = temp;
+  };
+
+  // Helper to restore content
+  const restoreContent = () => {
+    const canvas = canvasRef.current;
+    const temp = savedImageRef.current;
+    if (!canvas || !temp) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Draw saved image back at 0,0. This preserves the drawing without scaling, 
+    // effectively cropping if smaller or adding whitespace if larger.
+    ctx.drawImage(temp, 0, 0);
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -56,11 +86,23 @@ export function VirtualWhiteboard({
     const context = canvas.getContext('2d');
     if (!context) return;
 
-    canvas.width = canvas.offsetWidth;
-    canvas.height = height;
+    // Save before calculating new size logic
+    if (canvas.width > 0 && canvas.height > 0) {
+      saveContent();
+    }
+
+    // Compact mode always uses a fixed smaller canvas size initially
+    const baseWidth = variant === 'compact' ? 350 : canvas.offsetWidth;
+    const baseHeight = variant === 'compact' ? 200 : height;
+
+    canvas.width = baseWidth;
+    canvas.height = baseHeight;
     context.fillStyle = 'white';
     context.fillRect(0, 0, canvas.width, canvas.height);
-  }, []);
+
+    // Restore
+    restoreContent();
+  }, [variant, height]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -69,17 +111,43 @@ export function VirtualWhiteboard({
     const context = canvas.getContext('2d');
     if (!context) return;
 
-    const canvasWidth = isSticky ? 320 : canvas.offsetWidth;
-    const canvasHeight = isSticky ? (isExpanded ? 400 : 200) : height;
-    
-    if (canvas.width !== canvasWidth || canvas.height !== canvasHeight) {
+    // Save before calculating new size logic
+    if (canvas.width > 0 && canvas.height > 0) {
+      saveContent();
+    }
+
+    let canvasWidth, canvasHeight;
+
+    if (isSticky) {
+      // Sticky mode: 250px (compact) or 500px (expanded)
+      canvasWidth = 320;
+      canvasHeight = pinnedExpanded ? 500 : 250;
+    } else if (variant === 'compact') {
+      canvasWidth = canvas.parentElement?.offsetWidth || 350;
+      canvasHeight = 250;
+    } else {
+      canvasWidth = canvas.offsetWidth;
+      canvasHeight = isInlineCollapsed ? 0 : height;
+    }
+
+    // Resize if changed
+    if (!isInlineCollapsed && (canvas.width !== canvasWidth || canvas.height !== canvasHeight)) {
       canvas.width = canvasWidth;
       canvas.height = canvasHeight;
 
       context.fillStyle = 'white';
       context.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Restore immediately after resize
+      restoreContent();
+
+      // Restore drawing settings that get reset on resize
+      context.strokeStyle = tool === 'eraser' ? 'white' : currentColor;
+      context.lineWidth = tool === 'eraser' ? lineWidth * 3 : lineWidth;
+      context.lineCap = 'round';
+      context.lineJoin = 'round';
     }
-  }, [height, isSticky, isExpanded]);
+  }, [height, isSticky, isInlineCollapsed, variant, pinnedExpanded]);
 
   useEffect(() => {
     if (textInput.active && textInputRef.current) {
@@ -194,304 +262,231 @@ export function VirtualWhiteboard({
 
   const startDrag = (e: MouseEvent | TouchEvent) => {
     if (!isSticky) return;
-    
+
+    if (e.cancelable && 'preventDefault' in e) e.preventDefault();
+
     setIsDragging(true);
     const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
     const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
-    
+
+    // Sync ref start position
+    currentDragPos.current = { ...position };
+
     setDragOffset({
       x: clientX - position.x,
       y: clientY - position.y
     });
+
+    document.body.style.userSelect = 'none';
   };
 
-  const onDrag = (e: MouseEvent | TouchEvent) => {
-    if (!isDragging) return;
-    
+  const onDrag = (e: globalThis.MouseEvent | globalThis.TouchEvent) => {
+    if (!isDragging || !containerRef.current) return;
+
+    if (e.cancelable) e.preventDefault();
+
     const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
     const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
-    
-    setPosition({
-      x: clientX - dragOffset.x,
-      y: clientY - dragOffset.y
-    });
+
+    const newX = clientX - dragOffset.x;
+    const newY = clientY - dragOffset.y;
+
+    // Direct DOM update for performance (60fps)
+    containerRef.current.style.left = `${newX}px`;
+    containerRef.current.style.top = `${newY}px`;
+
+    currentDragPos.current = { x: newX, y: newY };
   };
 
   const stopDrag = () => {
-    setIsDragging(false);
+    if (isDragging) {
+      setIsDragging(false);
+      document.body.style.userSelect = '';
+      setPosition(currentDragPos.current);
+    }
   };
 
   useEffect(() => {
     if (isDragging) {
-      window.addEventListener('mousemove', onDrag as any);
-      window.addEventListener('mouseup', stopDrag);
-      window.addEventListener('touchmove', onDrag as any);
-      window.addEventListener('touchend', stopDrag);
-      
+      const handleWindowMove = (e: globalThis.MouseEvent | globalThis.TouchEvent) => onDrag(e);
+      const handleWindowUp = () => stopDrag();
+
+      window.addEventListener('mousemove', handleWindowMove);
+      window.addEventListener('mouseup', handleWindowUp);
+      window.addEventListener('touchmove', handleWindowMove, { passive: false });
+      window.addEventListener('touchend', handleWindowUp);
+
       return () => {
-        window.removeEventListener('mousemove', onDrag as any);
-        window.removeEventListener('mouseup', stopDrag);
-        window.removeEventListener('touchmove', onDrag as any);
-        window.removeEventListener('touchend', stopDrag);
+        window.removeEventListener('mousemove', handleWindowMove);
+        window.removeEventListener('mouseup', handleWindowUp);
+        window.removeEventListener('touchmove', handleWindowMove);
+        window.removeEventListener('touchend', handleWindowUp);
       };
     }
-  }, [isDragging, dragOffset, position]);
+  }, [isDragging, dragOffset]);
 
-  const compactHeight = isExpanded ? 400 : 200;
+  // INLINE COLLAPSED VIEW (Default variant only)
+  if (!isSticky && isInlineCollapsed && variant === 'default') {
+    return (
+      <div className="my-8">
+        <div
+          className="bg-white rounded-xl shadow-sm border border-[#4D7DA3]/20 p-4 cursor-pointer hover:bg-[#f8fcfe] transition-all group"
+          onClick={() => setIsInlineCollapsed(false)}
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <span className="text-2xl group-hover:scale-110 transition-transform">📝</span>
+              <div>
+                <h3 className="font-bold text-[#153230]">{title}</h3>
+                <p className="text-sm text-[#153230]/60">Click to open whiteboard and take notes</p>
+              </div>
+            </div>
+            <div className="text-[#4D7DA3] font-bold text-sm group-hover:translate-x-1 transition-transform">
+              Open →
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div 
-      className={`my-8 transition-all duration-300 ${
-        isSticky ? 'fixed z-50' : ''
-      } ${isDragging ? 'cursor-move' : ''}`}
+    <div
+      ref={containerRef}
+      className={`transition-all duration-300 ${isSticky ? 'fixed z-50' : 'my-0'
+        } ${isDragging ? 'cursor-move' : ''}`}
       style={isSticky ? {
         left: `${position.x}px`,
         top: `${position.y}px`,
         width: '340px',
       } : {}}
     >
-      <div className={`bg-white rounded-2xl shadow-2xl border border-gray-100 transition-all duration-300 ${
-        isSticky ? 'shadow-2xl' : ''
-      }`}>
-        {isSticky && !isExpanded && (
-          <div
-            className="bg-blue-50 border-b border-blue-100 p-2 cursor-move hover:bg-blue-100 transition-colors rounded-t-2xl"
-            onMouseDown={startDrag}
-            onTouchStart={startDrag}
-            onClick={() => setIsExpanded(true)}
-          >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <svg className="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                </svg>
-                <span className="text-sm font-semibold text-gray-900">{title}</span>
-                <span className="text-xs text-gray-500">↔ Drag</span>
+      <div className={`bg-white rounded-2xl shadow-xl border border-gray-100 transition-all duration-300 ${isSticky ? 'shadow-2xl' : ''
+        }`}>
+        {/* Header - Always Show Full Layout if Pinned */}
+        <div
+          className={`bg-blue-50 border-b border-blue-100 px-4 py-3 ${isSticky ? 'cursor-move rounded-t-2xl' : 'rounded-t-2xl'
+            }`}
+          onMouseDown={isSticky ? startDrag : undefined}
+          onTouchStart={isSticky ? startDrag : undefined}
+        >
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <div className="flex items-center gap-2">
+              <span className="text-xl">📝</span>
+              <div>
+                <h3 className="text-sm font-bold text-gray-900 leading-tight">{title}</h3>
+                {isSticky && <span className="text-[10px] text-gray-500">↔ Drag</span>}
               </div>
+            </div>
+
+            <div className="flex gap-1">
+              {/* Resize Toggle for Pinned Mode */}
+              {isSticky && (
+                <button
+                  onClick={() => setPinnedExpanded(!pinnedExpanded)}
+                  className="px-2 py-1.5 rounded-lg text-xs font-semibold bg-white text-gray-700 hover:bg-blue-50 border border-gray-200 transition-all"
+                  title={pinnedExpanded ? "Collapse height" : "Expand size"}
+                >
+                  {pinnedExpanded ? '⤡ Less' : '⤢ More'}
+                </button>
+              )}
+              {/* Minimize only available if NOT sticky and NOT compact */}
+              {(!isSticky && variant !== 'compact') && (
+                <button
+                  onClick={() => setIsInlineCollapsed(true)}
+                  className="bg-white text-gray-700 p-1.5 rounded-lg hover:bg-gray-50 border border-gray-200"
+                  title="Minimize"
+                >
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+              )}
+
               <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsSticky(false);
-                }}
-                className="text-gray-600 hover:text-gray-900 hover:bg-gray-200 rounded px-2 py-1 text-xs transition-all"
+                onClick={() => setIsSticky(!isSticky)}
+                className={`px-2 py-1.5 rounded-lg text-xs font-semibold transition-all ${isSticky
+                  ? 'bg-blue-600 text-white shadow-md'
+                  : 'bg-white text-gray-700 hover:bg-blue-50 border border-gray-200'
+                  }`}
               >
-                ✕
+                {isSticky ? '✕ Close Pin' : '📌 Pin'}
               </button>
             </div>
           </div>
-        )}
+        </div>
 
-        {(!isSticky || isExpanded) && (
-          <div
-            className={`bg-blue-50 border-b border-blue-100 px-6 py-4 ${
-              isSticky ? 'cursor-move rounded-t-2xl' : 'rounded-t-2xl'
-            }`}
-            onMouseDown={isSticky ? startDrag : undefined}
-            onTouchStart={isSticky ? startDrag : undefined}
-          >
-            <div className="flex items-center justify-between flex-wrap gap-3">
-              <div className="flex items-center gap-3">
-                <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                </svg>
-                <div>
-                  <h3 className="text-lg font-bold text-gray-900">{title}</h3>
-                  {isSticky && <span className="text-xs text-gray-500">↔ Drag to reposition</span>}
-                </div>
-              </div>
-              
-              <div className="flex gap-2">
-                {isSticky && isExpanded && (
-                  <button
-                    onClick={() => setIsExpanded(false)}
-                    className="bg-gray-100 text-gray-700 px-3 py-2 rounded-lg font-semibold text-xs hover:bg-gray-200 transition-all"
-                  >
-                    Minimize
-                  </button>
-                )}
-                <button
-                  onClick={() => setIsSticky(!isSticky)}
-                  className={`px-3 py-2 rounded-lg font-semibold text-xs transition-all ${
-                    isSticky
-                      ? 'bg-blue-600 text-white shadow-md'
-                      : 'bg-white text-gray-700 hover:bg-blue-50 border border-gray-200'
+        {/* Toolbar - Always visible if Expanded or Pinned */}
+        <div className="p-3 bg-gray-50 border-b border-gray-200 rounded-b-none">
+          {/* Top Controls: Tools */}
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex gap-0.5 bg-white rounded-lg border border-gray-200 p-0.5 shadow-sm">
+              <button
+                onClick={() => setTool('pen')}
+                className={`p-1.5 rounded text-xs transition-all ${tool === 'pen' ? 'bg-gray-900 text-white' : 'text-gray-400 hover:text-gray-900'
                   }`}
-                >
-                  {isSticky ? '📌 Pinned' : '📌 Pin'}
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {(!isSticky || isExpanded) && (
-          <div className="p-4 bg-gray-50 border-b border-gray-200 rounded-b-none">
-            <div className="flex flex-wrap gap-4 items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="flex gap-1 bg-white rounded-lg border border-gray-200 p-1">
-                  <button
-                    onClick={() => setTool('pen')}
-                    className={`px-3 py-1.5 rounded text-sm font-medium transition-all ${
-                      tool === 'pen'
-                        ? 'bg-gray-900 text-white shadow-sm'
-                        : 'text-gray-600 hover:text-gray-900'
-                    }`}
-                  >
-                    ✏️ Draw
-                  </button>
-                  <button
-                    onClick={() => setTool('text')}
-                    className={`px-3 py-1.5 rounded text-sm font-medium transition-all ${
-                      tool === 'text'
-                        ? 'bg-gray-900 text-white shadow-sm'
-                        : 'text-gray-600 hover:text-gray-900'
-                    }`}
-                  >
-                    Aa Text
-                  </button>
-                  <button
-                    onClick={() => setTool('eraser')}
-                    className={`px-3 py-1.5 rounded text-sm font-medium transition-all ${
-                      tool === 'eraser'
-                        ? 'bg-gray-900 text-white shadow-sm'
-                        : 'text-gray-600 hover:text-gray-900'
-                    }`}
-                  >
-                    🧹 Erase
-                  </button>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2">
-                {tool === 'text' ? (
-                  <div className="flex gap-1 bg-white rounded-lg border border-gray-200 p-1">
-                    {fontSizes.map((size) => (
-                      <button
-                        key={size.value}
-                        onClick={() => setFontSize(size.value)}
-                        className={`px-2.5 py-1 rounded text-xs font-medium transition-all ${
-                          fontSize === size.value
-                            ? 'bg-gray-900 text-white'
-                            : 'text-gray-600 hover:text-gray-900'
-                        }`}
-                      >
-                        {size.label}
-                      </button>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="flex gap-1 bg-white rounded-lg border border-gray-200 p-1">
-                    {brushSizes.map((size) => (
-                      <button
-                        key={size.value}
-                        onClick={() => setLineWidth(size.value)}
-                        className={`px-2.5 py-1 rounded text-xs font-medium transition-all ${
-                          lineWidth === size.value
-                            ? 'bg-gray-900 text-white'
-                            : 'text-gray-600 hover:text-gray-900'
-                        }`}
-                      >
-                        {size.label}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <div className="flex gap-2">
-                <button
-                  onClick={clearCanvas}
-                  className="bg-white border border-gray-200 text-gray-700 px-3 py-2 rounded-lg text-xs font-semibold hover:bg-gray-50 transition-all"
-                >
-                  🗑️ Clear
-                </button>
-                <button
-                  onClick={downloadCanvas}
-                  className="bg-gray-900 text-white px-3 py-2 rounded-lg text-xs font-semibold hover:bg-gray-800 transition-all"
-                >
-                  💾 Save
-                </button>
-              </div>
+                title="Pen"
+              >
+                ✏️
+              </button>
+              <button
+                onClick={() => setTool('text')}
+                className={`p-1.5 rounded text-xs font-bold transition-all ${tool === 'text' ? 'bg-gray-900 text-white' : 'text-gray-400 hover:text-gray-900'
+                  }`}
+                title="Text"
+              >
+                Aa
+              </button>
+              <button
+                onClick={() => setTool('eraser')}
+                className={`p-1.5 rounded text-xs transition-all ${tool === 'eraser' ? 'bg-gray-900 text-white' : 'text-gray-400 hover:text-gray-900'
+                  }`}
+                title="Eraser"
+              >
+                🧹
+              </button>
             </div>
 
-            <div className="flex gap-1.5 items-center mt-3 pt-3 border-t border-gray-200">
-              <span className="text-xs font-medium text-gray-500 mr-1">Colors</span>
-              {colors.map((color) => (
-                <button
-                  key={color.value}
-                  onClick={() => {
-                    setCurrentColor(color.value);
-                    if (tool === 'eraser') setTool('pen');
-                  }}
-                  className={`w-7 h-7 rounded border-2 transition-all ${
-                    currentColor === color.value && tool !== 'eraser'
-                      ? 'border-gray-900 scale-110 shadow-md'
-                      : 'border-gray-200 hover:border-gray-400 hover:scale-105'
-                  }`}
-                  style={{ backgroundColor: color.value }}
-                  title={color.name}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {isSticky && !isExpanded && (
-          <div className="p-2 bg-gray-50 flex items-center justify-between border-b border-gray-200">
-            <div className="flex gap-1.5 items-center">
-              <div className="flex gap-0.5 bg-white rounded border border-gray-200 p-0.5">
-                <button
-                  onClick={() => setTool('pen')}
-                  className={`px-2 py-1 rounded text-xs transition-all ${
-                    tool === 'pen' ? 'bg-gray-900 text-white' : 'text-gray-600 hover:text-gray-900'
-                  }`}
-                >
-                  ✏️
-                </button>
-                <button
-                  onClick={() => setTool('text')}
-                  className={`px-2 py-1 rounded text-xs font-bold transition-all ${
-                    tool === 'text' ? 'bg-gray-900 text-white' : 'text-gray-600 hover:text-gray-900'
-                  }`}
-                >
-                  Aa
-                </button>
-              </div>
-              {colors.slice(0, 3).map((color) => (
-                <button
-                  key={color.value}
-                  onClick={() => {
-                    setCurrentColor(color.value);
-                    if (tool === 'eraser') setTool('pen');
-                  }}
-                  className={`w-5 h-5 rounded border transition-all ${
-                    currentColor === color.value && tool !== 'eraser'
-                      ? 'border-gray-900 scale-110'
-                      : 'border-gray-300 hover:border-gray-400'
-                  }`}
-                  style={{ backgroundColor: color.value }}
-                />
-              ))}
-            </div>
             <div className="flex gap-1">
               <button
                 onClick={clearCanvas}
-                className="bg-white border border-gray-200 text-gray-600 px-2 py-1 rounded text-xs hover:bg-gray-50 transition-all"
+                className="bg-white border border-gray-200 text-gray-700 p-1.5 rounded-lg hover:bg-gray-50 transition-all text-xs"
+                title="Clear"
               >
                 🗑️
               </button>
               <button
                 onClick={downloadCanvas}
-                className="bg-gray-900 text-white px-2 py-1 rounded text-xs hover:bg-gray-800 transition-all"
+                className="bg-gray-900 text-white p-1.5 rounded-lg hover:bg-gray-800 transition-all text-xs"
+                title="Save"
               >
                 💾
               </button>
             </div>
           </div>
-        )}
 
-        <div className={`${isSticky ? 'p-2 rounded-b-2xl' : 'p-4 rounded-b-2xl'} relative bg-blue-50`}>
-          <div className="relative rounded-xl overflow-hidden border-2 border-blue-300 shadow-inner">
+          {/* Colors Row */}
+          <div className="flex gap-1 items-center justify-center">
+            {colors.map((color) => (
+              <button
+                key={color.value}
+                onClick={() => {
+                  setCurrentColor(color.value);
+                  if (tool === 'eraser') setTool('pen');
+                }}
+                className={`w-5 h-5 rounded-full border border-gray-200 transition-all ${currentColor === color.value && tool !== 'eraser'
+                  ? 'ring-2 ring-gray-900 ring-offset-1 scale-110'
+                  : 'hover:scale-110'
+                  }`}
+                style={{ backgroundColor: color.value }}
+                title={color.name}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className={`${isSticky ? 'p-2 rounded-b-2xl' : 'p-2 rounded-b-2xl'} relative bg-blue-50/50`}>
+          <div className="relative rounded-xl overflow-hidden border border-blue-200/50 bg-white shadow-inner">
             <canvas
               ref={canvasRef}
               onClick={handleCanvasClick}
@@ -503,8 +498,10 @@ export function VirtualWhiteboard({
               onTouchMove={draw}
               onTouchEnd={stopDrawing}
               className={`w-full touch-none transition-all duration-300 ${tool === 'text' ? 'cursor-text' : 'cursor-crosshair'}`}
-              style={{ 
-                height: isSticky ? `${compactHeight}px` : `${height}px`,
+              style={{
+                height: isSticky
+                  ? (pinnedExpanded ? '500px' : '250px')
+                  : (variant === 'compact' ? '250px' : `${height}px`),
                 width: '100%'
               }}
             />
@@ -528,29 +525,12 @@ export function VirtualWhiteboard({
               />
             )}
           </div>
-          {tool === 'text' && (
-            <p className="text-xs text-gray-500 mt-2 text-center">
-              Click anywhere to add text • Press Enter to save • Esc to cancel
+          {tool === 'text' && !isInlineCollapsed && (
+            <p className="text-[10px] text-gray-400 mt-1 text-center">
+              Click to type • Enter to save
             </p>
           )}
         </div>
-
-        {showInstructions && (!isSticky || isExpanded) && (
-          <div className="p-4 bg-gray-50 rounded-b-2xl">
-            <div className="flex items-start gap-3">
-              <span className="text-lg">💡</span>
-              <div className="flex-1">
-                <p className="text-xs font-semibold text-gray-900 mb-1">Quick Tips:</p>
-                <ul className="text-xs text-gray-600 space-y-1">
-                  <li>• Pin to keep notes visible while reading</li>
-                  <li>• Drag the header to reposition anywhere</li>
-                  <li>• Use text tool to type notes directly</li>
-                  <li>• Save your work anytime as an image</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

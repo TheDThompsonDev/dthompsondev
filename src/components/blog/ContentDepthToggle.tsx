@@ -73,6 +73,11 @@ export function ContentDepthToggle() {
                     </button>
                 ))}
             </div>
+
+            {/* Keyboard Shortcut Hint */}
+            <div className="text-center mt-2 text-xs text-[#153230]/40 font-medium hidden sm:block opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                Press <span className="font-mono bg-[#153230]/5 px-1 rounded">←</span> / <span className="font-mono bg-[#153230]/5 px-1 rounded">→</span> to switch views
+            </div>
         </div>
     );
 }
