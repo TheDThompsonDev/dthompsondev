@@ -73,7 +73,7 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
     <>
       <ScrollProgress />
       <FloatingTOC items={headings} />
-      
+
       <div className="min-h-screen bg-[#E2F3F2]">
         <div className="max-w-[1400px] mx-auto">
           <div className="bg-white rounded-[32px] shadow-xl m-4 overflow-hidden border border-[#4D7DA3]/10">
@@ -84,7 +84,7 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
                 </div>
                 <span className="text-xl font-bold tracking-tight text-[#153230]">DTHOMPSONDEV</span>
               </Link>
-              <Link 
+              <Link
                 href="/blog"
                 className="bg-[#153230] text-white px-8 py-4 rounded-full hover:bg-[#4D7DA3] hover:scale-105 transition-all duration-300 font-semibold"
               >
@@ -100,17 +100,17 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
                       {post.category}
                     </span>
                   )}
-                  
+
                   <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-[#153230] mb-6 leading-tight">
                     {post.title}
                   </h1>
-                  
+
                   {post.excerpt && (
                     <p className="text-xl text-[#153230]/70 mb-6 leading-relaxed">
                       {post.excerpt}
                     </p>
                   )}
-                  
+
                   <div className="flex flex-wrap items-center gap-4 text-sm text-[#153230]/60">
                     <span className="font-medium">{post.author_name}</span>
                     <span>•</span>
@@ -149,22 +149,8 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
             <footer className="px-8 md:px-16 py-8 border-t border-[#4D7DA3]/10">
               <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                 <p className="text-[#153230]/60 text-sm">
-                  © 2025 DTHOMPSONDEV. All rights reserved.
+                  © {new Date().getFullYear()} DTHOMPSONDEV. All rights reserved.
                 </p>
-                <div className="flex gap-6">
-                  <Link href="/" className="text-[#153230]/60 hover:text-[#4D7DA3] text-sm font-semibold transition-colors">
-                    Home
-                  </Link>
-                  <Link href="/blog" className="text-[#153230]/60 hover:text-[#4D7DA3] text-sm font-semibold transition-colors">
-                    Blog
-                  </Link>
-                  <a href="#" className="text-[#153230]/60 hover:text-[#4D7DA3] text-sm font-semibold transition-colors">
-                    Twitter
-                  </a>
-                  <a href="#" className="text-[#153230]/60 hover:text-[#4D7DA3] text-sm font-semibold transition-colors">
-                    LinkedIn
-                  </a>
-                </div>
               </div>
             </footer>
           </div>

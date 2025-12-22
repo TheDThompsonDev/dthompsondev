@@ -192,16 +192,8 @@ function BlogPostLayoutInner({
             <footer className="px-8 md:px-12 py-8 border-t border-[#4D7DA3]/10 bg-[#f8fcfe]">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                     <p className="text-[#153230]/60 text-sm">
-                        © 2025 DTHOMPSONDEV. All rights reserved.
+                        © {new Date().getFullYear()} DTHOMPSONDEV. All rights reserved.
                     </p>
-                    <div className="flex gap-6">
-                        <Link href="/" className="text-[#153230]/60 hover:text-[#4D7DA3] text-sm font-semibold transition-colors">
-                            Home
-                        </Link>
-                        <Link href="/blog" className="text-[#153230]/60 hover:text-[#4D7DA3] text-sm font-semibold transition-colors">
-                            Blog
-                        </Link>
-                    </div>
                 </div>
             </footer>
         </>
@@ -213,11 +205,9 @@ export function BlogPostLayout(props: BlogPostLayoutProps) {
     if (isDepthAware(props)) {
         const { slug, ...rest } = props;
         return (
-            <Suspense fallback={<div>Loading...</div>}>
-                <ContentDepthProvider articleSlug={slug}>
-                    <BlogPostLayoutInner slug={slug} {...rest} />
-                </ContentDepthProvider>
-            </Suspense>
+            <ContentDepthProvider articleSlug={slug}>
+                <BlogPostLayoutInner slug={slug} {...rest} />
+            </ContentDepthProvider>
         );
     }
 

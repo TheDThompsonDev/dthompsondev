@@ -518,7 +518,7 @@ export default function TalksPage() {
                 <div className="absolute w-2.5 h-2.5 bg-[#4ade80] rounded-full animate-ping"></div>
               </div>
               <span className="text-sm font-bold tracking-wide">
-                BOOKING NOW FOR 2025 EVENTS
+                BOOKING NOW FOR 2026 EVENTS
               </span>
             </div>
 

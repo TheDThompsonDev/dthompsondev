@@ -365,22 +365,8 @@ function BlogContent() {
       <footer className="px-8 md:px-16 py-8 border-t border-[#4D7DA3]/10">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-[#153230]/60 text-sm">
-            © 2025 DTHOMPSONDEV. All rights reserved.
+            © {new Date().getFullYear()} DTHOMPSONDEV. All rights reserved.
           </p>
-          <div className="flex gap-6">
-            <Link href="/" className="text-[#153230]/60 hover:text-[#4D7DA3] text-sm font-semibold transition-colors">
-              Home
-            </Link>
-            <Link href="/blog" className="text-[#153230]/60 hover:text-[#4D7DA3] text-sm font-semibold transition-colors">
-              Blog
-            </Link>
-            <a href="#" className="text-[#153230]/60 hover:text-[#4D7DA3] text-sm font-semibold transition-colors">
-              Twitter
-            </a>
-            <a href="#" className="text-[#153230]/60 hover:text-[#4D7DA3] text-sm font-semibold transition-colors">
-              LinkedIn
-            </a>
-          </div>
         </div>
       </footer>
     </>
