@@ -146,7 +146,7 @@ export default function The58BillionPivotPost() {
 
                         <div className="bg-[#f8fcfe] border-l-4 border-[#4D7DA3] p-6 rounded-r-xl my-8">
 
-                            <h3 className="font-bold text-[#153230] mb-2 uppercase text-sm tracking-wider">CYT Question for Leaders</h3>
+                            <h3 className="font-bold text-[#153230] mb-2 uppercase text-sm tracking-wider">Question for Leaders</h3>
                             <p className="mb-4">Look at your current roadmap. Are you solving a problem because it matters to the market, or simply because it's a "hard problem" that makes you feel smart?</p>
                             <p className="italic text-[#153230]/70">What is the project you are holding onto right now that is technically impressive but strategically useless?</p>
                         </div>
@@ -173,7 +173,7 @@ export default function The58BillionPivotPost() {
                         </div>
 
                         <div className="bg-[#f8fcfe] border-l-4 border-[#4D7DA3] p-6 rounded-r-xl my-8">
-                            <h3 className="font-bold text-[#153230] mb-2 uppercase text-sm tracking-wider">CYT Question for Leaders</h3>
+                            <h3 className="font-bold text-[#153230] mb-2 uppercase text-sm tracking-wider">Question for Leaders</h3>
                             <p className="mb-4">If you are building for the constraints of today, you are already obsolete. Where will the infrastructure be in 3 years?</p>
                             <p className="italic text-[#153230]/70">Are you building a product that will feel "native" to the future, or are you just optimizing a legacy workflow?</p>
                         </div>
@@ -198,7 +198,7 @@ export default function The58BillionPivotPost() {
                         </div>
 
                         <div className="bg-[#f8fcfe] border-l-4 border-[#4D7DA3] p-6 rounded-r-xl my-8">
-                            <h3 className="font-bold text-[#153230] mb-2 uppercase text-sm tracking-wider">CYT Question for Leaders</h3>
+                            <h3 className="font-bold text-[#153230] mb-2 uppercase text-sm tracking-wider">Question for Leaders</h3>
                             <p className="mb-4">What is the role you are playing right now that you are actually failing at?</p>
                             <p className="italic text-[#153230]/70">If you were an outside consultant auditing your own performance, would you fire yourself from that specific set of responsibilities?</p>
                         </div>
@@ -225,7 +225,7 @@ export default function The58BillionPivotPost() {
                         </div>
 
                         <div className="bg-[#f8fcfe] border-l-4 border-[#4D7DA3] p-6 rounded-r-xl my-8">
-                            <h3 className="font-bold text-[#153230] mb-2 uppercase text-sm tracking-wider">CYT Question for Leaders</h3>
+                            <h3 className="font-bold text-[#153230] mb-2 uppercase text-sm tracking-wider">Question for Leaders</h3>
                             <p className="mb-4">Are you trying to be 10% better than your competitor at the same game, or are you changing the rules of the game entirely?</p>
                             <p className="italic text-[#153230]/70">Where is the friction in your customer's day that isn't about the "tool," but about the "process"?</p>
                         </div>
