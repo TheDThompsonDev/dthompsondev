@@ -4,6 +4,7 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { TiltCard } from "@/components/TiltCard";
+import Image from "next/image";
 
 const events = [
   { date: "June 4", name: "DSD Meetup (In Person)", type: "The Local Chapter" },
@@ -51,7 +52,7 @@ export default function CommunityPage() {
 
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center items-center">
               <a
-                href="https://discord.gg/dallasdevs"
+                href="https://discord.gg/pWGt6JMV9t"
                 target="_blank"
                 rel="noopener noreferrer"
                 // UPDATED: Brand Color Button instead of Discord Blue
@@ -62,12 +63,7 @@ export default function CommunityPage() {
                 </svg>
                 Join the Discord
               </a>
-              <a
-                href="#bento-grid"
-                className="w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 bg-white hover:bg-gray-50 text-[#153230] border border-[#E2F3F2] rounded-full font-bold text-base md:text-lg transition-all shadow-lg hover:shadow-xl text-center"
-              >
-                In Real Life
-              </a>
+
             </div>
           </ScrollReveal>
         </div>
@@ -82,10 +78,10 @@ export default function CommunityPage() {
           <div className="grid md:grid-cols-12 gap-6 h-auto">
 
             {/* Card A: CONFERENCES - Takes center stage (6 cols) */}
-            <div className="md:col-span-12 lg:col-span-8 h-[400px]">
+            <div className="md:col-span-12 lg:col-span-8 h-[500px]">
               <TiltCard className="h-full">
                 <div className="h-full bg-white rounded-2xl overflow-hidden relative group border border-[#E2F3F2] shadow-[0_20px_60px_rgba(0,0,0,0.3)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.4)] transition-all duration-300">
-                  <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1544531586-fde5298cdd40?q=80&w=2940&auto=format&fit=crop')] opacity-[0.2] bg-cover bg-center group-hover:scale-105 transition-transform duration-700 mix-blend-multiply grayscale group-hover:grayscale-0 transition-all" />
+                  <div className="absolute inset-0 bg-[url('/about/CYC1.jpg')] opacity-[0.2] bg-cover bg-center group-hover:scale-105 transition-transform duration-700 mix-blend-multiply grayscale group-hover:grayscale-0 transition-all" />
 
                   <div className="relative z-10 p-6 sm:p-10 h-full flex flex-col justify-end">
                     <div className="bg-[#4D7DA3] w-fit px-3 py-1 rounded-lg text-xs font-black uppercase tracking-wider mb-4 text-white shadow-md">
@@ -97,7 +93,6 @@ export default function CommunityPage() {
                     </p>
                     <div className="flex flex-wrap items-center gap-4">
                       <span className="bg-[#153230] text-white px-4 py-2 rounded-full font-bold text-sm">Next: Oct 26-28</span>
-                      <a href="#" className="font-bold text-[#153230] hover:text-[#4D7DA3] underline decoration-2 underline-offset-4">View Past Highlights &rarr;</a>
                     </div>
                   </div>
                 </div>
@@ -105,7 +100,7 @@ export default function CommunityPage() {
             </div>
 
             {/* Card B: COHORT (New) */}
-            <div className="md:col-span-6 lg:col-span-4 h-[400px]">
+            <div className="md:col-span-6 lg:col-span-4 h-[500px]">
               <TiltCard className="h-full">
                 <div className="h-full bg-[#153230] rounded-2xl overflow-hidden relative group border border-[#153230] shadow-[0_20px_60px_rgba(21,50,48,0.4)] hover:shadow-[0_30px_80px_rgba(21,50,48,0.5)] transition-all duration-300">
                   <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-emerald-500 via-transparent to-transparent" />
@@ -118,9 +113,14 @@ export default function CommunityPage() {
                     <p className="text-emerald-100/80 mb-6 text-sm font-medium leading-relaxed">
                       A rigorous 6-week program where we build a production-grade application from scratch.
                     </p>
-                    <button className="bg-white text-[#153230] px-6 py-2 rounded-full font-bold text-sm w-fit mx-auto hover:bg-emerald-50 transition-colors">
+                    <a
+                      href="https://dallassoftwaredevelopers.org"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-white text-[#153230] px-6 py-2 rounded-full font-bold text-sm w-fit mx-auto hover:bg-emerald-50 transition-colors inline-block"
+                    >
                       Join Waitlist
-                    </button>
+                    </a>
                   </div>
                 </div>
               </TiltCard>
@@ -128,10 +128,10 @@ export default function CommunityPage() {
 
 
             {/* Card C: MEETUPS (Local Chapter) */}
-            <div className="md:col-span-6 h-[300px]">
+            <div className="md:col-span-6 h-[450px]">
               <TiltCard className="h-full">
                 <div className="h-full bg-white rounded-2xl overflow-hidden relative group border border-[#E2F3F2] shadow-[0_20px_60px_rgba(0,0,0,0.3)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.4)] transition-all duration-300">
-                  <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2832&auto=format&fit=crop')] opacity-[0.2] bg-cover bg-center group-hover:scale-105 transition-transform duration-700 mix-blend-multiply grayscale group-hover:grayscale-0 transition-all" />
+                  <div className="absolute inset-0 bg-[url('/community/community-1.jpg')] opacity-[0.2] bg-cover bg-center group-hover:scale-105 transition-transform duration-700 mix-blend-multiply grayscale group-hover:grayscale-0 transition-all" />
 
                   <div className="relative z-10 p-6 sm:p-8 h-full flex flex-col justify-end">
                     <div className="flex items-center justify-between mb-2">
@@ -141,7 +141,7 @@ export default function CommunityPage() {
                       <span className="text-[#84803E] font-bold text-xs uppercase tracking-wider">Dallas, TX</span>
                     </div>
 
-                    <h2 className="text-3xl font-black mb-2 text-[#153230]">The Local Chapter</h2>
+                    <h2 className="text-3xl font-black mb-2 text-[#153230]">Dallas Software Developers Group</h2>
                     <p className="text-[#153230]/80 text-sm font-bold">
                       Monthly meetups. Free food. Zero ego. <br /> Come hang out with neighbors who code.
                     </p>
@@ -151,7 +151,7 @@ export default function CommunityPage() {
             </div>
 
             {/* Card D: DISCORD (Rebranded to Community Hub) */}
-            <div className="md:col-span-6 h-[300px]">
+            <div className="md:col-span-6 h-[450px]">
               <TiltCard className="h-full">
                 {/* BRAND ALIGNED: Using Dark Teal/Blue gradient instead of Discord Blurple */}
                 <div className="h-full bg-gradient-to-br from-[#1e4644] to-[#153230] rounded-2xl overflow-hidden relative group border border-[#153230] shadow-[0_20px_60px_rgba(0,0,0,0.3)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.4)] transition-all duration-300">
@@ -166,7 +166,7 @@ export default function CommunityPage() {
                       The 24/7 co-working space. Stuck on a bug? <br />
                       <span className="font-bold text-white">12,000+ devs are online.</span>
                     </p>
-                    <a href="https://discord.gg/dallasdevs" className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-5 py-2 rounded-full font-bold text-sm w-fit hover:bg-white hover:text-[#153230] transition-all">
+                    <a href="https://discord.gg/pWGt6JMV9t" className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-5 py-2 rounded-full font-bold text-sm w-fit hover:bg-white hover:text-[#153230] transition-all">
                       Open Discord
                     </a>
                   </div>
@@ -191,47 +191,57 @@ export default function CommunityPage() {
             <button className="hidden sm:block text-sm font-bold text-[#4D7DA3] hover:text-[#153230] transition-colors">View All Photos &rarr;</button>
           </div>
 
-          <div className="columns-1 sm:columns-2 md:columns-3 gap-6 space-y-6">
-            {/* Photo 1 */}
-            <div className="relative group break-inside-avoid rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
-              <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=2070&auto=format&fit=crop" alt="Coffee Meetup" className="w-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                <p className="text-white text-xs font-bold uppercase tracking-wider mb-1">Pop-up</p>
-                <p className="text-white font-bold text-sm">Design District Coffee</p>
-              </div>
-            </div>
-
-            {/* Photo 2 */}
-            <div className="relative group break-inside-avoid rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
-              <img src="https://images.unsplash.com/photo-1591115765373-5207764f72e7?q=80&w=2070&auto=format&fit=crop" alt="Hackathon" className="w-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                <p className="text-white text-xs font-bold uppercase tracking-wider mb-1">Hackathon</p>
-                <p className="text-white font-bold text-sm">Build Weekend '23</p>
-              </div>
-            </div>
-
-            {/* Photo 3 */}
-            <div className="relative group break-inside-avoid rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
-              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop" alt="Cohort Demo Day" className="w-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                <p className="text-white text-xs font-bold uppercase tracking-wider mb-1">Cohort</p>
-                <p className="text-white font-bold text-sm">Demo Day: Batch #4</p>
-              </div>
-            </div>
-
-            {/* Photo 4 - Text Card */}
-            <div className="bg-[#84803E] p-8 rounded-2xl break-inside-avoid text-center flex flex-col items-center justify-center min-h-[200px] shadow-lg">
-              <h3 className="text-white font-black text-2xl mb-2">We build in public.</h3>
-              <p className="text-white/80 text-sm">Every Friday. 2 PM CST. On Discord.</p>
-            </div>
-
-            {/* Photo 5 */}
-            <div className="relative group break-inside-avoid rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
-              <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=2070&auto=format&fit=crop" alt="Group Shot" className="w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-6 mt-8">
+            {/* Top Row: 2 Wide Images */}
+            <div className="md:col-span-3 relative aspect-video rounded-2xl overflow-hidden shadow-lg group">
+              <Image
+                src="/community/community-1.jpg"
+                alt="Community event group photo"
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
               <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
                 <p className="text-white text-xs font-bold uppercase tracking-wider mb-1">Meetup</p>
-                <p className="text-white font-bold text-sm">Holiday Party</p>
+                <p className="text-white font-bold text-sm">Community Gathering</p>
               </div>
+            </div>
+            <div className="md:col-span-3 relative aspect-video rounded-2xl overflow-hidden shadow-lg group">
+              <Image
+                src="/community/community-2.jpg"
+                alt="Community workshop"
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                <p className="text-white text-xs font-bold uppercase tracking-wider mb-1">Workshop</p>
+                <p className="text-white font-bold text-sm">Learning Together</p>
+              </div>
+            </div>
+
+            {/* Bottom Row: 3 Smaller Images */}
+            <div className="md:col-span-2 relative aspect-square rounded-2xl overflow-hidden shadow-lg group">
+              <Image
+                src="/community/community-3.jpg"
+                alt="Community networking"
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+            <div className="md:col-span-2 relative aspect-square rounded-2xl overflow-hidden shadow-lg group">
+              <Image
+                src="/community/community-4.jpg"
+                alt="Community fun"
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+            <div className="md:col-span-2 relative aspect-square rounded-2xl overflow-hidden shadow-lg group">
+              <Image
+                src="/community/community-5.jpg"
+                alt="Community mentorship"
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
             </div>
           </div>
         </ScrollReveal>
@@ -243,8 +253,8 @@ export default function CommunityPage() {
       <section className="px-4 sm:px-8 pb-12">
         <ScrollReveal>
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 max-w-6xl mx-auto">
+            {/* 
 
-            {/* Left: Community Activity Feed */}
             <div className="bg-white rounded-2xl p-6 md:p-8 border border-[#E2F3F2] shadow-[0_20px_60px_rgba(0,0,0,0.2)]">
               <h3 className="text-2xl font-black text-[#153230] mb-6 flex items-center gap-3">
                 <span className="w-3 h-3 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_#22c55e]" />
@@ -292,7 +302,7 @@ export default function CommunityPage() {
               </div>
             </div>
 
-            {/* Right: The Calendar */}
+
             <div className="bg-white rounded-2xl p-6 md:p-8 border border-[#E2F3F2] shadow-[0_20px_60px_rgba(0,0,0,0.2)]">
               <h3 className="text-2xl font-black text-[#153230] mb-8">What's Happening This Month</h3>
               <div className="space-y-4">
@@ -309,7 +319,9 @@ export default function CommunityPage() {
                   </div>
                 ))}
               </div>
-            </div>
+            </div> */}
+
+
 
           </div>
         </ScrollReveal>

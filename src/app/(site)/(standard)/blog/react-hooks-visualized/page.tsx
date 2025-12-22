@@ -3,7 +3,6 @@
 import { BlogPostLayout } from '@/components/blog/BlogPostLayout';
 import { InteractiveCode } from '@/components/InteractiveCode';
 import { AnimatedDiagram } from '@/components/AnimatedDiagram';
-import { VirtualWhiteboard } from '@/components/VirtualWhiteboard';
 import { CodeMorph } from '@/components/CodeMorph';
 import { FloatingTOC } from '@/components/FloatingTOC';
 import { ScrollReveal } from '@/components/ScrollReveal';
@@ -184,7 +183,6 @@ export default function ReactHooksVisualizedPost() {
         long={{
           content: (
             <>
-              <VirtualWhiteboard title="Take Notes while you read!" height={400} />
 
               <ScrollReveal delay={100}>
                 <div className="prose prose-lg max-w-none">

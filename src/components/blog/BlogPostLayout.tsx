@@ -9,7 +9,7 @@ import { ContentDepthProvider } from './ContentDepthProvider';
 import { ContentDepthToggle } from './ContentDepthToggle';
 import { ContentDepthPanel } from './ContentDepthPanel';
 import { EngagementBar } from './EngagementBar';
-import { ShareMenu } from './ShareMenu';
+import { samplePosts } from '@/data/blogPosts';
 
 interface DepthContent {
     content: ReactNode;
@@ -66,23 +66,27 @@ function BlogPostLayoutInner({
 }: Omit<BlogPostLayoutProps, 'slug'> & { children?: ReactNode; slug?: string; coverImage?: string }) {
     const hasDepthContent = short && medium && long;
 
-    const [showShareMenu, setShowShareMenu] = useState(false);
-    const shareMenuRef = useRef<HTMLDivElement>(null);
+    // Calculate Next Post
+    // Sort posts by date descending (newest first)
+    const sortedPosts = [...samplePosts].sort((a, b) =>
+        new Date(b.published_at || b.created_at).getTime() - new Date(a.published_at || a.created_at).getTime()
+    );
 
-    useEffect(() => {
-        function handleClickOutside(event: MouseEvent) {
-            if (shareMenuRef.current && !shareMenuRef.current.contains(event.target as Node)) {
-                setShowShareMenu(false);
-            }
-        }
+    // Find current post index
+    const currentIndex = sortedPosts.findIndex(p => p.slug === slug);
 
-        if (showShareMenu) {
-            document.addEventListener('mousedown', handleClickOutside);
-        }
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [showShareMenu]);
+    // Next post is the one AFTER this one (older in time, or next in reading sequence)
+    // If we want chronological order (Oldest -> Newest), we'd go index - 1.
+    // If we want "Next in feed" (Newest -> Oldest), we go index + 1.
+    // The user said "next blog in order". Usually implies "Continue Reading" -> next one in the list.
+    // Since the list is Newest First, "Next" usually means the *previous chronological* post?
+    // OR, if reading a series, you want the *next chronological* post (Newer).
+    // Let's assume standard blog behavior: "Next Post" usually points to the Previous one in time (the one before this one).
+    // Wait, if I am on the newest, "Next" should be the second newest.
+    // So index + 1.
+    const nextPost = currentIndex !== -1 && currentIndex < sortedPosts.length - 1
+        ? sortedPosts[currentIndex + 1]
+        : null;
 
     return (
         <>
@@ -133,8 +137,7 @@ function BlogPostLayoutInner({
                 <div className="my-16">
                     <VirtualWhiteboard title="Notes & Ideas" showInstructions={true} />
                 </div>
-                {/* Content Depth Toggle - Only shown when depth content is provided */}
-                {hasDepthContent && <ContentDepthToggle />}
+                {/* Content Toggle Removed - delivering all content by default as requested */}
 
                 <ScrollReveal delay={200}>
                     <div className={`prose prose-lg max-w-none text-[#153230]/80 ${hasDepthContent ? 'mt-8' : ''}`}>
@@ -168,19 +171,16 @@ function BlogPostLayoutInner({
                             >
                                 ← Back to all posts
                             </Link>
-                            <div className="relative" ref={shareMenuRef}>
-                                <button
-                                    onClick={() => setShowShareMenu(!showShareMenu)}
-                                    className="text-[#4D7DA3] hover:text-[#153230] font-bold transition-colors min-w-[80px] text-right"
+                            {nextPost ? (
+                                <Link
+                                    href={`/blog/${nextPost.slug}`}
+                                    className="text-[#4D7DA3] hover:text-[#153230] font-bold text-right transition-colors"
                                 >
-                                    Share →
-                                </button>
-                                <ShareMenu
-                                    isOpen={showShareMenu}
-                                    onClose={() => setShowShareMenu(false)}
-                                    className="absolute bottom-full right-0 mb-2"
-                                />
-                            </div>
+                                    Next: {nextPost.title} →
+                                </Link>
+                            ) : (
+                                <div></div>
+                            )}
                         </div>
                     </div>
                 </ScrollReveal>
@@ -195,12 +195,7 @@ function BlogPostLayoutInner({
                         © 2025 DTHOMPSONDEV. All rights reserved.
                     </p>
                     <div className="flex gap-6">
-                        <Link href="/" className="text-[#153230]/60 hover:text-[#4D7DA3] text-sm font-semibold transition-colors">
-                            Home
-                        </Link>
-                        <Link href="/blog" className="text-[#153230]/60 hover:text-[#4D7DA3] text-sm font-semibold transition-colors">
-                            Blog
-                        </Link>
+
                     </div>
                 </div>
             </footer>

@@ -439,15 +439,27 @@ const videoTalks: VideoTalk[] = rawTalks;
 
 const speakingTopics: SpeakingTopic[] = [
   {
-    icon: "🚀",
-    title: "Breaking Into Tech",
-    description: "From non-traditional backgrounds to tech careers. Real strategies that work for career changers and bootcamp grads.",
+    icon: "🤖",
+    title: "AI & The Future of Development",
+    description: "Understanding AI's impact on software development and how developers can thrive in an AI-augmented world.",
     color: "#4D7DA3"
   },
   {
-    icon: "👥",
+    icon: "🏢",
+    title: "Technical Leadership",
+    description: "Transitioning from IC to management. Building high-performing teams and driving technical excellence.",
+    color: "#153230"
+  },
+  {
+    icon: "�",
     title: "Community Building at Scale",
     description: "How to grow developer communities from 0 to 10K+ members. Proven frameworks for engagement and retention.",
+    color: "#84803E"
+  },
+  {
+    icon: "🎯",
+    title: "Personal Branding for Developers",
+    description: "Building an authentic online presence that opens doors. Content creation, networking, and thought leadership.",
     color: "#84803E"
   },
   {
@@ -457,22 +469,10 @@ const speakingTopics: SpeakingTopic[] = [
     color: "#153230"
   },
   {
-    icon: "🤖",
-    title: "AI & The Future of Development",
-    description: "Understanding AI's impact on software development and how developers can thrive in an AI-augmented world.",
-    color: "#4D7DA3"
-  },
-  {
-    icon: "🎯",
-    title: "Personal Branding for Developers",
-    description: "Building an authentic online presence that opens doors. Content creation, networking, and thought leadership.",
+    icon: "🚀",
+    title: "Breaking Into Tech",
+    description: "From non-traditional backgrounds to tech careers. Real strategies that work for career changers and bootcamp grads.",
     color: "#84803E"
-  },
-  {
-    icon: "🏢",
-    title: "Technical Leadership",
-    description: "Transitioning from IC to management. Building high-performing teams and driving technical excellence.",
-    color: "#153230"
   }
 ];
 
@@ -525,13 +525,13 @@ export default function TalksPage() {
             <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-[#153230] leading-[1.1] mb-8">
               Speaker.
               <br />
-              <span className="text-[#4D7DA3]">Storyteller.</span>
+              <span className="text-[#4D7DA3]">Developer.</span>
               <br />
               <span className="text-[#84803E]">Community Leader.</span>
             </h1>
 
             <p className="text-xl md:text-2xl text-[#153230]/70 leading-relaxed max-w-4xl mx-auto mb-12">
-              Conference keynotes • Podcast appearances • Corporate workshops • Panel moderation
+              Conference keynotes • Podcasts • Corporate workshops • Panel moderation
               <br />
               <span className="text-[#4D7DA3] font-bold text-2xl md:text-3xl">
                 Reaching 450,000+ developers globally
@@ -638,40 +638,74 @@ export default function TalksPage() {
       </section>
 
       {/* Speaking Topics Section */}
-      <section id="speaking-topics" className="mx-4 mt-12">
-        <div className="bg-gradient-to-br from-[#153230] to-[#4D7DA3] rounded-[32px] p-8 md:p-16 shadow-2xl overflow-hidden relative">
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }}></div>
-            <div className="absolute bottom-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }}></div>
-          </div>
-
+      <section id="speaking-topics" className="mx-4 mt-20 mb-20">
+        <div className="max-w-6xl mx-auto">
           <ScrollReveal>
-            <div className="relative z-10">
-              <div className="text-center mb-12">
-                <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
-                  🎤 Speaking Topics
-                </h2>
-                <p className="text-xl text-white/90 max-w-3xl mx-auto">
-                  Engaging, authentic talks that inspire developers and drive action
-                </p>
-              </div>
+            <div className="text-center mb-16">
+              <span className="text-[#4D7DA3] font-black tracking-widest uppercase text-sm mb-4 block">
+                Expertise & Focus Areas
+              </span>
+              <h2 className="text-4xl md:text-5xl font-black text-[#153230] mb-6">
+                Speaking Topics
+              </h2>
+              <p className="text-xl text-[#153230]/70 max-w-2xl mx-auto leading-relaxed">
+                Engaging, actionable talks designed to inspire developers and provide real-world strategies for growth.
+              </p>
+            </div>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {speakingTopics.map((topic, index) => (
-                  <motion.div
-                    key={topic.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 hover:scale-105 transition-all duration-300"
-                  >
-                    <div className="text-5xl mb-4">{topic.icon}</div>
-                    <h3 className="text-xl font-black text-white mb-3">{topic.title}</h3>
-                    <p className="text-white/80 text-sm leading-relaxed">{topic.description}</p>
-                  </motion.div>
-                ))}
-              </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {speakingTopics.map((topic, index) => (
+                <TiltCard key={topic.title} className="h-full">
+                  <div className="bg-white rounded-3xl p-8 h-full border border-[#E2F3F2] shadow-[0_10px_40px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.1)] transition-all duration-300 flex flex-col group">
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3 shadow-sm`} style={{ backgroundColor: `${topic.color}15` }}>
+                      {/* Icon switching based on title because we removed emoji icons from data */}
+                      {topic.title.includes("Breaking") && (
+                        <svg className="w-7 h-7" style={{ color: topic.color }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16 8a6 6 0 016 6v7h-4v-8m-4-3a6 6 0 01-6-6v-2h4v8" /></svg>
+                      )}
+                      {topic.title.includes("Breaking") && ( // Fallback/Correction for Rocket Icon above which was actually a generic shape? Let's use a clear Rocket
+                        <svg className="w-7 h-7" style={{ color: topic.color }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                      )}
+
+                      {topic.title.includes("Community") && (
+                        <svg className="w-7 h-7" style={{ color: topic.color }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                      )}
+
+                      {topic.title.includes("Career") && (
+                        <svg className="w-7 h-7" style={{ color: topic.color }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+                      )}
+
+                      {topic.title.includes("AI") && (
+                        <svg className="w-7 h-7" style={{ color: topic.color }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                      )}
+
+                      {topic.title.includes("Branding") && (
+                        <svg className="w-7 h-7" style={{ color: topic.color }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" /></svg>
+                      )}
+
+                      {topic.title.includes("Leadership") && (
+                        <svg className="w-7 h-7" style={{ color: topic.color }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+                      )}
+                    </div>
+
+                    <h3 className="text-xl font-black text-[#153230] mb-3 group-hover:text-[#4D7DA3] transition-colors">
+                      {topic.title}
+                    </h3>
+                    <p className="text-[#153230]/70 text-sm leading-relaxed font-medium">
+                      {topic.description}
+                    </p>
+                  </div>
+                </TiltCard>
+              ))}
+            </div>
+
+            <div className="mt-12 text-center">
+              <a
+                href="/#contact"
+                className="inline-flex items-center gap-2 text-[#153230] font-black border-b-2 border-[#4D7DA3]/30 hover:border-[#4D7DA3] pb-0.5 transition-all text-sm uppercase tracking-wide"
+              >
+                Inquire about a topic
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+              </a>
             </div>
           </ScrollReveal>
         </div>
@@ -832,72 +866,6 @@ export default function TalksPage() {
           </ScrollReveal>
         </div>
       </section> */}
-
-      {/* Featured Channels */}
-      <section className="mx-4 mt-12">
-        <div className="bg-white rounded-[32px] p-8 md:p-12 shadow-xl border border-[#4D7DA3]/10">
-          <ScrollReveal>
-            <h2 className="text-3xl md:text-4xl font-black text-[#153230] mb-6 text-center">
-              Featured On Leading Tech Platforms
-            </h2>
-            <p className="text-center text-[#153230]/70 mb-8 max-w-2xl mx-auto">
-              Trusted by top tech brands and media outlets to share insights with developer audiences
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              {brandLogos.map((brand, index) => (
-                <motion.div
-                  key={brand}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: index * 0.05 }}
-                  className="bg-linear-to-r from-[#E2F3F2] to-white border border-[#4D7DA3]/10 rounded-xl px-6 py-3 hover:scale-110 hover:shadow-lg hover:border-[#4D7DA3]/30 transition-all"
-                >
-                  <span className="text-[#153230] font-bold">{brand}</span>
-                </motion.div>
-              ))}
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="relative mx-4 mt-12 mb-6 overflow-hidden">
-        <div className="absolute inset-0 bg-linear-to-br from-[#153230] via-[#4D7DA3] to-[#84803E] rounded-[32px]" />
-
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full mix-blend-overlay filter blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full mix-blend-overlay filter blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }} />
-        </div>
-
-        <div className="relative px-8 md:px-16 py-20 md:py-28 text-center">
-          <ScrollReveal>
-            <h2 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
-              Let's Create Something
-              <br />
-              Amazing Together
-            </h2>
-            <p className="text-xl md:text-2xl text-white/90 mb-10 max-w-3xl mx-auto leading-relaxed">
-              Available for conference keynotes, podcast appearances, corporate workshops,
-              and brand partnerships. Let's inspire developers together.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Link
-                href="/#contact"
-                className="group relative bg-white text-[#153230] px-12 py-6 rounded-full font-black text-xl hover:scale-110 hover:shadow-2xl transition-all duration-300 overflow-hidden"
-              >
-                <span className="relative z-10">Book Me to Speak</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#4D7DA3]/10 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
-              </Link>
-              <a
-                href="mailto:contact@dthompsondev.com"
-                className="bg-transparent border-3 border-white text-white px-12 py-6 rounded-full font-black text-xl hover:bg-white hover:text-[#153230] hover:scale-110 transition-all duration-300"
-              >
-                Download Speaker Kit
-              </a>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
     </>
   );
 }

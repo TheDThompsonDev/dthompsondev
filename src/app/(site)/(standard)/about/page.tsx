@@ -4,9 +4,9 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { useState } from "react";
 import { JourneySlider } from "@/components/about/JourneySlider";
 import { ForkInTheRoadDiagram } from "@/components/about/ForkInTheRoadDiagram";
-import { StrategyGraphic } from "@/components/about/StrategyGraphic";
 import { ClosedMouthsGraphic } from "@/components/about/ClosedMouthsGraphic";
 import { ImpactGraphic } from "@/components/about/ImpactGraphic";
+import Image from "next/image";
 
 type ContentTab = "all" | "talks" | "podcasts" | "conferences";
 
@@ -242,9 +242,17 @@ export default function AboutPage() {
       <section className="px-6 sm:px-12 md:px-20 py-24 relative bg-white">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
           <ScrollReveal>
-            <div className="relative">
-              <div className="absolute -inset-4 bg-[#4D7DA3] rounded-[2rem] rotate-[-2deg] opacity-20"></div>
-              <StrategyGraphic />
+            <div className="relative aspect-square md:aspect-auto h-[500px] w-full rounded-[2rem] overflow-hidden shadow-2xl group">
+              <Image
+                src="/about/Day1.jpg"
+                alt="My first day at my first tech job"
+                fill
+                className="object-cover transform transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#153230] via-transparent to-transparent opacity-60"></div>
+              <div className="absolute bottom-6 left-6">
+                <p className="text-white/90 text-sm font-mono pl-1 backdrop-blur-md bg-black/40 px-3 py-1 rounded-lg inline-block border-l-4 border-[#4D7DA3]">Day 1: The Pivot Realized</p>
+              </div>
             </div>
           </ScrollReveal>
 
@@ -289,52 +297,13 @@ export default function AboutPage() {
           <ScrollReveal>
             <div className="relative">
               <div className="absolute -inset-4 bg-cyan-500/20 rounded-[2rem] rotate-[2deg] blur-xl"></div>
-              <div className="relative aspect-square rounded-[2rem] overflow-hidden bg-[#0F172A] border border-cyan-500/30 flex items-center justify-center p-8 shadow-2xl">
-                {/* CSS Architecture Diagram */}
-                <div className="relative w-full h-full flex flex-col justify-between">
-                  {/* Top Node */}
-                  <div className="flex justify-center">
-                    <div className="bg-cyan-500/10 border border-cyan-400/50 text-cyan-300 px-4 py-2 rounded-lg font-mono text-xs flex items-center gap-2 shadow-[0_0_15px_rgba(34,211,238,0.2)]">
-                      <span className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></span>
-                      Client_App
-                    </div>
-                  </div>
-
-                  {/* Middle Layer */}
-                  <div className="flex justify-between items-center px-4 relative">
-                    {/* Connecting Lines (SVG overlay could be better but CSS borders work for simple) */}
-                    <div className="absolute top-1/2 left-0 w-full h-px bg-cyan-500/20 -z-10"></div>
-
-                    <div className="bg-[#1E293B] border border-cyan-500/30 text-cyan-100 p-3 rounded-lg w-24 text-center text-[10px] font-mono shadow-lg">
-                      Auth_Svc
-                    </div>
-                    <div className="bg-[#1E293B] border border-cyan-500/30 text-cyan-100 p-3 rounded-lg w-24 text-center text-[10px] font-mono shadow-lg scale-110 ring-2 ring-cyan-500/20">
-                      API_Gateway
-                    </div>
-                    <div className="bg-[#1E293B] border border-cyan-500/30 text-cyan-100 p-3 rounded-lg w-24 text-center text-[10px] font-mono shadow-lg">
-                      Payment_Svc
-                    </div>
-                  </div>
-
-                  {/* Bottom Layer */}
-                  <div className="flex justify-center gap-8">
-                    <div className="bg-indigo-900/30 border border-indigo-500/30 text-indigo-200 px-4 py-3 rounded-lg flex flex-col items-center gap-1">
-                      <span className="text-[10px] font-mono">PostgreSQL</span>
-                    </div>
-                    <div className="bg-indigo-900/30 border border-indigo-500/30 text-indigo-200 px-4 py-3 rounded-lg flex flex-col items-center gap-1">
-                      <span className="text-[10px] font-mono">Snowflake</span>
-                    </div>
-                  </div>
-
-                  {/* Vertical Connectors (Pseudo-elements simulation) */}
-                  <div className="absolute inset-0 pointer-events-none">
-                    <svg className="w-full h-full opacity-30">
-                      <path d="M150 40 L150 120" stroke="#22d3ee" strokeWidth="2" strokeDasharray="4 4" />
-                      <path d="M150 180 L100 240" stroke="#22d3ee" strokeWidth="2" />
-                      <path d="M150 180 L200 240" stroke="#22d3ee" strokeWidth="2" />
-                    </svg>
-                  </div>
-                </div>
+              <div className="relative aspect-square rounded-[2rem] overflow-hidden bg-[#0F172A] border border-cyan-500/30 flex items-center justify-center shadow-2xl">
+                <Image
+                  src="/about/speaking-at-meetup.jpg"
+                  alt="Speaking at a tech meetup in Memphis"
+                  fill
+                  className="object-cover"
+                />
               </div>
             </div>
           </ScrollReveal>
@@ -385,13 +354,65 @@ export default function AboutPage() {
                 I achieved the goal. I climbed the ladder. But I realized that success that isn't shared is failure. I am no longer obsessed with making the most money. I am obsessed with leaving the world better than I found it.
               </p>
               <p>
-                That is why I founded the <strong>Commit Your Code</strong> conference. That is why I speak in prisons. When you teach a prisoner to code, you aren't just teaching them a skill. You are dropping their recidivism rate to near zero. You are handing them a tool to rewrite their future.
+                That is why I founded the <strong>Commit Your Code</strong> conference. That is why I have spoken in prisons. When you teach a prisoner to code, you aren't just teaching them a skill. You are dropping their recidivism rate to near zero. You are handing them a tool to rewrite their future.
               </p>
             </div>
           </ScrollReveal>
 
           <ScrollReveal delay={200}>
-            <ImpactGraphic />
+            <div className="grid grid-cols-1 md:grid-cols-6 gap-4 mt-8">
+              {/* Wide Images (Top 3) */}
+              <div className="md:col-span-6 relative aspect-video rounded-2xl overflow-hidden shadow-lg group">
+                <Image
+                  src="/about/CYC1.jpg"
+                  alt="Commit Your Code Conference"
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+              <div className="md:col-span-6 relative aspect-video rounded-2xl overflow-hidden shadow-lg group">
+                <Image
+                  src="/about/impact-community-1.jpg"
+                  alt="Community Selfie"
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+              <div className="md:col-span-6 relative aspect-video rounded-2xl overflow-hidden shadow-lg group">
+                <Image
+                  src="/about/impact-community-2.jpg"
+                  alt="Community Group Shot"
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+
+              {/* Square Images (Bottom 3) */}
+              <div className="md:col-span-2 relative aspect-square rounded-2xl overflow-hidden shadow-lg group">
+                <Image
+                  src="/about/impact-community-3.jpg"
+                  alt="Community Connection"
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+              <div className="md:col-span-2 relative aspect-square rounded-2xl overflow-hidden shadow-lg group">
+                <Image
+                  src="/about/impact-community-4.jpg"
+                  alt="Networking"
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+              <div className="md:col-span-2 relative aspect-square rounded-2xl overflow-hidden shadow-lg group">
+                <Image
+                  src="/about/impact-community-5.jpg"
+                  alt="Mentorship"
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+            </div>
           </ScrollReveal>
 
           <ScrollReveal delay={400}>

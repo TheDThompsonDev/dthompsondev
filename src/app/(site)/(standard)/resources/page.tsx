@@ -34,7 +34,7 @@ export default function ResourcesPage() {
       color: "#4ade80",
       cardBg: "bg-[#142A25]", // Deep Green
       image: "/resources/discord-logo.png",
-      link: "https://discord.gg/dallasdevs",
+      link: "https://discord.gg/pWGt6JMV9t",
       imageStyle: "object-contain scale-75 shadow-2xl rounded-2xl rotate-[2deg] hover:rotate-0 transition-all duration-500"
     },
     {
