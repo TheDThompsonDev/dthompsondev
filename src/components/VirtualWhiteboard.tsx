@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState, useEffect, MouseEvent, TouchEvent } from 'react';
+import { createPortal } from 'react-dom';
 
 interface VirtualWhiteboardProps {
   title?: string;
@@ -350,10 +351,11 @@ export function VirtualWhiteboard({
     );
   }
 
-  return (
+  // The main whiteboard content - extracted to be reusable for portal
+  const whiteboardContent = (
     <div
       ref={containerRef}
-      className={`transition-all duration-300 ${isSticky ? 'fixed z-50' : 'my-0'
+      className={`transition-all duration-300 ${isSticky ? 'fixed z-[9999]' : 'my-0'
         } ${isDragging ? 'cursor-move' : ''}`}
       style={isSticky ? {
         left: `${position.x}px`,
@@ -534,4 +536,13 @@ export function VirtualWhiteboard({
       </div>
     </div>
   );
+
+  // When sticky (pinned), render via portal to escape parent stacking contexts
+  // This ensures the whiteboard is always on top of all content and follows scroll
+  if (isSticky && typeof document !== 'undefined') {
+    return createPortal(whiteboardContent, document.body);
+  }
+
+  // When not sticky, render inline normally
+  return whiteboardContent;
 }
