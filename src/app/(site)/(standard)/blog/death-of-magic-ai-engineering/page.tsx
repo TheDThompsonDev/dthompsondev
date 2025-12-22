@@ -4,7 +4,6 @@ import { BlogPostLayout } from '@/components/blog/BlogPostLayout';
 import { InteractiveCode } from '@/components/InteractiveCode';
 import { AnimatedDiagram } from '@/components/AnimatedDiagram';
 import { ScrollReveal } from '@/components/ScrollReveal';
-import { VirtualWhiteboard } from '@/components/VirtualWhiteboard';
 import { CodeMorph } from '@/components/CodeMorph';
 
 export default function DeathOfMagicPost() {
@@ -221,7 +220,7 @@ user = client.messages.create(
   return (
     <BlogPostLayout
       category="AI Engineering"
-      date="November 29, 2025"
+      date="December 21, 2025"
       readTime="15 min read"
       title={<>The Death of Magic:<br /><span className="text-[#4D7DA3]">Welcome to AI Engineering</span></>}
       subtitle="The 'Magic Era' of AI is dead. Learn the four architectural pillars that separate weekend prompt-tinkerers from production AI engineers."
@@ -271,10 +270,8 @@ user = client.messages.create(
               We've spent fifty years building tools for deterministic systems. Then we threw it all away because the ChatGPT demo looked cool. It's time to bring engineering discipline back to AI.
             </p>
 
-            <h2 className="text-3xl font-bold text-[#153230] mb-4 mt-12">The 4 Pillars of AI Engineering</h2>
-
             <AnimatedDiagram
-              title="The Architectural Pillars"
+              title="The 4 Pillars of AI Engineering"
               steps={architectPillars}
             />
 
@@ -303,10 +300,8 @@ user = client.messages.create(
                 <p><strong>The Fix:</strong> Build an Eval Pipeline. Defining "Golden Datasets" of correct input/outputs. Use a cheaper "Judge" LLM to grade your production model's outputs. Break the build if the score drops.</p>
               </div>
             </div>
-
-            <h3 className="text-2xl font-bold text-[#153230] mb-6 mt-16">The Eval Pipeline Visualized</h3>
             <AnimatedDiagram
-              title="Automated Quality Control"
+              title="The Eval Pipeline: Automated Quality Control"
               steps={evalPipeline}
             />
           </>
@@ -315,11 +310,6 @@ user = client.messages.create(
       long={{
         content: (
           <>
-            <VirtualWhiteboard
-              title="Take Notes While Reading"
-              height={300}
-            />
-
             <ScrollReveal delay={400}>
               <div className="mb-12">
                 <p className="text-xl text-[#153230]/70 leading-relaxed">

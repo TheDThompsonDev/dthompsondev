@@ -18,9 +18,9 @@ export function AnimatedDiagram({ title, steps }: AnimatedDiagramProps) {
   const [activeStep, setActiveStep] = useState(0);
 
   return (
-    <div className="my-16">
+    <div className="my-12">
       <div className="mb-8">
-        <h3 className="text-3xl font-bold text-[#153230] tracking-tight">
+        <h3 className="text-2xl font-bold text-[#153230] tracking-tight">
           {title}
         </h3>
         <p className="text-gray-600 mt-2">Click through each step to explore</p>
@@ -34,11 +34,10 @@ export function AnimatedDiagram({ title, steps }: AnimatedDiagramProps) {
               {steps.map((step, index) => (
                 <div
                   key={index}
-                  className={`transition-all duration-500 ${
-                    index === activeStep
+                  className={`transition-all duration-500 ${index === activeStep
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 translate-y-4 absolute inset-0 pointer-events-none"
-                  }`}
+                    }`}
                 >
                   <div className="space-y-6">
                     <div className="inline-flex items-center gap-3 bg-white rounded-2xl px-5 py-3 shadow-md border border-gray-100">
@@ -70,27 +69,25 @@ export function AnimatedDiagram({ title, steps }: AnimatedDiagramProps) {
                 <button
                   key={index}
                   onClick={() => setActiveStep(index)}
-                  className={`group relative transition-all duration-300 ${
-                    index === activeStep ? "scale-105" : "hover:scale-105"
-                  }`}
+                  className={`group relative transition-all duration-300 ${index === activeStep ? "scale-105" : "hover:scale-105"
+                    }`}
                 >
                   <div
-                    className={`w-14 h-14 lg:w-16 lg:h-16 rounded-2xl flex items-center justify-center font-bold text-lg transition-all duration-300 ${
-                      index === activeStep
+                    className={`w-14 h-14 lg:w-16 lg:h-16 rounded-2xl flex items-center justify-center font-bold text-lg transition-all duration-300 ${index === activeStep
                         ? "shadow-xl"
                         : "shadow-md hover:shadow-lg bg-white border-2"
-                    }`}
+                      }`}
                     style={
                       index === activeStep
                         ? {
-                            backgroundColor: step.color,
-                            color: "white",
-                            borderColor: step.color,
-                          }
+                          backgroundColor: step.color,
+                          color: "white",
+                          borderColor: step.color,
+                        }
                         : {
-                            borderColor: step.color + "40",
-                            color: step.color,
-                          }
+                          borderColor: step.color + "40",
+                          color: step.color,
+                        }
                     }
                   >
                     {index + 1}

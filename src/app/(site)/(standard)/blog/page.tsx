@@ -36,9 +36,9 @@ const samplePosts: BlogPost[] = [
     read_time: '15 min',
     status: 'published',
     author_name: 'Danny Thompson',
-    created_at: new Date('2025-11-29').toISOString(),
-    updated_at: new Date('2025-11-29').toISOString(),
-    published_at: new Date('2025-11-29').toISOString(),
+    created_at: new Date('2025-12-21').toISOString(),
+    updated_at: new Date('2025-12-21').toISOString(),
+    published_at: new Date('2025-12-21').toISOString(),
     targetPersonas: ['p2', 'p3'], // Senior Engineer, Engineering Manager
     cover_image_url: '/blog-covers/ai-engineering.png',
   },
