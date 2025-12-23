@@ -32,10 +32,26 @@ export function ContactForm() {
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
+      // Handle non-JSON responses gracefully (e.g., 405 with empty body)
+      let data;
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        try {
+          data = await response.json();
+        } catch {
+          // JSON parsing failed - response body might be empty or malformed
+          throw new Error(`Server returned ${response.status} with invalid response`);
+        }
+      } else {
+        // Response is not JSON (could be HTML error page or empty)
+        if (!response.ok) {
+          throw new Error(`Server returned ${response.status} ${response.statusText}`);
+        }
+        data = { success: true };
+      }
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to send message');
+        throw new Error(data.error || `Failed to send message (${response.status})`);
       }
 
       setStatus('success');
