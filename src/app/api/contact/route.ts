@@ -1,6 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
-import { escapeHtml } from '@/lib/sanitize';
+
+// Inline escapeHtml to avoid importing from sanitize.ts which uses isomorphic-dompurify
+// (can cause issues in Vercel serverless environment)
+function escapeHtml(unsafe: string): string {
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
