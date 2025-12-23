@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { BotIdClient } from "botid/client";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -18,6 +19,12 @@ export const metadata: Metadata = {
   description: "Director of Technology, Community Leader, and Career Champion helping developers level up through mentorship, technical leadership, and authentic community building.",
 };
 
+// Routes protected by BotID
+const protectedRoutes = [
+  { path: '/api/contact', method: 'POST' as const },
+  { path: '/api/newsletter', method: 'POST' as const },
+];
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -25,6 +32,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <BotIdClient protect={protectedRoutes} />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#E2F3F2]`}
       >

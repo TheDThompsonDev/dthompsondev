@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { checkBotId } from 'botid/server';
 
 // Inline escapeHtml to avoid importing from sanitize.ts which uses isomorphic-dompurify
 // (can cause issues in Vercel serverless environment)
@@ -36,6 +37,15 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    // Verify BotID challenge - blocks bots from submitting
+    const botIdResult = await checkBotId();
+    if (botIdResult.isBot) {
+      return NextResponse.json(
+        { error: 'Bot detected. Please try again.' },
+        { status: 403 }
+      );
+    }
+
     const body = await request.json();
     const { name, email, company, message } = body;
 

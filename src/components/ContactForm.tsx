@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 
 export function ContactForm() {
   const [formData, setFormData] = useState({
@@ -24,6 +24,8 @@ export function ContactForm() {
     setErrorMessage('');
 
     try {
+      // Regular fetch - BotID automatically attaches verification headers
+      // when BotIdClient component is mounted in layout
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
