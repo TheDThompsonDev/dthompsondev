@@ -53,8 +53,12 @@ export async function POST(request: NextRequest) {
     const safeMessage = escapeHtml(message);
 
     // Send email using Resend
+    // IMPORTANT: In production, you MUST use a verified domain in the 'from' field
+    // Set RESEND_FROM_EMAIL env var to something like: 'Contact Form <contact@yourdomain.com>'
+    const fromEmail = process.env.RESEND_FROM_EMAIL || 'Contact Form <onboarding@resend.dev>';
+
     const { data, error } = await resend.emails.send({
-      from: 'Contact Form <onboarding@resend.dev>', // Change this to your verified domain
+      from: fromEmail,
       to: process.env.CONTACT_EMAIL || 'your-email@example.com', // Your email
       replyTo: email,
       subject: `New Contact Form Submission from ${safeName}`,
