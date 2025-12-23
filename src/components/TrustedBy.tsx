@@ -58,7 +58,7 @@ export const TrustedBy = () => {
                 <div className="flex items-center justify-center h-16 w-40">
                   <Image
                     src={brand.url || `https://cdn.simpleicons.org/${brand.slug}`}
-                    alt={`${brand.name} logo`}
+                    alt=""
                     width={120}
                     height={40}
                     className={`max-h-[40px] ${brand.slug === 'wix' ? 'max-w-[80px]' : 'max-w-[120px]'} w-auto h-auto object-contain opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300`}

@@ -158,7 +158,7 @@ const Column = ({ testimonials, duration = 20, className = "" }: { testimonials:
         <div key={`${t.id}-${i}`} className="bg-white rounded-2xl p-6 shadow-sm border border-[#E2F3F2] hover:shadow-md transition-shadow">
           <div className="flex items-start justify-between mb-4">
             <div className="flex items-center gap-3">
-              <Image src={t.avatar} alt={t.name} width={40} height={40} className="rounded-full bg-gray-100" />
+              <Image src={t.avatar} alt="" width={40} height={40} className="rounded-full bg-gray-100" />
               <div>
                 <div className="font-bold text-[#153230] text-sm">{t.name}</div>
                 <div className="text-xs text-[#153230]/60">{t.handle}</div>

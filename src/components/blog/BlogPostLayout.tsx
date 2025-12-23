@@ -99,7 +99,7 @@ function BlogPostLayoutInner({
                         <div className="mb-8 md:mb-12 rounded-2xl overflow-hidden shadow-2xl border border-[#4D7DA3]/10 max-w-5xl mx-auto">
                             <img
                                 src={coverImage}
-                                alt={typeof title === 'string' ? title : 'Blog post cover'}
+                                alt=""
                                 className="w-full h-auto max-h-[600px] object-cover rounded-2xl"
                             />
                         </div>

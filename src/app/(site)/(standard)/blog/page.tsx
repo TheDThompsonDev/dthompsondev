@@ -150,7 +150,7 @@ function BlogContent() {
                         {post.cover_image_url ? (
                           <img
                             src={post.cover_image_url}
-                            alt={post.title}
+                            alt=""
                             className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                           />
                         ) : (
@@ -219,7 +219,7 @@ function BlogContent() {
                           {post.cover_image_url ? (
                             <img
                               src={post.cover_image_url}
-                              alt={post.title}
+                              alt=""
                               className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                             />
                           ) : (
