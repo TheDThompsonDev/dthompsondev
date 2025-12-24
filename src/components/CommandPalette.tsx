@@ -289,7 +289,7 @@ export function CommandPalette() {
                                     aria-label="Search commands"
                                 />
                                 <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-1 text-xs text-[#153230]/50 bg-gray-100 rounded font-mono">
-                                    {isMac ? '⌘' : 'Ctrl'} K
+                                    {isMac ? '⌘' : 'Ctrl'} + K
                                 </kbd>
                             </div>
 

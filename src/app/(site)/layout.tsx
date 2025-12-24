@@ -4,7 +4,6 @@ import { FloatingHomeLogo } from "@/components/FloatingHomeLogo";
 import { CommandPaletteProvider } from "@/components/CommandPaletteProvider";
 import { CommandPalette } from "@/components/CommandPalette";
 import { GlobalContactModal } from "@/components/GlobalContactModal";
-import { FloatingSearchButton } from "@/components/FloatingSearchButton";
 
 
 export default function SiteLayout({
@@ -22,7 +21,6 @@ export default function SiteLayout({
             </div>
             <CommandPalette />
             <GlobalContactModal />
-            <FloatingSearchButton />
         </CommandPaletteProvider>
     );
 }
