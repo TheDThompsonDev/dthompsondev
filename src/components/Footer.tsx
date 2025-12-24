@@ -25,7 +25,8 @@ export function Footer() {
             icon: (
                 <img
                     src="/logos/bluesky-white-icon.svg"
-                    alt="Bluesky"
+                    alt=""
+                    aria-hidden="true"
                     className="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity"
                 />
             ),
@@ -65,7 +66,7 @@ export function Footer() {
                         </p>
                         <button
                             onClick={() => setIsContactOpen(true)}
-                            className="inline-flex items-center gap-2 bg-[#4D7DA3] text-white px-6 py-3 rounded-full font-bold hover:bg-[#5a8fb8] transition-colors shadow-lg group"
+                            className="inline-flex items-center gap-2 bg-[#2e6089] text-white px-6 py-3 rounded-full font-bold hover:bg-[#3d7ba8] transition-colors shadow-lg group"
                         >
                             <span>Let's Work Together</span>
                             <svg
@@ -86,7 +87,7 @@ export function Footer() {
 
                     {/* Navigation Column */}
                     <div className="md:col-span-3 md:col-start-7">
-                        <h3 className="font-bold text-lg mb-6 text-[#4D7DA3]">Explore</h3>
+                        <h3 className="font-bold text-lg mb-6 text-[#7eb9dc]">Explore</h3>
                         <ul className="space-y-4">
                             {navLinks.map((link) => (
                                 <li key={link.name}>
@@ -103,7 +104,7 @@ export function Footer() {
 
                     {/* Connect Column */}
                     <div className="md:col-span-3">
-                        <h3 className="font-bold text-lg mb-6 text-[#4D7DA3]">Connect</h3>
+                        <h3 className="font-bold text-lg mb-6 text-[#7eb9dc]">Connect</h3>
                         <div className="flex flex-col gap-4">
                             {socialLinks.map((social) => (
                                 <a
@@ -113,7 +114,7 @@ export function Footer() {
                                     rel="noopener noreferrer"
                                     className="flex items-center gap-3 text-white/70 hover:text-white group transition-colors"
                                 >
-                                    <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                                    <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center group-hover:bg-white/20 transition-colors" aria-hidden="true">
                                         <span className="text-sm font-bold">{social.icon}</span>
                                     </div>
                                     <span>{social.name}</span>
@@ -124,7 +125,7 @@ export function Footer() {
                 </div>
 
                 {/* Copyright */}
-                <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/40">
+                <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/70">
                     <p>
                         &copy; {new Date().getFullYear()} Danny Thompson. All rights reserved.
                     </p>

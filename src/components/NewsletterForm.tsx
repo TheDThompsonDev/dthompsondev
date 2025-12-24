@@ -44,19 +44,25 @@ export function NewsletterForm() {
                         </div>
                     ) : (
                         <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
-                            <input
-                                type="email"
-                                placeholder="Enter your email"
-                                required
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                disabled={status === 'loading'}
-                                className="flex-1 px-6 py-4 rounded-full bg-white border border-white/20 text-[#153230] font-semibold focus:outline-none focus:ring-4 focus:ring-white/30 transition-all disabled:opacity-50"
-                            />
+                            <div className="flex-1 relative">
+                                <label htmlFor="newsletter-email" className="block text-left text-sm font-medium mb-2 text-white/90">
+                                    Email Address
+                                </label>
+                                <input
+                                    id="newsletter-email"
+                                    type="email"
+                                    placeholder="Enter your email"
+                                    required
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    disabled={status === 'loading'}
+                                    className="w-full px-6 py-4 rounded-full bg-white border border-white/20 text-[#153230] font-semibold focus:outline-none focus:ring-4 focus:ring-white/30 transition-all disabled:opacity-50"
+                                />
+                            </div>
                             <button
                                 type="submit"
                                 disabled={status === 'loading'}
-                                className="bg-white text-[#4D7DA3] px-8 py-4 rounded-full font-bold hover:scale-105 hover:shadow-2xl transition-all duration-300 disabled:opacity-50 disabled:hover:scale-100"
+                                className="bg-white text-[#2e6089] px-8 py-4 rounded-full font-bold hover:scale-105 hover:shadow-2xl transition-all duration-300 disabled:opacity-50 disabled:hover:scale-100 sm:self-end"
                             >
                                 {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
                             </button>

@@ -3,6 +3,22 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* Accessible color alternatives for WCAG 4.5:1 contrast */
+  --blue-accessible: #2e6089;
+  /* Darkened from #4D7DA3 - passes on white */
+  --blue-on-dark: #7eb9dc;
+  /* Lightened for dark backgrounds */
+  --grey-accessible: #4a5757;
+  /* Darkened from #738483 - passes on white */
+  --focus-ring: #2e6089;
+  /* Focus indicator color */
+}
+
+/* Accessible focus indicators */
+*:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
 }
 
 /* Animated Gradient for Text */

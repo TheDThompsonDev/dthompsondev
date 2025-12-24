@@ -172,14 +172,14 @@ function BlogContent() {
                           >
                             {post.category}
                           </span>
-                          <span className="text-sm text-[#153230]/60">
+                          <span className="text-sm text-[#4a5757]">
                             {new Date(post.published_at || post.created_at).toLocaleDateString()}
                           </span>
-                          <span className="text-sm text-[#153230]/60">• {post.read_time || '5 min'}</span>
+                          <span className="text-sm text-[#4a5757]">• {post.read_time || '5 min'}</span>
                         </div>
-                        <h3 className="text-2xl font-black text-[#153230] mb-3 leading-tight">
+                        <h2 className="text-2xl font-black text-[#153230] mb-3 leading-tight">
                           {post.title}
-                        </h3>
+                        </h2>
                         <p className="text-[#153230]/70 leading-relaxed">
                           {post.excerpt}
                         </p>
@@ -236,14 +236,14 @@ function BlogContent() {
                             >
                               {post.category}
                             </span>
-                            <span className="text-sm text-[#153230]/60">
+                            <span className="text-sm text-[#4a5757]">
                               {new Date(post.published_at || post.created_at).toLocaleDateString()}
                             </span>
-                            <span className="text-sm text-[#153230]/60">• {post.read_time || '5 min'}</span>
+                            <span className="text-sm text-[#4a5757]">• {post.read_time || '5 min'}</span>
                           </div>
-                          <h3 className="text-2xl font-black text-[#153230] mb-3 leading-tight">
+                          <h2 className="text-2xl font-black text-[#153230] mb-3 leading-tight">
                             {post.title}
-                          </h3>
+                          </h2>
                           <p className="text-[#153230]/70 leading-relaxed">
                             {post.excerpt}
                           </p>
@@ -258,13 +258,7 @@ function BlogContent() {
         </div>
       </section>
 
-      <footer className="px-8 md:px-16 py-8 border-t border-[#4D7DA3]/10">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-[#153230]/60 text-sm">
-            © {new Date().getFullYear()} DTHOMPSONDEV. All rights reserved.
-          </p>
-        </div>
-      </footer>
+
     </>
   );
 }
