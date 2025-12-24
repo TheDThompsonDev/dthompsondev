@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCommandPalette } from './CommandPaletteProvider';
 import { MatrixRain } from './MatrixRain';
+import { useAlgoliaSearch, AlgoliaHit } from '@/hooks/useAlgoliaSearch';
 
 interface Command {
     id: string;
@@ -80,10 +81,33 @@ export function CommandPalette() {
     const previousActiveElement = useRef<HTMLElement | null>(null);
     const router = useRouter();
     const [matrixActive, setMatrixActive] = useState(false);
+    const { results: algoliaResults, isLoading: isSearching, search: searchAlgolia, clearResults } = useAlgoliaSearch();
 
     useEffect(() => {
         setIsMac(navigator.platform.toUpperCase().indexOf('MAC') >= 0);
     }, []);
+
+    // Security: Max query length
+    const MAX_QUERY_LENGTH = 100;
+
+    // Debounced Algolia search with protection
+    useEffect(() => {
+        // Too short - clear results immediately
+        if (search.trim().length < 2) {
+            clearResults();
+            return;
+        }
+
+        // Truncate query if too long (security)
+        const sanitizedQuery = search.trim().slice(0, MAX_QUERY_LENGTH);
+
+        // Debounce search to prevent API abuse
+        const timer = setTimeout(() => {
+            searchAlgolia(sanitizedQuery);
+        }, 300);
+
+        return () => clearTimeout(timer);
+    }, [search, searchAlgolia, clearResults]);
 
     const commands: Command[] = useMemo(() => [
         {
@@ -284,6 +308,7 @@ export function CommandPalette() {
                                     type="text"
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
+                                    maxLength={100}
                                     placeholder="Type a command or search..."
                                     className="flex-1 text-[#153230] placeholder:text-[#153230]/40 outline-none text-base bg-transparent"
                                     aria-label="Search commands"
@@ -299,9 +324,9 @@ export function CommandPalette() {
                                 role="listbox"
                                 aria-label="Available commands"
                             >
-                                {filteredCommands.length === 0 ? (
+                                {filteredCommands.length === 0 && algoliaResults.length === 0 && !isSearching ? (
                                     <div className="px-4 py-8 text-center text-[#153230]/50">
-                                        No commands found for &quot;{search}&quot;
+                                        No results found for &quot;{search}&quot;
                                     </div>
                                 ) : (
                                     <>
@@ -406,6 +431,47 @@ export function CommandPalette() {
                                                     </button>
                                                 );
                                             })}
+
+                                        {/* Content Search Results from Algolia */}
+                                        {search.trim().length >= 2 && (
+                                            <>
+                                                <div className="px-3 py-1.5 mt-2 border-t border-gray-100">
+                                                    <p className="text-xs font-semibold text-[#153230]/40 uppercase tracking-wider px-2 mt-2 flex items-center gap-2">
+                                                        📚 Content
+                                                        {isSearching && <span className="animate-pulse">...</span>}
+                                                    </p>
+                                                </div>
+                                                {algoliaResults.length === 0 && !isSearching && (
+                                                    <div className="px-5 py-3 text-[#153230]/50 text-sm">
+                                                        No content found for "{search}"
+                                                    </div>
+                                                )}
+                                                {algoliaResults.map((hit, idx) => (
+                                                    <button
+                                                        key={hit.objectID}
+                                                        onClick={() => {
+                                                            if (hit.url.startsWith('http')) {
+                                                                window.open(hit.url, '_blank');
+                                                            } else {
+                                                                router.push(hit.url);
+                                                            }
+                                                            closePalette();
+                                                        }}
+                                                        className="w-full flex items-center gap-3 px-5 py-3 text-left transition-colors text-[#153230]/70 hover:bg-gray-50"
+                                                    >
+                                                        <span className="flex-shrink-0 text-[#153230]/60">
+                                                            {hit.type === 'blog' ? <BlogIcon /> : <PodcastIcon />}
+                                                        </span>
+                                                        <div className="flex-1 min-w-0">
+                                                            <span className="font-medium block truncate">{hit.title}</span>
+                                                            <span className="text-xs text-[#153230]/40 block truncate">
+                                                                {hit.type === 'blog' ? 'Blog' : 'Podcast'} · {hit.category || 'Content'}
+                                                            </span>
+                                                        </div>
+                                                    </button>
+                                                ))}
+                                            </>
+                                        )}
                                     </>
                                 )}
                             </div>
