@@ -1,6 +1,9 @@
 "use client";
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import { samplePosts } from "@/data/blogPosts";
+import { PERSONA_INFO } from "@/data/personaContent";
 
 const CENTER_PERSON = {
   id: "danny",
@@ -35,8 +38,8 @@ const VISITOR_ARCHETYPES = [
       "Resume reviews tailored to junior dev positions",
       "Interview preparation workshops"
     ],
-    impact: "300+ junior developers have landed their first or next roles through mentorship",
-    stats: "300+ junior devs mentored to their next role",
+    impact: "700+ junior developers have landed their first or next roles through mentorship",
+    stats: "700+ junior devs mentored to their next role",
     cta: "Get Mentorship"
   },
   {
@@ -478,69 +481,96 @@ export function OrbitSwitcher() {
                     </div>
                   </div>
 
-                  {/* Challenges Section */}
-                  <div className="bg-red-50/30 rounded-xl sm:rounded-2xl p-3 sm:p-5 mb-3 sm:mb-5 border border-red-200/30">
-                    <p className="text-xs sm:text-sm font-bold text-[#153230]/70 uppercase tracking-wider mb-3 sm:mb-4 flex items-center gap-2">
-                      <span className="text-base sm:text-lg">🎯</span> Common Challenges
+                  {/* Content Focus */}
+                  <div className="bg-gradient-to-br from-[#E2F3F2] to-[#E2F3F2]/30 rounded-xl p-3 sm:p-4 mb-4 border border-[#4D7DA3]/20">
+                    <p className="text-xs sm:text-sm text-[#153230] font-medium">
+                      {PERSONA_INFO[selected.id]?.contentFocus || 'Curated content for your journey'}
                     </p>
-                    <div className="space-y-2 sm:space-y-2.5">
-                      {selected.challenges?.slice(0, 3).map((challenge, i) => (
-                        <div key={i} className="flex items-start gap-2 sm:gap-2.5">
-                          <div className="w-1.5 h-1.5 bg-red-400 rounded-full shrink-0 mt-1.5 sm:mt-2"></div>
-                          <span className="text-xs sm:text-sm text-[#153230]/80 leading-snug">{challenge}</span>
-                        </div>
-                      ))}
+                  </div>
+
+                  {/* Blog Posts for this Persona */}
+                  <div className="mb-4">
+                    <p className="text-xs sm:text-sm font-bold text-[#153230]/70 uppercase tracking-wider mb-3 flex items-center gap-2">
+                      <span className="text-base">📚</span> Recommended Reading
+                    </p>
+                    <div className="space-y-3">
+                      {samplePosts
+                        .filter(post => post.targetPersonas?.includes(selected.id))
+                        .slice(0, 3)
+                        .map((post) => (
+                          <Link
+                            key={post.id}
+                            href={`/blog/${post.slug}`}
+                            className="block bg-white rounded-xl p-3 border border-[#4D7DA3]/10 hover:border-[#4D7DA3]/40 hover:shadow-md transition-all duration-300 group"
+                          >
+                            <div className="flex gap-3">
+                              {post.cover_image_url && (
+                                <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0 bg-[#4D7DA3]/10">
+                                  <img
+                                    src={post.cover_image_url}
+                                    alt=""
+                                    className="w-full h-full object-cover"
+                                  />
+                                </div>
+                              )}
+                              <div className="flex-1 min-w-0">
+                                <span className="text-[10px] font-bold text-[#4D7DA3] uppercase tracking-wide">{post.category}</span>
+                                <h4 className="text-sm font-bold text-[#153230] leading-tight group-hover:text-[#4D7DA3] transition-colors line-clamp-2">
+                                  {post.title}
+                                </h4>
+                                <span className="text-[10px] text-[#153230]/60">{post.read_time}</span>
+                              </div>
+                            </div>
+                          </Link>
+                        ))}
+                      {samplePosts.filter(post => post.targetPersonas?.includes(selected.id)).length === 0 && (
+                        <p className="text-sm text-[#153230]/60 text-center py-4">More content coming soon!</p>
+                      )}
                     </div>
                   </div>
 
-                  {/* Resources Section */}
-                  <div className="bg-gradient-to-br from-[#E2F3F2] to-[#E2F3F2]/30 rounded-xl sm:rounded-2xl p-3 sm:p-5 mb-3 sm:mb-5 border border-[#4D7DA3]/20">
-                    <p className="text-xs sm:text-sm font-bold text-[#153230]/70 uppercase tracking-wider mb-3 sm:mb-4 flex items-center gap-2">
-                      <span className="text-base sm:text-lg">📚</span> What You Get
+                  {/* Podcast Section */}
+                  <div className="mb-4">
+                    <p className="text-xs sm:text-sm font-bold text-[#153230]/70 uppercase tracking-wider mb-3 flex items-center gap-2">
+                      <span className="text-base">🎙️</span> From The Podcast
                     </p>
-                    <div className="space-y-2 sm:space-y-2.5">
-                      {selected.whatYouGet.slice(0, 3).map((item, i) => (
-                        <div key={i} className="flex items-start gap-2 sm:gap-2.5">
-                          <div className="w-4 h-4 sm:w-5 sm:h-5 bg-[#4D7DA3] rounded-md flex items-center justify-center shrink-0 mt-0">
-                            <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                            </svg>
-                          </div>
-                          <span className="text-xs sm:text-sm text-[#153230] font-medium">{item}</span>
+                    <Link
+                      href="/podcast"
+                      className="block bg-gradient-to-br from-[#153230] to-[#1a3d3a] rounded-xl p-4 border border-[#4D7DA3]/20 hover:border-[#4D7DA3]/40 hover:shadow-lg transition-all duration-300 group"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 rounded-lg bg-[#4D7DA3] flex items-center justify-center shrink-0">
+                          <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 1c-4.97 0-9 4.03-9 9v7c0 1.66 1.34 3 3 3h3v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-4v8h3c1.66 0 3-1.34 3-3v-7c0-4.97-4.03-9-9-9z" />
+                          </svg>
                         </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Resources Available */}
-                  <div className="hidden sm:block bg-emerald-50/30 rounded-2xl p-5 mb-5 border border-emerald-200/30">
-                    <p className="text-sm font-bold text-[#153230]/70 uppercase tracking-wider mb-4 flex items-center gap-2">
-                      <span className="text-lg">🎓</span> Resources Available
-                    </p>
-                    <div className="space-y-2.5">
-                      {selected.resources?.slice(0, 3).map((resource, i) => (
-                        <div key={i} className="flex items-start gap-2.5">
-                          <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0 mt-2.5"></div>
-                          <span className="text-sm text-[#153230]/80 leading-snug">{resource}</span>
+                        <div className="flex-1">
+                          <h4 className="text-sm font-bold text-white leading-tight group-hover:text-[#4D7DA3] transition-colors">
+                            The Programming Podcast
+                          </h4>
+                          <p className="text-xs text-white/70 mt-0.5">
+                            Deep dives on career, tech & growth
+                          </p>
                         </div>
-                      ))}
-                    </div>
+                        <div className="text-white/60 group-hover:text-white transition-colors">
+                          →
+                        </div>
+                      </div>
+                    </Link>
                   </div>
 
-                  {/* Impact Section */}
-                  <div className="bg-gradient-to-r from-[#4D7DA3] to-[#3d6a8a] rounded-xl sm:rounded-2xl p-4 sm:p-5 mb-4 sm:mb-6 text-white border border-[#4D7DA3]/40">
-                    <p className="text-xs font-bold uppercase tracking-wider mb-2 opacity-90">🚀 Real Impact</p>
-                    <p className="text-sm sm:text-base font-bold leading-tight">{selected.impact}</p>
+                  {/* Impact Stats */}
+                  <div className="bg-gradient-to-r from-[#4D7DA3] to-[#3d6a8a] rounded-xl p-3 sm:p-4 mb-4 text-white">
+                    <p className="text-xs font-bold uppercase tracking-wider mb-1 opacity-90">🚀 Real Impact</p>
+                    <p className="text-sm font-bold leading-tight">{selected.stats}</p>
                   </div>
 
-                  <button
-                    onClick={() => {
-                      window.location.href = `/blog?persona=${selectedPerson}`;
-                    }}
-                    className="w-full bg-gradient-to-r from-[#4D7DA3] to-[#3d6a8a] text-white py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base hover:shadow-xl hover:scale-105 transition-all duration-300"
+                  <Link
+                    href={`/persona/${selected.id}`}
+                    className="block w-full bg-gradient-to-r from-[#153230] to-[#4D7DA3] text-white py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base hover:shadow-xl hover:scale-105 transition-all duration-300 text-center"
                   >
-                    {selected.cta} →
-                  </button>
+                    View All Content for {selected.label}s →
+                  </Link>
                 </motion.div>
               )}
             </AnimatePresence>
