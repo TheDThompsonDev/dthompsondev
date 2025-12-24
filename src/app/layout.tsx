@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Caveat } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { BotIdClient } from "botid/client";
 import "./globals.css";
@@ -14,12 +14,17 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const caveat = Caveat({
+  variable: "--font-caveat",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
   title: "DThompsonDev",
   description: "Director of Technology, Community Leader, and Career Champion helping developers level up through mentorship, technical leadership, and authentic community building.",
 };
 
-// Routes protected by BotID
+// Routes protected by vercel BotID
 const protectedRoutes = [
   { path: '/api/contact', method: 'POST' as const },
   { path: '/api/newsletter', method: 'POST' as const },
@@ -36,7 +41,7 @@ export default function RootLayout({
         <BotIdClient protect={protectedRoutes} />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#E2F3F2]`}
+        className={`${geistSans.variable} ${geistMono.variable} ${caveat.variable} antialiased bg-[#E2F3F2]`}
       >
         {children}
         <Analytics />

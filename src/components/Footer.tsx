@@ -131,6 +131,15 @@ export function Footer() {
                     </p>
                     <p>Designed & Built with ❤️ by Danny Thompson</p>
                 </div>
+                <div className="mt-4 text-center">
+                    <p className="inline-flex items-center gap-2 text-white/50 text-xs">
+                        <span>Pro tip: Press</span>
+                        <kbd className="px-1.5 py-0.5 font-mono bg-white/10 rounded">⌘K</kbd>
+                        <span>or</span>
+                        <kbd className="px-1.5 py-0.5 font-mono bg-white/10 rounded">Ctrl+K</kbd>
+                        <span>to search</span>
+                    </p>
+                </div>
             </div>
 
             {/* Contact Modal */}

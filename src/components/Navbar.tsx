@@ -3,20 +3,19 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ContactModalButton } from "./ContactModalButton";
+import { CommandPaletteButton } from "./CommandPaletteButton";
 
 export default function Navbar() {
   const pathname = usePathname();
   const isHomepage = pathname === '/';
 
   return (
-    // Hide navbar on mobile for non-homepage (FloatingHomeLogo handles that)
     <header className={`${isHomepage ? 'block' : 'hidden lg:block'} px-4 sm:px-6 md:px-16 py-4 sm:py-6 md:py-8`}>
       <div className="flex items-center justify-between gap-4 md:gap-8">
         <Link
           href="/"
           className="flex items-center gap-3 hover:opacity-80 transition-opacity"
         >
-          {/* Show logo on mobile only on homepage, always show on lg screens */}
           <div className={`${isHomepage ? 'flex' : 'hidden lg:flex'} w-10 h-10 md:w-12 md:h-12 bg-[#153230] rounded-2xl items-center justify-center text-white text-xl md:text-2xl font-bold`}>
             DT
           </div>
@@ -82,11 +81,14 @@ export default function Navbar() {
           </Link>
         </nav>
 
-        <ContactModalButton
-          className="hidden lg:flex bg-[#153230] text-white px-6 md:px-8 py-3 md:py-4 rounded-full hover:bg-[#4D7DA3] hover:scale-105 transition-all duration-300 font-semibold text-sm md:text-base whitespace-nowrap cursor-pointer"
-        >
-          Contact Me
-        </ContactModalButton>
+        <div className="hidden lg:flex items-center gap-3">
+          <CommandPaletteButton />
+          <ContactModalButton
+            className="bg-[#153230] text-white px-6 md:px-8 py-3 md:py-4 rounded-full hover:bg-[#4D7DA3] hover:scale-105 transition-all duration-300 font-semibold text-sm md:text-base whitespace-nowrap cursor-pointer"
+          >
+            Contact Me
+          </ContactModalButton>
+        </div>
       </div>
     </header>
   );
