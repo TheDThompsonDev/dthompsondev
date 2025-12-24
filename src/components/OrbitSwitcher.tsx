@@ -617,7 +617,7 @@ export function OrbitSwitcher() {
       </AnimatePresence>
 
       <div className="mt-4 sm:mt-6 text-center text-xs sm:text-sm text-[#153230]/60 font-medium px-2">
-        <span className="font-bold text-[#153230]">Orbit View:</span> Discover your path • <span className="font-bold text-[#153230]">Room View:</span> Explore resources by topic
+        <span className="font-bold text-[#153230]">Orbit View:</span> Discover your path
       </div>
     </div>
   );
