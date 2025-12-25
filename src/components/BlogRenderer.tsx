@@ -1,11 +1,11 @@
 'use client';
 
 import { BlogContent, ContentBlock } from '@/types/blog';
-import { CodeMorph } from './CodeMorph';
-import { InteractiveCode } from './InteractiveCode';
-import { AnimatedDiagram } from './AnimatedDiagram';
-import { VirtualWhiteboard } from './VirtualWhiteboard';
-import { CodePlayground } from './CodePlayground';
+import { CodeMorph } from '@/components/interactive/CodeMorph';
+import { InteractiveCode } from '@/components/interactive/InteractiveCode';
+import { AnimatedDiagram } from '@/components/interactive/AnimatedDiagram';
+import { VirtualWhiteboard } from '@/components/interactive/VirtualWhiteboard';
+import { CodePlayground } from '@/components/interactive/CodePlayground';
 
 interface BlogRendererProps {
   content: BlogContent;

@@ -1,6 +1,6 @@
 'use client';
 
-import { TiltCard } from '@/components/TiltCard';
+import { TiltCard } from '@/components/ui/TiltCard';
 import Link from 'next/link';
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';

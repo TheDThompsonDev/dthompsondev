@@ -1,7 +1,7 @@
 'use client';
 
-import { ScrollReveal } from "@/components/ScrollReveal";
-import { ContactModalButton } from "@/components/ContactModalButton";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { ContactModalButton } from "@/components/contact/ContactModalButton";
 import Link from "next/link";
 import Image from "next/image";
 

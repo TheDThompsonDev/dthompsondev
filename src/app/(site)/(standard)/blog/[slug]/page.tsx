@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { BlogPost } from '@/types/blog';
 import { BlogRenderer } from '@/components/BlogRenderer';
-import { ScrollProgress } from '@/components/ScrollProgress';
+import { ScrollProgress } from '@/components/ui/ScrollProgress';
 import { FloatingTOC } from '@/components/FloatingTOC';
 
 export default function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {

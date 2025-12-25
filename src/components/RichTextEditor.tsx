@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { LinkDialog } from './LinkDialog';
+import { LinkDialog } from '@/components/ui/LinkDialog';
 
 interface RichTextEditorProps {
   value: string;
@@ -22,7 +22,7 @@ export function RichTextEditor({ value, onChange, placeholder, className, onSlas
   const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
     const newValue = e.currentTarget.textContent || '';
     onChange(newValue);
-    
+
     if (onSlashCommand && newValue.includes('/')) {
       const selection = window.getSelection();
       if (selection && selection.rangeCount > 0) {
@@ -42,7 +42,7 @@ export function RichTextEditor({ value, onChange, placeholder, className, onSlas
 
     const range = selection.getRangeAt(0);
     const rect = range.getBoundingClientRect();
-    
+
     if (editorRef.current.contains(range.commonAncestorContainer)) {
       selectionRangeRef.current = range.cloneRange();
       setSelectedText(selection.toString());
@@ -85,7 +85,7 @@ export function RichTextEditor({ value, onChange, placeholder, className, onSlas
       const currentContent = editorRef.current.textContent || '';
       const start = currentContent.indexOf(selectedContent);
       if (start !== -1) {
-        const newContent = 
+        const newContent =
           currentContent.substring(0, start) +
           formattedText +
           currentContent.substring(start + selectedContent.length);
@@ -98,7 +98,7 @@ export function RichTextEditor({ value, onChange, placeholder, className, onSlas
 
   useEffect(() => {
     document.addEventListener('selectionchange', handleSelectionChange);
-    
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
         e.preventDefault();
@@ -117,9 +117,9 @@ export function RichTextEditor({ value, onChange, placeholder, className, onSlas
         }
       }
     };
-    
+
     document.addEventListener('keydown', handleKeyDown);
-    
+
     return () => {
       document.removeEventListener('selectionchange', handleSelectionChange);
       document.removeEventListener('keydown', handleKeyDown);
@@ -149,7 +149,7 @@ export function RichTextEditor({ value, onChange, placeholder, className, onSlas
       .replace(/\*(.+?)\*/g, '<em>$1</em>')
       .replace(/__(.+?)__/g, '<u>$1</u>')
       .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-[#4D7DA3] underline hover:text-[#153230] transition-colors">$1</a>');
-    
+
     return formatted;
   };
 
@@ -218,7 +218,7 @@ export function RichTextEditor({ value, onChange, placeholder, className, onSlas
           />
         </div>
       )}
-      
+
       <div
         ref={editorRef}
         contentEditable

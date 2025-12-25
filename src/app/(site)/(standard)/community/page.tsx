@@ -1,9 +1,9 @@
 "use client";
 
-import { ScrollReveal } from "@/components/ScrollReveal";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { TiltCard } from "@/components/TiltCard";
+import { TiltCard } from "@/components/ui/TiltCard";
 import Image from "next/image";
 
 const events = [

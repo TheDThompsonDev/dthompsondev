@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import { ScrollReveal } from '@/components/ScrollReveal';
+import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { PodcastEpisode } from '@/components/PodcastEpisode';
 import { PodcastErrorBoundary } from '@/components/PodcastErrorBoundary';
 import { mergeEpisodesByIndex } from '@/lib/podcast-utils';

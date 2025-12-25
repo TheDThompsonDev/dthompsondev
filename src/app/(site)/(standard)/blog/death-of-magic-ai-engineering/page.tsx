@@ -1,8 +1,8 @@
 'use client';
 
 import { BlogPostLayout } from '@/components/blog/BlogPostLayout';
-import { InteractiveCode } from '@/components/InteractiveCode';
-import { CodeMorph } from '@/components/CodeMorph';
+import { InteractiveCode } from '@/components/interactive/InteractiveCode';
+import { CodeMorph } from '@/components/interactive/CodeMorph';
 import {
   BarChart3, RefreshCw, Scale, AlertOctagon,
   Target, Lock, Construction, CheckCircle2,

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useCommandPalette } from './CommandPaletteProvider';
+import { useCommandPalette } from '@/components/command-palette/CommandPaletteProvider';
 
 const STORAGE_KEY = 'floating-search-tooltip-shown';
 

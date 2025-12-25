@@ -4,8 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { MobileMenuOverlay } from "./MobileMenuOverlay";
-import { Modal } from "./Modal";
-import { ContactForm } from "./ContactForm";
+import { Modal } from "@/components/ui/Modal";
+import { ContactForm } from "@/components/contact/ContactForm";
 
 export default function BottomNav() {
   const pathname = usePathname();

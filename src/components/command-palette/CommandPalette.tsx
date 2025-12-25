@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCommandPalette } from './CommandPaletteProvider';
-import { MatrixRain } from './MatrixRain';
+import { MatrixRain } from '@/components/home/MatrixRain';
 import { useAlgoliaSearch, AlgoliaHit } from '@/hooks/useAlgoliaSearch';
 import {
     HomeIcon,
@@ -16,7 +16,7 @@ import {
     AboutIcon,
     ContactIcon,
     MatrixIcon
-} from './commandPaletteIcons';
+} from './icons';
 
 interface Command {
     id: string;

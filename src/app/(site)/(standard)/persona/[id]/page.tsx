@@ -3,10 +3,9 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { samplePosts } from '@/data/blogPosts';
 import { PERSONA_INFO } from '@/data/personaContent';
-import { TiltCard } from '@/components/TiltCard';
-import { ScrollReveal } from '@/components/ScrollReveal';
+import { TiltCard } from '@/components/ui/TiltCard';
+import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
-// Define valid persona IDs
 const VALID_PERSONA_IDS = ['p1', 'p2', 'p3', 'p4', 'p5', 'p6'];
 
 const colors = ['#4D7DA3', '#84803E', '#A34D7D', '#7DA34D', '#D87D4A'];
@@ -42,7 +41,6 @@ export default async function PersonaPage({ params }: { params: Promise<{ id: st
 
     const persona = PERSONA_INFO[personaId];
 
-    // Filter blog posts for this persona
     const relevantPosts = samplePosts.filter(post =>
         post.targetPersonas?.includes(personaId)
     ).sort((a, b) =>
@@ -50,14 +48,12 @@ export default async function PersonaPage({ params }: { params: Promise<{ id: st
         new Date(a.publishedAt || a.createdAt).getTime()
     );
 
-    // Get other posts that might be interesting
     const otherPosts = samplePosts.filter(post =>
         !post.targetPersonas?.includes(personaId)
     ).slice(0, 3);
 
     return (
         <>
-            {/* Hero Section */}
             <section className="px-4 sm:px-8 md:px-16 py-12 sm:py-16 md:py-24 border-b-2 border-[#153230]/10">
                 <ScrollReveal>
                     <div className="max-w-5xl mx-auto">
@@ -87,7 +83,6 @@ export default async function PersonaPage({ params }: { params: Promise<{ id: st
                 </ScrollReveal>
             </section>
 
-            {/* Curated Content Section */}
             <section className="px-4 sm:px-8 md:px-16 py-12 sm:py-16">
                 <div className="max-w-6xl mx-auto">
                     <div className="mb-8">
@@ -170,7 +165,6 @@ export default async function PersonaPage({ params }: { params: Promise<{ id: st
                         </div>
                     )}
 
-                    {/* Podcast Section */}
                     <div className="mb-16">
                         <div className="mb-6">
                             <h2 className="text-2xl font-black text-[#153230] flex items-center gap-3">
@@ -219,7 +213,6 @@ export default async function PersonaPage({ params }: { params: Promise<{ id: st
                         </Link>
                     </div>
 
-                    {/* Explore More Content */}
                     {otherPosts.length > 0 && (
                         <div className="pt-12 border-t-2 border-[#4D7DA3]/20">
                             <h2 className="text-2xl font-black text-[#153230] mb-6">Explore More Content</h2>
@@ -252,7 +245,6 @@ export default async function PersonaPage({ params }: { params: Promise<{ id: st
                         </div>
                     )}
 
-                    {/* CTA Section */}
                     <div className="mt-16 text-center">
                         <Link
                             href="/blog"

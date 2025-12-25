@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ContactModalButton } from "./ContactModalButton";
-import { CommandPaletteButton } from "./CommandPaletteButton";
+import { ContactModalButton } from "@/components/contact/ContactModalButton";
+import { CommandPaletteButton } from "@/components/command-palette/CommandPaletteButton";
 
 export default function Navbar() {
   const pathname = usePathname();

@@ -1,30 +1,30 @@
-import { ScrollReveal } from "@/components/ScrollReveal";
-import { TrustedBy } from "@/components/TrustedBy";
-import { NewsletterForm } from "@/components/NewsletterForm";
-import { TiltCard } from "@/components/TiltCard";
-import { BentoGrid } from "@/components/BentoGrid";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { TrustedBy } from "@/components/home/TrustedBy";
+import { NewsletterForm } from "@/components/newsletter/NewsletterForm";
+import { TiltCard } from "@/components/ui/TiltCard";
+import { BentoGrid } from "@/components/home/BentoGrid";
 import { bentoGridImages } from "@/data/heroImages";
-import RotarySelector from "@/components/RotarySelector";
+import RotarySelector from "@/components/home/RotarySelector";
 import { PodcastRadioTuner } from "@/components/PodcastRadioTuner";
 import { PodcastRadioSkeleton } from "@/components/PodcastSkeleton";
 import { PodcastErrorBoundary } from "@/components/PodcastErrorBoundary";
-import Navbar from "@/components/Navbar";
-import { HeroContactButton } from "@/components/HeroContactButton";
+import Navbar from "@/components/navigation/Navbar";
+import { HeroContactButton } from "@/components/contact/HeroContactButton";
 import Link from "next/link";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import { Loader2 } from "lucide-react";
 
 // Lazy load below-the-fold components
-const WallOfLove = dynamic(() => import("@/components/WallOfLove").then(mod => mod.WallOfLove), {
+const WallOfLove = dynamic(() => import("@/components/home/WallOfLove").then(mod => mod.WallOfLove), {
   loading: () => <div className="h-[600px] bg-[#F8FDFF] animate-pulse" />
 });
 
-const ContactForm = dynamic(() => import("@/components/ContactForm").then(mod => mod.ContactForm), {
+const ContactForm = dynamic(() => import("@/components/contact/ContactForm").then(mod => mod.ContactForm), {
   loading: () => <div className="h-[400px] bg-white rounded-[32px] animate-pulse" />
 });
 
-const OrbitSwitcher = dynamic(() => import("@/components/OrbitSwitcher").then(mod => mod.OrbitSwitcher), {
+const OrbitSwitcher = dynamic(() => import("@/components/home/OrbitSwitcher").then(mod => mod.OrbitSwitcher), {
   loading: () => <div className="h-[400px] bg-transparent" />
 });
 

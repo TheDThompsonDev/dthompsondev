@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { isValidEmail, isValidName, isValidMessage } from '@/lib/validation';
-import { FloatingLabelInput } from './FloatingLabelInput';
+import { FloatingLabelInput } from '@/components/ui/FloatingLabelInput';
 
 export function ContactForm() {
   const [formData, setFormData] = useState({

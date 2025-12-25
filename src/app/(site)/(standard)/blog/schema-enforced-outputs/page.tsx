@@ -3,7 +3,7 @@
 import { BlogPostLayout } from '@/components/blog/BlogPostLayout';
 import Link from 'next/link';
 
-import { CodeMorph } from '@/components/CodeMorph';
+import { CodeMorph } from '@/components/interactive/CodeMorph';
 import Image from 'next/image';
 
 export default function SchemaEnforcedOutputsPost() {

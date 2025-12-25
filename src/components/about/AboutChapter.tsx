@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode } from 'react';
-import { ScrollReveal } from '@/components/ScrollReveal';
+import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
 interface AboutChapterProps {
     id?: string;

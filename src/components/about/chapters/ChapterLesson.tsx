@@ -1,6 +1,6 @@
 'use client';
 
-import { ScrollReveal } from '@/components/ScrollReveal';
+import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { ClosedMouthsGraphic } from '@/components/about/ClosedMouthsGraphic';
 
 export function ChapterLesson() {

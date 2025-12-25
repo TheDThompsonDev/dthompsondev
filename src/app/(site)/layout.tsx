@@ -1,9 +1,9 @@
-import BottomNav from "@/components/BottomNav";
-import { Footer } from "@/components/Footer";
-import { FloatingHomeLogo } from "@/components/FloatingHomeLogo";
-import { CommandPaletteProvider } from "@/components/CommandPaletteProvider";
-import { CommandPalette } from "@/components/CommandPalette";
-import { GlobalContactModal } from "@/components/GlobalContactModal";
+import BottomNav from "@/components/navigation/BottomNav";
+import { Footer } from "@/components/navigation/Footer";
+import { FloatingHomeLogo } from "@/components/navigation/FloatingHomeLogo";
+import { CommandPaletteProvider } from "@/components/command-palette/CommandPaletteProvider";
+import { CommandPalette } from "@/components/command-palette/CommandPalette";
+import { GlobalContactModal } from "@/components/contact/GlobalContactModal";
 
 
 export default function SiteLayout({

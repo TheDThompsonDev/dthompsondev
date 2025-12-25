@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { NewsletterForm } from "./NewsletterForm";
-import { Modal } from "./Modal";
-import { ContactForm } from "./ContactForm";
+import { NewsletterForm } from "@/components/newsletter/NewsletterForm";
+import { Modal } from "@/components/ui/Modal";
+import { ContactForm } from "@/components/contact/ContactForm";
 
 export function Footer() {
     const [isContactOpen, setIsContactOpen] = useState(false);

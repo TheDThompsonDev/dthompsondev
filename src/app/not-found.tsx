@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import Navbar from '@/components/Navbar';
-import { CommandPaletteProvider } from '@/components/CommandPaletteProvider';
+import Navbar from '@/components/navigation/Navbar';
+import { CommandPaletteProvider } from '@/components/command-palette/CommandPaletteProvider';
 
 export default function NotFound() {
     return (

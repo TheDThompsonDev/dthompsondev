@@ -1,6 +1,6 @@
 'use client';
 
-import { ScrollReveal } from '@/components/ScrollReveal';
+import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { JourneySlider } from '@/components/about/JourneySlider';
 
 export function ChapterOrigin() {

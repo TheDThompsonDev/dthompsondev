@@ -1,6 +1,6 @@
 'use client';
 
-import { ScrollReveal } from '@/components/ScrollReveal';
+import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { ForkInTheRoadDiagram } from '@/components/about/ForkInTheRoadDiagram';
 
 export function ChapterFork() {

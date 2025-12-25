@@ -1,4 +1,4 @@
-import { ScrollReveal } from '@/components/ScrollReveal';
+import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { PodcastPageClient } from '@/components/PodcastPageClient';
 import { internalFetch } from '@/lib/server-utils';
 import type { Episode, PodcastData } from '@/types/podcast';

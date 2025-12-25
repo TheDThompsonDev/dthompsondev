@@ -1,8 +1,8 @@
 "use client";
 
-import { ScrollReveal } from "@/components/ScrollReveal";
-import { TiltCard } from "@/components/TiltCard";
-import { ContactModalButton } from "@/components/ContactModalButton";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { TiltCard } from "@/components/ui/TiltCard";
+import { ContactModalButton } from "@/components/contact/ContactModalButton";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {

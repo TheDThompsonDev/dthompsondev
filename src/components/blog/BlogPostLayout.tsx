@@ -1,10 +1,10 @@
 'use client';
 
 import { ReactNode } from 'react';
-import { ScrollReveal } from '@/components/ScrollReveal';
+import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import Link from 'next/link';
-import { ScrollProgress } from '@/components/ScrollProgress';
-import { VirtualWhiteboard } from '@/components/VirtualWhiteboard';
+import { ScrollProgress } from '@/components/ui/ScrollProgress';
+import { VirtualWhiteboard } from '@/components/interactive/VirtualWhiteboard';
 import { ContentDepthProvider } from './ContentDepthProvider';
 import { ContentDepthToggle } from './ContentDepthToggle';
 import { ContentDepthPanel } from './ContentDepthPanel';
