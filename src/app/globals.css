@@ -4,15 +4,19 @@
   --background: #ffffff;
   --foreground: #171717;
 
-  /* Accessible color alternatives for WCAG 4.5:1 contrast */
+  --color-primary: #4D7DA3;
+  --color-primary-dark: #2e6089;
+  --color-primary-light: #7eb9dc;
+  --color-secondary: #153230;
+  --color-accent: #84803E;
+  --color-surface: #E2F3F2;
+  --color-surface-light: #F8FDFF;
+  --color-border: rgba(77, 125, 163, 0.1);
+
   --blue-accessible: #2e6089;
-  /* Darkened from #4D7DA3 - passes on white */
   --blue-on-dark: #7eb9dc;
-  /* Lightened for dark backgrounds */
   --grey-accessible: #4a5757;
-  /* Darkened from #738483 - passes on white */
   --focus-ring: #2e6089;
-  /* Focus indicator color */
 }
 
 /* Accessible focus indicators */
