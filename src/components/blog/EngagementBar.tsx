@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Eye, ThumbsUp, ThumbsDown, Share2, Check } from 'lucide-react';
 import { ShareMenu } from './ShareMenu';
 import { trackBlogDepth } from '@/lib/analytics';
@@ -143,7 +143,7 @@ export function EngagementBar({ slug, title }: EngagementBarProps) {
                     <ShareMenu
                         isOpen={showShareMenu}
                         onClose={() => setShowShareMenu(false)}
-                        url={typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname}` : undefined}
+                        url={typeof window !== 'undefined' ? `${process.env.NEXT_PUBLIC_APP_URL || window.location.origin}${window.location.pathname}` : undefined}
                         title={title}
                         className="absolute bottom-full right-0 mb-3"
                     />
