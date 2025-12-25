@@ -143,7 +143,7 @@ export function EngagementBar({ slug, title }: EngagementBarProps) {
                     <ShareMenu
                         isOpen={showShareMenu}
                         onClose={() => setShowShareMenu(false)}
-                        url={typeof window !== 'undefined' ? window.location.href : undefined}
+                        url={typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname}` : undefined}
                         title={title}
                         className="absolute bottom-full right-0 mb-3"
                     />

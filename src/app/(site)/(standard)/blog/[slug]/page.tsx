@@ -3,6 +3,7 @@
 import { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { BlogPost } from '@/types/blog';
 import { BlogRenderer } from '@/components/BlogRenderer';
 import { ScrollProgress } from '@/components/ui/ScrollProgress';
@@ -131,11 +132,13 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
                 </div>
 
                 {post.coverImageUrl && (
-                  <div className="mb-12">
-                    <img
+                  <div className="mb-12 relative w-full h-[400px]">
+                    <Image
                       src={post.coverImageUrl}
                       alt={post.title}
-                      className="w-full rounded-2xl shadow-lg"
+                      fill
+                      className="rounded-2xl shadow-lg object-cover"
+                      sizes="(max-width: 1400px) 100vw, 1400px"
                     />
                   </div>
                 )}

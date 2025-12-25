@@ -2,14 +2,15 @@
 
 import { TiltCard } from '@/components/ui/TiltCard';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { BlogPost } from '@/types/blog';
 
-// WCAG AA compliant colors for white text (4.5:1+ contrast ratio)
+// WCAG AA compliant colors for 
+// white text (4.5:1+ contrast ratio)
 const colors = ['#2e6089', '#5d5a2e', '#7a3760', '#4d7a30', '#a85a32'];
 
-// Persona labels for display
 const PERSONA_LABELS: Record<string, string> = {
   p1: 'Junior Developer',
   p2: 'Senior Engineer',
@@ -39,7 +40,7 @@ function BlogContent() {
   const [categories, setCategories] = useState<string[]>(['All', 'AI Engineering', 'Leadership', 'Career', 'React']);
 
   useEffect(() => {
-    // fetchPosts(); // Disabled - showing sample posts only
+    fetchPosts();
   }, []);
 
   const fetchPosts = async () => {
@@ -59,12 +60,9 @@ function BlogContent() {
     }
   };
 
-  // Filter by category and persona
   let filteredPosts = selectedCategory === 'All'
     ? blogPosts
     : blogPosts.filter(post => post.category === selectedCategory);
-
-  // If persona is selected, prioritize relevant content and separate into matched and all posts
   let personaRelevantPosts: BlogPost[] = [];
   let otherPosts: BlogPost[] = [];
 
@@ -74,8 +72,6 @@ function BlogContent() {
   } else {
     personaRelevantPosts = filteredPosts;
   }
-
-
 
   if (loading) {
     return (
@@ -87,8 +83,6 @@ function BlogContent() {
 
   return (
     <>
-
-
       <section className="relative px-4 sm:px-8 md:px-16 py-10 sm:py-16 md:py-32">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8 sm:mb-16">
@@ -149,10 +143,12 @@ function BlogContent() {
                         }}
                       >
                         {post.coverImageUrl ? (
-                          <img
+                          <Image
                             src={post.coverImageUrl}
-                            alt=""
-                            className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                            alt={post.title}
+                            fill
+                            className="object-cover transition-transform duration-700 hover:scale-110"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           />
                         ) : (
                           <div className="text-white text-center p-6 bg-black/10 w-full h-full flex flex-col items-center justify-center backdrop-blur-[2px]">
@@ -218,10 +214,12 @@ function BlogContent() {
                           }}
                         >
                           {post.coverImageUrl ? (
-                            <img
+                            <Image
                               src={post.coverImageUrl}
-                              alt=""
+                              alt={post.title}
+                              fill
                               className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                              sizes="(max-width: 768px) 100vw, 33vw"
                             />
                           ) : (
                             <div className="text-white text-center p-6 bg-black/10 w-full h-full flex flex-col items-center justify-center backdrop-blur-[2px]">

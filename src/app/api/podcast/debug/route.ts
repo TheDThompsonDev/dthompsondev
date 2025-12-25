@@ -4,38 +4,34 @@ export const runtime = "edge";
 
 export async function GET(request: Request) {
   try {
-    const { origin } = new URL(request.url);
-
-    // Fetch YouTube episodes
+    const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+    const host = process.env.VERCEL_URL || 'localhost:3000';
+    const origin = `${protocol}://${host}`;
     const youtubeResponse = await fetch(`${origin}/api/podcast/youtube`, {
       cache: 'no-store'
     });
     const youtubeData = await youtubeResponse.json();
     const youtubeEpisodes = youtubeData.episodes || [];
-
-    // Fetch Spotify episodes
     const spotifyResponse = await fetch(`${origin}/api/podcast/spotify`, {
       cache: 'no-store'
     });
     const spotifyData = await spotifyResponse.json();
     const spotifyEpisodes = spotifyData.episodes || [];
 
-    // Compare dates to find potential matches
     const youtubeDates = new Set(youtubeEpisodes.map((ep: any) => ep.publishDate));
     const spotifyDates = new Set(spotifyEpisodes.map((ep: any) => ep.publishDate));
-    
-    const exactMatches = youtubeEpisodes.filter((ytEp: any) => 
+
+    const exactMatches = youtubeEpisodes.filter((ytEp: any) =>
       spotifyDates.has(ytEp.publishDate)
     );
-    
-    const unmatchedYouTube = youtubeEpisodes.filter((ytEp: any) => 
+
+    const unmatchedYouTube = youtubeEpisodes.filter((ytEp: any) =>
       !spotifyDates.has(ytEp.publishDate)
     );
-    const unmatchedSpotify = spotifyEpisodes.filter((spEp: any) => 
+    const unmatchedSpotify = spotifyEpisodes.filter((spEp: any) =>
       !youtubeDates.has(spEp.publishDate)
     );
 
-    // Return comprehensive comparison
     return NextResponse.json({
       ok: true,
       timestamp: new Date().toISOString(),
