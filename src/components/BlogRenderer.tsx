@@ -7,6 +7,8 @@ import { AnimatedDiagram } from '@/components/interactive/AnimatedDiagram';
 import { VirtualWhiteboard } from '@/components/interactive/VirtualWhiteboard';
 import { CodePlayground } from '@/components/interactive/CodePlayground';
 
+import DOMPurify from 'isomorphic-dompurify';
+
 interface BlogRendererProps {
   content: BlogContent;
 }
@@ -28,7 +30,7 @@ function BlockRenderer({ block }: { block: ContentBlock }) {
       .replace(/\*(.+?)\*/g, '<em>$1</em>')
       .replace(/__(.+?)__/g, '<u>$1</u>');
 
-    return formatted;
+    return DOMPurify.sanitize(formatted);
   };
 
   switch (block.type) {
