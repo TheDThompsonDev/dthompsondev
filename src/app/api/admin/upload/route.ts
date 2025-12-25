@@ -40,10 +40,10 @@ export async function POST(request: Request) {
     });
 
     const savedFile = await saveUploadedFile({
-      file_name: file.name,
-      blob_url: blob.url,
-      file_type: file.type,
-      file_size: file.size,
+      fileName: file.name,
+      blobUrl: blob.url,
+      fileType: file.type,
+      fileSize: file.size,
     });
 
     return NextResponse.json({

@@ -68,7 +68,7 @@ function BlogPostLayoutInner({
 
     // Logic to find the next post
     const sortedPosts = [...samplePosts].sort((a, b) =>
-        new Date(b.published_at || b.created_at).getTime() - new Date(a.published_at || a.created_at).getTime()
+        new Date(b.publishedAt || b.createdAt).getTime() - new Date(a.publishedAt || a.createdAt).getTime()
     );
 
     const currentIndex = sortedPosts.findIndex(p => p.slug === slug);

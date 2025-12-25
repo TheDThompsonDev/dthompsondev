@@ -112,28 +112,28 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
                   )}
 
                   <div className="flex flex-wrap items-center gap-4 text-sm text-[#153230]/60">
-                    <span className="font-medium">{post.author_name}</span>
+                    <span className="font-medium">{post.authorName}</span>
                     <span>•</span>
                     <time>
-                      {new Date(post.published_at || post.created_at).toLocaleDateString('en-US', {
+                      {new Date(post.publishedAt || post.createdAt).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric',
                       })}
                     </time>
-                    {post.read_time && (
+                    {post.readTime && (
                       <>
                         <span>•</span>
-                        <span>{post.read_time}</span>
+                        <span>{post.readTime}</span>
                       </>
                     )}
                   </div>
                 </div>
 
-                {post.cover_image_url && (
+                {post.coverImageUrl && (
                   <div className="mb-12">
                     <img
-                      src={post.cover_image_url}
+                      src={post.coverImageUrl}
                       alt={post.title}
                       className="w-full rounded-2xl shadow-lg"
                     />

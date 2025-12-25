@@ -38,8 +38,8 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
         setExcerpt(data.excerpt || '');
         setCategory(data.category || '');
         setFeatured(data.featured);
-        setCoverImage(data.cover_image_url || '');
-        setReadTime(data.read_time || '');
+        setCoverImage(data.coverImageUrl || '');
+        setReadTime(data.readTime || '');
         setStatus(data.status);
         setContent(data.content);
       } else {
@@ -110,8 +110,8 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
           content,
           category,
           featured,
-          cover_image_url: coverImage,
-          read_time: readTime,
+          coverImageUrl: coverImage,
+          readTime: readTime,
           status: newStatus || status,
         }),
       });

@@ -111,15 +111,15 @@ export default function TalksPage() {
 
         <div className="grid md:grid-cols-3 gap-6 mb-12">
           {featuredVideos.map((video, index) => (
-            <ScrollReveal key={video.id} delay={index * 100}>
+            <ScrollReveal key={video.id} delay={index * 100} className="h-full">
               <motion.a
                 href={video.youtubeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group block bg-white rounded-3xl overflow-hidden border-2 border-[#4D7DA3]/20 hover:border-[#4D7DA3] hover:shadow-2xl transition-all duration-500"
+                className="group block h-full bg-white rounded-3xl overflow-hidden border-2 border-[#4D7DA3]/20 hover:border-[#4D7DA3] hover:shadow-2xl transition-all duration-500 flex flex-col"
                 whileHover={{ y: -8, scale: 1.02 }}
               >
-                <div className="relative overflow-hidden">
+                <div className="relative overflow-hidden flex-shrink-0">
                   <img
                     src={video.thumbnail}
                     alt=""
@@ -137,16 +137,16 @@ export default function TalksPage() {
                     Featured
                   </div>
                 </div>
-                <div className="p-6">
+                <div className="p-6 flex flex-col flex-grow">
                   {video.channel && (
                     <div className="text-xs font-bold text-[#4D7DA3] mb-2 uppercase tracking-wide">
                       {video.channel}
                     </div>
                   )}
-                  <h3 className="text-xl font-black text-[#153230] mb-3 leading-tight group-hover:text-[#4D7DA3] transition-colors">
+                  <h3 className="text-xl font-black text-[#153230] mb-3 leading-tight group-hover:text-[#4D7DA3] transition-colors line-clamp-2">
                     {video.title}
                   </h3>
-                  <p className="text-sm text-[#153230]/70 leading-relaxed">
+                  <p className="text-sm text-[#153230]/70 leading-relaxed line-clamp-3">
                     {video.description}
                   </p>
                 </div>

@@ -46,8 +46,8 @@ export default async function PersonaPage({ params }: { params: Promise<{ id: st
     const relevantPosts = samplePosts.filter(post =>
         post.targetPersonas?.includes(personaId)
     ).sort((a, b) =>
-        new Date(b.published_at || b.created_at).getTime() -
-        new Date(a.published_at || a.created_at).getTime()
+        new Date(b.publishedAt || b.createdAt).getTime() -
+        new Date(a.publishedAt || a.createdAt).getTime()
     );
 
     // Get other posts that might be interesting
@@ -116,9 +116,9 @@ export default async function PersonaPage({ params }: { params: Promise<{ id: st
                                                 className="h-48 flex items-center justify-center relative overflow-hidden"
                                                 style={{ backgroundColor: getColorForPost(index) }}
                                             >
-                                                {post.cover_image_url ? (
+                                                {post.coverImageUrl ? (
                                                     <img
-                                                        src={post.cover_image_url}
+                                                        src={post.coverImageUrl}
                                                         alt=""
                                                         className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                                                     />
@@ -142,9 +142,9 @@ export default async function PersonaPage({ params }: { params: Promise<{ id: st
                                                         {post.category}
                                                     </span>
                                                     <span className="text-sm text-[#4a5757]">
-                                                        {new Date(post.published_at || post.created_at).toLocaleDateString()}
+                                                        {new Date(post.publishedAt || post.createdAt).toLocaleDateString()}
                                                     </span>
-                                                    <span className="text-sm text-[#4a5757]">• {post.read_time || '5 min'}</span>
+                                                    <span className="text-sm text-[#4a5757]">• {post.readTime || '5 min'}</span>
                                                 </div>
                                                 <h3 className="text-2xl font-black text-[#153230] mb-3 leading-tight">
                                                     {post.title}
@@ -231,9 +231,9 @@ export default async function PersonaPage({ params }: { params: Promise<{ id: st
                                                 className="h-32 relative overflow-hidden opacity-70"
                                                 style={{ backgroundColor: getColorForPost(index) }}
                                             >
-                                                {post.cover_image_url && (
+                                                {post.coverImageUrl && (
                                                     <img
-                                                        src={post.cover_image_url}
+                                                        src={post.coverImageUrl}
                                                         alt=""
                                                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                                                     />

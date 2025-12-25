@@ -53,8 +53,8 @@ async function indexBlogPosts(): Promise<AlgoliaRecord[]> {
         description: post.excerpt || '',
         url: `/blog/${post.slug}`,
         category: post.category,
-        date: post.published_at || post.created_at,
-        thumbnail: post.cover_image_url,
+        date: post.publishedAt || post.createdAt,
+        thumbnail: post.coverImageUrl,
     }));
 
     console.log(`   Found ${blogRecords.length} blog posts`);

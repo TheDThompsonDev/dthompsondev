@@ -7,18 +7,18 @@ export interface BlogPost {
   category?: string;
   featured: boolean;
   status: 'draft' | 'published';
-  read_time?: string;
-  cover_image_url?: string;
-  author_name: string;
-  created_at: string;
-  updated_at: string;
-  published_at?: string;
+  readTime?: string;
+  coverImageUrl?: string;
+  authorName: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt?: string;
   seo?: {
-    meta_description?: string;
-    focus_keyword?: string;
-    og_image?: string;
+    metaDescription?: string;
+    focusKeyword?: string;
+    ogImage?: string;
   };
-  targetPersonas?: string[]; // e.g., ['p1', 'p2'] for Junior Dev, Senior Engineer
+  targetPersonas?: string[];
 }
 
 export interface BlogContent {

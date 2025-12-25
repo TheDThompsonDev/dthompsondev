@@ -8,8 +8,8 @@ export interface BlogPostCreateInput {
   content: Prisma.JsonValue;
   category?: string;
   featured?: boolean;
-  read_time?: string;
-  cover_image_url?: string;
+  readTime?: string;
+  coverImageUrl?: string;
 }
 
 export interface BlogPostUpdateInput {
@@ -20,15 +20,15 @@ export interface BlogPostUpdateInput {
   category?: string;
   featured?: boolean;
   status?: string;
-  read_time?: string;
-  cover_image_url?: string;
+  readTime?: string;
+  coverImageUrl?: string;
 }
 
 export interface UploadedFileInput {
-  file_name: string;
-  blob_url: string;
-  file_type?: string;
-  file_size?: number;
+  fileName: string;
+  blobUrl: string;
+  fileType?: string;
+  fileSize?: number;
 }
 
 export async function queryBlogPosts(status?: string) {
@@ -100,8 +100,8 @@ export async function createBlogPost(data: BlogPostCreateInput) {
         content: data.content || { blocks: [] },
         category: data.category,
         featured: data.featured || false,
-        readTime: data.read_time,
-        coverImageUrl: data.cover_image_url,
+        readTime: data.readTime,
+        coverImageUrl: data.coverImageUrl,
         status: 'draft'
       }
     });
@@ -123,8 +123,8 @@ export async function updateBlogPost(id: number, data: BlogPostUpdateInput) {
     if (data.content !== undefined && data.content !== null) updateData.content = data.content as Prisma.InputJsonValue;
     if (data.category !== undefined) updateData.category = data.category;
     if (data.featured !== undefined) updateData.featured = data.featured;
-    if (data.read_time !== undefined) updateData.readTime = data.read_time;
-    if (data.cover_image_url !== undefined) updateData.coverImageUrl = data.cover_image_url;
+    if (data.readTime !== undefined) updateData.readTime = data.readTime;
+    if (data.coverImageUrl !== undefined) updateData.coverImageUrl = data.coverImageUrl;
 
     if (data.status !== undefined) {
       updateData.status = data.status;
@@ -162,10 +162,10 @@ export async function saveUploadedFile(data: UploadedFileInput) {
   try {
     const file = await prisma.uploadedFile.create({
       data: {
-        fileName: data.file_name,
-        blobUrl: data.blob_url,
-        fileType: data.file_type,
-        fileSize: data.file_size
+        fileName: data.fileName,
+        blobUrl: data.blobUrl,
+        fileType: data.fileType,
+        fileSize: data.fileSize
       }
     });
 

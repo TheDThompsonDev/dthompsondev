@@ -314,10 +314,10 @@ export function OrbitSwitcher() {
                             className="block bg-white rounded-xl p-3 border border-[#4D7DA3]/10 hover:border-[#4D7DA3]/40 hover:shadow-md transition-all duration-300 group"
                           >
                             <div className="flex gap-3">
-                              {post.cover_image_url && (
+                              {post.coverImageUrl && (
                                 <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0 bg-[#4D7DA3]/10">
                                   <img
-                                    src={post.cover_image_url}
+                                    src={post.coverImageUrl}
                                     alt=""
                                     className="w-full h-full object-cover"
                                   />
@@ -328,7 +328,7 @@ export function OrbitSwitcher() {
                                 <h4 className="text-sm font-bold text-[#153230] leading-tight group-hover:text-[#4D7DA3] transition-colors line-clamp-2">
                                   {post.title}
                                 </h4>
-                                <span className="text-[10px] text-[#153230]/60">{post.read_time}</span>
+                                <span className="text-[10px] text-[#153230]/60">{post.readTime}</span>
                               </div>
                             </div>
                           </Link>

@@ -43,8 +43,8 @@ export async function POST(request: Request) {
       content: data.content || { blocks: [] },
       category: data.category,
       featured: data.featured,
-      read_time: data.read_time,
-      cover_image_url: data.cover_image_url,
+      readTime: data.readTime,
+      coverImageUrl: data.coverImageUrl,
     });
 
     return NextResponse.json(post, { status: 201 });

@@ -137,7 +137,7 @@ function BlogContent() {
 
           <div className="grid md:grid-cols-2 gap-8">
             {personaRelevantPosts
-              .sort((a, b) => new Date(b.published_at || b.created_at).getTime() - new Date(a.published_at || a.created_at).getTime())
+              .sort((a, b) => new Date(b.publishedAt || b.createdAt).getTime() - new Date(a.publishedAt || a.createdAt).getTime())
               .map((post, index) => (
                 <TiltCard className="h-full" key={post.id}>
                   <Link href={`/blog/${post.slug}`} className="block h-full">
@@ -148,9 +148,9 @@ function BlogContent() {
                           backgroundColor: getColorForPost(index)
                         }}
                       >
-                        {post.cover_image_url ? (
+                        {post.coverImageUrl ? (
                           <img
-                            src={post.cover_image_url}
+                            src={post.coverImageUrl}
                             alt=""
                             className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                           />
@@ -174,9 +174,9 @@ function BlogContent() {
                             {post.category}
                           </span>
                           <span className="text-sm text-[#4a5757]">
-                            {new Date(post.published_at || post.created_at).toLocaleDateString()}
+                            {new Date(post.publishedAt || post.createdAt).toLocaleDateString()}
                           </span>
-                          <span className="text-sm text-[#4a5757]">• {post.read_time || '5 min'}</span>
+                          <span className="text-sm text-[#4a5757]">• {post.readTime || '5 min'}</span>
                         </div>
                         <h2 className="text-2xl font-black text-[#153230] mb-3 leading-tight">
                           {post.title}
@@ -217,9 +217,9 @@ function BlogContent() {
                             backgroundColor: getColorForPost(index)
                           }}
                         >
-                          {post.cover_image_url ? (
+                          {post.coverImageUrl ? (
                             <img
-                              src={post.cover_image_url}
+                              src={post.coverImageUrl}
                               alt=""
                               className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                             />
@@ -238,9 +238,9 @@ function BlogContent() {
                               {post.category}
                             </span>
                             <span className="text-sm text-[#4a5757]">
-                              {new Date(post.published_at || post.created_at).toLocaleDateString()}
+                              {new Date(post.publishedAt || post.createdAt).toLocaleDateString()}
                             </span>
-                            <span className="text-sm text-[#4a5757]">• {post.read_time || '5 min'}</span>
+                            <span className="text-sm text-[#4a5757]">• {post.readTime || '5 min'}</span>
                           </div>
                           <h2 className="text-2xl font-black text-[#153230] mb-3 leading-tight">
                             {post.title}
