@@ -3,8 +3,9 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { samplePosts } from '@/data/blogPosts';
 import { PERSONA_INFO } from '@/data/personaContent';
-import { TiltCard } from '@/components/ui/TiltCard';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
+import { TrackedPostCard } from './TrackedPostCard';
+import { TrackedPodcastBanner } from './TrackedPodcastBanner';
 
 const VALID_PERSONA_IDS = ['p1', 'p2', 'p3', 'p4', 'p5', 'p6'];
 
@@ -104,53 +105,12 @@ export default async function PersonaPage({ params }: { params: Promise<{ id: st
                     {relevantPosts.length > 0 ? (
                         <div className="grid md:grid-cols-2 gap-8 mb-16">
                             {relevantPosts.map((post, index) => (
-                                <TiltCard className="h-full" key={post.id}>
-                                    <Link href={`/blog/${post.slug}`} className="block h-full">
-                                        <div className="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-[#4D7DA3]/10 h-full">
-                                            <div
-                                                className="h-48 flex items-center justify-center relative overflow-hidden"
-                                                style={{ backgroundColor: getColorForPost(index) }}
-                                            >
-                                                {post.coverImageUrl ? (
-                                                    <img
-                                                        src={post.coverImageUrl}
-                                                        alt=""
-                                                        className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-                                                    />
-                                                ) : (
-                                                    <div className="text-white text-center p-6 bg-black/10 w-full h-full flex flex-col items-center justify-center backdrop-blur-[2px]">
-                                                        <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                                                            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                                                            </svg>
-                                                        </div>
-                                                        <span className="text-xs font-bold tracking-wider uppercase">Read Post</span>
-                                                    </div>
-                                                )}
-                                            </div>
-                                            <div className="p-6">
-                                                <div className="flex items-center gap-3 mb-4">
-                                                    <span
-                                                        className="px-3 py-1 rounded-full text-xs font-black text-white"
-                                                        style={{ backgroundColor: getColorForPost(index) }}
-                                                    >
-                                                        {post.category}
-                                                    </span>
-                                                    <span className="text-sm text-[#4a5757]">
-                                                        {new Date(post.publishedAt || post.createdAt).toLocaleDateString()}
-                                                    </span>
-                                                    <span className="text-sm text-[#4a5757]">• {post.readTime || '5 min'}</span>
-                                                </div>
-                                                <h3 className="text-2xl font-black text-[#153230] mb-3 leading-tight">
-                                                    {post.title}
-                                                </h3>
-                                                <p className="text-[#153230]/70 leading-relaxed">
-                                                    {post.excerpt}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </Link>
-                                </TiltCard>
+                                <TrackedPostCard
+                                    key={post.id}
+                                    post={post}
+                                    index={index}
+                                    personaId={personaId}
+                                />
                             ))}
                         </div>
                     ) : (
@@ -174,43 +134,7 @@ export default async function PersonaPage({ params }: { params: Promise<{ id: st
                                 Deep dives on career, tech, and growth
                             </p>
                         </div>
-                        <Link
-                            href="/podcast"
-                            className="block bg-gradient-to-br from-[#153230] to-[#1a3d3a] rounded-2xl p-6 sm:p-8 border border-[#4D7DA3]/20 hover:border-[#4D7DA3]/40 hover:shadow-xl transition-all duration-300 group"
-                        >
-                            <div className="flex flex-col sm:flex-row items-center gap-6">
-                                <div className="w-24 h-24 rounded-2xl bg-[#4D7DA3] flex items-center justify-center shrink-0">
-                                    <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M12 1c-4.97 0-9 4.03-9 9v7c0 1.66 1.34 3 3 3h3v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-4v8h3c1.66 0 3-1.34 3-3v-7c0-4.97-4.03-9-9-9z" />
-                                    </svg>
-                                </div>
-                                <div className="flex-1 text-center sm:text-left">
-                                    <h3 className="text-xl sm:text-2xl font-black text-white leading-tight group-hover:text-[#4D7DA3] transition-colors">
-                                        The Programming Podcast
-                                    </h3>
-                                    <p className="text-white/70 mt-2 max-w-xl">
-                                        Join Danny Thompson and Leon Noel for real talk about AI, career advice, and everything developers need to thrive.
-                                    </p>
-                                    <div className="flex flex-wrap justify-center sm:justify-start gap-3 mt-4">
-                                        <span className="inline-flex items-center gap-1.5 text-xs font-bold text-white/80 bg-white/10 px-3 py-1.5 rounded-full">
-                                            <svg className="w-4 h-4 text-[#FF0000]" viewBox="0 0 24 24" fill="currentColor">
-                                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z" />
-                                            </svg>
-                                            YouTube
-                                        </span>
-                                        <span className="inline-flex items-center gap-1.5 text-xs font-bold text-white/80 bg-white/10 px-3 py-1.5 rounded-full">
-                                            <svg className="w-4 h-4 text-[#1DB954]" viewBox="0 0 24 24" fill="currentColor">
-                                                <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02z" />
-                                            </svg>
-                                            Spotify
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="text-white/60 group-hover:text-white transition-colors text-2xl hidden sm:block">
-                                    →
-                                </div>
-                            </div>
-                        </Link>
+                        <TrackedPodcastBanner />
                     </div>
 
                     {otherPosts.length > 0 && (

@@ -17,6 +17,7 @@ import {
     ContactIcon,
     MatrixIcon
 } from './icons';
+import { trackCommandPalette } from '@/lib/analytics';
 
 interface Command {
     id: string;
@@ -44,21 +45,14 @@ export function CommandPalette() {
         setIsMac(navigator.platform.toUpperCase().indexOf('MAC') >= 0);
     }, []);
 
-    // Security: Max query length
     const MAX_QUERY_LENGTH = 100;
 
-    // Debounced Algolia search with protection
     useEffect(() => {
-        // Too short - clear results immediately
         if (search.trim().length < 2) {
             clearResults();
             return;
         }
-
-        // Truncate query if too long (security)
         const sanitizedQuery = search.trim().slice(0, MAX_QUERY_LENGTH);
-
-        // Debounce search to prevent API abuse
         const timer = setTimeout(() => {
             searchAlgolia(sanitizedQuery);
         }, 300);
@@ -159,7 +153,7 @@ export function CommandPalette() {
         if (isOpen) {
             previousActiveElement.current = document.activeElement as HTMLElement;
             document.body.style.overflow = 'hidden';
-            // Focus input after animation
+            trackCommandPalette({ action: 'open' });
             setTimeout(() => inputRef.current?.focus(), 50);
         } else {
             document.body.style.overflow = 'unset';
@@ -188,6 +182,11 @@ export function CommandPalette() {
             case 'Enter':
                 e.preventDefault();
                 if (filteredCommands[selectedIndex]) {
+                    trackCommandPalette({
+                        action: 'navigate',
+                        destination: filteredCommands[selectedIndex].id,
+                        query: search || undefined
+                    });
                     filteredCommands[selectedIndex].action();
                     closePalette();
                 }
@@ -389,7 +388,6 @@ export function CommandPalette() {
                                                 );
                                             })}
 
-                                        {/* Content Search Results from Algolia */}
                                         {search.trim().length >= 2 && (
                                             <>
                                                 <div className="px-3 py-1.5 mt-2 border-t border-gray-100">

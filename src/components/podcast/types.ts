@@ -18,6 +18,7 @@ export interface RadioTunerProps {
     handleThumbnailError: (episodeIndex: number) => void;
     thumbnailError: Record<number, number>;
     formatDate: (dateString: string) => string;
+    onPlatformClick?: (platform: 'spotify' | 'youtube', episodeTitle: string) => void;
 }
 
 export interface RadioTunerDesktopProps extends RadioTunerProps {

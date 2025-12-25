@@ -3,11 +3,12 @@
 import { useState } from 'react';
 import { Modal } from '@/components/ui/Modal';
 import { ContactForm } from './ContactForm';
+import { trackContact } from '@/lib/analytics';
 
 interface ContactModalButtonProps {
     children: React.ReactNode;
     className?: string;
-    onClick?: () => void; // Called when button is clicked (useful for closing mobile menu)
+    onClick?: () => void;
 }
 
 export function ContactModalButton({ children, className = '', onClick }: ContactModalButtonProps) {
@@ -16,6 +17,7 @@ export function ContactModalButton({ children, className = '', onClick }: Contac
     const handleClick = () => {
         onClick?.();
         setIsModalOpen(true);
+        trackContact('modal_open');
     };
 
     return (

@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { Episode } from './podcast/types';
 import dynamic from 'next/dynamic';
 import { Loader2 } from 'lucide-react';
+import { trackContent } from '@/lib/analytics';
 
 const RadioTunerMobile = dynamic(() => import('./podcast/RadioTunerMobile').then(mod => mod.RadioTunerMobile), {
   loading: () => (
@@ -29,13 +30,10 @@ interface PodcastRadioTunerProps {
 }
 
 export function PodcastRadioTuner({ episodes }: PodcastRadioTunerProps) {
-  // Merge episodes by order/index - YouTube and Spotify episodes are now perfectly aligned
   const mergedEpisodes = useMemo(() => {
-    // Separate YouTube and Spotify episodes
     const youtubeEpisodes = episodes.filter(ep => ep.platform === 'youtube');
     const spotifyEpisodes = episodes.filter(ep => ep.platform === 'spotify');
 
-    // Merge by index (order)
     const merged: Episode[] = [];
     const maxLength = Math.max(youtubeEpisodes.length, spotifyEpisodes.length);
 
@@ -44,11 +42,10 @@ export function PodcastRadioTuner({ episodes }: PodcastRadioTunerProps) {
       const spotify = spotifyEpisodes[i];
 
       if (youtube && spotify) {
-        // Both exist - merge them, prioritizing YouTube thumbnail and Spotify metadata
         merged.push({
           ...spotify,
           videoUrl: youtube.videoUrl,
-          thumbnail: youtube.thumbnail, // Prioritize YouTube thumbnail
+          thumbnail: youtube.thumbnail,
           duration: youtube.duration || spotify.duration,
         });
       } else if (youtube) {
@@ -58,7 +55,6 @@ export function PodcastRadioTuner({ episodes }: PodcastRadioTunerProps) {
       }
     }
 
-    // Take the top 4
     const latest = merged.slice(0, 4);
 
     return latest;
@@ -70,21 +66,14 @@ export function PodcastRadioTuner({ episodes }: PodcastRadioTunerProps) {
   const [thumbnailError, setThumbnailError] = useState<Record<number, number>>({});
   const [isMounted, setIsMounted] = useState(false);
 
-  // Set mounted flag on client side only to avoid hydration mismatch
   useEffect(() => {
     setIsMounted(true);
   }, []);
-
-  // Get thumbnail URL with fallback quality levels
   const getThumbnailUrl = (baseUrl: string | undefined, episodeIndex: number): string | undefined => {
     if (!baseUrl) return undefined;
 
     const errorLevel = thumbnailError[episodeIndex] || 0;
-
-    // YouTube thumbnail quality levels (highest to lowest)
     const qualities = ['hqdefault.jpg', 'mqdefault.jpg', 'default.jpg'];
-
-    // If it's a YouTube thumbnail, try different quality levels
     if (baseUrl.includes('i.ytimg.com') && baseUrl.includes('hqdefault.jpg')) {
       const currentQuality = qualities[errorLevel];
       if (currentQuality) {
@@ -95,10 +84,9 @@ export function PodcastRadioTuner({ episodes }: PodcastRadioTunerProps) {
     return baseUrl;
   };
 
-  // Handle thumbnail load error
   const handleThumbnailError = (episodeIndex: number) => {
     const currentErrorLevel = thumbnailError[episodeIndex] || 0;
-    if (currentErrorLevel < 2) { // Try up to 3 quality levels
+    if (currentErrorLevel < 2) {
       setThumbnailError(prev => ({
         ...prev,
         [episodeIndex]: currentErrorLevel + 1
@@ -106,7 +94,6 @@ export function PodcastRadioTuner({ episodes }: PodcastRadioTunerProps) {
     }
   };
 
-  // Auto-rotate (pause when hovering or dragging)
   useEffect(() => {
     if (!isHovering && !isDragging && mergedEpisodes.length > 1) {
       const interval = setInterval(() => {
@@ -116,23 +103,19 @@ export function PodcastRadioTuner({ episodes }: PodcastRadioTunerProps) {
     }
   }, [isHovering, isDragging, mergedEpisodes.length]);
 
-  // Calculate angle from client coordinates
   const calculateAngle = (clientX: number, clientY: number, knobElement: HTMLElement) => {
     const rect = knobElement.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
     const angle = Math.atan2(clientY - centerY, clientX - centerX);
-    const normalizedAngle = (angle + Math.PI) / (2 * Math.PI); // 0 to 1
+    const normalizedAngle = (angle + Math.PI) / (2 * Math.PI);
     return Math.floor(normalizedAngle * mergedEpisodes.length) % mergedEpisodes.length;
   };
 
-  // Handle tuning knob interaction (click)
   const handleKnobClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const newIndex = calculateAngle(e.clientX, e.clientY, e.currentTarget);
     setSelectedIndex(newIndex);
   };
-
-  // Mouse drag support
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true);
     const newIndex = calculateAngle(e.clientX, e.clientY, e.currentTarget);
@@ -150,7 +133,6 @@ export function PodcastRadioTuner({ episodes }: PodcastRadioTunerProps) {
     setIsDragging(false);
   };
 
-  // Touch support for mobile
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     setIsDragging(true);
     const touch = e.touches[0];
@@ -170,7 +152,6 @@ export function PodcastRadioTuner({ episodes }: PodcastRadioTunerProps) {
     setIsDragging(false);
   };
 
-  // Keyboard support for accessibility
   const handleKnobKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     switch (e.key) {
       case 'ArrowRight':
@@ -208,6 +189,14 @@ export function PodcastRadioTuner({ episodes }: PodcastRadioTunerProps) {
     });
   };
 
+  const handlePlatformClick = (platform: 'spotify' | 'youtube', episodeTitle: string) => {
+    trackContent({
+      type: 'podcast',
+      title: episodeTitle,
+      action: 'external_link'
+    });
+  };
+
   const knobHandlers = {
     onClick: handleKnobClick,
     onMouseDown: handleMouseDown,
@@ -230,6 +219,7 @@ export function PodcastRadioTuner({ episodes }: PodcastRadioTunerProps) {
         handleThumbnailError={handleThumbnailError}
         thumbnailError={thumbnailError}
         formatDate={formatDate}
+        onPlatformClick={handlePlatformClick}
       />
       <RadioTunerDesktop
         mergedEpisodes={mergedEpisodes}
@@ -241,6 +231,7 @@ export function PodcastRadioTuner({ episodes }: PodcastRadioTunerProps) {
         formatDate={formatDate}
         setIsHovering={setIsHovering}
         knobHandlers={knobHandlers}
+        onPlatformClick={handlePlatformClick}
       />
     </>
   );

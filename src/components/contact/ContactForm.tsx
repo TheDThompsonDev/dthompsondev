@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react';
 import { isValidEmail, isValidName, isValidMessage } from '@/lib/validation';
 import { FloatingLabelInput } from '@/components/ui/FloatingLabelInput';
+import { trackContact } from '@/lib/analytics';
 
 export function ContactForm() {
   const [formData, setFormData] = useState({
@@ -24,6 +25,7 @@ export function ContactForm() {
     e.preventDefault();
     setStatus('loading');
     setErrorMessage('');
+    trackContact('form_submit');
 
     try {
       // Regular fetch - BotID automatically attaches verification headers
@@ -57,12 +59,14 @@ export function ContactForm() {
       }
 
       setStatus('success');
+      trackContact('form_success');
       setFormData({ name: '', email: '', company: '', message: '' });
       setTouchedFields(new Set());
 
       setTimeout(() => setStatus('idle'), 5000);
     } catch (error) {
       setStatus('error');
+      trackContact('form_error');
       setErrorMessage(error instanceof Error ? error.message : 'Something went wrong');
     }
   };

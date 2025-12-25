@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
+import { track } from '@vercel/analytics';
 
 export function NewsletterForm() {
     const [email, setEmail] = useState('');
@@ -10,6 +11,7 @@ export function NewsletterForm() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setStatus('loading');
+        track('newsletter', { action: 'submit' });
 
         try {
             const res = await fetch('/api/newsletter', {
@@ -20,12 +22,15 @@ export function NewsletterForm() {
 
             if (res.ok) {
                 setStatus('success');
+                track('newsletter', { action: 'success' });
                 setEmail('');
             } else {
                 setStatus('error');
+                track('newsletter', { action: 'error' });
             }
         } catch (error) {
             setStatus('error');
+            track('newsletter', { action: 'error' });
         }
     };
 

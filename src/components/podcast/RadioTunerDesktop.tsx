@@ -7,13 +7,13 @@ import { RadioTunerDesktopProps } from './types';
 export const RadioTunerDesktop = ({
     mergedEpisodes,
     selectedIndex,
-    setSelectedIndex,
     getThumbnailUrl,
     handleThumbnailError,
     thumbnailError,
     formatDate,
     setIsHovering,
-    knobHandlers
+    knobHandlers,
+    onPlatformClick
 }: RadioTunerDesktopProps) => {
     const selectedEpisode = mergedEpisodes[selectedIndex] || mergedEpisodes[0];
 
@@ -26,7 +26,6 @@ export const RadioTunerDesktop = ({
                 boxShadow: 'inset 0 1px 2px rgba(255,255,255,0.15), 0 15px 45px rgba(0,0,0,0.6), 0 0 0 2px rgba(77,125,163,0.2)',
             }}
         >
-            {/* Plastic/Metal texture overlay */}
             <div className="absolute inset-0 opacity-10 pointer-events-none" style={{
                 backgroundImage: `
           repeating-linear-gradient(0deg, 
@@ -38,14 +37,11 @@ export const RadioTunerDesktop = ({
         `,
             }}></div>
 
-            {/* Carrying Handle */}
             <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-32 h-12">
                 <div className="relative w-full h-full">
-                    {/* Handle arc */}
                     <div className="absolute inset-x-0 top-0 h-10 border-4 border-[#4D7DA3] rounded-t-full bg-gradient-to-b from-[#5a8db3] to-[#4D7DA3]" style={{
                         boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.3), inset 0 -2px 4px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.4)',
                     }}></div>
-                    {/* Handle connectors */}
                     <div className="absolute bottom-0 left-2 w-6 h-4 bg-[#4D7DA3] rounded-b border-2 border-[#3d6a8a]" style={{
                         boxShadow: 'inset 0 -1px 2px rgba(0,0,0,0.5)',
                     }}></div>
@@ -55,7 +51,6 @@ export const RadioTunerDesktop = ({
                 </div>
             </div>
 
-            {/* Corner Screws - Chrome/Metal */}
             {[...Array(4)].map((_, i) => (
                 <div
                     key={i}
@@ -71,7 +66,6 @@ export const RadioTunerDesktop = ({
                 </div>
             ))}
 
-            {/* Top Brand Badge - Compact */}
             <div className="relative z-10 mb-3">
                 <div className="bg-gradient-to-b from-[#0a1a18] to-[#061210] rounded-lg p-2 border-2 border-[#4D7DA3] shadow-lg relative"
                     style={{
@@ -92,7 +86,7 @@ export const RadioTunerDesktop = ({
                                 THE PROGRAMMING PODCAST
                             </h2>
                             <p className="text-[7px] uppercase tracking-[0.25em] text-[#4D7DA3] font-bold mt-0.5">
-                                EST. 2023 • WEEKLY BROADCASTS
+                                EST. 2024 • WEEKLY BROADCASTS
                             </p>
                         </div>
                     </div>
@@ -100,10 +94,8 @@ export const RadioTunerDesktop = ({
             </div>
 
             <div className="space-y-3">
-                {/* Multi-Band Radio Dial Face with Flanking Knobs */}
                 <div className="relative">
                     <div className="flex items-center gap-4 md:gap-6">
-                        {/* LEFT KNOB - VOLUME */}
                         <div className="shrink-0">
                             <div className="text-[8px] text-center text-[#c9a961] font-bold uppercase tracking-wider mb-1.5 opacity-70">
                                 Volume
@@ -114,32 +106,24 @@ export const RadioTunerDesktop = ({
                                         boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.1), inset 0 -2px 4px rgba(0,0,0,0.5), 0 6px 12px rgba(0,0,0,0.6)',
                                     }}
                                 >
-                                    {/* Knob ridges */}
                                     <div className="absolute inset-0 rounded-full opacity-50" style={{
                                         backgroundImage: 'repeating-conic-gradient(from 0deg, transparent 0deg 8deg, rgba(0,0,0,0.2) 8deg 10deg)',
                                     }}></div>
-
-                                    {/* Pointer indicator */}
                                     <div className="absolute top-2 left-1/2 -translate-x-1/2 w-1.5 h-3 bg-[#c9a961] rounded-full shadow-lg"></div>
 
-                                    {/* Center circle */}
                                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-[#1a0f0a] border-2 border-[#5c3d2e]"></div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* CENTER - SINGLE HORIZONTAL DIAL */}
                         <div className="flex-1">
                             <div className="bg-black rounded-lg p-3 md:p-4 border-4 border-[#4D7DA3] shadow-2xl relative overflow-hidden" style={{
                                 boxShadow: 'inset 0 3px 8px rgba(0,0,0,0.9), 0 6px 12px rgba(0,0,0,0.6)',
                             }}>
-                                {/* Glass reflection */}
                                 <div className="absolute inset-0 bg-linear-to-br from-white/10 via-transparent to-transparent pointer-events-none"></div>
 
                                 <div className="relative z-10">
-                                    {/* Single Horizontal Dial - FM/MW/SW Combined */}
                                     <div className="relative h-16 md:h-20 bg-linear-to-r from-[#8B0000] via-[#4D7DA3] to-[#7BA05B] rounded-sm border-2 border-white/20 overflow-hidden">
-                                        {/* Frequency markers */}
                                         <div className="absolute inset-0 flex items-center justify-between px-2 md:px-4 text-[8px] md:text-[10px] font-bold text-white/90">
                                             <span>FM</span>
                                             <span>88</span>
@@ -151,7 +135,6 @@ export const RadioTunerDesktop = ({
                                             <span>MC</span>
                                         </div>
 
-                                        {/* MW Band markers (second row) */}
                                         <div className="absolute bottom-0 inset-x-0 flex items-center justify-between px-2 md:px-4 text-[7px] md:text-[9px] font-bold text-white/70 pb-1">
                                             <span>MW</span>
                                             <span>55</span>
@@ -163,7 +146,6 @@ export const RadioTunerDesktop = ({
                                             <span>KC</span>
                                         </div>
 
-                                        {/* Sliding Tuning Indicator - moves left to right */}
                                         <div
                                             className="absolute top-0 bottom-0 w-0.5 md:w-1 bg-white shadow-lg transition-all duration-300 z-10"
                                             style={{
@@ -172,7 +154,6 @@ export const RadioTunerDesktop = ({
                                             }}
                                         ></div>
 
-                                        {/* Red needle pointer at top */}
                                         <div
                                             className="absolute -top-1 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-8 border-t-[#FF0000] transition-all duration-300 z-20"
                                             style={{
@@ -182,7 +163,6 @@ export const RadioTunerDesktop = ({
                                         ></div>
                                     </div>
 
-                                    {/* Station indicator */}
                                     <div className="text-center mt-2">
                                         <span className="text-[10px] font-mono text-[#E2F3F2]/60 uppercase tracking-wider">
                                             Station {selectedIndex + 1} of {mergedEpisodes.length}
@@ -192,7 +172,6 @@ export const RadioTunerDesktop = ({
                             </div>
                         </div>
 
-                        {/* RIGHT KNOB - TUNING (Interactive) */}
                         <div className="shrink-0">
                             <div className="text-[8px] text-center text-[#c9a961] font-bold uppercase tracking-wider mb-1.5 opacity-70">
                                 Tuning
@@ -212,12 +191,9 @@ export const RadioTunerDesktop = ({
                                         boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.1), inset 0 -2px 4px rgba(0,0,0,0.5), 0 6px 12px rgba(0,0,0,0.6)',
                                     }}
                                 >
-                                    {/* Knob ridges */}
                                     <div className="absolute inset-0 rounded-full opacity-50 pointer-events-none" style={{
                                         backgroundImage: 'repeating-conic-gradient(from 0deg, transparent 0deg 8deg, rgba(0,0,0,0.2) 8deg 10deg)',
                                     }}></div>
-
-                                    {/* Pointer indicator - rotates based on selected episode */}
                                     <div
                                         className="absolute w-1.5 h-3 bg-[#c9a961] rounded-full shadow-lg transition-transform duration-300 pointer-events-none"
                                         style={{
@@ -228,7 +204,6 @@ export const RadioTunerDesktop = ({
                                         }}
                                     ></div>
 
-                                    {/* Center circle */}
                                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-[#1a0f0a] border-2 border-[#5c3d2e] pointer-events-none"></div>
                                 </div>
                             </div>
@@ -236,20 +211,14 @@ export const RadioTunerDesktop = ({
                     </div>
                 </div>
 
-                {/* Display Section - Compact with side constraints to match dial width */}
                 <div className="flex items-center gap-4 md:gap-6">
-                    {/* LEFT SPACER - matches knob width */}
                     <div className="shrink-0 w-14 md:w-16"></div>
-
-                    {/* CENTER - Display content */}
                     <div className="flex-1 relative bg-black rounded-xl p-3 md:p-4 border-3 border-[#153230] shadow-xl overflow-hidden" style={{
                         boxShadow: 'inset 0 3px 8px rgba(0,0,0,0.9), 0 4px 8px rgba(0,0,0,0.5)',
                     }}>
-                        {/* Screen glow */}
                         <div className="absolute inset-0 bg-gradient-radial from-[#4D7DA3]/5 via-transparent to-transparent"></div>
 
                         <div className="relative z-10">
-                            {/* NOW BROADCASTING Indicator - Compact */}
                             <div className="flex items-center gap-2 mb-3 justify-center flex-wrap">
                                 <div className="relative flex items-center justify-center">
                                     <div className="w-2.5 h-2.5 bg-[#FF0000] rounded-full animate-pulse shadow-lg" style={{
@@ -270,9 +239,7 @@ export const RadioTunerDesktop = ({
                                 </div>
                             </div>
 
-                            {/* Fixed height container to prevent layout shifts */}
                             <div className="grid md:grid-cols-[160px_1fr] gap-3 min-h-[180px] md:min-h-[160px]">
-                                {/* Episode Thumbnail Display */}
                                 <div className="relative h-fit">
                                     <div className="bg-[#0a1a18] p-2 rounded-lg border-2 border-[#4D7DA3] shadow-xl relative" style={{
                                         boxShadow: 'inset 0 2px 6px rgba(0,0,0,0.8), 0 3px 6px rgba(0,0,0,0.4)',
@@ -289,11 +256,9 @@ export const RadioTunerDesktop = ({
                                                         sizes="(max-width: 768px) 100vw, 160px"
                                                         onError={() => handleThumbnailError(selectedIndex)}
                                                     />
-                                                    {/* Screen scanlines */}
                                                     <div className="absolute inset-0 pointer-events-none opacity-20" style={{
                                                         backgroundImage: 'repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(0,0,0,0.5) 2px, rgba(0,0,0,0.5) 4px)',
                                                     }}></div>
-                                                    {/* Glass reflection */}
                                                     <div className="absolute inset-0 bg-linear-to-br from-white/10 via-transparent to-transparent opacity-40"></div>
                                                 </>
                                             ) : (
@@ -305,7 +270,6 @@ export const RadioTunerDesktop = ({
                                             )}
                                         </div>
 
-                                        {/* Platform indicator bulbs */}
                                         <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 flex gap-2">
                                             {selectedEpisode.audioUrl && (
                                                 <div className="relative">
@@ -338,10 +302,8 @@ export const RadioTunerDesktop = ({
                                     </div>
                                 </div>
 
-                                {/* Episode Details - Fixed height layout */}
                                 <div className="flex flex-col justify-between min-h-[160px]">
                                     <div className="flex-1">
-                                        {/* Metadata row - fixed height */}
                                         <div className="flex flex-wrap items-center gap-2 mb-2 h-5">
                                             <span className="text-[10px] font-mono font-bold text-[#4D7DA3] tracking-wide">
                                                 {formatDate(selectedEpisode.publishDate)}
@@ -356,20 +318,17 @@ export const RadioTunerDesktop = ({
                                             )}
                                         </div>
 
-                                        {/* Title - fixed height for up to 2 lines */}
                                         <h3 className="text-base md:text-lg font-black text-[#E2F3F2] mb-2 leading-snug line-clamp-2 h-[42px] md:h-[48px] overflow-hidden" style={{
                                             textShadow: '0 1px 3px rgba(0,0,0,0.8)',
                                         }}>
                                             {selectedEpisode.title}
                                         </h3>
 
-                                        {/* Description - fixed height for 2 lines */}
                                         <p className="text-xs text-[#E2F3F2]/70 leading-relaxed line-clamp-2 mb-3 h-[36px] overflow-hidden">
                                             {selectedEpisode.description}
                                         </p>
                                     </div>
 
-                                    {/* Platform buttons with retro style - fixed at bottom */}
                                     <div className="flex gap-2">
                                         {selectedEpisode.audioUrl && (
                                             <a
@@ -380,6 +339,7 @@ export const RadioTunerDesktop = ({
                                                 style={{
                                                     boxShadow: '0 3px 6px rgba(29,185,84,0.4), inset 0 1px 2px rgba(255,255,255,0.3)',
                                                 }}
+                                                onClick={() => onPlatformClick?.('spotify', selectedEpisode.title)}
                                             >
                                                 <svg className="w-3.5 h-3.5 relative z-10" viewBox="0 0 24 24" fill="currentColor">
                                                     <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z" />
@@ -398,6 +358,7 @@ export const RadioTunerDesktop = ({
                                                 style={{
                                                     boxShadow: '0 3px 6px rgba(255,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.3)',
                                                 }}
+                                                onClick={() => onPlatformClick?.('youtube', selectedEpisode.title)}
                                             >
                                                 <svg className="w-3.5 h-3.5 relative z-10" viewBox="0 0 24 24" fill="currentColor">
                                                     <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
@@ -412,19 +373,15 @@ export const RadioTunerDesktop = ({
                         </div>
                     </div>
 
-                    {/* RIGHT SPACER - matches knob width */}
                     <div className="shrink-0 w-14 md:w-16"></div>
                 </div>
 
-                {/* SPEAKER GRILLE - Compact */}
                 <div className="relative bg-linear-to-b from-[#0f2624] to-[#0a1a18] rounded-2xl p-4 md:p-6 border-4 border-[#153230] shadow-2xl overflow-hidden" style={{
                     boxShadow: 'inset 0 4px 10px rgba(0,0,0,0.8), 0 6px 12px rgba(0,0,0,0.6)',
                 }}>
-                    {/* Speaker grille mesh pattern */}
                     <div className="relative min-h-[150px] md:min-h-[180px] rounded-xl overflow-hidden bg-[#0a1a18] border-2 border-[#4D7DA3]/30" style={{
                         boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.9)',
                     }}>
-                        {/* Perforated mesh pattern */}
                         <div className="absolute inset-0" style={{
                             backgroundImage: `
                   radial-gradient(circle at center, rgba(77,125,163,0.15) 1px, transparent 1px),
@@ -434,7 +391,6 @@ export const RadioTunerDesktop = ({
                             backgroundPosition: '0 0, 4px 4px',
                         }}></div>
 
-                        {/* Diagonal cross-hatch for depth */}
                         <div className="absolute inset-0 opacity-30" style={{
                             backgroundImage: `
                   repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(77,125,163,0.05) 10px, rgba(77,125,163,0.05) 11px),
@@ -442,10 +398,8 @@ export const RadioTunerDesktop = ({
                 `,
                         }}></div>
 
-                        {/* Sound wave animation effect */}
                         <div className="absolute inset-0 flex items-center justify-center gap-2 md:gap-3 px-8">
                             {[...Array(12)].map((_, i) => {
-                                // Use deterministic heights based on index to avoid hydration mismatch
                                 const baseHeights = [35, 50, 45, 40, 55, 38, 48, 42, 52, 46, 40, 36];
                                 return (
                                     <div
@@ -461,7 +415,6 @@ export const RadioTunerDesktop = ({
                             })}
                         </div>
 
-                        {/* Brand badge in center of speaker */}
                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                             <div className="bg-linear-to-b from-[#d4af6a] to-[#a8894d] rounded-lg px-6 py-3 border-2 border-[#8b7355] shadow-2xl" style={{
                                 boxShadow: 'inset 0 1px 2px rgba(255,255,255,0.3), 0 4px 12px rgba(0,0,0,0.6)',
@@ -478,7 +431,6 @@ export const RadioTunerDesktop = ({
                         </div>
                     </div>
 
-                    {/* Speaker label */}
                     <div className="text-center mt-4">
                         <span className="text-[10px] text-[#c9a961] font-bold uppercase tracking-[0.3em] opacity-60">
                             High Fidelity Speaker System
@@ -486,14 +438,12 @@ export const RadioTunerDesktop = ({
                     </div>
                 </div>
 
-                {/* Large brass CTA */}
                 <Link href="/podcast" className="relative z-10 group block mt-6">
                     <div className="bg-linear-to-b from-[#d4af6a] via-[#c9a961] to-[#a8894d] border-4 border-[#8b7355] shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden relative"
                         style={{
                             boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.4), inset 0 -2px 4px rgba(0,0,0,0.3), 0 12px 24px rgba(0,0,0,0.4)',
                         }}
                     >
-                        {/* Brass texture */}
                         <div className="absolute inset-0 opacity-20" style={{
                             backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px)',
                         }}></div>
@@ -517,7 +467,6 @@ export const RadioTunerDesktop = ({
                             </svg>
                         </div>
 
-                        {/* Shine effect */}
                         <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/40 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
                     </div>
                 </Link>

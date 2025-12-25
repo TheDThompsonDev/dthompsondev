@@ -13,6 +13,7 @@ import {
   speakingStats,
   brandLogos
 } from "@/data/talks";
+import { trackContent } from "@/lib/analytics";
 
 export default function TalksPage() {
   const [activeFilter, setActiveFilter] = useState<ContentFilter>("all");
@@ -64,7 +65,6 @@ export default function TalksPage() {
               </span>
             </p>
 
-            {/* Speaking Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto mb-12">
               {speakingStats.map((stat, index) => (
                 <motion.div
@@ -96,7 +96,6 @@ export default function TalksPage() {
         </div>
       </section>
 
-      {/* Featured Talks Section */}
       <section className="mx-4 mt-8">
         <ScrollReveal>
           <div className="text-center mb-8">
@@ -116,6 +115,7 @@ export default function TalksPage() {
                 href={video.youtubeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackContent({ type: 'talk', title: video.title, action: 'external_link' })}
                 className="group block h-full bg-white rounded-3xl overflow-hidden border-2 border-[#4D7DA3]/20 hover:border-[#4D7DA3] hover:shadow-2xl transition-all duration-500 flex flex-col"
                 whileHover={{ y: -8, scale: 1.02 }}
               >
@@ -156,7 +156,6 @@ export default function TalksPage() {
         </div>
       </section>
 
-      {/* Speaking Topics Section */}
       <section id="speaking-topics" className="mx-4 mt-20 mb-20">
         <div className="max-w-6xl mx-auto">
           <ScrollReveal>
@@ -177,11 +176,10 @@ export default function TalksPage() {
                 <TiltCard key={topic.title} className="h-full">
                   <div className="bg-white rounded-3xl p-8 h-full border border-[#E2F3F2] shadow-[0_10px_40px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.1)] transition-all duration-300 flex flex-col group">
                     <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3 shadow-sm`} style={{ backgroundColor: `${topic.color}15` }}>
-                      {/* Icon switching based on title because we removed emoji icons from data */}
                       {topic.title.includes("Breaking") && (
                         <svg className="w-7 h-7" style={{ color: topic.color }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16 8a6 6 0 016 6v7h-4v-8m-4-3a6 6 0 01-6-6v-2h4v8" /></svg>
                       )}
-                      {topic.title.includes("Breaking") && ( // Fallback/Correction for Rocket Icon above which was actually a generic shape? Let's use a clear Rocket
+                      {topic.title.includes("Breaking") && (
                         <svg className="w-7 h-7" style={{ color: topic.color }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                       )}
 
@@ -229,7 +227,6 @@ export default function TalksPage() {
         </div>
       </section>
 
-      {/* All Talks Library */}
       <section className="mx-4 mt-12 mb-10">
         <ScrollReveal>
 
@@ -241,7 +238,6 @@ export default function TalksPage() {
               30+ speaking engagements covering career development, community building, and technical leadership
             </p>
 
-            {/* Filter Buttons */}
             <div className="flex flex-wrap justify-center gap-3">
               {[
                 { id: "all" as ContentFilter, label: "All Talks", count: videoTalks.length },
@@ -282,6 +278,7 @@ export default function TalksPage() {
                   href={video.youtubeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackContent({ type: 'talk', title: video.title, action: 'external_link' })}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
