@@ -10,7 +10,7 @@ export function ChapterPivot() {
                 <ScrollReveal>
                     <div className="relative aspect-[4/5] sm:aspect-square md:aspect-auto md:h-[400px] lg:h-[500px] w-full max-w-full rounded-xl sm:rounded-[2rem] overflow-hidden shadow-2xl group">
                         <Image
-                            src="/about/Day1.jpg"
+                            src="https://twxvicohcixbzang.public.blob.vercel-storage.com/about/Day1.jpg"
                             alt="My first day at my first tech job"
                             fill
                             className="object-cover transform transition-transform duration-700 group-hover:scale-105"

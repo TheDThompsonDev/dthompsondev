@@ -81,7 +81,7 @@ export default function CommunityPage() {
             <div className="md:col-span-12 lg:col-span-8 h-[500px]">
               <TiltCard className="h-full">
                 <div className="h-full bg-white rounded-2xl overflow-hidden relative group border border-[#E2F3F2] shadow-[0_20px_60px_rgba(0,0,0,0.3)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.4)] transition-all duration-300">
-                  <div className="absolute inset-0 bg-[url('/about/CYC1.jpg')] opacity-[0.2] bg-cover bg-center group-hover:scale-105 transition-transform duration-700 mix-blend-multiply grayscale group-hover:grayscale-0 transition-all" />
+                  <div className="absolute inset-0 bg-[url('https://twxvicohcixbzang.public.blob.vercel-storage.com/about/CYC1.jpg')] opacity-[0.2] bg-cover bg-center group-hover:scale-105 transition-transform duration-700 mix-blend-multiply grayscale group-hover:grayscale-0 transition-all" />
 
                   <div className="relative z-10 p-6 sm:p-10 h-full flex flex-col justify-end">
                     <div className="bg-[#2e6089] w-fit px-3 py-1 rounded-lg text-xs font-black uppercase tracking-wider mb-4 text-white shadow-md">

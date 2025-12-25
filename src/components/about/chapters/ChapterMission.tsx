@@ -27,7 +27,7 @@ export function ChapterMission() {
                     <div className="grid grid-cols-1 gap-3 sm:gap-4 mt-6 sm:mt-8">
                         <div className="relative aspect-video rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group">
                             <Image
-                                src="/about/CYC1.jpg"
+                                src="https://twxvicohcixbzang.public.blob.vercel-storage.com/about/CYC1.jpg"
                                 alt="Commit Your Code Conference"
                                 fill
                                 className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -35,7 +35,7 @@ export function ChapterMission() {
                         </div>
                         <div className="relative aspect-video rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group">
                             <Image
-                                src="/about/impact-community-1.jpg"
+                                src="https://twxvicohcixbzang.public.blob.vercel-storage.com/about/impact-community-1.jpg"
                                 alt="Community Selfie"
                                 fill
                                 className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -43,7 +43,7 @@ export function ChapterMission() {
                         </div>
                         <div className="relative aspect-video rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group">
                             <Image
-                                src="/about/impact-community-2.jpg"
+                                src="https://twxvicohcixbzang.public.blob.vercel-storage.com/about/impact-community-2.jpg"
                                 alt="Community Group Shot"
                                 fill
                                 className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -53,7 +53,7 @@ export function ChapterMission() {
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                             <div className="relative aspect-square rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group">
                                 <Image
-                                    src="/about/impact-community-3.jpg"
+                                    src="https://twxvicohcixbzang.public.blob.vercel-storage.com/about/impact-community-3.jpg"
                                     alt="Community Connection"
                                     fill
                                     className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -61,7 +61,7 @@ export function ChapterMission() {
                             </div>
                             <div className="relative aspect-square rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group">
                                 <Image
-                                    src="/about/impact-community-4.jpg"
+                                    src="https://twxvicohcixbzang.public.blob.vercel-storage.com/about/impact-community-4.jpg"
                                     alt="Networking"
                                     fill
                                     className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -69,7 +69,7 @@ export function ChapterMission() {
                             </div>
                             <div className="relative aspect-square rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group">
                                 <Image
-                                    src="/about/impact-community-5.jpg"
+                                    src="https://twxvicohcixbzang.public.blob.vercel-storage.com/about/impact-community-5.jpg"
                                     alt="Mentorship"
                                     fill
                                     className="object-cover transition-transform duration-500 group-hover:scale-110"

@@ -3,8 +3,6 @@ import { Resend } from 'resend';
 import { checkBotId } from 'botid/server';
 import { isValidEmail } from '@/lib/validation';
 
-// Inline escapeHtml to avoid importing from sanitize.ts which uses isomorphic-dompurify
-// (can cause issues in Vercel serverless environment)
 function escapeHtml(unsafe: string): string {
   return unsafe
     .replace(/&/g, '&amp;')
@@ -16,7 +14,8 @@ function escapeHtml(unsafe: string): string {
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Handle CORS preflight requests
+// This handles CORS preflight requests
+// It's required for the contact form to work in production
 export async function OPTIONS() {
   return new NextResponse(null, {
     status: 204,
@@ -29,6 +28,8 @@ export async function OPTIONS() {
 }
 
 // Explicitly handle GET requests with a proper JSON 405 response
+// It's required for the contact form to work in production
+// 405 errors kept occuring otherwise
 export async function GET() {
   return NextResponse.json(
     { error: 'Method Not Allowed. Use POST to submit the contact form.' },
@@ -50,7 +51,6 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { name, email, company, message } = body;
 
-    // Validation
     if (!name || !email || !message) {
       return NextResponse.json(
         { error: 'Name, email, and message are required' },
@@ -58,7 +58,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Email validation
     if (!isValidEmail(email)) {
       return NextResponse.json(
         { error: 'Invalid email address' },
@@ -66,7 +65,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Sanitize user inputs to prevent XSS
     const safeName = escapeHtml(name);
     const safeEmail = escapeHtml(email);
     const safeCompany = company ? escapeHtml(company) : '';
@@ -75,6 +73,7 @@ export async function POST(request: NextRequest) {
     // Send email using Resend
     // IMPORTANT: In production, you MUST use a verified domain in the 'from' field
     // Set RESEND_FROM_EMAIL env var to something like: 'Contact Form <contact@yourdomain.com>'
+    // This was actually tricky to figure out for a bit so leaving this reminder for the future.
     const fromEmail = process.env.RESEND_FROM_EMAIL || 'Contact Form <onboarding@resend.dev>';
 
     const { data, error } = await resend.emails.send({
@@ -106,7 +105,6 @@ export async function POST(request: NextRequest) {
       `,
     });
 
-    // Check if there was an error from Resend
     if (error) {
       console.error('Resend API error:', error);
       return NextResponse.json(
@@ -115,7 +113,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Log success for debugging
     console.log('Email sent successfully:', data);
 
     return NextResponse.json(

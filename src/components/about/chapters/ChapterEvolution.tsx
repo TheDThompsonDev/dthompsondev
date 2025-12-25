@@ -12,7 +12,7 @@ export function ChapterEvolution() {
                         <div className="absolute -inset-4 bg-cyan-500/20 rounded-[2rem] rotate-[2deg] blur-xl"></div>
                         <div className="relative aspect-square rounded-xl sm:rounded-[2rem] overflow-hidden bg-[#0F172A] border border-cyan-500/30 flex items-center justify-center shadow-2xl">
                             <Image
-                                src="/about/speaking-at-meetup.jpg"
+                                src="https://twxvicohcixbzang.public.blob.vercel-storage.com/about/speaking-at-meetup.jpg"
                                 alt="Speaking at a tech meetup in Memphis"
                                 fill
                                 className="object-cover"
