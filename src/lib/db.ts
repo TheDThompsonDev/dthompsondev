@@ -1,9 +1,40 @@
+import { Prisma } from '@prisma/client';
 import { prisma } from './prisma';
+
+export interface BlogPostCreateInput {
+  slug: string;
+  title: string;
+  excerpt?: string;
+  content: Prisma.JsonValue;
+  category?: string;
+  featured?: boolean;
+  read_time?: string;
+  cover_image_url?: string;
+}
+
+export interface BlogPostUpdateInput {
+  slug?: string;
+  title?: string;
+  excerpt?: string;
+  content?: Prisma.JsonValue;
+  category?: string;
+  featured?: boolean;
+  status?: string;
+  read_time?: string;
+  cover_image_url?: string;
+}
+
+export interface UploadedFileInput {
+  file_name: string;
+  blob_url: string;
+  file_type?: string;
+  file_size?: number;
+}
 
 export async function queryBlogPosts(status?: string) {
   try {
     const where = status ? { status } : {};
-    
+
     const posts = await prisma.blogPost.findMany({
       where,
       orderBy: { updatedAt: 'desc' },
@@ -11,7 +42,7 @@ export async function queryBlogPosts(status?: string) {
         components: true
       }
     });
-    
+
     return posts;
   } catch (error) {
     console.error('Query error:', error);
@@ -29,7 +60,7 @@ export async function getBlogPost(id: number) {
         }
       }
     });
-    
+
     return post;
   } catch (error) {
     console.error('Query error:', error);
@@ -42,7 +73,7 @@ export async function getBlogPostBySlug(slug: string, includeUnpublished = false
     const where = includeUnpublished
       ? { slug }
       : { slug, status: 'published' };
-    
+
     const post = await prisma.blogPost.findFirst({
       where,
       include: {
@@ -51,7 +82,7 @@ export async function getBlogPostBySlug(slug: string, includeUnpublished = false
         }
       }
     });
-    
+
     return post;
   } catch (error) {
     console.error('Query error:', error);
@@ -59,16 +90,7 @@ export async function getBlogPostBySlug(slug: string, includeUnpublished = false
   }
 }
 
-export async function createBlogPost(data: {
-  slug: string;
-  title: string;
-  excerpt?: string;
-  content: any;
-  category?: string;
-  featured?: boolean;
-  read_time?: string;
-  cover_image_url?: string;
-}) {
+export async function createBlogPost(data: BlogPostCreateInput) {
   try {
     const post = await prisma.blogPost.create({
       data: {
@@ -83,7 +105,7 @@ export async function createBlogPost(data: {
         status: 'draft'
       }
     });
-    
+
     return post;
   } catch (error) {
     console.error('Create error:', error);
@@ -91,41 +113,31 @@ export async function createBlogPost(data: {
   }
 }
 
-export async function updateBlogPost(id: number, data: {
-  slug?: string;
-  title?: string;
-  excerpt?: string;
-  content?: any;
-  category?: string;
-  featured?: boolean;
-  status?: string;
-  read_time?: string;
-  cover_image_url?: string;
-}) {
+export async function updateBlogPost(id: number, data: BlogPostUpdateInput) {
   try {
-    const updateData: any = {};
-    
+    const updateData: Prisma.BlogPostUpdateInput = {};
+
     if (data.slug !== undefined) updateData.slug = data.slug;
     if (data.title !== undefined) updateData.title = data.title;
     if (data.excerpt !== undefined) updateData.excerpt = data.excerpt;
-    if (data.content !== undefined) updateData.content = data.content;
+    if (data.content !== undefined && data.content !== null) updateData.content = data.content as Prisma.InputJsonValue;
     if (data.category !== undefined) updateData.category = data.category;
     if (data.featured !== undefined) updateData.featured = data.featured;
     if (data.read_time !== undefined) updateData.readTime = data.read_time;
     if (data.cover_image_url !== undefined) updateData.coverImageUrl = data.cover_image_url;
-    
+
     if (data.status !== undefined) {
       updateData.status = data.status;
       if (data.status === 'published') {
         updateData.publishedAt = new Date();
       }
     }
-    
+
     const post = await prisma.blogPost.update({
       where: { id },
       data: updateData
     });
-    
+
     return post;
   } catch (error) {
     console.error('Update error:', error);
@@ -138,7 +150,7 @@ export async function deleteBlogPost(id: number) {
     await prisma.blogPost.delete({
       where: { id }
     });
-    
+
     return { success: true };
   } catch (error) {
     console.error('Delete error:', error);
@@ -146,12 +158,7 @@ export async function deleteBlogPost(id: number) {
   }
 }
 
-export async function saveUploadedFile(data: {
-  file_name: string;
-  blob_url: string;
-  file_type?: string;
-  file_size?: number;
-}) {
+export async function saveUploadedFile(data: UploadedFileInput) {
   try {
     const file = await prisma.uploadedFile.create({
       data: {
@@ -161,7 +168,7 @@ export async function saveUploadedFile(data: {
         fileSize: data.file_size
       }
     });
-    
+
     return file;
   } catch (error) {
     console.error('Save file error:', error);
@@ -174,7 +181,7 @@ export async function getUploadedFiles() {
     const files = await prisma.uploadedFile.findMany({
       orderBy: { uploadedAt: 'desc' }
     });
-    
+
     return files;
   } catch (error) {
     console.error('Query error:', error);
@@ -187,7 +194,7 @@ export async function deleteUploadedFile(id: number) {
     await prisma.uploadedFile.delete({
       where: { id }
     });
-    
+
     return { success: true };
   } catch (error) {
     console.error('Delete error:', error);
