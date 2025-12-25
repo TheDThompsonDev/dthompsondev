@@ -43,11 +43,9 @@ export function ContactForm() {
         try {
           data = await response.json();
         } catch {
-          // JSON parsing failed - response body might be empty or malformed
           throw new Error(`Server returned ${response.status} with invalid response`);
         }
       } else {
-        // Response is not JSON (could be HTML error page or empty)
         if (!response.ok) {
           throw new Error(`Server returned ${response.status} ${response.statusText}`);
         }
@@ -62,7 +60,6 @@ export function ContactForm() {
       setFormData({ name: '', email: '', company: '', message: '' });
       setTouchedFields(new Set());
 
-      // Reset success message after 5 seconds
       setTimeout(() => setStatus('idle'), 5000);
     } catch (error) {
       setStatus('error');
@@ -73,7 +70,6 @@ export function ContactForm() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
 
-    // Limit message length
     if (name === 'message' && value.length > messageMaxLength) {
       return;
     }
@@ -83,7 +79,6 @@ export function ContactForm() {
       [name]: value,
     }));
 
-    // Mark field as touched
     setTouchedFields(prev => new Set(prev).add(name));
   };
 
@@ -143,7 +138,6 @@ export function ContactForm() {
         />
       </div>
 
-      {/* Company Field with Floating Label */}
       <div className="relative group">
         <input
           type="text"
