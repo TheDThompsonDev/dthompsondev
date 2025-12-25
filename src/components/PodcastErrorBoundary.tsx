@@ -40,15 +40,15 @@ export class PodcastErrorBoundary extends Component<Props, State> {
           <div className="max-w-md mx-auto">
             {/* Radio icon for podcast context */}
             <div className="text-6xl mb-4">📻</div>
-            
+
             <h3 className="text-2xl md:text-3xl font-black text-[#153230] mb-3 tracking-tight">
               Radio Interference Detected
             </h3>
-            
+
             <p className="text-base text-[#153230]/80 mb-4 leading-relaxed">
               We're having trouble tuning into the podcast feed. This is usually temporary.
             </p>
-            
+
             {/* Show error details only in development */}
             {process.env.NODE_ENV === 'development' && this.state.error && (
               <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded text-left">
@@ -57,16 +57,16 @@ export class PodcastErrorBoundary extends Component<Props, State> {
                 </p>
               </div>
             )}
-            
+
             <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
               {/* Try again without full reload */}
               <button
                 onClick={this.resetError}
-                className="bg-[#4D7DA3] hover:bg-[#153230] text-white px-6 py-3 font-bold uppercase tracking-wider transition-colors duration-300"
+                className="bg-[#2e6089] hover:bg-[#153230] text-white px-6 py-3 font-bold uppercase tracking-wider transition-colors duration-300"
               >
                 Try Again
               </button>
-              
+
               {/* Go back to home */}
               <button
                 onClick={() => window.location.href = '/'}
@@ -75,7 +75,7 @@ export class PodcastErrorBoundary extends Component<Props, State> {
                 Back to Home
               </button>
             </div>
-            
+
             <p className="text-sm text-[#153230]/50">
               Podcast feeds are refreshed automatically. Please try again in a few minutes.
             </p>

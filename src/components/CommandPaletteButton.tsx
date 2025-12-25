@@ -103,8 +103,8 @@ export function CommandPaletteButton() {
                         d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                     />
                 </svg>
-                <span className="hidden sm:inline text-[#153230]/50">Search...</span>
-                <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-xs font-mono bg-[#153230]/5 border border-[#153230]/10 rounded text-[#153230]/50 group-hover:bg-[#153230]/10 transition-colors whitespace-nowrap">
+                <span className="hidden sm:inline text-[#153230]/80">Search...</span>
+                <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-xs font-mono bg-[#153230]/15 border border-[#153230]/20 rounded text-[#153230]/80 group-hover:bg-[#153230]/20 transition-colors whitespace-nowrap">
                     {isMac ? '⌘' : 'Ctrl'} + K
                 </kbd>
             </button>

@@ -87,7 +87,7 @@ const response = await anthropic.messages.create({
 
 // Response continues from '{', bypassing "Sure! Here's the JSON..."`,
       explanation: 'By putting that brace in the model\'s mouth, you bypass the preamble and force the probability distribution to align with your schema immediately.',
-      color: '#4D7DA3',
+      color: '#2e6089',
     },
     {
       title: 'Type Safety with Pydantic',
@@ -111,7 +111,7 @@ user = client.messages.create(
 
 # user.age is guaranteed to be an int, not "twenty-nine"`,
       explanation: 'Tools like Pydantic and Instructor hook into the sampling loop. If your schema requires an integer and the model attempts to sample a letter, the sampler rejects it and forces a resample.',
-      color: '#10B981',
+      color: '#059669',
     },
   ];
 
@@ -170,7 +170,7 @@ user = client.messages.create(
     {
       title: 'Golden Dataset',
       description: '100+ examples of perfect input/output pairs that define "correct" behavior.',
-      color: '#4D7DA3',
+      color: '#2e6089',
       icon: <BarChart3 className="w-6 h-6" />,
     },
     {
@@ -197,13 +197,13 @@ user = client.messages.create(
     {
       title: 'State Orchestration',
       description: 'Build smart orchestrators that manage stateless models with external state persistence.',
-      color: '#4D7DA3',
+      color: '#2e6089',
       icon: <Target className="w-6 h-6" />,
     },
     {
       title: 'Constrained Generation',
       description: 'English is a compiled language. Use prefilling and type-safe schemas.',
-      color: '#10B981',
+      color: '#059669',
       icon: <Lock className="w-6 h-6" />,
     },
     {
@@ -238,19 +238,19 @@ user = client.messages.create(
 
             <ul className="space-y-4 mb-8">
               <li className="flex gap-3">
-                <span className="text-[#4D7DA3] font-bold">→</span>
+                <span className="text-[#1e6088] font-bold">→</span>
                 <span><strong>Use State Machines, not Context.</strong> The model is a stateless CPU, not an employee. Stop context rot by managing state in <em>your</em> code, not the prompt.</span>
               </li>
               <li className="flex gap-3">
-                <span className="text-[#4D7DA3] font-bold">→</span>
+                <span className="text-[#1e6088] font-bold">→</span>
                 <span><strong>English is a Compiled Language.</strong> Treat prompts like code. Ambiguity = Syntax Error. Use schemas and type safety to force deterministic outputs.</span>
               </li>
               <li className="flex gap-3">
-                <span className="text-[#4D7DA3] font-bold">→</span>
+                <span className="text-[#1e6088] font-bold">→</span>
                 <span><strong>Assume Inference Will Fail.</strong> APIs are distributed systems on experimental hardware. If you don't have fallbacks and exponential backoff, you're not in production.</span>
               </li>
               <li className="flex gap-3">
-                <span className="text-[#4D7DA3] font-bold">→</span>
+                <span className="text-[#1e6088] font-bold">→</span>
                 <span><strong>Evals, Not Vibes.</strong> You cannot scale "looking at it." Build a regression testing suite using golden datasets and LLM-as-judge. If pass rate drops, break the build.</span>
               </li>
             </ul>
@@ -279,7 +279,7 @@ user = client.messages.create(
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4" style={{ backgroundColor: step.color + '20' }}>
                     {step.icon}
                   </div>
-                  <h3 className="font-bold text-lg mb-2 text-[#153230]">{step.title}</h3>
+                  <h2 className="font-bold text-lg mb-2 text-[#153230]">{step.title}</h2>
                   <p className="text-gray-600 text-sm leading-relaxed">{step.description}</p>
                 </div>
               ))}

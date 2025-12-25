@@ -17,7 +17,7 @@ export function LinkDialog({ initialUrl = '', initialText = '', onInsert, onRemo
 
   useEffect(() => {
     urlInputRef.current?.focus();
-    
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Enter') {
         e.preventDefault();
@@ -34,19 +34,19 @@ export function LinkDialog({ initialUrl = '', initialText = '', onInsert, onRemo
 
   const handleInsert = () => {
     if (!url) return;
-    
+
     let finalUrl = url;
     if (!finalUrl.startsWith('http://') && !finalUrl.startsWith('https://') && !finalUrl.startsWith('/')) {
       finalUrl = 'https://' + finalUrl;
     }
-    
+
     onInsert(finalUrl, text || url);
     onClose();
   };
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center" onClick={onClose}>
-      <div 
+      <div
         className="bg-white rounded-2xl shadow-2xl border border-gray-200 p-6 w-full max-w-md animate-[fadeIn_0.2s_ease-out]"
         onClick={(e) => e.stopPropagation()}
       >
@@ -114,7 +114,7 @@ export function LinkDialog({ initialUrl = '', initialText = '', onInsert, onRemo
             <button
               onClick={handleInsert}
               disabled={!url}
-              className="flex-1 px-4 py-3 bg-[#4D7DA3] text-white rounded-xl font-semibold hover:bg-[#4D7DA3]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 px-4 py-3 bg-[#2e6089] text-white rounded-xl font-semibold hover:bg-[#2e6089]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Insert Link
             </button>

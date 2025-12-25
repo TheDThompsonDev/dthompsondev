@@ -75,7 +75,7 @@ export function CommandPaletteHint() {
                         <div className="px-4 pb-4 flex gap-2">
                             <button
                                 onClick={handleTryIt}
-                                className="flex-1 bg-[#4D7DA3] hover:bg-[#5d8db3] text-white text-sm font-semibold py-2 px-4 rounded-lg transition-colors"
+                                className="flex-1 bg-[#2e6089] hover:bg-[#3d7ba8] text-white text-sm font-semibold py-2 px-4 rounded-lg transition-colors"
                             >
                                 Try it now
                             </button>

@@ -338,8 +338,8 @@ export function VirtualWhiteboard({
             <div className="flex items-center gap-3">
               <span className="text-2xl group-hover:scale-110 transition-transform">📝</span>
               <div>
-                <h3 className="font-bold text-[#153230]">{title}</h3>
-                <p className="text-sm text-[#153230]/60">Click to open whiteboard and take notes</p>
+                <span className="font-bold text-[#153230] block">{title}</span>
+                <p className="text-sm text-[#153230]/80">Click to open whiteboard and take notes</p>
               </div>
             </div>
             <div className="text-[#4D7DA3] font-bold text-sm group-hover:translate-x-1 transition-transform">
@@ -376,8 +376,8 @@ export function VirtualWhiteboard({
             <div className="flex items-center gap-2">
               <span className="text-xl">📝</span>
               <div>
-                <h3 className="text-sm font-bold text-gray-900 leading-tight">{title}</h3>
-                {isSticky && <span className="text-[10px] text-gray-500">↔ Drag</span>}
+                <span className="text-sm font-bold text-gray-900 leading-tight block">{title}</span>
+                {isSticky && <span className="text-[10px] text-gray-600">↔ Drag</span>}
               </div>
             </div>
 
@@ -397,6 +397,7 @@ export function VirtualWhiteboard({
                 <button
                   onClick={() => setIsInlineCollapsed(true)}
                   className="bg-white text-gray-700 p-1.5 rounded-lg hover:bg-gray-50 border border-gray-200"
+                  aria-label="Minimize whiteboard"
                   title="Minimize"
                 >
                   <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -427,14 +428,16 @@ export function VirtualWhiteboard({
                 onClick={() => setTool('pen')}
                 className={`p-1.5 rounded text-xs transition-all ${tool === 'pen' ? 'bg-gray-900 text-white' : 'text-gray-400 hover:text-gray-900'
                   }`}
+                aria-label="Pen tool"
                 title="Pen"
               >
                 ✏️
               </button>
               <button
                 onClick={() => setTool('text')}
-                className={`p-1.5 rounded text-xs font-bold transition-all ${tool === 'text' ? 'bg-gray-900 text-white' : 'text-gray-400 hover:text-gray-900'
+                className={`p-1.5 rounded text-xs font-bold transition-all ${tool === 'text' ? 'bg-gray-900 text-white' : 'text-gray-600 hover:text-gray-900'
                   }`}
+                aria-label="Text tool"
                 title="Text"
               >
                 Aa
@@ -443,6 +446,7 @@ export function VirtualWhiteboard({
                 onClick={() => setTool('eraser')}
                 className={`p-1.5 rounded text-xs transition-all ${tool === 'eraser' ? 'bg-gray-900 text-white' : 'text-gray-400 hover:text-gray-900'
                   }`}
+                aria-label="Eraser tool"
                 title="Eraser"
               >
                 🧹
@@ -481,6 +485,7 @@ export function VirtualWhiteboard({
                   : 'hover:scale-110'
                   }`}
                 style={{ backgroundColor: color.value }}
+                aria-label={`Select ${color.name} color`}
                 title={color.name}
               />
             ))}

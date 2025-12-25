@@ -51,8 +51,8 @@ export default function AboutPage() {
       </section>
 
       {/* --- CHAPTER 1: THE ORIGIN --- */}
-      <section id="origin" className="px-6 sm:px-12 md:px-20 py-24 relative bg-[#F8FAFC] overflow-hidden">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-[45%_55%] gap-12 items-center">
+      <section id="origin" className="px-4 sm:px-8 md:px-12 lg:px-20 py-12 sm:py-16 md:py-24 relative bg-[#F8FAFC] overflow-hidden">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-[45%_55%] gap-8 lg:gap-12 items-center">
 
           <ScrollReveal>
             <div className="order-2 lg:order-1">
@@ -88,7 +88,7 @@ export default function AboutPage() {
       </section>
 
       {/* --- CHAPTER 2: THE FORK --- */}
-      <section className="px-6 sm:px-12 md:px-20 py-24 bg-white relative">
+      <section className="px-4 sm:px-8 md:px-12 lg:px-20 py-12 sm:py-16 md:py-24 bg-white relative">
         <div className="max-w-4xl mx-auto text-center mb-16">
           <ScrollReveal>
             <span className="text-[#153230] font-black text-sm tracking-[0.2em] uppercase mb-4 block">Chapter 2: The Fork in the Road</span>
@@ -131,8 +131,8 @@ export default function AboutPage() {
       </section>
 
       {/* --- CHAPTER 3: THE LESSON --- */}
-      <section className="px-6 sm:px-12 md:px-20 py-24 bg-[#F0FDF4] relative overflow-hidden">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10">
+      <section className="px-4 sm:px-8 md:px-12 lg:px-20 py-12 sm:py-16 md:py-24 bg-[#F0FDF4] relative overflow-hidden">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-8 lg:gap-16 items-center relative z-10">
 
           <ScrollReveal>
             <div className="order-2 lg:order-1 relative">
@@ -174,12 +174,12 @@ export default function AboutPage() {
       </section>
 
       {/* --- CHAPTER 4: THE GRIND --- */}
-      <section className="px-6 sm:px-12 md:px-20 py-32 bg-[#153230] text-white relative overflow-hidden">
+      <section className="px-4 sm:px-8 md:px-12 lg:px-20 py-16 sm:py-24 md:py-32 bg-[#153230] text-white relative overflow-hidden">
         {/* Noise Texture */}
         <div className="absolute inset-0 opacity-5 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#4ade80]/10 rounded-full blur-[100px] pointer-events-none"></div>
 
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-8 lg:gap-16 items-center relative z-10">
           <ScrollReveal>
             <div>
               <span className="text-[#4ade80] font-black text-sm tracking-[0.2em] uppercase mb-4 block">Chapter 4: The Grind and "Popeyes"</span>
@@ -239,10 +239,10 @@ export default function AboutPage() {
       </section>
 
       {/* --- CHAPTER 5: THE PIVOT --- */}
-      <section className="px-6 sm:px-12 md:px-20 py-24 relative bg-white">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+      <section className="px-4 sm:px-8 md:px-12 lg:px-20 py-12 sm:py-16 md:py-24 relative bg-white">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           <ScrollReveal>
-            <div className="relative aspect-square md:aspect-auto h-[500px] w-full rounded-[2rem] overflow-hidden shadow-2xl group">
+            <div className="relative aspect-[4/5] sm:aspect-square md:aspect-auto md:h-[400px] lg:h-[500px] w-full max-w-full rounded-xl sm:rounded-[2rem] overflow-hidden shadow-2xl group">
               <Image
                 src="/about/Day1.jpg"
                 alt="My first day at my first tech job"
@@ -250,19 +250,19 @@ export default function AboutPage() {
                 className="object-cover transform transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#153230] via-transparent to-transparent opacity-60"></div>
-              <div className="absolute bottom-6 left-6">
-                <p className="text-white/90 text-sm font-mono pl-1 backdrop-blur-md bg-black/40 px-3 py-1 rounded-lg inline-block border-l-4 border-[#4D7DA3]">Day 1: The Pivot Realized</p>
+              <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6">
+                <p className="text-white/90 text-xs sm:text-sm font-mono pl-1 backdrop-blur-md bg-black/40 px-2 sm:px-3 py-1 rounded-lg inline-block border-l-2 sm:border-l-4 border-[#4D7DA3]">Day 1: The Pivot Realized</p>
               </div>
             </div>
           </ScrollReveal>
 
           <ScrollReveal delay={200}>
             <div>
-              <span className="text-[#4D7DA3] font-black text-sm tracking-[0.2em] uppercase mb-4 block">Chapter 5: The Strategic Pivot</span>
-              <h2 className="text-4xl md:text-5xl font-black text-[#153230] mb-6 leading-tight">
+              <span className="text-[#4D7DA3] font-black text-xs sm:text-sm tracking-[0.15em] sm:tracking-[0.2em] uppercase mb-3 sm:mb-4 block">Chapter 5: The Strategic Pivot</span>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-[#153230] mb-4 sm:mb-6 leading-tight">
                 Strategy Over Spray and Pray
               </h2>
-              <h3 className="text-2xl font-bold text-[#4D7DA3] mb-8 italic">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-[#4D7DA3] mb-6 sm:mb-8 italic">
                 "Stop negotiating with your potential."
               </h3>
               <div className="space-y-6 text-lg text-[#153230]/80 leading-relaxed font-medium">
@@ -291,13 +291,13 @@ export default function AboutPage() {
       </section>
 
       {/* --- CHAPTER 6: THE EVOLUTION --- */}
-      <section className="px-6 sm:px-12 md:px-20 py-24 bg-[#0B1120] text-white relative overflow-hidden">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+      <section className="px-4 sm:px-8 md:px-12 lg:px-20 py-12 sm:py-16 md:py-24 bg-[#0B1120] text-white relative overflow-hidden">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Visual (Left) */}
           <ScrollReveal>
             <div className="relative">
               <div className="absolute -inset-4 bg-cyan-500/20 rounded-[2rem] rotate-[2deg] blur-xl"></div>
-              <div className="relative aspect-square rounded-[2rem] overflow-hidden bg-[#0F172A] border border-cyan-500/30 flex items-center justify-center shadow-2xl">
+              <div className="relative aspect-square rounded-xl sm:rounded-[2rem] overflow-hidden bg-[#0F172A] border border-cyan-500/30 flex items-center justify-center shadow-2xl">
                 <Image
                   src="/about/speaking-at-meetup.jpg"
                   alt="Speaking at a tech meetup in Memphis"
@@ -341,7 +341,7 @@ export default function AboutPage() {
       </section>
 
       {/* --- CHAPTER 7: THE MISSION --- */}
-      <section className="px-6 sm:px-12 md:px-20 py-24 bg-[#E2F3F2]">
+      <section className="px-4 sm:px-8 md:px-12 lg:px-20 py-12 sm:py-16 md:py-24 bg-[#E2F3F2]">
         <div className="max-w-5xl mx-auto text-center">
           <ScrollReveal>
             <span className="text-[#153230] font-black text-sm tracking-[0.2em] uppercase mb-4 block">Chapter 7: The Mission</span>
@@ -360,9 +360,9 @@ export default function AboutPage() {
           </ScrollReveal>
 
           <ScrollReveal delay={200}>
-            <div className="grid grid-cols-1 md:grid-cols-6 gap-4 mt-8">
+            <div className="grid grid-cols-1 gap-3 sm:gap-4 mt-6 sm:mt-8">
               {/* Wide Images (Top 3) */}
-              <div className="md:col-span-6 relative aspect-video rounded-2xl overflow-hidden shadow-lg group">
+              <div className="relative aspect-video rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group">
                 <Image
                   src="/about/CYC1.jpg"
                   alt="Commit Your Code Conference"
@@ -370,7 +370,7 @@ export default function AboutPage() {
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
-              <div className="md:col-span-6 relative aspect-video rounded-2xl overflow-hidden shadow-lg group">
+              <div className="relative aspect-video rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group">
                 <Image
                   src="/about/impact-community-1.jpg"
                   alt="Community Selfie"
@@ -378,7 +378,7 @@ export default function AboutPage() {
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
-              <div className="md:col-span-6 relative aspect-video rounded-2xl overflow-hidden shadow-lg group">
+              <div className="relative aspect-video rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group">
                 <Image
                   src="/about/impact-community-2.jpg"
                   alt="Community Group Shot"
@@ -388,29 +388,31 @@ export default function AboutPage() {
               </div>
 
               {/* Square Images (Bottom 3) */}
-              <div className="md:col-span-2 relative aspect-square rounded-2xl overflow-hidden shadow-lg group">
-                <Image
-                  src="/about/impact-community-3.jpg"
-                  alt="Community Connection"
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-              </div>
-              <div className="md:col-span-2 relative aspect-square rounded-2xl overflow-hidden shadow-lg group">
-                <Image
-                  src="/about/impact-community-4.jpg"
-                  alt="Networking"
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-              </div>
-              <div className="md:col-span-2 relative aspect-square rounded-2xl overflow-hidden shadow-lg group">
-                <Image
-                  src="/about/impact-community-5.jpg"
-                  alt="Mentorship"
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                />
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+                <div className="relative aspect-square rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group">
+                  <Image
+                    src="/about/impact-community-3.jpg"
+                    alt="Community Connection"
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                </div>
+                <div className="relative aspect-square rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group">
+                  <Image
+                    src="/about/impact-community-4.jpg"
+                    alt="Networking"
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                </div>
+                <div className="relative aspect-square rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group">
+                  <Image
+                    src="/about/impact-community-5.jpg"
+                    alt="Mentorship"
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                </div>
               </div>
             </div>
           </ScrollReveal>
@@ -432,7 +434,7 @@ export default function AboutPage() {
       </section>
 
       {/* --- CTA SECTION --- */}
-      <section className="relative px-6 sm:px-12 md:px-20 py-24 bg-gradient-to-br from-[#153230] via-[#1E4B48] to-[#153230] text-center overflow-hidden">
+      <section className="relative px-4 sm:px-8 md:px-12 lg:px-20 py-12 sm:py-16 md:py-24 bg-gradient-to-br from-[#153230] via-[#1E4B48] to-[#153230] text-center overflow-hidden">
         <div className="relative z-10 max-w-4xl mx-auto">
           <ScrollReveal>
             <h2 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">

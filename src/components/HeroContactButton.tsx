@@ -11,7 +11,7 @@ export function HeroContactButton() {
     <>
       <button
         onClick={() => setIsModalOpen(true)}
-        className="group relative bg-[#4D7DA3] text-white px-8 py-4 lg:px-10 lg:py-5 rounded-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 font-bold text-sm lg:text-md overflow-hidden w-full sm:w-auto cursor-pointer"
+        className="group relative bg-[#2e6089] text-white px-8 py-4 lg:px-10 lg:py-5 rounded-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 font-bold text-sm lg:text-md overflow-hidden w-full sm:w-auto cursor-pointer"
       >
         <span className="relative z-10">
           Let's work together!

@@ -84,7 +84,7 @@ export default function CommunityPage() {
                   <div className="absolute inset-0 bg-[url('/about/CYC1.jpg')] opacity-[0.2] bg-cover bg-center group-hover:scale-105 transition-transform duration-700 mix-blend-multiply grayscale group-hover:grayscale-0 transition-all" />
 
                   <div className="relative z-10 p-6 sm:p-10 h-full flex flex-col justify-end">
-                    <div className="bg-[#4D7DA3] w-fit px-3 py-1 rounded-lg text-xs font-black uppercase tracking-wider mb-4 text-white shadow-md">
+                    <div className="bg-[#2e6089] w-fit px-3 py-1 rounded-lg text-xs font-black uppercase tracking-wider mb-4 text-white shadow-md">
                       Flagship Event
                     </div>
                     <h2 className="text-3xl sm:text-5xl font-black mb-3 text-[#153230]">Commit Your Code</h2>
@@ -135,7 +135,7 @@ export default function CommunityPage() {
 
                   <div className="relative z-10 p-6 sm:p-8 h-full flex flex-col justify-end">
                     <div className="flex items-center justify-between mb-2">
-                      <div className="bg-[#84803E] w-fit px-3 py-1 rounded-lg text-xs font-black uppercase tracking-wider text-white shadow-md">
+                      <div className="bg-[#5d5a2e] w-fit px-3 py-1 rounded-lg text-xs font-black uppercase tracking-wider text-white shadow-md">
                         DSD Meetups
                       </div>
                       <span className="text-[#84803E] font-bold text-xs uppercase tracking-wider">Dallas, TX</span>
@@ -332,8 +332,8 @@ export default function CommunityPage() {
       */}
       <section className="py-8 border-t border-[#E2F3F2] mt-6">
         <div className="container mx-auto px-6 text-center">
-          <p className="text-xs md:text-sm text-[#153230]/40 mb-8 font-black uppercase tracking-[0.2em]">Members from companies like</p>
-          <div className="flex flex-wrap justify-center gap-8 md:gap-16 opacity-30 hover:opacity-100 transition-all duration-500 grayscale hover:grayscale-0">
+          <p className="text-xs md:text-sm text-[#153230]/70 mb-8 font-black uppercase tracking-[0.2em]">Members from companies like</p>
+          <div className="flex flex-wrap justify-center gap-8 md:gap-16 opacity-60 hover:opacity-100 transition-all duration-500 grayscale hover:grayscale-0">
             <span className="text-xl font-black text-[#153230]">GOOGLE</span>
             <span className="text-xl font-black text-[#153230]">NETFLIX</span>
             <span className="text-xl font-black text-[#153230]">MICROSOFT</span>

@@ -6,7 +6,8 @@ import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { BlogPost } from '@/types/blog';
 
-const colors = ['#4D7DA3', '#84803E', '#A34D7D', '#7DA34D', '#D87D4A'];
+// WCAG AA compliant colors for white text (4.5:1+ contrast ratio)
+const colors = ['#2e6089', '#5d5a2e', '#7a3760', '#4d7a30', '#a85a32'];
 
 // Persona labels for display
 const PERSONA_LABELS: Record<string, string> = {
@@ -125,8 +126,8 @@ function BlogContent() {
                 key={category}
                 onClick={() => setSelectedCategory(category)}
                 className={`px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 ${selectedCategory === category
-                  ? 'bg-[#4D7DA3] text-white shadow-lg scale-105'
-                  : 'bg-white text-[#153230] border-2 border-[#4D7DA3]/20 hover:border-[#4D7DA3] hover:scale-105'
+                  ? 'bg-[#153230] text-white shadow-lg scale-105'
+                  : 'bg-white text-[#153230] border-2 border-[#153230]/30 hover:border-[#153230] hover:scale-105'
                   }`}
               >
                 {category}

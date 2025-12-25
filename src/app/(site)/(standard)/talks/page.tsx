@@ -607,7 +607,7 @@ export default function TalksPage() {
                       </svg>
                     </div>
                   </div>
-                  <div className="absolute top-4 left-4 bg-[#4D7DA3] text-white px-3 py-1 rounded-full text-xs font-black uppercase">
+                  <div className="absolute top-4 left-4 bg-[#2e6089] text-white px-3 py-1 rounded-full text-xs font-black uppercase">
                     Featured
                   </div>
                 </div>
@@ -776,7 +776,7 @@ export default function TalksPage() {
                       </div>
                     </div>
                     {video.featured && (
-                      <div className="absolute top-2 right-2 bg-[#4D7DA3] text-white px-2 py-1 rounded text-[10px] font-black">
+                      <div className="absolute top-2 right-2 bg-[#2e6089] text-white px-2 py-1 rounded text-[10px] font-black">
                         ★
                       </div>
                     )}

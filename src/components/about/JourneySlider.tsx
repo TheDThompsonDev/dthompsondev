@@ -5,7 +5,7 @@ import { ReactCompareSlider, ReactCompareSliderImage } from "react-compare-slide
 export const JourneySlider = () => {
     return (
         <div
-            className="relative w-full rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white group"
+            className="relative w-full rounded-xl sm:rounded-[2rem] overflow-hidden shadow-2xl border-2 sm:border-4 border-white group"
             style={{
                 paddingBottom: '100%',
                 position: 'relative'
@@ -43,16 +43,17 @@ export const JourneySlider = () => {
                                 }}
                             />
                             <div
-                                className="absolute bg-black/80 px-4 py-2 rounded-lg border-l-4 border-red-500"
+                                className="absolute bg-black/80 px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg border-l-2 sm:border-l-4 border-red-500"
                                 style={{
-                                    bottom: '2rem',
-                                    left: '2rem',
+                                    bottom: '1rem',
+                                    left: '0.75rem',
                                     WebkitBackdropFilter: 'blur(12px)',
-                                    backdropFilter: 'blur(12px)'
+                                    backdropFilter: 'blur(12px)',
+                                    maxWidth: 'calc(50% - 1rem)'
                                 }}
                             >
-                                <p className="text-white font-mono text-sm font-bold">2014: The Kitchen</p>
-                                <p className="text-gray-300 text-xs">Minimum Wage. Maximum Hunger.</p>
+                                <p className="text-white font-mono text-xs sm:text-sm font-bold">2014: The Kitchen</p>
+                                <p className="text-gray-300 text-[10px] sm:text-xs">Minimum Wage. Maximum Hunger.</p>
                             </div>
                         </div>
                     }
@@ -77,16 +78,17 @@ export const JourneySlider = () => {
                                 }}
                             />
                             <div
-                                className="absolute bg-[#153230]/90 px-4 py-2 rounded-lg border-r-4 border-[#4D7DA3] text-right"
+                                className="absolute bg-[#153230]/90 px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg border-r-2 sm:border-r-4 border-[#4D7DA3] text-right"
                                 style={{
-                                    bottom: '2rem',
-                                    right: '2rem',
+                                    bottom: '1rem',
+                                    right: '0.75rem',
                                     WebkitBackdropFilter: 'blur(12px)',
-                                    backdropFilter: 'blur(12px)'
+                                    backdropFilter: 'blur(12px)',
+                                    maxWidth: 'calc(50% - 1rem)'
                                 }}
                             >
-                                <p className="text-white font-mono text-sm font-bold">2025: The Stage</p>
-                                <p className="text-gray-300 text-xs">Director of Technology. Leader.</p>
+                                <p className="text-white font-mono text-xs sm:text-sm font-bold">2025: The Stage</p>
+                                <p className="text-gray-300 text-[10px] sm:text-xs">Director of Technology. Leader.</p>
                             </div>
                         </div>
                     }
@@ -128,13 +130,13 @@ export const JourneySlider = () => {
                 />
             </div>
             <div
-                className="absolute top-8 right-8 bg-white/10 p-4 rounded-xl border border-white/20 max-w-xs text-left z-20 pointer-events-none"
+                className="absolute top-3 right-3 sm:top-8 sm:right-8 bg-white/10 p-2 sm:p-4 rounded-lg sm:rounded-xl border border-white/20 max-w-[140px] sm:max-w-xs text-left z-20 pointer-events-none"
                 style={{
                     WebkitBackdropFilter: 'blur(12px)',
                     backdropFilter: 'blur(12px)'
                 }}
             >
-                <p className="text-white text-sm font-bold italic">"Bite-sized goals lead to a full meal."</p>
+                <p className="text-white text-xs sm:text-sm font-bold italic">"Bite-sized goals lead to a full meal."</p>
             </div>
         </div>
     );

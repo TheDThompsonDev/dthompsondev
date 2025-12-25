@@ -104,8 +104,8 @@ export function EngagementBar({ slug, title }: EngagementBarProps) {
             <div className="bg-white/80 backdrop-blur-md shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-[#E2F3F2] rounded-full px-2 py-2 flex items-center gap-1 sm:gap-2">
 
                 {/* View Counter */}
-                <div className="flex items-center gap-1.5 px-3 py-1.5 text-[#153230]/60 border-r border-[#153230]/10 mr-1">
-                    <Eye className="w-4 h-4" />
+                <div className="flex items-center gap-1.5 px-3 py-1.5 text-[#153230]/80 border-r border-[#153230]/10 mr-1" aria-label="View count">
+                    <Eye className="w-4 h-4" aria-hidden="true" />
                     <span className="text-sm font-bold tabular-nums">{stats.views.toLocaleString()}</span>
                 </div>
 
@@ -114,12 +114,13 @@ export function EngagementBar({ slug, title }: EngagementBarProps) {
                     whileTap={{ scale: 0.8 }}
                     onClick={() => handleReaction('like')}
                     disabled={hasLiked || hasDisliked}
+                    aria-label={hasLiked ? 'Liked' : 'Like this post'}
                     className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-colors ${hasLiked
                         ? 'bg-green-100 text-green-700'
-                        : 'hover:bg-[#E2F3F2] text-[#153230]/70'
+                        : 'hover:bg-[#E2F3F2] text-[#153230]/80'
                         } ${hasDisliked ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                    <ThumbsUp className={`w-4 h-4 ${hasLiked ? 'fill-current' : ''}`} />
+                    <ThumbsUp className={`w-4 h-4 ${hasLiked ? 'fill-current' : ''}`} aria-hidden="true" />
                     <span className="text-sm font-bold tabular-nums">{stats.likes > 0 ? stats.likes : ''}</span>
                 </motion.button>
 
@@ -128,12 +129,13 @@ export function EngagementBar({ slug, title }: EngagementBarProps) {
                     whileTap={{ scale: 0.8 }}
                     onClick={() => handleReaction('dislike')}
                     disabled={hasLiked || hasDisliked}
+                    aria-label={hasDisliked ? 'Disliked' : 'Dislike this post'}
                     className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-colors ${hasDisliked
                         ? 'bg-red-100 text-red-700'
-                        : 'hover:bg-[#E2F3F2] text-[#153230]/70'
+                        : 'hover:bg-[#E2F3F2] text-[#153230]/80'
                         } ${hasLiked ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                    <ThumbsDown className={`w-4 h-4 ${hasDisliked ? 'fill-current' : ''}`} />
+                    <ThumbsDown className={`w-4 h-4 ${hasDisliked ? 'fill-current' : ''}`} aria-hidden="true" />
                 </motion.button>
 
                 <div className="w-px h-4 bg-[#153230]/10 mx-1"></div>

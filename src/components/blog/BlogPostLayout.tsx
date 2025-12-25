@@ -83,7 +83,7 @@ function BlogPostLayoutInner({
             <header className="px-8 md:px-12 py-8 max-w-5xl mx-auto w-full">
                 <Link
                     href="/blog"
-                    className="group inline-flex items-center gap-3 text-base font-bold text-[#153230]/60 hover:text-[#153230] transition-colors"
+                    className="group inline-flex items-center gap-3 text-base font-bold text-[#153230]/80 hover:text-[#153230] transition-colors"
                 >
                     <div className="w-10 h-10 flex items-center justify-center rounded-full border border-[#153230]/10 bg-white group-hover:border-[#153230] group-hover:bg-[#153230] group-hover:text-white transition-all duration-300 shadow-sm">
                         ←
@@ -110,10 +110,10 @@ function BlogPostLayoutInner({
                         {/* Left: Metadata & Typography */}
                         <div className="flex-1 space-y-6">
                             <div className="flex items-center gap-3 mb-4 md:mb-6">
-                                <span className="px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-xs md:text-sm font-bold text-white bg-[#4D7DA3]">
+                                <span className="px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-xs md:text-sm font-bold text-white bg-[#2e6089]">
                                     {category}
                                 </span>
-                                <span className="text-[#153230]/60 text-xs md:text-sm">{date} • {readTime}</span>
+                                <span className="text-[#153230]/80 text-xs md:text-sm">{date} • {readTime}</span>
                             </div>
 
                             <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-[#153230] leading-[1.1] tracking-tight">
@@ -135,7 +135,7 @@ function BlogPostLayoutInner({
                                     showInstructions={false}
                                 />
                             </div>
-                            <p className="text-center text-xs text-[#4D7DA3] mt-2 font-medium bg-[#E5F4FF]/50 py-1 rounded-lg">
+                            <p className="text-center text-xs text-[#1e6088] mt-2 font-medium bg-[#E5F4FF]/50 py-1 rounded-lg">
                                 💡 Pin this to keep notes while reading!
                             </p>
                         </div>
@@ -190,7 +190,7 @@ function BlogPostLayoutInner({
                         <div className="flex items-center justify-between">
                             <Link
                                 href="/blog"
-                                className="text-[#4D7DA3] hover:text-[#153230] font-bold flex items-center gap-2 transition-colors"
+                                className="text-[#1e6088] hover:text-[#153230] font-bold flex items-center gap-2 transition-colors"
                             >
                                 ← Back to all posts
                             </Link>
@@ -198,7 +198,7 @@ function BlogPostLayoutInner({
                             {nextPost && (
                                 <Link
                                     href={`/blog/${nextPost.slug}`}
-                                    className="text-[#4D7DA3] hover:text-[#153230] font-bold flex items-center gap-2 transition-colors text-right"
+                                    className="text-[#1e6088] hover:text-[#153230] font-bold flex items-center gap-2 transition-colors text-right"
                                 >
                                     Next Post →
                                 </Link>
@@ -213,12 +213,12 @@ function BlogPostLayoutInner({
 
             <footer className="px-8 md:px-12 py-8 border-t border-[#4D7DA3]/10 bg-[#f8fcfe]">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p className="text-[#153230]/60 text-sm">
+                    <p className="text-[#153230]/80 text-sm">
                         © {new Date().getFullYear()} DTHOMPSONDEV. All rights reserved.
                     </p>
                     <Link
                         href="/feed.xml"
-                        className="text-[#153230]/40 hover:text-[#4D7DA3] text-sm font-medium transition-colors flex items-center gap-2"
+                        className="text-[#153230]/70 hover:text-[#1e6088] text-sm font-medium transition-colors flex items-center gap-2"
                         target="_blank"
                     >
                         <span className="w-4 h-4 flex items-center justify-center rounded-sm border border-current font-serif font-bold text-[10px] leading-none">R</span>

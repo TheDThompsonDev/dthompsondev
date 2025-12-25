@@ -97,7 +97,7 @@ export function CodeMorph({ steps, title, subtitle }: CodeMorphProps) {
     <div className="my-16">
       {title && (
         <div className="mb-8">
-          <h3 className="text-3xl font-bold text-gray-900 tracking-tight mb-2">{title}</h3>
+          <h2 className="text-3xl font-bold text-gray-900 tracking-tight mb-2">{title}</h2>
           {subtitle && <p className="text-gray-600">{subtitle}</p>}
         </div>
       )}
@@ -124,9 +124,9 @@ export function CodeMorph({ steps, title, subtitle }: CodeMorphProps) {
                   transition={{ duration: 0.4 }}
                   className="space-y-4"
                 >
-                  <h4 className="text-2xl font-bold text-gray-900 tracking-tight leading-tight">
+                  <h3 className="text-2xl font-bold text-gray-900 tracking-tight leading-tight">
                     {steps[activeStep].title}
-                  </h4>
+                  </h3>
                   <p className="text-gray-600 leading-relaxed text-base">
                     {steps[activeStep].description}
                   </p>
@@ -135,10 +135,11 @@ export function CodeMorph({ steps, title, subtitle }: CodeMorphProps) {
 
               <div className="pt-8 border-t border-gray-100">
                 <div className="flex gap-2 mb-4">
-                  {steps.map((_, index) => (
+                  {steps.map((step, index) => (
                     <button
                       key={index}
                       onClick={() => handleStepChange(index)}
+                      aria-label={`Go to step ${index + 1}: ${step.title}`}
                       className={`flex-1 h-1.5 rounded-lg transition-all duration-500 ${index === activeStep ? 'bg-gray-900' : index < activeStep ? 'bg-gray-400' : 'bg-gray-200'
                         }`}
                     />
@@ -172,13 +173,13 @@ export function CodeMorph({ steps, title, subtitle }: CodeMorphProps) {
                 <div className="w-3 h-3 rounded-lg bg-[#ffbd2e]"></div>
                 <div className="w-3 h-3 rounded-lg bg-[#27c93f]"></div>
               </div>
-              <span className="text-xs text-gray-500 font-mono ml-2">example.js</span>
+              <span className="text-xs text-gray-400 font-mono ml-2">example.js</span>
             </div>
 
             <div className="font-mono text-sm leading-loose">
               {groupedTokens.map((lineTokens, lineIdx) => (
                 <div key={`line-${lineIdx}`} className="flex min-h-[1.75rem]">
-                  <span className="inline-block w-10 text-gray-600 select-none text-right mr-4 text-xs flex-shrink-0">
+                  <span className="inline-block w-10 text-gray-400 select-none text-right mr-4 text-xs flex-shrink-0">
                     {lineIdx + 1}
                   </span>
                   <div className="flex-1 whitespace-pre-wrap">

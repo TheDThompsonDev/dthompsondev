@@ -600,9 +600,9 @@ function RotarySelectorComponent() {
                   <span
                     className="inline-block px-4 py-2 rounded-full text-sm font-bold border-2"
                     style={{
-                      backgroundColor: `${currentColor}20`,
+                      backgroundColor: `${currentColor}30`,
                       borderColor: currentColor,
-                      color: currentColor,
+                      color: '#153230',
                     }}
                   >
                     SELECTED
@@ -619,9 +619,9 @@ function RotarySelectorComponent() {
                       key={tag}
                       className="px-4 py-2 rounded-xl text-sm font-bold border transition-all duration-300 hover:scale-105"
                       style={{
-                        backgroundColor: `${currentColor}15`,
-                        borderColor: `${currentColor}40`,
-                        color: currentColor,
+                        backgroundColor: `${currentColor}25`,
+                        borderColor: `${currentColor}50`,
+                        color: '#153230',
                         animationDelay: `${tagIndex * 0.1}s`,
                       }}
                     >
@@ -757,9 +757,9 @@ function RotarySelectorComponent() {
                       key={tag}
                       className="px-3 py-1 rounded-lg text-xs font-bold border"
                       style={{
-                        backgroundColor: `${currentColor}15`,
-                        borderColor: `${currentColor}40`,
-                        color: currentColor,
+                        backgroundColor: `${currentColor}25`,
+                        borderColor: `${currentColor}50`,
+                        color: '#153230',
                       }}
                     >
                       {tag}

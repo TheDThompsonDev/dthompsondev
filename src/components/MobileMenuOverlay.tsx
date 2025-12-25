@@ -118,7 +118,7 @@ export function MobileMenuOverlay({ isOpen, onClose }: MobileMenuOverlayProps) {
                 <div className="mb-8">
                     <ContactModalButton
                         onClick={onClose}
-                        className="block w-full bg-[#4D7DA3] text-white text-center py-4 rounded-full font-bold text-lg hover:bg-[#5a8fb8] transition-colors shadow-lg cursor-pointer"
+                        className="block w-full bg-[#2e6089] text-white text-center py-4 rounded-full font-bold text-lg hover:bg-[#3d7ba8] transition-colors shadow-lg cursor-pointer"
                     >
                         Get In Touch
                     </ContactModalButton>

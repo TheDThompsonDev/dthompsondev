@@ -71,11 +71,10 @@ export function SlashCommandMenu({ position, onSelect, onClose, searchQuery = ''
           <button
             key={type}
             onClick={() => onSelect(type)}
-            className={`w-full text-left p-3 rounded-lg transition-colors flex items-start gap-3 ${
-              index === selectedIndex
-                ? 'bg-[#4D7DA3] text-white'
+            className={`w-full text-left p-3 rounded-lg transition-colors flex items-start gap-3 ${index === selectedIndex
+                ? 'bg-[#2e6089] text-white'
                 : 'hover:bg-gray-100 text-gray-900'
-            }`}
+              }`}
           >
             <span className="text-2xl flex-shrink-0">{config.icon}</span>
             <div className="flex-1 min-w-0">
@@ -89,7 +88,7 @@ export function SlashCommandMenu({ position, onSelect, onClose, searchQuery = ''
           </button>
         ))}
       </div>
-      
+
       <div className="mt-2 pt-2 border-t border-gray-200 px-2">
         <p className="text-xs text-gray-500 flex items-center gap-2">
           <kbd className="px-1.5 py-0.5 bg-gray-100 rounded text-xs">↑↓</kbd> Navigate

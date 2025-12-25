@@ -96,7 +96,7 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
               <div className="max-w-4xl mx-auto">
                 <div className="mb-8">
                   {post.category && (
-                    <span className="inline-block px-4 py-2 bg-[#4D7DA3] text-white rounded-full text-sm font-bold mb-4">
+                    <span className="inline-block px-4 py-2 bg-[#2e6089] text-white rounded-full text-sm font-bold mb-4">
                       {post.category}
                     </span>
                   )}

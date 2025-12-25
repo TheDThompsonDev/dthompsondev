@@ -12,7 +12,7 @@ export default function ResourcesPage() {
       title: "The Programming Podcast",
       subtitle: "Weekly technical deep dives & career advice. Join us as we explore the latest in tech, interview industry leaders, and break down complex concepts.",
       label: "PODCAST",
-      color: "#84803E",
+      color: "#5d5a2e",
       cardBg: "bg-[#54433A]", // Warm Brown
       image: "/resources/podcast-art.png",
       link: "/podcast",
@@ -23,7 +23,7 @@ export default function ResourcesPage() {
       title: "LinkedIn Series",
       subtitle: "Master your professional presence with our comprehensive video series. Learn to network, optimize your profile, and attract recruiters.",
       label: "SERIES",
-      color: "#4D7DA3",
+      color: "#2e6089",
       cardBg: "bg-[#1E293B]", // Dark Slate Navy
       image: "/resources/linkedin-thumb.png",
       link: "#",
@@ -34,7 +34,7 @@ export default function ResourcesPage() {
       title: "Commit Your Code Discord!",
       subtitle: "Join 12,000+ developers in our active community. Daily job posts, code reviews, career advice, and weekly study groups. Free forever.",
       label: "COMMUNITY",
-      color: "#4ade80",
+      color: "#15803d",
       cardBg: "bg-[#142A25]", // Deep Green
       image: "/resources/discord-logo.png",
       link: "https://discord.gg/pWGt6JMV9t",
@@ -45,7 +45,7 @@ export default function ResourcesPage() {
       title: "LinkedIn Crash Course",
       subtitle: "100% Free on LinkedIn Learning. A structured path to mastering LinkedIn for developers, from profile creation to content strategy.",
       label: "COURSE",
-      color: "#0ea5e9",
+      color: "#0369a1",
       cardBg: "bg-[#0B1120]", // Deepest Blue
       image: "/resources/course-thumb.png",
       link: "#",
@@ -149,9 +149,9 @@ export default function ResourcesPage() {
                   />
 
                   <div className="relative z-10">
-                    <h3 className="text-2xl md:text-4xl font-black text-[#153230] mb-4 leading-tight group-hover:text-[#4D7DA3] transition-colors">
+                    <h2 className="text-2xl md:text-4xl font-black text-[#153230] mb-4 leading-tight group-hover:text-[#4D7DA3] transition-colors">
                       {item.title}
-                    </h3>
+                    </h2>
                     <p className="text-lg text-[#153230]/70 leading-relaxed mb-6">
                       {item.subtitle}
                     </p>
