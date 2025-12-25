@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { isValidEmail, isValidName, isValidMessage } from '@/lib/validation';
+import { FloatingLabelInput } from './FloatingLabelInput';
 
 export function ContactForm() {
   const [formData, setFormData] = useState({
@@ -111,123 +112,35 @@ export function ContactForm() {
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="space-y-3 sm:space-y-6">
-      {/* Name and Email Row */}
       <div className="grid md:grid-cols-2 gap-3 sm:gap-6">
-        {/* Name Field with Floating Label */}
-        <div className="relative group">
-          <input
-            type="text"
-            id="name"
-            name="name"
-            required
-            value={formData.name}
-            onChange={handleChange}
-            onFocus={() => handleFocus('name')}
-            onBlur={handleBlur}
-            className={`
-              peer w-full px-4 sm:px-5 py-3 sm:py-4 pt-5 sm:pt-6 rounded-xl border-2 
-              bg-white/80 backdrop-blur-sm
-              transition-all duration-300
-              text-[#153230] text-sm sm:text-base font-medium
-              placeholder-transparent
-              focus:outline-none focus:ring-4 focus:ring-[#4D7DA3]/20
-              ${getFieldValidation('name', formData.name) === 'valid'
-                ? 'border-green-400 focus:border-green-500'
-                : getFieldValidation('name', formData.name) === 'invalid'
-                  ? 'border-red-400 focus:border-red-500'
-                  : 'border-[#E2F3F2] focus:border-[#4D7DA3] hover:border-[#4D7DA3]/50'
-              }
-            `}
-            placeholder="Your Name"
-            aria-label="Your full name"
-            aria-required="true"
-          />
-          <label
-            htmlFor="name"
-            className={`
-              absolute left-5 transition-all duration-300 pointer-events-none
-              peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-[#153230]/50
-              peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#4D7DA3] peer-focus:font-bold
-              ${formData.name ? 'top-2 text-xs font-bold text-[#153230]' : 'top-4 text-base text-[#153230]/50'}
-            `}
-          >
-            Your Name <span className="text-[#4D7DA3]">*</span>
-          </label>
+        <FloatingLabelInput
+          id="name"
+          name="name"
+          type="text"
+          label="Your Name"
+          value={formData.name}
+          required
+          ariaLabel="Your full name"
+          validation={getFieldValidation('name', formData.name)}
+          onChange={handleChange}
+          onFocus={() => handleFocus('name')}
+          onBlur={handleBlur}
+        />
 
-          {/* Validation Icon */}
-          {getFieldValidation('name', formData.name) === 'valid' && (
-            <div className="absolute right-4 top-1/2 -translate-y-1/2">
-              <svg className="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-          )}
-          {getFieldValidation('name', formData.name) === 'invalid' && (
-            <div className="absolute right-4 top-1/2 -translate-y-1/2">
-              <svg className="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </div>
-          )}
-        </div>
 
-        {/* Email Field with Floating Label */}
-        <div className="relative group">
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            value={formData.email}
-            onChange={handleChange}
-            onFocus={() => handleFocus('email')}
-            onBlur={handleBlur}
-            className={`
-              peer w-full px-4 sm:px-5 py-3 sm:py-4 pt-5 sm:pt-6 rounded-xl border-2 
-              bg-white/80 backdrop-blur-sm
-              transition-all duration-300
-              text-[#153230] text-sm sm:text-base font-medium
-              placeholder-transparent
-              focus:outline-none focus:ring-4 focus:ring-[#4D7DA3]/20
-              ${getFieldValidation('email', formData.email) === 'valid'
-                ? 'border-green-400 focus:border-green-500'
-                : getFieldValidation('email', formData.email) === 'invalid'
-                  ? 'border-red-400 focus:border-red-500'
-                  : 'border-[#E2F3F2] focus:border-[#4D7DA3] hover:border-[#4D7DA3]/50'
-              }
-            `}
-            placeholder="Your Email"
-            aria-label="Your email address"
-            aria-required="true"
-          />
-          <label
-            htmlFor="email"
-            className={`
-              absolute left-5 transition-all duration-300 pointer-events-none
-              peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-[#153230]/50
-              peer-focus:top-2 peer-focus:text-xs peer-focus:text-[#4D7DA3] peer-focus:font-bold
-              ${formData.email ? 'top-2 text-xs font-bold text-[#153230]' : 'top-4 text-base text-[#153230]/50'}
-            `}
-          >
-            Email Address <span className="text-[#4D7DA3]">*</span>
-          </label>
-
-          {/* Validation Icon */}
-          {getFieldValidation('email', formData.email) === 'valid' && (
-            <div className="absolute right-4 top-1/2 -translate-y-1/2">
-              <svg className="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-          )}
-          {getFieldValidation('email', formData.email) === 'invalid' && (
-            <div className="absolute right-4 top-1/2 -translate-y-1/2">
-              <svg className="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </div>
-          )}
-        </div>
+        <FloatingLabelInput
+          id="email"
+          name="email"
+          type="email"
+          label="Email Address"
+          value={formData.email}
+          required
+          ariaLabel="Your email address"
+          validation={getFieldValidation('email', formData.email)}
+          onChange={handleChange}
+          onFocus={() => handleFocus('email')}
+          onBlur={handleBlur}
+        />
       </div>
 
       {/* Company Field with Floating Label */}
@@ -265,7 +178,6 @@ export function ContactForm() {
         </label>
       </div>
 
-      {/* Message Field with Character Counter */}
       <div className="relative group">
         <textarea
           id="message"
@@ -307,7 +219,6 @@ export function ContactForm() {
           Tell Me About Your Project <span className="text-[#4D7DA3]">*</span>
         </label>
 
-        {/* Character Counter */}
         <div className={`
           absolute bottom-3 right-4 text-xs font-semibold transition-colors
           ${messageLength > messageMaxLength * 0.9
@@ -321,7 +232,6 @@ export function ContactForm() {
         </div>
       </div>
 
-      {/* Status Messages with Animation */}
       {status === 'success' && (
         <div className="bg-linear-to-r from-green-50 to-emerald-50 border-2 border-green-400 text-[#153230] px-6 py-4 rounded-xl shadow-lg animate-in fade-in slide-in-from-top-2 duration-500">
           <div className="flex items-start gap-3">
@@ -362,7 +272,6 @@ export function ContactForm() {
         </div>
       )}
 
-      {/* Submit Button with Enhanced Styling */}
       <div className="pt-2">
         <button
           type="submit"
@@ -380,10 +289,7 @@ export function ContactForm() {
           `}
           aria-label="Submit contact form"
         >
-          {/* Animated Background Gradient */}
           <div className="absolute inset-0 bg-linear-to-r from-[#4D7DA3] via-[#5a8fb5] to-[#4D7DA3] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-          {/* Button Content */}
           <span className="relative flex items-center justify-center gap-3">
             {status === 'loading' ? (
               <>
@@ -410,7 +316,6 @@ export function ContactForm() {
           </span>
         </button>
 
-        {/* Privacy Note */}
         <div className="mt-4 flex items-start gap-2 text-xs text-[#153230]/60 leading-relaxed">
           <svg className="w-4 h-4 shrink-0 mt-0.5 text-[#4D7DA3]" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
