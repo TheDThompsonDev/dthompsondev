@@ -42,13 +42,9 @@ export function Footer() {
 
     return (
         <footer className="bg-[#153230] text-white">
-            {/* Newsletter Section */}
             <NewsletterForm />
-
-            {/* Main Footer Content */}
             <div className="max-w-7xl mx-auto px-8 md:px-16 pb-16">
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 border-t border-white/10 pt-16">
-                    {/* Brand & Contact Column */}
                     <div className="md:col-span-5 space-y-6">
                         <Link href="/" className="inline-block">
                             <div className="flex items-center gap-3">
@@ -85,7 +81,6 @@ export function Footer() {
                         </button>
                     </div>
 
-                    {/* Navigation Column */}
                     <div className="md:col-span-3 md:col-start-7">
                         <h3 className="font-bold text-lg mb-6 text-[#7eb9dc]">Explore</h3>
                         <ul className="space-y-4">
@@ -102,7 +97,6 @@ export function Footer() {
                         </ul>
                     </div>
 
-                    {/* Connect Column */}
                     <div className="md:col-span-3">
                         <h3 className="font-bold text-lg mb-6 text-[#7eb9dc]">Connect</h3>
                         <div className="flex flex-col gap-4">
@@ -123,13 +117,17 @@ export function Footer() {
                         </div>
                     </div>
                 </div>
-
-                {/* Copyright */}
                 <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/70">
                     <p>
                         &copy; {new Date().getFullYear()} Danny Thompson. All rights reserved.
                     </p>
-                    <p>Designed & Built with ❤️ by Danny Thompson</p>
+                    <div className="flex items-center gap-4">
+                        <Link href="/privacy" className="hover:text-white transition-colors">
+                            Privacy Policy
+                        </Link>
+                        <span>·</span>
+                        <span>Designed & Built with ❤️ by Danny Thompson</span>
+                    </div>
                 </div>
                 <div className="mt-4 text-center">
                     <p className="inline-flex items-center gap-2 text-white/70 text-xs">
@@ -142,7 +140,6 @@ export function Footer() {
                 </div>
             </div>
 
-            {/* Contact Modal */}
             <Modal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)}>
                 <div className="text-center mb-6">
                     <h2 className="text-2xl font-black text-[#153230] mb-2">

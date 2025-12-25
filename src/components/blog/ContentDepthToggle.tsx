@@ -2,6 +2,7 @@
 
 import { useContentDepth, ContentDepth } from './ContentDepthProvider';
 import { useEffect, useState } from 'react';
+import { trackBlogDepth } from '@/lib/analytics';
 
 const DEPTH_LABELS: Record<ContentDepth, string> = {
     short: 'Quick Takes',
@@ -26,7 +27,6 @@ export function ContentDepthToggle() {
             setDepth(targetDepth);
         }
 
-        // Arrow key navigation
         const currentIndex = DEPTH_ORDER.indexOf(depth);
         if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
             e.preventDefault();
@@ -57,7 +57,10 @@ export function ContentDepthToggle() {
                         aria-selected={displayDepth === d}
                         aria-controls={`content-${d}`}
                         tabIndex={displayDepth === d ? 0 : -1}
-                        onClick={() => setDepth(d)}
+                        onClick={() => {
+                            setDepth(d);
+                            trackBlogDepth({ slug: '', depth: d, action: 'toggle' });
+                        }}
                         onKeyDown={(e) => handleKeyDown(e, d)}
                         className={`
                             px-4 py-3 sm:px-8 sm:py-3 rounded-full text-sm sm:text-base font-bold
@@ -74,7 +77,6 @@ export function ContentDepthToggle() {
                 ))}
             </div>
 
-            {/* Keyboard Shortcut Hint */}
             <div className="text-center mt-2 text-xs text-[#153230]/40 font-medium hidden sm:block opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 Press <span className="font-mono bg-[#153230]/5 px-1 rounded">←</span> / <span className="font-mono bg-[#153230]/5 px-1 rounded">→</span> to switch views
             </div>
