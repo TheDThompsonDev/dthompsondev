@@ -14,7 +14,7 @@ export default function The58BillionPivotPost() {
             title={<>The $58 Billion<br /><span className="text-[#4D7DA3]">Pivot</span></>}
             subtitle="Are you building a business or just a Meme Generator? The story of how Figma almost didn't exist."
             slug="the-58-billion-pivot"
-            coverImage="/blog-covers/58-billion-pivot.jpeg"
+            coverImage="https://twxvicohcixbzang.public.blob.vercel-storage.com/blog-covers/58-billion-pivot.jpeg"
             short={{
                 content: (
                     <>
@@ -100,7 +100,7 @@ export default function The58BillionPivotPost() {
 
                         <div className="my-8 rounded-xl overflow-hidden shadow-lg border border-gray-100">
                             <Image
-                                src="/blog-images/58-billion-pivot/figma-valuation.jpg"
+                                src="https://twxvicohcixbzang.public.blob.vercel-storage.com/blog-images/58-billion-pivot/figma-valuation.jpg"
                                 alt="Figma logo dissolving into pixels"
                                 width={1200}
                                 height={600}
@@ -134,7 +134,7 @@ export default function The58BillionPivotPost() {
 
                         <div className="my-8 rounded-xl overflow-hidden shadow-lg border border-gray-100">
                             <Image
-                                src="/blog-images/58-billion-pivot/technical-trap.jpg"
+                                src="https://twxvicohcixbzang.public.blob.vercel-storage.com/blog-images/58-billion-pivot/technical-trap.jpg"
                                 alt="Steampunk machine representing the trap of solving technically hard but useless problems"
                                 width={1200}
                                 height={600}
@@ -164,7 +164,7 @@ export default function The58BillionPivotPost() {
 
                         <div className="my-8 rounded-xl overflow-hidden shadow-lg border border-gray-100">
                             <Image
-                                src="/blog-images/58-billion-pivot/infrastructure-bet.jpg"
+                                src="https://twxvicohcixbzang.public.blob.vercel-storage.com/blog-images/58-billion-pivot/infrastructure-bet.jpg"
                                 alt="A betting ticket against infrastructure futures on a crumbling bridge"
                                 width={1200}
                                 height={600}
@@ -189,7 +189,7 @@ export default function The58BillionPivotPost() {
 
                         <div className="my-8 rounded-xl overflow-hidden shadow-lg border border-gray-100">
                             <Image
-                                src="/blog-images/58-billion-pivot/founder-trap.jpg"
+                                src="https://twxvicohcixbzang.public.blob.vercel-storage.com/blog-images/58-billion-pivot/founder-trap.jpg"
                                 alt="A cage representing the Founder's Trap of trying to do everything"
                                 width={1200}
                                 height={600}
@@ -216,7 +216,7 @@ export default function The58BillionPivotPost() {
 
                         <div className="my-8 rounded-xl overflow-hidden shadow-lg border border-gray-100">
                             <Image
-                                src="/blog-images/58-billion-pivot/changing-rules.jpg"
+                                src="https://twxvicohcixbzang.public.blob.vercel-storage.com/blog-images/58-billion-pivot/changing-rules.jpg"
                                 alt="Chess board comparison: Playing the same game vs Changing the rules"
                                 width={1200}
                                 height={600}

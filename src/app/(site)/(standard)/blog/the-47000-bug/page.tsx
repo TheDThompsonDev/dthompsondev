@@ -12,7 +12,7 @@ export default function The47000DollarBugPost() {
             title={<>The $47,000 Bug:<br /><span className="text-[#4D7DA3]">That Taught Me to Stop Using ||</span></>}
             subtitle="A property management company lost thousands due to a single character. Learn why || is dangerous and how ?? saves your production apps."
             slug="the-47000-bug"
-            coverImage="/blog-covers/bug_fix_code_snippet_1766352858325.png"
+            coverImage="https://twxvicohcixbzang.public.blob.vercel-storage.com/blog-covers/bug_fix_code_snippet_1766352858325.png"
             short={{
                 content: (
                     <>

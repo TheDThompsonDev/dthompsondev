@@ -16,7 +16,7 @@ export const samplePosts: BlogPost[] = [
         updatedAt: new Date('2025-12-21').toISOString(),
         publishedAt: new Date('2025-12-21').toISOString(),
         targetPersonas: ['p2', 'p3'],
-        coverImageUrl: '/blog-covers/ai-engineering.png',
+        coverImageUrl: 'https://twxvicohcixbzang.public.blob.vercel-storage.com/blog-covers/ai-engineering.png',
     },
     {
         id: 6,
@@ -33,7 +33,7 @@ export const samplePosts: BlogPost[] = [
         updatedAt: new Date('2025-12-20').toISOString(),
         publishedAt: new Date('2025-12-20').toISOString(),
         targetPersonas: ['p3', 'p6'],
-        coverImageUrl: '/blog-covers/58-billion-pivot.jpeg',
+        coverImageUrl: 'https://twxvicohcixbzang.public.blob.vercel-storage.com/blog-covers/58-billion-pivot.jpeg',
     },
     {
         id: 5,
@@ -50,7 +50,7 @@ export const samplePosts: BlogPost[] = [
         updatedAt: new Date('2025-12-06').toISOString(),
         publishedAt: new Date('2025-12-06').toISOString(),
         targetPersonas: ['p1', 'p2', 'p5'],
-        coverImageUrl: '/blog-covers/invisible-framework.jpg',
+        coverImageUrl: 'https://twxvicohcixbzang.public.blob.vercel-storage.com/blog-covers/invisible-framework.jpg',
     },
     {
         id: 4,
@@ -67,7 +67,7 @@ export const samplePosts: BlogPost[] = [
         updatedAt: new Date('2025-12-13').toISOString(),
         publishedAt: new Date('2025-12-13').toISOString(),
         targetPersonas: ['p2', 'p3', 'p6'],
-        coverImageUrl: '/blog-covers/schema-outputs.jpeg',
+        coverImageUrl: 'https://twxvicohcixbzang.public.blob.vercel-storage.com/blog-covers/schema-outputs.jpeg',
     },
     {
         id: 2,
@@ -84,7 +84,7 @@ export const samplePosts: BlogPost[] = [
         updatedAt: new Date('2025-11-22').toISOString(),
         publishedAt: new Date('2025-11-22').toISOString(),
         targetPersonas: ['p1', 'p2'],
-        coverImageUrl: '/blog-covers/react-hooks-visualized.jpeg',
+        coverImageUrl: 'https://twxvicohcixbzang.public.blob.vercel-storage.com/blog-covers/react-hooks-visualized.jpeg',
     },
     {
         id: 7,
@@ -101,6 +101,6 @@ export const samplePosts: BlogPost[] = [
         updatedAt: new Date('2025-11-19').toISOString(),
         publishedAt: new Date('2025-11-19').toISOString(),
         targetPersonas: ['p1', 'p2'],
-        coverImageUrl: '/blog-covers/bug_fix_code_snippet_1766352858325.png',
+        coverImageUrl: 'https://twxvicohcixbzang.public.blob.vercel-storage.com/blog-covers/bug_fix_code_snippet_1766352858325.png',
     },
 ];

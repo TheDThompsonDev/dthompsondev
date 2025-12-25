@@ -105,7 +105,7 @@ export async function classifyMessage(message: string): Promise<SupportTicket> {
             title={<>Understanding Schema-Enforced<br /><span className="text-[#4D7DA3]">Outputs</span></>}
             subtitle="If you've integrated an LLM by parsing its output with regex, you've likely experienced the moment when everything breaks. It's time to make the model speak JSON."
             slug="schema-enforced-outputs"
-            coverImage="/blog-covers/schema-outputs.jpeg"
+            coverImage="https://twxvicohcixbzang.public.blob.vercel-storage.com/blog-covers/schema-outputs.jpeg"
             short={{
                 content: (
                     <>
@@ -227,7 +227,7 @@ const ticket = TicketSchema.parse(JSON.parse(completion.content));`}</pre>
 
                             <div className="my-8 rounded-xl overflow-hidden shadow-lg border border-gray-100 bg-[#a3cef1]">
                                 <Image
-                                    src="/blog-images/schema-outputs/routing-logic.png"
+                                    src="https://twxvicohcixbzang.public.blob.vercel-storage.com/blog-images/schema-outputs/routing-logic.png"
                                     alt="Flow chart showing message routing based on sentiment and intent analysis"
                                     width={1200}
                                     height={600}
@@ -259,7 +259,7 @@ const ticket = TicketSchema.parse(JSON.parse(completion.content));`}</pre>
 
                         <div className="my-8 rounded-xl overflow-hidden shadow-lg border border-gray-100">
                             <Image
-                                src="/blog-images/schema-outputs/robust-integration.png"
+                                src="https://twxvicohcixbzang.public.blob.vercel-storage.com/blog-images/schema-outputs/robust-integration.png"
                                 alt="Diagram showing the flow from fragile text output to robust AI features via schema validation"
                                 width={1200}
                                 height={600}
@@ -285,7 +285,7 @@ const ticket = TicketSchema.parse(JSON.parse(completion.content));`}</pre>
 
                         <div className="my-8 rounded-xl overflow-hidden shadow-lg border border-gray-100 bg-[#333]">
                             <Image
-                                src="/blog-images/schema-outputs/benefits-diagram.png"
+                                src="https://twxvicohcixbzang.public.blob.vercel-storage.com/blog-images/schema-outputs/benefits-diagram.png"
                                 alt="Diagram of 4 benefits: Maintainable Codebase, Operational Reliability, Zero Parsing Logic, End-to-End Type Safety"
                                 width={1200}
                                 height={800}
@@ -437,7 +437,7 @@ const result = SupportTicketSchema.parse(JSON.parse(buffer));`}</pre>
 
                         <div className="my-12 rounded-xl overflow-hidden shadow-lg border border-gray-100">
                             <Image
-                                src="/blog-images/schema-outputs/business-comparison.png"
+                                src="https://twxvicohcixbzang.public.blob.vercel-storage.com/blog-images/schema-outputs/business-comparison.png"
                                 alt="Comparison table of Customer Support, Lead Enrichment, and Document Processing workflows"
                                 width={1200}
                                 height={800}

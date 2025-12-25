@@ -24,7 +24,7 @@ export function Footer() {
             href: "https://bsky.app/profile/dthompsondev.bsky.social",
             icon: (
                 <img
-                    src="/logos/bluesky-white-icon.svg"
+                    src="https://twxvicohcixbzang.public.blob.vercel-storage.com/logos/bluesky-white-icon.svg"
                     alt=""
                     aria-hidden="true"
                     className="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity"

@@ -138,7 +138,7 @@ const TESTIMONIALS = [
     role: "Developer",
     platform: "linkedin",
     content: "Danny is a man of action. He’s created incredible opportunities for developers like myself to grow and level up. Most notably, his new Commit Your Talk series has been an amazing, supportive space to practice public speaking in a way that directly relates to tech roles and strengthening our own skills. I feel more confident with every meeting and am embracing the uncomfortable feeling of growth. You can definitely catch me speaking at a conference in 2026!",
-    avatar: "/testimonials/sara-baqla.jpg"
+    avatar: "https://twxvicohcixbzang.public.blob.vercel-storage.com/testimonials/sara-baqla.jpg"
   }
 ];
 

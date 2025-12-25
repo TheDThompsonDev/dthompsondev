@@ -228,7 +228,7 @@ user = client.messages.create(
       title={<>The Death of Magic:<br /><span className="text-[#4D7DA3]">Welcome to AI Engineering</span></>}
       subtitle="The 'Magic Era' of AI is dead. Learn the four architectural pillars that separate weekend prompt-tinkerers from production AI engineers."
       slug="death-of-magic-ai-engineering"
-      coverImage="/blog-covers/ai-engineering.png"
+      coverImage="https://twxvicohcixbzang.public.blob.vercel-storage.com/blog-covers/ai-engineering.png"
       short={{
         content: (
           <>

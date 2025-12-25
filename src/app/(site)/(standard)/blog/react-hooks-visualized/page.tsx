@@ -121,7 +121,7 @@ export default function ReactHooksVisualizedPost() {
         title={<>React Hooks: <br /><span className="text-[#4D7DA3]">The Mental Models You're Missing</span></>}
         subtitle="Hooks fundamentally changed how we write React components. But too many developers are coding with superstition. Let's build the mental models."
         slug="react-hooks-visualized"
-        coverImage="/blog-covers/react-hooks-visualized.jpeg"
+        coverImage="https://twxvicohcixbzang.public.blob.vercel-storage.com/blog-covers/react-hooks-visualized.jpeg"
         short={{
           content: (
             <>

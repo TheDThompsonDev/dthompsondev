@@ -14,7 +14,7 @@ export default function ResourcesPage() {
       label: "PODCAST",
       color: "#5d5a2e",
       cardBg: "bg-[#54433A]", // Warm Brown
-      image: "/resources/podcast-art.png",
+      image: "https://twxvicohcixbzang.public.blob.vercel-storage.com/resources/podcast-art.png",
       link: "/podcast",
       imageStyle: "object-cover scale-75 shadow-2xl rounded-lg rotate-[-2deg] hover:rotate-0 transition-all duration-500"
     },
@@ -25,7 +25,7 @@ export default function ResourcesPage() {
       label: "SERIES",
       color: "#2e6089",
       cardBg: "bg-[#1E293B]", // Dark Slate Navy
-      image: "/resources/linkedin-thumb.png",
+      image: "https://twxvicohcixbzang.public.blob.vercel-storage.com/resources/linkedin-thumb.png",
       link: "#",
       imageStyle: "object-contain scale-[0.85] shadow-2xl rounded-lg hover:scale-90 transition-all duration-500"
     },
@@ -36,7 +36,7 @@ export default function ResourcesPage() {
       label: "COMMUNITY",
       color: "#15803d",
       cardBg: "bg-[#142A25]", // Deep Green
-      image: "/resources/discord-logo.png",
+      image: "https://twxvicohcixbzang.public.blob.vercel-storage.com/resources/discord-logo.png",
       link: "https://discord.gg/pWGt6JMV9t",
       imageStyle: "object-contain scale-75 shadow-2xl rounded-2xl rotate-[2deg] hover:rotate-0 transition-all duration-500"
     },
@@ -47,7 +47,7 @@ export default function ResourcesPage() {
       label: "COURSE",
       color: "#0369a1",
       cardBg: "bg-[#0B1120]", // Deepest Blue
-      image: "/resources/course-thumb.png",
+      image: "https://twxvicohcixbzang.public.blob.vercel-storage.com/resources/course-thumb.png",
       link: "#",
       imageStyle: "object-contain scale-[0.85] shadow-2xl rounded-lg hover:scale-90 transition-all duration-500"
     }

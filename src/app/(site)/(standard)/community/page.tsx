@@ -131,7 +131,7 @@ export default function CommunityPage() {
             <div className="md:col-span-6 h-[450px]">
               <TiltCard className="h-full">
                 <div className="h-full bg-white rounded-2xl overflow-hidden relative group border border-[#E2F3F2] shadow-[0_20px_60px_rgba(0,0,0,0.3)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.4)] transition-all duration-300">
-                  <div className="absolute inset-0 bg-[url('/community/community-1.jpg')] opacity-[0.2] bg-cover bg-center group-hover:scale-105 transition-transform duration-700 mix-blend-multiply grayscale group-hover:grayscale-0 transition-all" />
+                  <div className="absolute inset-0 bg-[url('https://twxvicohcixbzang.public.blob.vercel-storage.com/community/community-1.jpg')] opacity-[0.2] bg-cover bg-center group-hover:scale-105 transition-transform duration-700 mix-blend-multiply grayscale group-hover:grayscale-0 transition-all" />
 
                   <div className="relative z-10 p-6 sm:p-8 h-full flex flex-col justify-end">
                     <div className="flex items-center justify-between mb-2">
@@ -195,7 +195,7 @@ export default function CommunityPage() {
             {/* Top Row: 2 Wide Images */}
             <div className="md:col-span-3 relative aspect-video rounded-2xl overflow-hidden shadow-lg group">
               <Image
-                src="/community/community-1.jpg"
+                src="https://twxvicohcixbzang.public.blob.vercel-storage.com/community/community-1.jpg"
                 alt="Community event group photo"
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -207,7 +207,7 @@ export default function CommunityPage() {
             </div>
             <div className="md:col-span-3 relative aspect-video rounded-2xl overflow-hidden shadow-lg group">
               <Image
-                src="/community/community-2.jpg"
+                src="https://twxvicohcixbzang.public.blob.vercel-storage.com/community/community-2.jpg"
                 alt="Community workshop"
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -221,7 +221,7 @@ export default function CommunityPage() {
             {/* Bottom Row: 3 Smaller Images */}
             <div className="md:col-span-2 relative aspect-square rounded-2xl overflow-hidden shadow-lg group">
               <Image
-                src="/community/community-3.jpg"
+                src="https://twxvicohcixbzang.public.blob.vercel-storage.com/community/community-3.jpg"
                 alt="Community networking"
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -229,7 +229,7 @@ export default function CommunityPage() {
             </div>
             <div className="md:col-span-2 relative aspect-square rounded-2xl overflow-hidden shadow-lg group">
               <Image
-                src="/community/community-4.jpg"
+                src="https://twxvicohcixbzang.public.blob.vercel-storage.com/community/community-4.jpg"
                 alt="Community fun"
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -237,7 +237,7 @@ export default function CommunityPage() {
             </div>
             <div className="md:col-span-2 relative aspect-square rounded-2xl overflow-hidden shadow-lg group">
               <Image
-                src="/community/community-5.jpg"
+                src="https://twxvicohcixbzang.public.blob.vercel-storage.com/community/community-5.jpg"
                 alt="Community mentorship"
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"

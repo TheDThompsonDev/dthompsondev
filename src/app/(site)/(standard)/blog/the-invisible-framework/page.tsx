@@ -12,7 +12,7 @@ export default function InvisibleFrameworkPost() {
             title={<>The Invisible<br /><span className="text-[#4D7DA3]">Framework</span></>}
             subtitle="Mental models that separate Senior Devs from everyone else. Stop focusing on syntax and start understanding the invisible maps of how the engineering world works."
             slug="the-invisible-framework"
-            coverImage="/blog-covers/invisible-framework.jpg"
+            coverImage="https://twxvicohcixbzang.public.blob.vercel-storage.com/blog-covers/invisible-framework.jpg"
             short={{
                 content: (
                     <>

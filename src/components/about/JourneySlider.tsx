@@ -33,7 +33,7 @@ export const JourneySlider = () => {
                             }}
                         >
                             <ReactCompareSliderImage
-                                src="/photos/frying.jpg"
+                                src="https://twxvicohcixbzang.public.blob.vercel-storage.com/photos/frying.jpg"
                                 alt="The Beginning - Gas Station Kitchen"
                                 style={{
                                     width: '100%',
