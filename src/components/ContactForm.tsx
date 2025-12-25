@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import { isValidEmail, isValidName, isValidMessage } from '@/lib/validation';
 
 export function ContactForm() {
   const [formData, setFormData] = useState({
@@ -98,12 +99,11 @@ export function ContactForm() {
 
     switch (fieldName) {
       case 'name':
-        return value.trim().length >= 2 ? 'valid' : 'invalid';
+        return isValidName(value) ? 'valid' : 'invalid';
       case 'email':
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(value) ? 'valid' : 'invalid';
+        return isValidEmail(value) ? 'valid' : 'invalid';
       case 'message':
-        return value.trim().length >= 10 ? 'valid' : 'invalid';
+        return isValidMessage(value) ? 'valid' : 'invalid';
       default:
         return null;
     }

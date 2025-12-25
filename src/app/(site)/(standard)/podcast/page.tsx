@@ -1,6 +1,6 @@
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { PodcastPageClient } from '@/components/PodcastPageClient';
-import { headers } from 'next/headers';
+import { internalFetch } from '@/lib/server-utils';
 import type { Episode, PodcastData } from '@/types/podcast';
 import type { Metadata } from 'next';
 
@@ -16,14 +16,7 @@ export default async function PodcastPage() {
   let error: string | null = null;
 
   try {
-    const headersList = await headers();
-    const host = headersList.get('host') || 'localhost:3000';
-    const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
-    const baseUrl = `${protocol}://${host}`;
-
-    const res = await fetch(`${baseUrl}/api/podcast.json`, {
-      next: { revalidate: 3600 },
-    });
+    const res = await internalFetch('/api/podcast.json');
 
     if (!res.ok) {
       throw new Error(`Failed to fetch podcast data: ${res.status}`);

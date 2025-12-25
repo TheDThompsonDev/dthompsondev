@@ -10,7 +10,6 @@ import { PodcastErrorBoundary } from "@/components/PodcastErrorBoundary";
 import Navbar from "@/components/Navbar";
 import { HeroContactButton } from "@/components/HeroContactButton";
 import Link from "next/link";
-import { headers } from "next/headers";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import { Loader2 } from "lucide-react";
@@ -28,35 +27,15 @@ const OrbitSwitcher = dynamic(() => import("@/components/OrbitSwitcher").then(mo
   loading: () => <div className="h-[400px] bg-transparent" />
 });
 
-type Episode = {
-  id: string;
-  guid: string;
-  title: string;
-  link: string;
-  pubDate: string;
-  publishDate: string;
-  description: string;
-  audioUrl: string;
-  videoUrl?: string;
-  thumbnail: string;
-  duration: string;
-  platform: "spotify" | "youtube";
-  externalUrl: string;
-};
+import type { Episode } from "@/types/podcast";
+import { internalFetch } from "@/lib/server-utils";
 
 export default async function Home() {
   // Fetch podcast episodes
   let episodes: Episode[] = [];
 
   try {
-    const headersList = await headers();
-    const host = headersList.get("host") || "localhost:3000";
-    const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
-    const baseUrl = `${protocol}://${host}`;
-
-    const res = await fetch(`${baseUrl}/api/podcast.json`, {
-      next: { revalidate: 3600 }, // Cache for 1 hour
-    });
+    const res = await internalFetch("/api/podcast.json");
 
     if (res.ok) {
       const data = await res.json();

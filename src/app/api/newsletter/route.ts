@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { isValidEmail } from '@/lib/validation';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -16,8 +17,7 @@ export async function POST(request: Request) {
         }
 
         // Email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
+        if (!isValidEmail(email)) {
             return NextResponse.json(
                 { error: 'Invalid email address' },
                 { status: 400 }

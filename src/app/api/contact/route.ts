@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { checkBotId } from 'botid/server';
+import { isValidEmail } from '@/lib/validation';
 
 // Inline escapeHtml to avoid importing from sanitize.ts which uses isomorphic-dompurify
 // (can cause issues in Vercel serverless environment)
@@ -58,8 +59,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    if (!isValidEmail(email)) {
       return NextResponse.json(
         { error: 'Invalid email address' },
         { status: 400 }
