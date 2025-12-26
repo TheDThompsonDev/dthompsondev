@@ -8,30 +8,43 @@ interface ShareMenuProps {
     isOpen: boolean;
     onClose: () => void;
     url?: string;
+    slug?: string;
     title?: string;
     className?: string;
 }
 
-export function ShareMenu({ isOpen, onClose, url, title, className = '' }: ShareMenuProps) {
+export function ShareMenu({ isOpen, onClose, url, slug, title, className = '' }: ShareMenuProps) {
     const [copied, setCopied] = useState(false);
 
     const handleShare = async (platform: 'copy' | 'twitter' | 'linkedin') => {
-        const shareUrl = url || window.location.href;
-        const shareTitle = title || document.title;
+        let shareUrl = url;
+
+        if (!shareUrl && slug) {
+            const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://dthompson.dev';
+            shareUrl = `${baseUrl}/blog/${slug}`;
+        }
+
+        // Fallback to window.location only if absolutely necessary and running on client
+        if (!shareUrl && typeof window !== 'undefined') {
+            shareUrl = window.location.href;
+        }
+
+        const finalShareUrl = shareUrl || '';
+        const shareTitle = title || (typeof document !== 'undefined' ? document.title : '');
         const text = `Check out "${shareTitle}" by @dthompsondev`;
 
         if (platform === 'copy') {
-            await navigator.clipboard.writeText(shareUrl);
+            await navigator.clipboard.writeText(finalShareUrl);
             setCopied(true);
             setTimeout(() => {
                 setCopied(false);
                 onClose();
             }, 1000);
         } else if (platform === 'twitter') {
-            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(shareUrl)}`, '_blank');
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(finalShareUrl)}`, '_blank');
             onClose();
         } else if (platform === 'linkedin') {
-            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`, '_blank');
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(finalShareUrl)}`, '_blank');
             onClose();
         }
     };
