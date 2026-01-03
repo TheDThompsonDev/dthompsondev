@@ -44,7 +44,7 @@ export function ChapterEvolution() {
                                 I led teams in migrating legacy monoliths to Microservices using <strong>Go (Golang) and React</strong>. I learned that Go offers the concurrency needed for modern speed, and React offers the scale for modern UIs.
                             </p>
                             <p>
-                                Today, my role isn't just about writing code. It is about de-risking architecture. It is about aligning engineering with revenue. I leverage tools like <strong>Snowflake</strong> for data and **AWS** for scale. I don't sugarcoat code reviews. When you sugarcoat something, people eat it instead of looking at it. I give my teams the raw data so we can fix the problem and ship.
+                                Today, my role isn't just about writing code. It is about de-risking architecture. It is about aligning engineering with revenue. I leverage tools like <strong>Snowflake</strong> for data and <strong>AWS</strong> for scale. I don't sugarcoat code reviews. When you sugarcoat something, people eat it instead of looking at it. I give my teams the raw data so we can fix the problem and ship.
                             </p>
                         </div>
                     </div>
