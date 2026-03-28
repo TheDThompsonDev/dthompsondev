@@ -188,7 +188,7 @@ function fetchUserData(userId) {
       resolve({
         id: userId,
         name: "Danny Thompson",
-        role: "Director of Tech"
+        role: "Senior Developer Advocate"
       });
     }, 1000);
   });

@@ -82,7 +82,7 @@ export function ChapterMission() {
                 <ScrollReveal delay={400}>
                     <div className="space-y-6 text-lg text-[#153230]/80 leading-relaxed max-w-4xl mx-auto text-center mt-12">
                         <p className="text-xl font-bold text-[#153230] italic">
-                            "I stand here today not just as a Director of Technology, but as proof of a simple truth: Potential is nothing without execution."
+                            "I stand here today not just as a Senior Developer Advocate, but as proof of a simple truth: Potential is nothing without execution."
                         </p>
                         <p>
                             You can be Popeyes today, and you can be a leader tomorrow. The smell of grease was temporary. The skills I built were permanent.

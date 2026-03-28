@@ -87,8 +87,8 @@ export const JourneySlider = () => {
                                     maxWidth: 'calc(50% - 1rem)'
                                 }}
                             >
-                                <p className="text-white font-mono text-xs sm:text-sm font-bold">2025: The Stage</p>
-                                <p className="text-gray-300 text-[10px] sm:text-xs">Director of Technology. Leader.</p>
+                                <p className="text-white font-mono text-xs sm:text-sm font-bold">2026: The Stage</p>
+                                <p className="text-gray-300 text-[10px] sm:text-xs">Senior Developer Advocate. Leader.</p>
                             </div>
                         </div>
                     }

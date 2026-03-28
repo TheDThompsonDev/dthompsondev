@@ -15,6 +15,11 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import { Loader2 } from "lucide-react";
 
+// Analytics tracking components
+import { SectionTracker } from "@/components/analytics/SectionTracker";
+import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
+import { TimeOnPageTracker } from "@/components/analytics/TimeOnPageTracker";
+
 // Lazy load below-the-fold components
 const WallOfLove = dynamic(() => import("@/components/home/WallOfLove").then(mod => mod.WallOfLove), {
   loading: () => <div className="h-[600px] bg-[#F8FDFF] animate-pulse" />
@@ -52,6 +57,7 @@ export default async function Home() {
           <div className="bg-white rounded-[32px] shadow-xl m-4 overflow-hidden border border-[#4D7DA3]/10">
             <Navbar />
 
+            <SectionTracker section="hero" page="/">
             <section className="relative px-4 sm:px-8 md:px-16 py-8 md:py-12">
               <div className="absolute top-0 right-0 w-[600px] h-[700px] bg-gradient-to-br from-[#4D7DA3]/10 to-transparent rounded-full blur-3xl"></div>
               <div className="absolute bottom-0 left-0 w-[400px] h-[700px] bg-gradient-to-tr from-[#84803E]/8 to-transparent rounded-full blur-3xl"></div>
@@ -70,7 +76,7 @@ export default async function Home() {
                     </div>
 
                     <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-[#153230] leading-tight lg:leading-[1] tracking-tight">
-                      Director of Tech,{" "}
+                      Senior Developer Advocate,{" "}
                       <span className="text-[#4D7DA3]">
                         Executive Advisor,
                         <br />
@@ -133,20 +139,28 @@ export default async function Home() {
                 </div>
               </div>
             </section>
+            </SectionTracker>
 
+            <SectionTracker section="trusted_by" page="/">
             <TrustedBy />
+            </SectionTracker>
 
+            <SectionTracker section="rotary_selector" page="/">
             <RotarySelector />
+            </SectionTracker>
+            <SectionTracker section="orbit_switcher" page="/">
             <div className="relative z-30">
               <ScrollReveal delay={100}>
                 {/* OrbitSwitcher Section - Outside the main card */}
                 <OrbitSwitcher />
               </ScrollReveal>
             </div>
+            </SectionTracker>
           </div>
 
           {/* Podcast Radio Tuner Section */}
-          <section className="relative z-[50] bg-white rounded-[32px] mx-4 mt-6 px-6 md:px-12 py-16 shadow-lg border border-[#E2F3F2]">
+          <SectionTracker section="podcast" page="/">
+          <section className="relative z-[50] bg-white rounded-[32px] mx-4 mt-6 px-6 md:px-12 py-16 shadow-lg border border-[#E2F3F2]" data-section="podcast">
             <ScrollReveal>
               <PodcastErrorBoundary
                 fallback={
@@ -163,6 +177,7 @@ export default async function Home() {
               </PodcastErrorBoundary>
             </ScrollReveal>
           </section>
+          </SectionTracker>
 
           {/* Option 1: Wall of Love
         <div className="relative z-40 mt-8 mb-8">
@@ -173,17 +188,20 @@ export default async function Home() {
         */}
 
           {/* Newsletter Section - Moved from global layout */}
+          <SectionTracker section="newsletter" page="/">
           <div className="relative z-40 mt-8 mb-8">
             <div className="mx-4 rounded-[32px] overflow-hidden shadow-xl border border-[#E2F3F2]">
               <NewsletterForm />
             </div>
           </div>
+          </SectionTracker>
 
 
         </div>
 
         {/* Contact Section - Ultra Premium Design */}
-        <section id="contact" className="relative mx-4 mt-6 mb-6 overflow-hidden">
+        <SectionTracker section="contact" page="/">
+        <section id="contact" className="relative mx-4 mt-6 mb-6 overflow-hidden" data-section="contact">
           {/* Advanced Animated Background with Mesh Gradient */}
           <div className="absolute inset-0 bg-[#0a1f1e] rounded-[32px]" />
 
@@ -363,6 +381,11 @@ export default async function Home() {
             </ScrollReveal >
           </div >
         </section>
+        </SectionTracker>
+
+        {/* Analytics trackers — invisible, zero UI */}
+        <ScrollDepthTracker page="/" />
+        <TimeOnPageTracker page="/" />
       </main>
 
     </>

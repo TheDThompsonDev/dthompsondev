@@ -32,7 +32,7 @@ export const CENTER_PERSON: CenterPerson = {
     id: "danny",
     name: "Danny Thompson",
     initials: "DT",
-    role: "Director of Tech",
+    role: "Senior Developer Advocate",
 };
 
 export const VISITOR_ARCHETYPES: PersonaArchetype[] = [
