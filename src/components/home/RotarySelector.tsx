@@ -6,6 +6,7 @@ import { Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import styles from './RotarySelector.module.css';
 import { contentItems, type ContentItem } from '@/data/contentEcosystem';
+import { SoftGateModal } from '@/components/newsletter/SoftGateModal';
 
 function RotarySelectorComponent() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -21,6 +22,10 @@ function RotarySelectorComponent() {
   const [isMounted, setIsMounted] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  
+  // Soft Gate State
+  const [gateModalOpen, setGateModalOpen] = useState(false);
+  const [pendingUrl, setPendingUrl] = useState<string | null>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const dialRef = useRef<HTMLDivElement>(null);
@@ -63,6 +68,22 @@ function RotarySelectorComponent() {
       setTimeout(() => setIsTransitioning(false), 500);
     }
   }, [anglePerItem, createParticleBurst]);
+
+  const handleLinkClick = useCallback((url: string) => {
+    if (url.startsWith('#')) {
+      // Internal smooth scroll routing (e.g., #podcast)
+      const element = document.querySelector(url);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.location.hash = url;
+      }
+    } else {
+      // External link - Intercept with Soft Gate
+      setPendingUrl(url);
+      setGateModalOpen(true);
+    }
+  }, []);
 
   const handleNext = useCallback(() => {
     const nextIndex = (selectedIndex + 1) % itemCount;
@@ -198,7 +219,7 @@ function RotarySelectorComponent() {
         e.preventDefault();
         const item = contentItems[selectedIndex];
         if (item.link && item.link.length > 0) {
-          window.open(item.link[0].url, '_blank');
+          handleLinkClick(item.link[0].url);
         }
       }
     };
@@ -459,7 +480,7 @@ function RotarySelectorComponent() {
                   {selectedItem.link?.map((linkItem, index) => (
                     <button
                       key={index}
-                      onClick={() => window.open(linkItem.url, '_blank')}
+                      onClick={() => handleLinkClick(linkItem.url)}
                       className="bg-[#153230] hover:bg-[#4D7DA3] text-white px-6 py-3 rounded-full font-bold transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2"
                     >
                       <span>{linkItem.text}</span>
@@ -597,7 +618,7 @@ function RotarySelectorComponent() {
                   {selectedItem.link?.map((linkItem, index) => (
                     <button
                       key={index}
-                      onClick={() => window.open(linkItem.url, '_blank')}
+                      onClick={() => handleLinkClick(linkItem.url)}
                       className="w-full bg-[#153230] hover:bg-[#4D7DA3] text-white px-4 py-2.5 rounded-full font-bold text-sm transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2"
                     >
                       <span className="truncate">{linkItem.text}</span>
@@ -611,6 +632,13 @@ function RotarySelectorComponent() {
         </div>
 
       </div>
+      
+      {/* Soft Gate Modal */}
+      <SoftGateModal 
+        isOpen={gateModalOpen} 
+        onClose={() => setGateModalOpen(false)} 
+        destinationUrl={pendingUrl} 
+      />
     </div>
   );
 }

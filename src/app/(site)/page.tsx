@@ -145,6 +145,15 @@ export default async function Home() {
             <TrustedBy />
             </SectionTracker>
 
+          {/* Newsletter Section - Elevated for higher conversion before Rotary exit links */}
+          <SectionTracker section="newsletter" page="/">
+          <div className="relative z-40 mt-8 mb-8">
+            <div className="mx-4 rounded-[32px] overflow-hidden shadow-xl border border-[#E2F3F2]">
+              <NewsletterForm />
+            </div>
+          </div>
+          </SectionTracker>
+
             <SectionTracker section="rotary_selector" page="/">
             <RotarySelector />
             </SectionTracker>
@@ -186,15 +195,6 @@ export default async function Home() {
           </div>
         </div>
         */}
-
-          {/* Newsletter Section - Moved from global layout */}
-          <SectionTracker section="newsletter" page="/">
-          <div className="relative z-40 mt-8 mb-8">
-            <div className="mx-4 rounded-[32px] overflow-hidden shadow-xl border border-[#E2F3F2]">
-              <NewsletterForm />
-            </div>
-          </div>
-          </SectionTracker>
 
 
         </div>

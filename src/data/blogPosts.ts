@@ -2,6 +2,23 @@ import { BlogPost } from '@/types/blog';
 
 export const samplePosts: BlogPost[] = [
     {
+        id: 8,
+        title: 'You Are Using the Wrong Model for the Job',
+        slug: 'wrong-model-for-the-job',
+        excerpt: 'An empty response and a four-paragraph answer to a yes/no question turned out to be the same mistake. Learn how to size the model and the output length to the task.',
+        content: { blocks: [] },
+        category: 'AI Engineering',
+        featured: true,
+        readTime: '9 min',
+        status: 'published',
+        authorName: 'Danny Thompson',
+        createdAt: new Date('2026-07-05T12:00:00').toISOString(),
+        updatedAt: new Date('2026-07-05T12:00:00').toISOString(),
+        publishedAt: new Date('2026-07-05T12:00:00').toISOString(),
+        targetPersonas: ['p2', 'p3', 'p6'],
+        coverImageUrl: 'https://twxvicohcixbzang.public.blob.vercel-storage.com/blog-covers/wrong-model-for-the-job.png',
+    },
+    {
         id: 3,
         title: 'The Death of Magic: Welcome to AI Engineering',
         slug: 'death-of-magic-ai-engineering',

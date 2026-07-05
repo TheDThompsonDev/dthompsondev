@@ -28,8 +28,7 @@ export const contentItems: ContentItem[] = [
         image: 'https://twxvicohcixbzang.public.blob.vercel-storage.com/podcast.jpg',
         link: [
             { url: 'https://www.youtube.com/@TheProgrammingPodcast', text: 'YouTube Channel' },
-            { url: 'https://open.spotify.com/show/6d59PZ138KeoKfq5hoVvyQ?si=b83a2e884bd442e6', text: 'Spotify' },
-            { url: 'https://podcasts.apple.com/us/podcast/the-programming-podcast/id1234567890', text: 'Apple Podcasts' },
+            { url: '#podcast', text: 'Listen on Website' }
         ],
     },
     {
