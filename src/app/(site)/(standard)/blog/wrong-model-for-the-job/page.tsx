@@ -78,7 +78,7 @@ export default function WrongModelForTheJobPost() {
                         <div className="bg-red-50 border-l-4 border-red-500 p-6 rounded-r-xl my-8">
                             <h3 className="font-bold text-red-900 mb-2">The Trap</h3>
                             <p className="text-red-900/80">
-                                I set a low cap because I wanted a short response. That works on a normal model. On a reasoning model, it prevents the answer from being written at all — and it still looks like a success.
+                                I set a low cap because I wanted a short response. That works on a normal model. On a reasoning model, it prevents the answer from being written at all, and it still looks like a success.
                             </p>
                         </div>
 
@@ -138,7 +138,7 @@ export default function WrongModelForTheJobPost() {
                         <h2 className="text-3xl font-bold text-[#153230] mb-6">Failure One: The Reasoning Model That Writes Nothing</h2>
 
                         <p className="text-[#153230]/80 leading-relaxed mb-6">
-                            Every chat completion has a limit on how many tokens it can generate. With older models, you set this using <code>max_tokens</code>. For reasoning models, you use <code>max_completion_tokens</code>. These settings look similar, but they aren't — the difference is what each one actually limits.
+                            Every chat completion has a limit on how many tokens it can generate. With older models, you set this using <code>max_tokens</code>. For reasoning models, you use <code>max_completion_tokens</code>. These settings look similar, but they aren't, the difference is what each one actually limits.
                         </p>
 
                         <div className="grid md:grid-cols-2 gap-6 my-8">
@@ -199,7 +199,7 @@ export default function WrongModelForTheJobPost() {
                             <div className="bg-white p-6 rounded-xl border-2 border-[#4D7DA3]/20 shadow-sm">
                                 <h4 className="font-bold text-xl text-[#153230] mb-2">1. Does this task need reasoning at all?</h4>
                                 <p className="text-[#153230]/80 leading-relaxed">
-                                    For things like routing, classification, extraction, tagging, or short replies, the answer is no — these are pattern-matching jobs. Use a fast, inexpensive model, or set reasoning to a minimum. Save the deep-reasoning models for truly hard, multi-step problems where accuracy is worth the extra time and cost.
+                                    For things like routing, classification, extraction, tagging, or short replies, the answer is no, these are pattern-matching jobs. Use a fast, inexpensive model, or set reasoning to a minimum. Save the deep-reasoning models for truly hard, multi-step problems where accuracy is worth the extra time and cost.
                                 </p>
                             </div>
                             <div className="bg-white p-6 rounded-xl border-2 border-[#4D7DA3]/20 shadow-sm">
@@ -270,7 +270,7 @@ export default function WrongModelForTheJobPost() {
                             <pre><code>{`const text = data.choices?.[0]?.message?.content ?? "";
 if (text.trim().length === 0) {
   // Never report an empty completion as success (a length-capped
-  // reasoning model does exactly this) — fall through to the next model.
+  // reasoning model does exactly this) fall through to the next model.
   lastError = \`\${model}: empty completion (finish_reason \${
     data.choices?.[0]?.finish_reason ?? "unknown"
   })\`;
