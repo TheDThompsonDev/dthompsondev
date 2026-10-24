@@ -24,7 +24,7 @@ const caveat = Caveat({
 });
 
 const siteTitle = "Danny Thompson (DThompsonDev) | Author & Developer Advocate";
-const siteDescription = "Danny Thompson is a senior developer advocate, co-author of The Developer's Guide to AI, and host of The Programming Podcast.";
+const siteDescription = "Danny Thompson is a senior developer advocate, co-author of The Developer's Guide to AI, and co-host of The Programming Podcast.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
