@@ -3,6 +3,7 @@
 import { Copy, Twitter, Linkedin, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
+import { SITE_URL } from '@/lib/site';
 
 interface ShareMenuProps {
     isOpen: boolean;
@@ -20,7 +21,7 @@ export function ShareMenu({ isOpen, onClose, url, slug, title, className = '' }:
         let shareUrl = url;
 
         if (!shareUrl && slug) {
-            const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://dthompson.dev';
+            const baseUrl = process.env.NEXT_PUBLIC_APP_URL || SITE_URL;
             shareUrl = `${baseUrl}/blog/${slug}`;
         }
 

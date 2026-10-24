@@ -5,6 +5,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { BotIdClient } from "botid/client";
 import Script from "next/script";
 import { ExternalLinkTracker } from "@/components/analytics/ExternalLinkTracker";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -22,9 +23,27 @@ const caveat = Caveat({
   subsets: ["latin"],
 });
 
+const siteTitle = "Danny Thompson (DThompsonDev) | Author & Developer Advocate";
+const siteDescription = "Danny Thompson is a senior developer advocate, co-author of The Developer's Guide to AI, and host of The Programming Podcast.";
+
 export const metadata: Metadata = {
-  title: "DThompsonDev",
-  description: "Senior Developer Advocate, Community Leader, and Career Champion helping developers level up through mentorship, technical leadership, and authentic community building.",
+  metadataBase: new URL(SITE_URL),
+  title: siteTitle,
+  description: siteDescription,
+  authors: [{ name: "Danny Thompson", url: SITE_URL }],
+  openGraph: {
+    type: "website",
+    siteName: "Danny Thompson",
+    locale: "en_US",
+    title: siteTitle,
+    description: siteDescription,
+  },
+  twitter: {
+    card: "summary",
+    creator: "@DThompsonDev",
+    title: siteTitle,
+    description: siteDescription,
+  },
 };
 
 // Routes protected by vercel BotID

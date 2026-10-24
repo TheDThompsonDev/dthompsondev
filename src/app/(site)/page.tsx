@@ -34,7 +34,13 @@ const OrbitSwitcher = dynamic(() => import("@/components/home/OrbitSwitcher").th
 });
 
 import type { Episode } from "@/types/podcast";
+import type { Metadata } from "next";
 import { internalFetch } from "@/lib/server-utils";
+import { homepageJsonLd } from "@/data/person";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default async function Home() {
   // Fetch podcast episodes
@@ -52,6 +58,10 @@ export default async function Home() {
   }
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageJsonLd).replace(/</g, "\\u003c") }}
+      />
       <main id="main-content">
         <div className="max-w-[1400px] mx-auto">
           <div className="bg-white rounded-[32px] shadow-xl m-4 overflow-hidden border border-[#4D7DA3]/10">
@@ -76,6 +86,9 @@ export default async function Home() {
                     </div>
 
                     <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-[#153230] leading-tight lg:leading-[1] tracking-tight">
+                      <span className="block text-base sm:text-lg md:text-xl font-bold tracking-normal leading-snug text-[#153230]/70 mb-3 lg:mb-4">
+                        Danny Thompson, author and developer advocate
+                      </span>
                       Senior Developer Advocate,{" "}
                       <span className="text-[#4D7DA3]">
                         Executive Advisor,

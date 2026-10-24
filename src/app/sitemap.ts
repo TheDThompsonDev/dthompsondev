@@ -1,16 +1,19 @@
 import { MetadataRoute } from 'next';
+import { samplePosts } from '@/data/blogPosts';
+import { SITE_URL } from '@/lib/site';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    // Use VERCEL_URL if available (preview deployments), otherwise fallback to localhost or production domain
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ||
-        (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+    const baseUrl = SITE_URL;
 
     // Static routes
     const routes = [
         '',
-        '/blog',
         '/about',
-        '/contact', // Assuming there is a contact page or section
+        '/blog',
+        '/talks',
+        '/podcast',
+        '/community',
+        '/resources',
     ].map((route) => ({
         url: `${baseUrl}${route}`,
         lastModified: new Date(),
@@ -18,7 +21,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: route === '' ? 1 : 0.8,
     }));
 
-    // In a real app, we would fetch dynamic blog posts here and add them to the sitemap
+    const blogRoutes = samplePosts
+        .filter((post) => post.status === 'published')
+        .map((post) => ({
+            url: `${baseUrl}/blog/${post.slug}`,
+            lastModified: new Date(post.updatedAt),
+            changeFrequency: 'monthly' as const,
+            priority: post.featured ? 0.8 : 0.7,
+        }));
 
-    return routes;
+    return [...routes, ...blogRoutes];
 }

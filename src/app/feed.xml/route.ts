@@ -1,7 +1,8 @@
 
 import { samplePosts } from '@/data/blogPosts';
+import { SITE_URL } from '@/lib/site';
 
-const baseUrl = 'https://dthompson.dev';
+const baseUrl = SITE_URL;
 
 export async function GET() {
   const sortedPosts = [...samplePosts].sort((a, b) =>
