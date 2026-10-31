@@ -68,13 +68,13 @@ export default async function Home() {
             <Navbar />
 
             <SectionTracker section="hero" page="/">
-            <section className="relative px-4 sm:px-8 md:px-16 py-8 md:py-12">
+            <section className="relative px-4 sm:px-8 md:px-16 py-8 md:py-12 lg:pt-8">
               <div className="absolute top-0 right-0 w-[600px] h-[700px] bg-gradient-to-br from-[#4D7DA3]/10 to-transparent rounded-full blur-3xl"></div>
               <div className="absolute bottom-0 left-0 w-[400px] h-[700px] bg-gradient-to-tr from-[#84803E]/8 to-transparent rounded-full blur-3xl"></div>
 
               <div className="relative z-10 max-w-6xl mx-auto">
-                <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-                  <div className="space-y-6 lg:space-y-8">
+                <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+                  <div className="space-y-6">
                     <div className="inline-flex items-center gap-2.5 bg-[#153230] text-white px-3 py-1.5 md:px-4 md:py-2 rounded-full shadow-lg">
                       <div className="relative flex items-center justify-center">
                         <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-[#4ade80] rounded-full animate-pulse"></div>
@@ -85,29 +85,20 @@ export default async function Home() {
                       </span>
                     </div>
 
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-[#153230] leading-tight lg:leading-[1] tracking-tight">
-                      <span className="block text-base sm:text-lg md:text-xl font-bold tracking-normal leading-snug text-[#153230]/70 mb-3 lg:mb-4">
-                        Danny Thompson, author and developer advocate
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#153230] leading-tight lg:leading-[1.05] tracking-tight">
+                      <span className="block text-base sm:text-lg font-bold tracking-normal leading-snug text-[#153230]/70 mb-3 lg:mb-4">
+                        Danny Thompson · Author, Senior Developer Advocate, Executive Advisor & Community Leader
                       </span>
-                      Senior Developer Advocate,{" "}
-                      <span className="text-[#4D7DA3]">
-                        Executive Advisor,
-                        <br />
-                      </span>{" "}
-                      & Community Leader.
+                      When engineering teams lose clarity,{" "}
+                      <span className="text-[#4D7DA3]">they call me.</span>
                     </h1>
 
                     <p className="text-base sm:text-lg lg:text-xl text-[#153230]/70 leading-relaxed max-w-xl">
-                      When organizations have engineering teams that have too many
-                      priorities, too much complexity, and not enough clarity.
-                      <span className="text-[#4D7DA3] font-bold">
-                        {" "}
-                        They call me.{" "}
-                      </span>{" "}
-                      I fix team alignment, simplify their systems, and deliver
-                      results they're proud of.
+                      Too many priorities, too much complexity, not enough direction.
+                      I fix team alignment, simplify systems, and deliver results
+                      leaders are proud of.
                     </p>
-                    <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-3 sm:gap-4 pt-2 lg:pt-4">
+                    <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-3 sm:gap-4 pt-2">
                       <p className="text-xl sm:text-2xl text-[#4D7DA3] font-bold leading-relaxed">
                         Clarity. Confidence. Code.
                       </p>

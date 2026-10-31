@@ -29,6 +29,8 @@ function RotarySelectorComponent() {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const dialRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const isInViewRef = useRef(false);
   const particleIdRef = useRef(0);
 
   // Minimum swipe distance (in px) to trigger navigation
@@ -206,16 +208,36 @@ function RotarySelectorComponent() {
     }
   };
 
-  // Keyboard controls
+  // Track whether the dial is on screen so page-level keys only apply while it's visible
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      isInViewRef.current = entry.isIntersecting;
+    }, { threshold: 0.3 });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [isMounted]);
+
+  // Keyboard controls: active while focus is inside the dial, or while nothing is
+  // focused and the dial is on screen. Never steal keys from forms, other widgets, or dialogs.
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+      if (document.querySelector('[role="dialog"]')) return;
+
+      const target = e.target as HTMLElement | null;
+      const focusIsFree = !target || target === document.body;
+      const focusInDial = !!target && !!sectionRef.current?.contains(target);
+      if (!focusInDial && !(focusIsFree && isInViewRef.current)) return;
+
       if (e.key === 'ArrowRight') {
         e.preventDefault();
         handleNext();
       } else if (e.key === 'ArrowLeft') {
         e.preventDefault();
         handlePrev();
-      } else if (e.key === 'Enter') {
+      } else if (e.key === 'Enter' && focusIsFree) {
         e.preventDefault();
         const item = contentItems[selectedIndex];
         if (item.link && item.link.length > 0) {
@@ -226,7 +248,7 @@ function RotarySelectorComponent() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedIndex, handleNext, handlePrev]);
+  }, [selectedIndex, handleNext, handlePrev, handleLinkClick]);
 
   // Show loading state during hydration
   if (!isMounted) {
@@ -252,7 +274,7 @@ function RotarySelectorComponent() {
   }
 
   return (
-    <div className="rounded-3xl -mt-8 bg-white p-4 sm:p-8 shadow-xl border-2 border-[#4D7DA3]/20 relative z-20" style={{ boxShadow: '0 -10px 30px -10px rgba(77, 125, 163, 0.3), 0 10px 30px -10px rgba(0, 0, 0, 0.1)' }}>
+    <div ref={sectionRef} className="rounded-3xl -mt-8 bg-white p-4 sm:p-8 shadow-xl border-2 border-[#4D7DA3]/20 relative z-20" style={{ boxShadow: '0 -10px 30px -10px rgba(77, 125, 163, 0.3), 0 10px 30px -10px rgba(0, 0, 0, 0.1)' }}>
       {/* Magnetic Field Visualization */}
       {isMounted && magneticField && (
         <div
