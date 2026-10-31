@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { checkBotId } from 'botid/server';
-import { isValidEmail } from '@/lib/validation';
+import { validateContactForm } from '@/lib/validation';
 
 function escapeHtml(unsafe: string): string {
   return unsafe
@@ -58,9 +58,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!isValidEmail(email)) {
+    // Same rules the form shows, enforced here so junk can't skip the UI
+    const { isValid, errors } = validateContactForm({ name, email, message });
+    if (!isValid) {
       return NextResponse.json(
-        { error: 'Invalid email address' },
+        { error: errors[0] },
         { status: 400 }
       );
     }

@@ -8,8 +8,16 @@ export function isValidName(name: string): boolean {
     return name.trim().length >= 2;
 }
 
+// Catches keyboard mashes like "aWdwadawdwa": a handful of keys repeated,
+// usually as one long "word". A real note has spaces and more letters.
+export function looksLikeKeyboardMash(text: string): boolean {
+    const words = text.trim().split(/\s+/).filter(Boolean);
+    const distinctLetters = new Set(text.toLowerCase().match(/\p{L}/gu) ?? []).size;
+    return distinctLetters < 5 || (words.length < 2 && distinctLetters < 15);
+}
+
 export function isValidMessage(message: string): boolean {
-    return message.trim().length >= 10;
+    return message.trim().length >= 10 && !looksLikeKeyboardMash(message);
 }
 
 export function validateContactForm(data: {
@@ -27,8 +35,10 @@ export function validateContactForm(data: {
         errors.push('Please enter a valid email address');
     }
 
-    if (!isValidMessage(data.message)) {
+    if (data.message.trim().length < 10) {
         errors.push('Message must be at least 10 characters');
+    } else if (looksLikeKeyboardMash(data.message)) {
+        errors.push('Please tell me a little more about what you need, in a few words.');
     }
 
     return {
